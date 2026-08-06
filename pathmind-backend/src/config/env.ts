@@ -21,8 +21,12 @@ const envSchema = z.object({
 
   AI_PROVIDER: z.enum(["anthropic", "openai"]).default("anthropic"),
   ANTHROPIC_API_KEY: z.string().optional().default(""),
+  ANTHROPIC_AUTH_TOKEN: z.string().optional().default(""),
+  ANTHROPIC_BASE_URL: z.string().optional().default(""),
   ANTHROPIC_MODEL: z.string().default("claude-sonnet-5"),
   OPENAI_API_KEY: z.string().optional().default(""),
+  OPENAI_BASE_URL: z.string().optional().default(""),
+  OPENAI_MODEL: z.string().default("meta/llama-3.1-70b-instruct"),
 
   SEARCH_PROVIDER: z.string().default("tavily"),
   SEARCH_API_KEY: z.string().optional().default(""),

@@ -82,7 +82,11 @@ export class AnthropicProvider implements AIProvider {
   private client: Anthropic;
 
   constructor() {
-    this.client = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
+    this.client = new Anthropic({
+      authToken: env.ANTHROPIC_AUTH_TOKEN || undefined,
+      apiKey: env.ANTHROPIC_API_KEY || undefined,
+      baseURL: env.ANTHROPIC_BASE_URL || undefined,
+    });
   }
 
   private async complete(prompt: string): Promise<string> {

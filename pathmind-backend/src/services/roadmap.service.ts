@@ -55,54 +55,56 @@ async function generateRoadmapFromScratch(
     throw new Error(`AI provider returned no syllabus stages for topic "${topic}"`);
   }
 
-  const stages: Stage[] = [];
+  // 2. Certifications (fetched once for the whole topic; ranked by value).
+  const certSearch = await webSearch(`best ${topic} certification`);
+  const certDrafts = await ai.generateCertifications(topic, certSearch);
+
   const stageObjectIds = stageDrafts.map(() => new Types.ObjectId());
 
-  for (const draft of stageDrafts) {
-    // 2. Free resources — grounded against a per-stage web search.
-    const resourceSearch = await webSearch(`${topic} ${draft.title} free tutorial docs`);
-    const resourceDrafts = await ai.generateFreeResources(topic, draft, resourceSearch);
+  // 3. Parallelize stage generation (resources and tags) to avoid long blocking times
+  const stages: Stage[] = await Promise.all(
+    stageDrafts.map(async (draft, index) => {
+      // 3a. Free resources — grounded against a per-stage web search.
+      const resourceSearch = await webSearch(`${topic} ${draft.title} free tutorial docs`);
+      const resourceDrafts = await ai.generateFreeResources(topic, draft, resourceSearch);
 
-    // 3. Certifications (fetched once per stage template context; ranked by value).
-    const certSearch = await webSearch(`best ${topic} certification`);
-    const certDrafts = await ai.generateCertifications(topic, certSearch);
+      // 3b. Practice links — AI suggests tags/difficulty only; the verification
+      // module resolves them to guaranteed-real problem URLs.
+      const tagSuggestions = await ai.suggestPracticeTags(topic, draft);
+      const practiceLinks = resolvePracticeLinks(
+        tagSuggestions.map((t) => ({ tag: t.tag, difficulty: t.difficulty }))
+      );
 
-    // 4. Practice links — AI suggests tags/difficulty only; the verification
-    // module resolves them to guaranteed-real problem URLs.
-    const tagSuggestions = await ai.suggestPracticeTags(topic, draft);
-    const practiceLinks = resolvePracticeLinks(
-      tagSuggestions.map((t) => ({ tag: t.tag, difficulty: t.difficulty }))
-    );
-
-    const now = new Date();
-    stages.push({
-      _id: stageObjectIds[stageDrafts.indexOf(draft)]!,
-      order: draft.order,
-      title: draft.title,
-      type: draft.type,
-      difficulty: draft.difficulty,
-      prerequisiteStageId:
-        draft.prerequisiteOrder === null ? null : stageObjectIds[draft.prerequisiteOrder]!,
-      syllabus: draft.syllabus,
-      estimatedDays: draft.estimatedDays,
-      freeResources: resourceDrafts.map((r) => ({
-        title: r.title,
-        url: r.url,
-        type: r.type,
-        lastVerifiedAt: now,
-        verified: true,
-      })),
-      certifications: certDrafts.map((c) => ({
-        title: c.title,
-        provider: c.provider,
-        url: c.url,
-        price: c.price,
-        rank: c.rank,
-        lastVerifiedAt: now,
-      })),
-      practiceLinks,
-    });
-  }
+      const now = new Date();
+      return {
+        _id: stageObjectIds[index]!,
+        order: draft.order,
+        title: draft.title,
+        type: draft.type,
+        difficulty: draft.difficulty,
+        prerequisiteStageId:
+          draft.prerequisiteOrder === null ? null : stageObjectIds[draft.prerequisiteOrder]!,
+        syllabus: draft.syllabus,
+        estimatedDays: draft.estimatedDays,
+        freeResources: resourceDrafts.map((r) => ({
+          title: r.title,
+          url: r.url,
+          type: r.type,
+          lastVerifiedAt: now,
+          verified: true,
+        })),
+        certifications: certDrafts.map((c) => ({
+          title: c.title,
+          provider: c.provider,
+          url: c.url,
+          price: c.price,
+          rank: c.rank,
+          lastVerifiedAt: now,
+        })),
+        practiceLinks,
+      };
+    })
+  );
 
   // 5. Suggested timeline — structured day-by-day breakdown.
   const timelineDrafts = await ai.generateTimeline(topic, stageDrafts);
