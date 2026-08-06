@@ -1,0 +1,44 @@
+# Node artifacts
+node_modules/
+**/node_modules/
+package-lock.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# TypeScript / build artifacts
+dist/
+build/
+**/dist/
+**/build/
+*.tsbuildinfo
+
+# Next.js / frontend
+.next/
+out/
+.next/**
+
+# Environment files
+.env
+.env.*
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.vscode/
+.idea/
+.DS_Store
+
+# Coverage
+coverage/
+**/coverage/
+
+# Misc
+.cache/
+*.local
