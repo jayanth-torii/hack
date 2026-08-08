@@ -4,7 +4,7 @@ import type {
   Difficulty,
   PracticePlatform,
   ResourceType,
-} from "@/types/domain";
+} from "../types/domain";
 
 export interface FreeResource {
   title: string;

@@ -1,8 +1,8 @@
 import { createApp } from "./app";
-import { env } from "@/config/env";
-import { logger } from "@/config/logger";
-import { connectDB, disconnectDB } from "@/config/db";
-import { startCronJobs } from "@/workers/cronScheduler";
+import { env } from "./config/env";
+import { logger } from "./config/logger";
+import { connectDB, disconnectDB } from "./config/db";
+import { startCronJobs } from "./workers/cronScheduler";
 
 let appPromise: ReturnType<typeof createApp> | null = null;
 

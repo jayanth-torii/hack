@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { exportCalendar, googleCallback, googleConnect, googleStatus } from "@/controllers/calendar.controller";
-import { optionalAuth, requireAuth } from "@/middleware/auth.middleware";
-import { validate } from "@/middleware/validate.middleware";
-import { exportCalendarSchema } from "@/schemas/calendar.schema";
+import { exportCalendar, googleCallback, googleConnect, googleStatus } from "../controllers/calendar.controller";
+import { optionalAuth, requireAuth } from "../middleware/auth.middleware";
+import { validate } from "../middleware/validate.middleware";
+import { exportCalendarSchema } from "../schemas/calendar.schema";
 
 export const calendarRouter = Router();
 

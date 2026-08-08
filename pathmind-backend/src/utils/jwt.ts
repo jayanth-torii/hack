@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-import { env } from "@/config/env";
-import type { AuthPayload } from "@/types/express";
+import { env } from "../config/env";
+import type { AuthPayload } from "../types/express";
 
 // jsonwebtoken's `expiresIn` type only accepts its own branded string literal
 // (via the `ms` package) or a number of seconds, not a generic `string` — the

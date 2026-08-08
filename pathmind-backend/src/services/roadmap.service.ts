@@ -1,19 +1,19 @@
 import { Types } from "mongoose";
-import { Roadmap, type RoadmapDocument, type Stage } from "@/models/Roadmap";
-import { getAIProvider } from "@/services/ai/aiService";
-import { ApiError } from "@/utils/apiError";
-import { normalizeResources } from "@/services/ai/normalizeResources";
-import { verifyResourceLinks } from "@/services/ai/verifyResources";
-import { webSearch } from "@/services/ai/webSearch";
+import { Roadmap, type RoadmapDocument, type Stage } from "../models/Roadmap";
+import { getAIProvider } from "./ai/aiService";
+import { ApiError } from "../utils/apiError";
+import { normalizeResources } from "./ai/normalizeResources";
+import { verifyResourceLinks } from "./ai/verifyResources";
+import { webSearch } from "./ai/webSearch";
 import {
   resolvePracticeLinks,
   verifyPracticeLinks,
-} from "@/services/practiceLinks/practiceLinks.service";
-import { cacheRoadmap, getCachedRoadmapByTopic } from "@/services/cache/cacheService";
-import { normalizeTopic, slugify } from "@/utils/slugify";
-import { env } from "@/config/env";
-import { logger } from "@/config/logger";
-import type { StageDraft } from "@/services/ai/AIProvider.interface";
+} from "./practiceLinks/practiceLinks.service";
+import { cacheRoadmap, getCachedRoadmapByTopic } from "./cache/cacheService";
+import { normalizeTopic, slugify } from "../utils/slugify";
+import { env } from "../config/env";
+import { logger } from "../config/logger";
+import type { StageDraft } from "./ai/AIProvider.interface";
 
 /**
  * The main /roadmaps/generate orchestration:

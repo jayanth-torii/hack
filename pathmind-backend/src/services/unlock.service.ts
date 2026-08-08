@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import type { Stage } from "@/models/Roadmap";
+import type { Stage } from "../models/Roadmap";
 
 /**
  * Server-side enforcement of difficulty-aware unlock progression.

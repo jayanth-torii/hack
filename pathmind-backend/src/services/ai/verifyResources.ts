@@ -1,4 +1,4 @@
-import { checkLinkAlive, type LinkCheckResult } from "@/services/freshness/linkChecker.service";
+import { checkLinkAlive, type LinkCheckResult } from "../freshness/linkChecker.service";
 import type { FreeResourceDraft } from "./AIProvider.interface";
 
 /**

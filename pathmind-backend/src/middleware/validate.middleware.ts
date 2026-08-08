@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import type { ZodSchema } from "zod";
-import { ApiError } from "@/utils/apiError";
+import { ApiError } from "../utils/apiError";
 
 // Validates { body, params, query } against a Zod schema and replaces the
 // request's fields with the parsed (and coerced/defaulted) values so

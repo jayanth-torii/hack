@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
-import { ApiError } from "@/utils/apiError";
-import { logger } from "@/config/logger";
+import { ApiError } from "../utils/apiError";
+import { logger } from "../config/logger";
 
 // Builds the standard request-context object attached to every error log so
 // a failing request can be correlated with its pino-http access log (req.id)

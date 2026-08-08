@@ -1,12 +1,12 @@
 import type { Request, Response } from "express";
-import { User } from "@/models/User";
-import { ApiError } from "@/utils/apiError";
-import { asyncHandler } from "@/utils/asyncHandler";
-import { comparePassword, compareToken, hashPassword, hashToken } from "@/utils/bcrypt";
-import { clearAuthCookies, setAuthCookies } from "@/utils/cookies";
-import { signAccessToken, signRefreshToken, verifyRefreshToken } from "@/utils/jwt";
-import { getGoogleLoginUrl, isGoogleCalendarConfigured } from "@/services/calendar/googleCalendar.service";
-import type { LoginInput, RegisterInput } from "@/schemas/auth.schema";
+import { User } from "../models/User";
+import { ApiError } from "../utils/apiError";
+import { asyncHandler } from "../utils/asyncHandler";
+import { comparePassword, compareToken, hashPassword, hashToken } from "../utils/bcrypt";
+import { clearAuthCookies, setAuthCookies } from "../utils/cookies";
+import { signAccessToken, signRefreshToken, verifyRefreshToken } from "../utils/jwt";
+import { getGoogleLoginUrl, isGoogleCalendarConfigured } from "../services/calendar/googleCalendar.service";
+import type { LoginInput, RegisterInput } from "../schemas/auth.schema";
 
 export const register = asyncHandler(async (req: Request, res: Response) => {
   const { email, password } = req.body as RegisterInput;

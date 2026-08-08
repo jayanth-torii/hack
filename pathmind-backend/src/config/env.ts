@@ -6,6 +6,14 @@ const envSchema = z.object({
   PORT: z.coerce.number().default(4000),
   CLIENT_ORIGIN: z.string().default("http://localhost:3000"),
 
+  // Comma-separated allowlist of browser origins allowed to call the API with
+  // credentials (cookies). Empty => allow any origin (development convenience).
+  CORS_ORIGINS: z.string().default(""),
+
+  // "lax" (default, same-origin deployments) | "none" (cross-site frontend,
+  // requires Secure) | "strict"
+  COOKIE_SAME_SITE: z.enum(["lax", "none", "strict"]).default("lax"),
+
   MOCK_MODE: z
     .string()
     .default("true")

@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { env } from "@/config/env";
-import { logger } from "@/config/logger";
+import { env } from "../../config/env";
+import { logger } from "../../config/logger";
 import type {
   AIProvider,
   CertificationDraft,

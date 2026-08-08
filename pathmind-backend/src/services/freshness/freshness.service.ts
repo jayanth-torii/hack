@@ -1,9 +1,9 @@
-import { Roadmap } from "@/models/Roadmap";
-import { logger } from "@/config/logger";
-import { env } from "@/config/env";
+import { Roadmap } from "../../models/Roadmap";
+import { logger } from "../../config/logger";
+import { env } from "../../config/env";
 import { checkLinkAlive } from "./linkChecker.service";
-import { webSearch } from "@/services/ai/webSearch";
-import { invalidateRoadmapCache } from "@/services/cache/cacheService";
+import { webSearch } from "../ai/webSearch";
+import { invalidateRoadmapCache } from "../cache/cacheService";
 
 const STALE_MS = env.FRESHNESS_STALE_DAYS * 24 * 60 * 60 * 1000;
 

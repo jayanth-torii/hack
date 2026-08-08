@@ -1,8 +1,8 @@
 import { google } from "googleapis";
-import { env } from "@/config/env";
-import { logger } from "@/config/logger";
-import type { GoogleCalendarToken } from "@/models/User";
-import type { TimelineDay } from "@/models/Roadmap";
+import { env } from "../../config/env";
+import { logger } from "../../config/logger";
+import type { GoogleCalendarToken } from "../../models/User";
+import type { TimelineDay } from "../../models/Roadmap";
 
 const SCOPES = ["https://www.googleapis.com/auth/calendar.events"];
 

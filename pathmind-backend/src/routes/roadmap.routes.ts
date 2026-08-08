@@ -4,15 +4,15 @@ import {
   getRoadmap,
   getSavedRoadmaps,
   saveRoadmap,
-} from "@/controllers/roadmap.controller";
-import { generateLimiter } from "@/config/rateLimits";
-import { requireAuth } from "@/middleware/auth.middleware";
-import { validate } from "@/middleware/validate.middleware";
+} from "../controllers/roadmap.controller";
+import { generateLimiter } from "../config/rateLimits";
+import { requireAuth } from "../middleware/auth.middleware";
+import { validate } from "../middleware/validate.middleware";
 import {
   generateRoadmapSchema,
   getRoadmapParamsSchema,
   saveRoadmapParamsSchema,
-} from "@/schemas/roadmap.schema";
+} from "../schemas/roadmap.schema";
 
 export const roadmapRouter = Router();
 

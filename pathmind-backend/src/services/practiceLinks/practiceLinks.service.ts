@@ -1,10 +1,10 @@
 import seedData from "./practiceLinks.seed.json";
-import type { Difficulty, PracticePlatform } from "@/types/domain";
-import type { PracticeLinkEntry } from "@/models/Roadmap";
+import type { Difficulty, PracticePlatform } from "../../types/domain";
+import type { PracticeLinkEntry } from "../../models/Roadmap";
 import {
   checkLinkAlive,
   type LinkCheckResult,
-} from "@/services/freshness/linkChecker.service";
+} from "../freshness/linkChecker.service";
 
 interface SeedEntry {
   topicTag: string;

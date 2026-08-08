@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { googleLogin, login, logout, refresh, register, me } from "@/controllers/auth.controller";
-import { authLimiter } from "@/config/rateLimits";
-import { requireAuth } from "@/middleware/auth.middleware";
-import { validate } from "@/middleware/validate.middleware";
-import { loginSchema, registerSchema } from "@/schemas/auth.schema";
+import { googleLogin, login, logout, refresh, register, me } from "../controllers/auth.controller";
+import { authLimiter } from "../config/rateLimits";
+import { requireAuth } from "../middleware/auth.middleware";
+import { validate } from "../middleware/validate.middleware";
+import { loginSchema, registerSchema } from "../schemas/auth.schema";
 
 export const authRouter = Router();
 

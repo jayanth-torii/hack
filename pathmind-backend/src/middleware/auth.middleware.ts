@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
-import { ApiError } from "@/utils/apiError";
-import { verifyAccessToken } from "@/utils/jwt";
+import { ApiError } from "../utils/apiError";
+import { verifyAccessToken } from "../utils/jwt";
 
 // Reads the httpOnly `accessToken` cookie, verifies it, and attaches the
 // decoded payload to req.auth. Routes that require a logged-in user use this.

@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { getProgress, updateProgress } from "@/controllers/progress.controller";
-import { requireAuth } from "@/middleware/auth.middleware";
-import { validate } from "@/middleware/validate.middleware";
-import { updateProgressParamsSchema } from "@/schemas/progress.schema";
+import { getProgress, updateProgress } from "../controllers/progress.controller";
+import { requireAuth } from "../middleware/auth.middleware";
+import { validate } from "../middleware/validate.middleware";
+import { updateProgressParamsSchema } from "../schemas/progress.schema";
 import { z } from "zod";
 
 export const progressRouter = Router();

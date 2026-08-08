@@ -1,5 +1,5 @@
 import ical, { ICalEventData } from "ical-generator";
-import type { TimelineDay } from "@/models/Roadmap";
+import type { TimelineDay } from "../../models/Roadmap";
 
 /**
  * Fully functional, dependency-free-of-external-services .ics generator —

@@ -1,22 +1,22 @@
 import type { Request, Response } from "express";
-import { env } from "@/config/env";
-import { asyncHandler } from "@/utils/asyncHandler";
-import { ApiError } from "@/utils/apiError";
-import { getRoadmapById } from "@/services/roadmap.service";
-import { generateIcsCalendar } from "@/services/calendar/icsGenerator";
+import { env } from "../config/env";
+import { asyncHandler } from "../utils/asyncHandler";
+import { ApiError } from "../utils/apiError";
+import { getRoadmapById } from "../services/roadmap.service";
+import { generateIcsCalendar } from "../services/calendar/icsGenerator";
 import {
   exchangeCodeForToken,
   exchangeCodeForTokenAndProfile,
   getGoogleAuthUrl,
   insertTimelineEvents,
   isGoogleCalendarConfigured,
-} from "@/services/calendar/googleCalendar.service";
-import { User } from "@/models/User";
-import { hashToken } from "@/utils/bcrypt";
-import { setAuthCookies } from "@/utils/cookies";
-import { signAccessToken, signRefreshToken } from "@/utils/jwt";
-import type { ExportCalendarInput } from "@/schemas/calendar.schema";
-import { slugify } from "@/utils/slugify";
+} from "../services/calendar/googleCalendar.service";
+import { User } from "../models/User";
+import { hashToken } from "../utils/bcrypt";
+import { setAuthCookies } from "../utils/cookies";
+import { signAccessToken, signRefreshToken } from "../utils/jwt";
+import type { ExportCalendarInput } from "../schemas/calendar.schema";
+import { slugify } from "../utils/slugify";
 
 export const exportCalendar = asyncHandler(async (req: Request, res: Response) => {
   const { id } = req.params as ExportCalendarInput["params"];

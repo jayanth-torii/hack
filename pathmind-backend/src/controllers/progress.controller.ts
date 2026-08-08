@@ -1,10 +1,10 @@
 import type { Request, Response } from "express";
 import { Types } from "mongoose";
-import { asyncHandler } from "@/utils/asyncHandler";
-import { ApiError } from "@/utils/apiError";
-import { UserProgress } from "@/models/UserProgress";
-import { getRoadmapById } from "@/services/roadmap.service";
-import { isStageUnlocked, recomputeUnlockedStageIds } from "@/services/unlock.service";
+import { asyncHandler } from "../utils/asyncHandler";
+import { ApiError } from "../utils/apiError";
+import { UserProgress } from "../models/UserProgress";
+import { getRoadmapById } from "../services/roadmap.service";
+import { isStageUnlocked, recomputeUnlockedStageIds } from "../services/unlock.service";
 
 async function getOrCreateProgress(userId: string, roadmapId: string) {
   const roadmap = await getRoadmapById(roadmapId);

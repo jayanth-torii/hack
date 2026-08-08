@@ -5,12 +5,12 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import pinoHttp from "pino-http";
 import swaggerUi from "swagger-ui-express";
-import { env } from "@/config/env";
-import { logger } from "@/config/logger";
-import { swaggerSpec } from "@/config/swagger";
-import { globalLimiter } from "@/config/rateLimits";
-import { apiRouter } from "@/routes";
-import { errorHandler, notFoundHandler } from "@/middleware/errorHandler";
+import { env } from "./config/env";
+import { logger } from "./config/logger";
+import { swaggerSpec } from "./config/swagger";
+import { globalLimiter } from "./config/rateLimits";
+import { apiRouter } from "./routes";
+import { errorHandler, notFoundHandler } from "./middleware/errorHandler";
 
 export function createApp(): Express {
   const app = express();
@@ -18,8 +18,23 @@ export function createApp(): Express {
   app.use(helmet());
   app.use(
     cors({
+      // CORS_ORIGINS (comma-separated) is the explicit allowlist for
+      // production. When empty, every origin is reflected — fine for local
+      // development and mock mode. With credentials:true the browser only
+      // accepts the reflected origin when it matches the requesting one.
       origin: (origin, callback) => {
-        callback(null, true);
+        if (env.CORS_ORIGINS) {
+          const allowed = env.CORS_ORIGINS.split(",")
+            .map((s) => s.trim())
+            .filter(Boolean);
+          // callback(null, false) omits Access-Control-Allow-Origin so the
+          // browser blocks the response — no 500, no error log for a blocked
+          // origin, and credentials never leak to an unlisted site.
+          callback(null, !origin || allowed.includes(origin));
+        } else {
+          // No allowlist configured (local dev / mock mode): reflect any origin.
+          callback(null, true);
+        }
       },
       credentials: true,
     })

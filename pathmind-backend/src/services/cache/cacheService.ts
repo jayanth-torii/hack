@@ -1,7 +1,7 @@
-import { redisClient } from "@/config/redis";
-import { logger } from "@/config/logger";
+import { redisClient } from "../../config/redis";
+import { logger } from "../../config/logger";
 import { ROADMAP_CACHE_TTL_SECONDS, roadmapTemplateKey, roadmapTopicKey } from "./cacheKeys";
-import type { RoadmapDocument } from "@/models/Roadmap";
+import type { RoadmapDocument } from "../../models/Roadmap";
 
 /**
  * Thin wrapper around Redis for the roadmap-template cache described in the

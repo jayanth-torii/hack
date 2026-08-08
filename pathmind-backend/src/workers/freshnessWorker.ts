@@ -1,5 +1,5 @@
-import { logger } from "@/config/logger";
-import { runFreshnessCheck } from "@/services/freshness/freshness.service";
+import { logger } from "../config/logger";
+import { runFreshnessCheck } from "../services/freshness/freshness.service";
 
 export async function freshnessWorker(): Promise<void> {
   logger.info("freshness worker: run started");

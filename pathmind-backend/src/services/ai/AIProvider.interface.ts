@@ -1,4 +1,4 @@
-import type { CertProvider, Difficulty, ResourceType } from "@/types/domain";
+import type { CertProvider, Difficulty, ResourceType } from "../../types/domain";
 import type { SearchResult } from "./webSearch";
 
 export interface StageDraft {
