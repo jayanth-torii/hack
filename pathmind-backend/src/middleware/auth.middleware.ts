@@ -7,6 +7,10 @@ import { verifyAccessToken } from "@/utils/jwt";
 export function requireAuth(req: Request, _res: Response, next: NextFunction): void {
   const token = req.cookies?.accessToken as string | undefined;
   if (!token) {
+    req.log?.warn(
+      { method: req.method, path: req.originalUrl, reason: "missing_token" },
+      "Authentication failed: no access token"
+    );
     next(ApiError.unauthorized("Missing access token"));
     return;
   }
@@ -14,6 +18,10 @@ export function requireAuth(req: Request, _res: Response, next: NextFunction): v
     req.auth = verifyAccessToken(token);
     next();
   } catch {
+    req.log?.warn(
+      { method: req.method, path: req.originalUrl, reason: "invalid_or_expired_token" },
+      "Authentication failed: invalid or expired access token"
+    );
     next(ApiError.unauthorized("Invalid or expired access token"));
   }
 }
@@ -30,7 +38,11 @@ export function optionalAuth(req: Request, _res: Response, next: NextFunction): 
   try {
     req.auth = verifyAccessToken(token);
   } catch {
-    // ignore invalid token in optional mode
+    // ignore invalid token in optional mode — but note it for observability
+    req.log?.debug(
+      { method: req.method, path: req.originalUrl, reason: "optional_token_invalid" },
+      "Optional auth ignored an invalid access token"
+    );
   }
   next();
 }

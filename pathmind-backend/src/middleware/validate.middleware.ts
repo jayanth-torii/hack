@@ -14,6 +14,16 @@ export function validate(schema: ZodSchema) {
     });
 
     if (!result.success) {
+      // Log the field errors (not the raw body — it may contain secrets)
+      // so malformed client traffic is visible in one line.
+      req.log?.warn(
+        {
+          method: req.method,
+          path: req.originalUrl,
+          issues: result.error.flatten().fieldErrors,
+        },
+        "Request validation failed"
+      );
       next(ApiError.unprocessable("Validation failed", result.error.flatten()));
       return;
     }

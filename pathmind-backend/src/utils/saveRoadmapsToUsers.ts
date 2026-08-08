@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { User } from "../models/User";
 import { Roadmap } from "../models/Roadmap";
+import { logger } from "../config/logger";
 import * as dotenv from "dotenv";
 import path from "path";
 
@@ -11,7 +12,7 @@ const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/pathmind";
 async function saveToUsers() {
   try {
     await mongoose.connect(MONGO_URI);
-    console.log("Connected to MongoDB");
+    logger.info("Connected to MongoDB");
 
     const topics = ["Dynamic Programming", "React", "System Design", "Machine Learning"];
     
@@ -19,7 +20,7 @@ async function saveToUsers() {
     const roadmaps = await Roadmap.find({ topic: { $in: topics } });
     const roadmapIds = roadmaps.map((r) => r._id);
 
-    console.log(`Found ${roadmaps.length} roadmaps in DB.`);
+    logger.info({ count: roadmaps.length }, "Roadmaps found in DB");
 
     // Add them to all users
     const result = await User.updateMany(
@@ -27,9 +28,9 @@ async function saveToUsers() {
       { $addToSet: { savedRoadmaps: { $each: roadmapIds } } }
     );
 
-    console.log(`Updated ${result.modifiedCount} users to include these roadmaps in their saved list.`);
+    logger.info({ modifiedUsers: result.modifiedCount }, "Users updated with saved roadmaps");
   } catch (err) {
-    console.error("Error:", err);
+    logger.error({ err }, "Error saving roadmaps to users");
   } finally {
     await mongoose.disconnect();
     process.exit(0);

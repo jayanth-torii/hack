@@ -24,6 +24,7 @@ export const register = asyncHandler(async (req: Request, res: Response) => {
   await user.save();
 
   setAuthCookies(res, accessToken, refreshToken);
+  req.log?.info({ userId: user._id.toString(), email }, "User registered");
   res.status(201).json({ user: { id: user._id.toString(), email: user.email } });
 });
 
@@ -31,13 +32,20 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
   const { email, password } = req.body as LoginInput;
 
   const user = await User.findOne({ email }).select("+passwordHash");
-  if (!user) throw ApiError.unauthorized("Invalid email or password");
+  if (!user) {
+    req.log?.warn({ email, reason: "unknown_email" }, "Login failed");
+    throw ApiError.unauthorized("Invalid email or password");
+  }
   if (!user.passwordHash) {
+    req.log?.warn({ email, reason: "google_only_account" }, "Login failed");
     throw ApiError.unauthorized("This account uses Google sign-in. Use \"Continue with Google\" instead.");
   }
 
   const valid = await comparePassword(password, user.passwordHash);
-  if (!valid) throw ApiError.unauthorized("Invalid email or password");
+  if (!valid) {
+    req.log?.warn({ email, reason: "wrong_password" }, "Login failed");
+    throw ApiError.unauthorized("Invalid email or password");
+  }
 
   const payload = { userId: user._id.toString(), email: user.email };
   const accessToken = signAccessToken(payload);
@@ -46,25 +54,36 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
   await user.save();
 
   setAuthCookies(res, accessToken, refreshToken);
+  req.log?.info({ userId: user._id.toString(), email }, "User logged in");
   res.status(200).json({ user: { id: user._id.toString(), email: user.email } });
 });
 
 export const refresh = asyncHandler(async (req: Request, res: Response) => {
   const token = req.cookies?.refreshToken as string | undefined;
-  if (!token) throw ApiError.unauthorized("Missing refresh token");
+  if (!token) {
+    req.log?.warn({ reason: "missing_token" }, "Token refresh failed");
+    throw ApiError.unauthorized("Missing refresh token");
+  }
 
   let decoded;
   try {
     decoded = verifyRefreshToken(token);
   } catch {
+    req.log?.warn({ reason: "invalid_token" }, "Token refresh failed");
     throw ApiError.unauthorized("Invalid or expired refresh token");
   }
 
   const user = await User.findById(decoded.userId).select("+refreshTokenHash");
-  if (!user?.refreshTokenHash) throw ApiError.unauthorized("Session revoked");
+  if (!user?.refreshTokenHash) {
+    req.log?.warn({ userId: decoded.userId, reason: "session_revoked" }, "Token refresh failed");
+    throw ApiError.unauthorized("Session revoked");
+  }
 
   const matches = await compareToken(token, user.refreshTokenHash);
-  if (!matches) throw ApiError.unauthorized("Session revoked");
+  if (!matches) {
+    req.log?.warn({ userId: decoded.userId, reason: "token_mismatch" }, "Token refresh failed");
+    throw ApiError.unauthorized("Session revoked");
+  }
 
   const payload = { userId: user._id.toString(), email: user.email };
   const accessToken = signAccessToken(payload);
@@ -73,6 +92,7 @@ export const refresh = asyncHandler(async (req: Request, res: Response) => {
   await user.save();
 
   setAuthCookies(res, accessToken, newRefreshToken);
+  req.log?.info({ userId: user._id.toString() }, "Tokens refreshed");
   res.status(200).json({ user: { id: user._id.toString(), email: user.email } });
 });
 
@@ -82,6 +102,7 @@ export const logout = asyncHandler(async (req: Request, res: Response) => {
     try {
       const decoded = verifyRefreshToken(token);
       await User.findByIdAndUpdate(decoded.userId, { $unset: { refreshTokenHash: 1 } });
+      req.log?.info({ userId: decoded.userId }, "User logged out");
     } catch {
       // token already invalid/expired — nothing to revoke
     }
@@ -108,6 +129,7 @@ export const logout = asyncHandler(async (req: Request, res: Response) => {
  */
 export const googleLogin = asyncHandler(async (req: Request, res: Response) => {
   if (!isGoogleCalendarConfigured()) {
+    req.log?.warn({ reason: "oauth_not_configured" }, "Google login attempted but OAuth is not configured");
     throw ApiError.conflict(
       "Google OAuth is not configured on this server. Set GOOGLE_CALENDAR_CLIENT_ID/SECRET."
     );
@@ -120,6 +142,7 @@ export const googleLogin = asyncHandler(async (req: Request, res: Response) => {
   // The callback dispatches on mode in state: "login" signs the user in,
   // "connect" (with a uid) links Calendar to an already-logged-in account.
   const state = JSON.stringify({ mode: "login", next });
+  req.log?.info({ next }, "Google login flow started");
   res.redirect(getGoogleLoginUrl(state));
 });
 

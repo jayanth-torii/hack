@@ -23,6 +23,10 @@ out/
 .env
 .env.*
 
+# MongoDB Atlas credentials — generated onboarding file, contains secrets
+atlas-credentials.env
+*.credentials.env
+
 # Logs
 logs/
 *.log

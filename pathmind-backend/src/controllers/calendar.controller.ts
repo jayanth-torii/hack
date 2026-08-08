@@ -31,6 +31,10 @@ export const exportCalendar = asyncHandler(async (req: Request, res: Response) =
     if (!req.auth) throw ApiError.unauthorized("Login required to export to Google Calendar");
     const user = await User.findById(req.auth.userId);
     if (!user?.googleCalendarToken) {
+      req.log?.warn(
+        { userId: req.auth.userId, roadmapId: id, reason: "calendar_not_connected" },
+        "Google Calendar export attempted without a connected calendar"
+      );
       throw ApiError.conflict(
         "Google Calendar not connected. Connect via GET /auth/google/connect, or use format=ics."
       );
@@ -41,11 +45,16 @@ export const exportCalendar = asyncHandler(async (req: Request, res: Response) =
       roadmap.suggestedTimeline,
       start ?? new Date(Date.now() + 86_400_000)
     );
+    req.log?.info(
+      { userId: req.auth.userId, roadmapId: id, eventCount: result.eventsCreated, format: "google" },
+      "Roadmap exported to Google Calendar"
+    );
     res.status(200).json({ format: "google", ...result });
     return;
   }
 
   const ics = generateIcsCalendar(roadmap.topic, roadmap.suggestedTimeline, start);
+  req.log?.info({ roadmapId: id, format: "ics" }, "Roadmap exported as .ics download");
   res.setHeader("Content-Type", "text/calendar; charset=utf-8");
   res.setHeader(
     "Content-Disposition",
@@ -68,6 +77,7 @@ export const googleConnect = asyncHandler(async (req: Request, res: Response) =>
   // flow is demoable without a Google Cloud project.
   if (!isGoogleCalendarConfigured()) {
     if (env.MOCK_MODE) {
+      req.log?.info({ userId }, "Google Calendar connect simulated via MOCK_MODE");
       await User.findByIdAndUpdate(userId, {
         googleCalendarToken: {
           accessToken: "mock-access-token",
@@ -79,12 +89,14 @@ export const googleConnect = asyncHandler(async (req: Request, res: Response) =>
       res.redirect(`${process.env.CLIENT_ORIGIN ?? "http://localhost:3000"}${next}${separator}calendarConnected=1`);
       return;
     }
+    req.log?.warn({ userId, reason: "oauth_not_configured" }, "Google Calendar connect attempted but OAuth is not configured");
     throw ApiError.conflict(
       "Google Calendar OAuth is not configured on this server. Set GOOGLE_CALENDAR_CLIENT_ID/SECRET."
     );
   }
 
   const state = JSON.stringify({ uid: userId, next });
+  req.log?.info({ userId, next }, "Google Calendar connect flow started");
   res.redirect(getGoogleAuthUrl(state));
 });
 
@@ -109,6 +121,7 @@ export const googleCallback = asyncHandler(async (req: Request, res: Response) =
   // in with the normal auth cookies, and also store the calendar token the
   // login scope granted (so export-to-Calendar works right after).
   if (mode === "login") {
+    req.log?.info({ mode: "login" }, "Google OAuth callback received (login mode)");
     if (!isGoogleCalendarConfigured()) {
       throw ApiError.conflict("Google OAuth is not configured on this server.");
     }
@@ -148,6 +161,7 @@ export const googleCallback = asyncHandler(async (req: Request, res: Response) =
   const token = await exchangeCodeForToken(code);
   await User.findByIdAndUpdate(userId, { googleCalendarToken: token });
 
+  req.log?.info({ userId, mode: "connect" }, "Google Calendar connected for user");
   const separator = next.includes("?") ? "&" : "?";
   res.redirect(`${process.env.CLIENT_ORIGIN ?? "http://localhost:3000"}${next}${separator}calendarConnected=1`);
 });
@@ -166,5 +180,7 @@ export const googleStatus = asyncHandler(async (req: Request, res: Response) => 
   if (!req.auth) throw ApiError.unauthorized("Not authenticated");
   const user = await User.findById(req.auth.userId);
   if (!user) throw ApiError.unauthorized("User not found");
-  res.status(200).json({ connected: Boolean(user.googleCalendarToken) });
+  const connected = Boolean(user.googleCalendarToken);
+  req.log?.debug({ userId: req.auth.userId, connected }, "Google Calendar status checked");
+  res.status(200).json({ connected });
 });

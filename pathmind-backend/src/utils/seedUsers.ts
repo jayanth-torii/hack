@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { User } from "../models/User";
 import { hashPassword } from "./bcrypt";
+import { logger } from "../config/logger";
 import * as dotenv from "dotenv";
 import path from "path";
 
@@ -11,7 +12,7 @@ const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/pathmind";
 async function seed() {
   try {
     await mongoose.connect(MONGO_URI);
-    console.log("Connected to MongoDB for seeding.");
+    logger.info("Connected to MongoDB for user seeding");
 
     const users = [
       { email: "user1@example.com", password: "password123" },
@@ -23,15 +24,15 @@ async function seed() {
       if (!existing) {
         const passwordHash = await hashPassword(u.password);
         await User.create({ email: u.email, passwordHash, savedRoadmaps: [] });
-        console.log(`Created user: ${u.email}`);
+        logger.info({ email: u.email }, "User created");
       } else {
-        console.log(`User already exists: ${u.email}`);
+        logger.info({ email: u.email }, "User already exists");
       }
     }
 
-    console.log("Seeding complete.");
+    logger.info("User seeding complete");
   } catch (err) {
-    console.error("Error seeding users:", err);
+    logger.error({ err }, "Error seeding users");
   } finally {
     await mongoose.disconnect();
     process.exit(0);

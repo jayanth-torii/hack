@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import express, { type Express } from "express";
 import helmet from "helmet";
 import cors from "cors";
@@ -23,7 +24,22 @@ export function createApp(): Express {
   );
   app.use(express.json());
   app.use(cookieParser());
-  app.use(pinoHttp({ logger, autoLogging: env.NODE_ENV !== "test" }));
+  app.use(
+    pinoHttp({
+      logger,
+      autoLogging: env.NODE_ENV !== "test",
+      // Correlation id: prefer a client-provided id (for frontend/edge
+      // tracing), fall back to a fresh UUID so every log line from one
+      // request shares the same req.id.
+      genReqId: (req) => {
+        const header = req.headers["x-request-id"];
+        if (typeof header === "string" && header.length > 0 && header.length <= 100) {
+          return header;
+        }
+        return randomUUID();
+      },
+    })
+  );
   app.use(globalLimiter);
 
   app.get("/health", (_req, res) => {

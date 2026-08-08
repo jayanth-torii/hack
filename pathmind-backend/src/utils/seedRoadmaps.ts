@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { generateOrGetRoadmap } from "../services/roadmap.service";
+import { logger } from "../config/logger";
 import * as dotenv from "dotenv";
 import path from "path";
 
@@ -11,19 +12,19 @@ const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/pathmind";
 async function seed() {
   try {
     await mongoose.connect(MONGO_URI);
-    console.log("Connected to MongoDB for roadmap seeding.");
+    logger.info("Connected to MongoDB for roadmap seeding");
 
     const topics = ["Dynamic Programming", "React", "System Design", "Machine Learning"];
 
     for (const topic of topics) {
-      console.log(`Generating roadmap for: ${topic}...`);
+      logger.info({ topic }, "Generating roadmap...");
       await generateOrGetRoadmap(topic);
-      console.log(`Successfully generated and cached roadmap for: ${topic}`);
+      logger.info({ topic }, "Roadmap generated and cached");
     }
 
-    console.log("All roadmaps seeded successfully.");
+    logger.info("All roadmaps seeded successfully");
   } catch (err) {
-    console.error("Error seeding roadmaps:", err);
+    logger.error({ err }, "Error seeding roadmaps");
   } finally {
     await mongoose.disconnect();
     process.exit(0);

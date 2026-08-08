@@ -27,6 +27,10 @@ export const getProgress = asyncHandler(async (req: Request, res: Response) => {
   const userId = req.auth!.userId;
   const { id } = req.params as { id: string };
   const { progress } = await getOrCreateProgress(userId, id);
+  req.log?.info(
+    { userId, roadmapId: id, completed: progress.completedStageIds.length, unlocked: progress.unlockedStageIds.length },
+    "Progress fetched"
+  );
   res.status(200).json({
     completedStageIds: progress.completedStageIds,
     unlockedStageIds: progress.unlockedStageIds,
@@ -63,6 +67,16 @@ export const updateProgress = asyncHandler(async (req: Request, res: Response) =
   progress.unlockedStageIds = recomputeUnlockedStageIds(roadmap.stages, progress.completedStageIds);
   await progress.save();
 
+  req.log?.info(
+    {
+      userId,
+      roadmapId: id,
+      stageId,
+      completedCount: progress.completedStageIds.length,
+      wasAlreadyCompleted: alreadyCompleted,
+    },
+    "Stage progress updated"
+  );
   res.status(200).json({
     completedStageIds: progress.completedStageIds,
     unlockedStageIds: progress.unlockedStageIds,
