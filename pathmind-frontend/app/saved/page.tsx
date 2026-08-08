@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { SavedRoadmaps } from "@/components/sections/SavedRoadmaps";
 
 export default function SavedPage() {
@@ -22,7 +23,9 @@ export default function SavedPage() {
         </Link>
       </header>
       <main className="pt-24">
-        <SavedRoadmaps />
+        <Suspense fallback={<p className="px-6 py-16 text-center text-muted">Loading your saved roadmaps…</p>}>
+          <SavedRoadmaps />
+        </Suspense>
       </main>
     </>
   );

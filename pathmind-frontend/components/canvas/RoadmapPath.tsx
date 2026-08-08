@@ -30,8 +30,10 @@ export function RoadmapPath({ roadmap }: { roadmap: Roadmap }) {
     ],
     [curve, roadmap.stages.length]
   );
-  const guidePoints = useMemo(() => curve.getPoints(Math.max(roadmap.stages.length * 20, 100)), [curve]);
-
+  const guidePoints = useMemo(
+    () => curve.getPoints(Math.max(roadmap.stages.length * 20, 100)),
+    [curve, roadmap.stages.length]
+  );
   const visibleStages = useMemo(
     () =>
       roadmap.stages.filter((s) => Math.abs(s.order - activeStageIndex) <= VIRTUALIZATION_WINDOW),
