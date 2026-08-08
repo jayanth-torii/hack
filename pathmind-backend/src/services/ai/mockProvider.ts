@@ -50,11 +50,18 @@ export class MockAIProvider implements AIProvider {
     searchContext: SearchResult[]
   ): Promise<FreeResourceDraft[]> {
     // Only ever cite URLs present in the (mock or real) search context —
-    // this is the "don't hallucinate URLs" guarantee exercised even in mock mode.
-    return searchContext.slice(0, 3).map((r, i) => ({
+    // this is the "don't hallucinate URLs" guarantee exercised even in mock
+    // mode. Types are derived from the URL shape (a watch?v= link is a video,
+    // a playlist?list= link is a playlist, everything else is a doc) so the
+    // mock path mirrors what the real provider is instructed to emit.
+    return searchContext.slice(0, 3).map((r) => ({
       title: `${r.title} — for ${stage.title}`,
       url: r.url,
-      type: i === 0 ? "playlist" : i === 1 ? "doc" : "blog",
+      type: r.url.includes("youtube.com")
+        ? r.url.includes("/playlist")
+          ? "playlist"
+          : "video"
+        : "doc",
     }));
   }
 

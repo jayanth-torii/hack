@@ -9,7 +9,7 @@ async function main(): Promise<void> {
 
   const app = createApp();
   app.listen(env.PORT, () => {
-    logger.info(`PathMind backend listening on port ${env.PORT} (mockMode=${env.MOCK_MODE})`);
+    logger.info(`Vidhyora backend listening on port ${env.PORT} (mockMode=${env.MOCK_MODE})`);
     logger.info(`Swagger docs: http://localhost:${env.PORT}/api-docs`);
   });
 

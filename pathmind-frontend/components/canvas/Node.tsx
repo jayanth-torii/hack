@@ -10,6 +10,7 @@ import type { Stage } from "@/types/roadmap";
 import type { NodeState } from "@/components/ui/ProgressBadge";
 import { NodeCard } from "@/components/ui/NodeCard";
 import { THEME } from "@/lib/theme";
+import { useQueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const COLOR_BY_STATE: Record<NodeState, string> = {
   locked: THEME.status.locked,
@@ -34,6 +35,7 @@ interface NodeProps {
  * postprocessing only highlights active/completed checkpoints.
  */
 export function Node({ stage, state, isFocused, onSelect, roadmapId, topic }: NodeProps) {
+  const queryClient = useQueryClient();
   const meshRef = useRef<Mesh>(null);
   const color = COLOR_BY_STATE[state];
   const locked = state === "locked";
@@ -82,7 +84,9 @@ export function Node({ stage, state, isFocused, onSelect, roadmapId, topic }: No
       <AnimatePresence>
         {isFocused && !locked && (
           <Html transform occlude distanceFactor={8} position={[1.2, 0, 0]} zIndexRange={[10, 0]}>
-            <NodeCard stage={stage} state={state} roadmapId={roadmapId} topic={topic} compact />
+            <QueryClientProvider client={queryClient}>
+              <NodeCard stage={stage} state={state} roadmapId={roadmapId} topic={topic} compact />
+            </QueryClientProvider>
           </Html>
         )}
       </AnimatePresence>

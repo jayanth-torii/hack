@@ -3,7 +3,7 @@
 import { forwardRef, type ButtonHTMLAttributes } from "react";
 import { clsx } from "@/lib/clsx";
 
-type Variant = "primary" | "secondary" | "ghost";
+type Variant = "primary" | "secondary" | "ghost" | "accent";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: Variant;
@@ -15,6 +15,8 @@ const VARIANT_CLASSES: Record<Variant, string> = {
     "bg-brand-500 text-white hover:bg-brand-600 shadow-lg shadow-brand-500/20 disabled:bg-slate-600",
   secondary: "bg-surface-800 text-slate-100 hover:bg-surface-800/70 border border-slate-700",
   ghost: "bg-transparent text-slate-300 hover:text-white hover:bg-white/5",
+  // Acjon signature lime CTA — see templates/acjon (_theme.scss tp-btn-green).
+  accent: "bg-accent text-on-accent font-bold tracking-tight hover:bg-accent-hover shadow-lg shadow-accent/25 disabled:bg-slate-600",
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(

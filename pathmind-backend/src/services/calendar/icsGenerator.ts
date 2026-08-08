@@ -15,7 +15,7 @@ export function generateIcsCalendar(
   timeline: TimelineDay[],
   startDate: Date = defaultStartDate()
 ): Buffer {
-  const calendar = ical({ name: `PathMind — ${topic}` });
+  const calendar = ical({ name: `Vidhyora — ${topic}` });
 
   for (const day of timeline) {
     const eventDate = new Date(startDate);
@@ -28,7 +28,7 @@ export function generateIcsCalendar(
     const event: ICalEventData = {
       start: eventDate,
       end,
-      summary: `PathMind — ${topic} (Day ${day.day})`,
+      summary: `Vidhyora — ${topic} (Day ${day.day})`,
       description: day.tasks.map((t) => `• ${t}`).join("\n"),
     };
     calendar.createEvent(event);

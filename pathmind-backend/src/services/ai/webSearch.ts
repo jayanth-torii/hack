@@ -54,6 +54,25 @@ export async function webSearch(query: string, limit = 5): Promise<SearchResult[
   }
 }
 
+// Deterministic 11-char YouTube-style id (base64url alphabet) derived from the
+// query — so even the mock path emits a deep-linkable watch?v= URL and the
+// frontend thumbnail-or-cover preview flow is exercised end to end.
+function mockVideoId(query: string): string {
+  let h = 2166136261;
+  for (let i = 0; i < query.length; i++) {
+    h ^= query.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-";
+  let id = "";
+  let x = h >>> 0;
+  for (let i = 0; i < 11; i++) {
+    id += chars[x % 64];
+    x = Math.floor(x / 64);
+  }
+  return id;
+}
+
 function mockSearch(query: string, limit: number): SearchResult[] {
   const topic = query.trim().toLowerCase().replace(/\s+/g, "-");
   const templates: SearchResult[] = [
@@ -64,8 +83,8 @@ function mockSearch(query: string, limit: number): SearchResult[] {
     },
     {
       title: `${query} full course — YouTube`,
-      url: `https://www.youtube.com/results?search_query=${encodeURIComponent(query + " full course")}`,
-      snippet: `Top community-recommended video playlist covering ${query} end to end.`,
+      url: `https://www.youtube.com/watch?v=${mockVideoId(query)}`,
+      snippet: `Top community-recommended video course covering ${query} end to end.`,
     },
     {
       title: `${query} — MDN / Official Docs`,

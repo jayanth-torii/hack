@@ -24,11 +24,10 @@ npm run dev
 
 To go live:
 1. Set `MOCK_MODE=false`.
-2. Fill in `ANTHROPIC_API_KEY` (default provider — `AI_PROVIDER=anthropic`).
-3. Fill in `SEARCH_API_KEY` (Tavily-compatible; swap the request in `src/services/ai/webSearch.ts` if using a different vendor).
-4. For Google Calendar export, create an OAuth 2.0 Web client in Google Cloud Console (Calendar API enabled), register `GOOGLE_CALENDAR_REDIRECT_URI` as an authorized redirect URI, and fill in `GOOGLE_CALENDAR_CLIENT_ID`/`SECRET`. Until then, `format=google` returns 409 and the `.ics` download (always works) is the fallback.
-
-`AI_PROVIDER=openai` is defined in `src/services/ai/openaiProvider.ts` as a stub behind the same `AIProvider` interface — not implemented, so switching to it throws until filled in.
+2. Configure `AI_PROVIDER` (either `"anthropic"`, `"openai"`, or `"gemini"`).
+3. Fill in the corresponding key (`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, or `GEMINI_API_KEY`).
+4. Fill in `SEARCH_API_KEY` (Tavily-compatible; swap the request in `src/services/ai/webSearch.ts` if using a different vendor).
+5. For Google Calendar export, create an OAuth 2.0 Web client in Google Cloud Console (Calendar API enabled), register `GOOGLE_CALENDAR_REDIRECT_URI` as an authorized redirect URI, and fill in `GOOGLE_CALENDAR_CLIENT_ID`/`SECRET`. Until then, `format=google` returns 409 and the `.ics` download (always works) is the fallback.
 
 ## Scripts
 

@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { login, logout, refresh, register } from "@/controllers/auth.controller";
+import { googleLogin, login, logout, refresh, register, me } from "@/controllers/auth.controller";
 import { authLimiter } from "@/config/rateLimits";
+import { requireAuth } from "@/middleware/auth.middleware";
 import { validate } from "@/middleware/validate.middleware";
 import { loginSchema, registerSchema } from "@/schemas/auth.schema";
 
@@ -52,6 +53,23 @@ authRouter.post("/login", authLimiter, validate(loginSchema), login);
 
 /**
  * @openapi
+ * /auth/google:
+ *   get:
+ *     summary: "Start 'Continue with Google' — redirects to Google's consent screen"
+ *     tags: [Auth]
+ *     parameters:
+ *       - in: query
+ *         name: next
+ *         required: false
+ *         schema: { type: string }
+ *     responses:
+ *       302: { description: Redirect to Google's consent screen }
+ *       409: { description: Google OAuth not configured on this server }
+ */
+authRouter.get("/google", googleLogin);
+
+/**
+ * @openapi
  * /auth/refresh:
  *   post:
  *     summary: Rotate access/refresh tokens using the refreshToken cookie
@@ -72,3 +90,15 @@ authRouter.post("/refresh", authLimiter, refresh);
  *       204: { description: Logged out }
  */
 authRouter.post("/logout", logout);
+
+/**
+ * @openapi
+ * /auth/me:
+ *   get:
+ *     summary: Get the currently authenticated user
+ *     tags: [Auth]
+ *     responses:
+ *       200: { description: Returns the user object }
+ *       401: { description: Not authenticated }
+ */
+authRouter.get("/me", requireAuth, me);

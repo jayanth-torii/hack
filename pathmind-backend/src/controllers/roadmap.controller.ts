@@ -1,7 +1,8 @@
 import type { Request, Response } from "express";
+import { Types } from "mongoose";
 import { asyncHandler } from "@/utils/asyncHandler";
 import { ApiError } from "@/utils/apiError";
-import { generateOrGetRoadmap, getRoadmapBySlug } from "@/services/roadmap.service";
+import { generateOrGetRoadmap, getRoadmapBySlug, getRoadmapById } from "@/services/roadmap.service";
 import { User } from "@/models/User";
 import { Roadmap } from "@/models/Roadmap";
 import type { GenerateRoadmapInput } from "@/schemas/roadmap.schema";
@@ -12,9 +13,16 @@ export const generateRoadmap = asyncHandler(async (req: Request, res: Response) 
   res.status(200).json({ roadmap });
 });
 
+
 export const getRoadmap = asyncHandler(async (req: Request, res: Response) => {
   const { slug } = req.params as { slug: string };
-  const roadmap = await getRoadmapBySlug(slug);
+  let roadmap;
+  if (Types.ObjectId.isValid(slug)) {
+    roadmap = await getRoadmapById(slug);
+  }
+  if (!roadmap) {
+    roadmap = await getRoadmapBySlug(slug);
+  }
   if (!roadmap) throw ApiError.notFound("Roadmap not found");
   res.status(200).json({ roadmap });
 });

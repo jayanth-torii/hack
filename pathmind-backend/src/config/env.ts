@@ -19,7 +19,7 @@ const envSchema = z.object({
   JWT_ACCESS_TTL: z.string().default("15m"),
   JWT_REFRESH_TTL: z.string().default("30d"),
 
-  AI_PROVIDER: z.enum(["anthropic", "openai"]).default("anthropic"),
+  AI_PROVIDER: z.enum(["anthropic", "openai", "gemini"]).default("anthropic"),
   ANTHROPIC_API_KEY: z.string().optional().default(""),
   ANTHROPIC_AUTH_TOKEN: z.string().optional().default(""),
   ANTHROPIC_BASE_URL: z.string().optional().default(""),
@@ -27,6 +27,8 @@ const envSchema = z.object({
   OPENAI_API_KEY: z.string().optional().default(""),
   OPENAI_BASE_URL: z.string().optional().default(""),
   OPENAI_MODEL: z.string().default("meta/llama-3.1-70b-instruct"),
+  GEMINI_API_KEY: z.string().optional().default(""),
+  GEMINI_MODEL: z.string().default("gemini-1.5-flash"),
 
   SEARCH_PROVIDER: z.string().default("tavily"),
   SEARCH_API_KEY: z.string().optional().default(""),
@@ -42,6 +44,14 @@ const envSchema = z.object({
 
   FRESHNESS_CRON_SCHEDULE: z.string().default("0 3 * * *"),
   FRESHNESS_STALE_DAYS: z.coerce.number().default(7),
+
+  // Liveness-check every resource URL before persisting a generated roadmap
+  // (drops definitive 404/410 links). Set to "false" to skip the network
+  // checks (faster generation, used by the hermetic test suite).
+  VERIFY_LINKS: z
+    .string()
+    .default("true")
+    .transform((v) => v !== "false"),
 });
 
 export type Env = z.infer<typeof envSchema>;

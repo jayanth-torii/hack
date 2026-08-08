@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"src/**/*.ts\"",
     "test": "jest --runInBand",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "seed:users": "tsx src/utils/seedUsers.ts"
   },
   "engines": {
     "node": ">=20.0.0"

@@ -11,10 +11,6 @@ export async function connectDB(): Promise<typeof mongoose> {
   mongoose.set("strictQuery", true);
 
   let uri = env.MONGO_URI;
-  
-  // Unconditionally use memory server because this local environment lacks Docker
-  memoryServer = await MongoMemoryServer.create();
-  uri = memoryServer.getUri();
 
   const conn = await mongoose.connect(uri);
   connected = true;

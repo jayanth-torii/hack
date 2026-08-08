@@ -6,6 +6,10 @@ import type { TimelineDay } from "@/models/Roadmap";
 
 const SCOPES = ["https://www.googleapis.com/auth/calendar.events"];
 
+// Login grants identity (openid/email/profile) plus calendar so a Google
+// sign-in also connects Calendar — one consent screen, two features.
+const LOGIN_SCOPES = ["openid", "email", "profile", "https://www.googleapis.com/auth/calendar.events"];
+
 function getOAuthClient() {
   return new google.auth.OAuth2(
     env.GOOGLE_CALENDAR_CLIENT_ID,
@@ -34,6 +38,85 @@ export function getGoogleAuthUrl(state: string): string {
     scope: SCOPES,
     state,
   });
+}
+
+/**
+ * Authorization URL for "Continue with Google" sign-in. The resulting
+ * callback goes through the same /auth/google/callback endpoint, which
+ * dispatches on the `mode` in state ("login" vs "connect").
+ */
+export function getGoogleLoginUrl(state: string): string {
+  const client = getOAuthClient();
+  return client.generateAuthUrl({
+    access_type: "offline",
+    prompt: "consent",
+    scope: LOGIN_SCOPES,
+    state,
+  });
+}
+
+export interface GoogleProfile {
+  email: string;
+  name?: string;
+  picture?: string;
+}
+
+/**
+ * Exchanges the OAuth code for tokens and resolves the user's identity from
+ * the OpenID id_token (falling back to the userinfo endpoint). Returns both
+ * so the caller can sign the user in and store the calendar token in one go.
+ */
+export async function exchangeCodeForTokenAndProfile(
+  code: string
+): Promise<{ token: GoogleCalendarToken; profile: GoogleProfile }> {
+  const client = getOAuthClient();
+  const { tokens } = await client.getToken(code);
+  if (!tokens.access_token) {
+    throw new Error("Google did not return an access token");
+  }
+  // prompt=consent + access_type=offline always yields a refresh token; fail
+  // loudly rather than store an empty one that breaks calendar refresh later.
+  if (!tokens.refresh_token) {
+    throw new Error("Google did not return a refresh token");
+  }
+
+  let profile: GoogleProfile = { email: "" };
+  if (tokens.id_token) {
+    const ticket = await client.verifyIdToken({
+      idToken: tokens.id_token,
+      audience: env.GOOGLE_CALENDAR_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+    if (payload?.email) {
+      profile = {
+        email: payload.email.toLowerCase(),
+        name: payload.name,
+        picture: payload.picture,
+      };
+    }
+  }
+
+  if (!profile.email) {
+    // Fallback: fetch the profile directly with the access token.
+    client.setCredentials({ access_token: tokens.access_token });
+    const oauth2 = google.oauth2({ version: "v2", auth: client });
+    const { data } = await oauth2.userinfo.get();
+    if (!data.email) throw new Error("Google did not return an email address");
+    profile = {
+      email: data.email.toLowerCase(),
+      name: data.name ?? undefined,
+      picture: data.picture ?? undefined,
+    };
+  }
+
+  return {
+    token: {
+      accessToken: tokens.access_token,
+      refreshToken: tokens.refresh_token,
+      expiresAt: new Date(tokens.expiry_date ?? Date.now() + 3_600_000),
+    },
+    profile,
+  };
 }
 
 export async function exchangeCodeForToken(code: string): Promise<GoogleCalendarToken> {
@@ -94,7 +177,7 @@ export async function insertTimelineEvents(
       const { data } = await calendar.events.insert({
         calendarId: "primary",
         requestBody: {
-          summary: `PathMind — ${topic} (Day ${day.day})`,
+          summary: `Vidhyora — ${topic} (Day ${day.day})`,
           description: day.tasks.map((t) => `• ${t}`).join("\n"),
           start: { dateTime: start.toISOString() },
           end: { dateTime: end.toISOString() },

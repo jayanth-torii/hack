@@ -39,6 +39,32 @@ describe("POST /roadmaps/generate", () => {
     expect(roadmap.suggestedTimeline.length).toBeGreaterThan(0);
   });
 
+  it("ships deep-linkable resources — real watch?v= URLs, never YouTube search pages", async () => {
+    const res = await request(app).post("/roadmaps/generate").send({ topic: "Rust" });
+    expect(res.status).toBe(200);
+    const { roadmap } = res.body;
+
+    // NOTE: this assertion relies on the mock search's YouTube template being
+    // the 2nd result (index 1) and mockProvider taking searchContext.slice(0, 3)
+    // — keep them in sync if the mock fixtures are ever reordered.
+    const resources = roadmap.stages.flatMap((s: { freeResources: Array<{ url: string }> }) =>
+      s.freeResources ?? []
+    );
+    expect(resources.length).toBeGreaterThan(0);
+
+    // At least one stage resource is a deep YouTube video link.
+    expect(
+      resources.some((r: { url: string }) => /youtube\.com\/watch\?v=[A-Za-z0-9_-]{11}/.test(r.url))
+    ).toBe(true);
+
+    // No search pages, channel pages, or bare homepages anywhere.
+    for (const r of resources) {
+      expect(r.url).not.toMatch(/youtube\.com\/results\?/);
+      expect(r.url).not.toMatch(/youtube\.com\/@/);
+      expect(r.url).not.toBe("https://www.youtube.com/");
+    }
+  });
+
   it("returns the same cached template on a repeat request for the same topic", async () => {
     const first = await request(app).post("/roadmaps/generate").send({ topic: "React" });
     const second = await request(app).post("/roadmaps/generate").send({ topic: "react" }); // different casing

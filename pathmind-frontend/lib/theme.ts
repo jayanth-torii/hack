@@ -3,6 +3,9 @@
 export const THEME = {
   brand400: "#38bdf8",
   brand500: "#0ea5e9",
+  accent: "#C9F31D",
+  ink: "#010103",
+  paper: "#F5F7F5",
   status: {
     locked: "#475569",
     active: "#38bdf8",

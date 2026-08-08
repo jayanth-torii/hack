@@ -37,9 +37,23 @@ export function buildFreeResourcesPrompt(
   stage: StageDraft,
   searchContext: SearchResult[]
 ): string {
-  return `For the topic "${topic}", stage "${stage.title}" (difficulty: ${stage.difficulty}), pick the best FREE learning resources (YouTube playlists, official docs, high-quality blogs).
+  return `For the topic "${topic}", stage "${stage.title}" (difficulty: ${stage.difficulty}), pick the best FREE learning resources.
 
-CRITICAL: You may ONLY cite URLs that appear verbatim in the search results below. Never invent or guess a URL. If none of the results fit, return fewer resources rather than fabricating one.
+URL RULES (critical):
+- Prefer deep links to single videos: https://www.youtube.com/watch?v=XXXXXXXXXXX (an 11-character video id) or https://youtu.be/XXXXXXXXXXX.
+- A real YouTube playlist URL has the shape https://www.youtube.com/playlist?list=XXXXXXXX — use type "playlist" only for that exact shape.
+- NEVER return YouTube search pages (https://www.youtube.com/results?search_query=...), channel pages (youtube.com/@...), or the youtube.com homepage — they are not watchable resources and will be rejected.
+- You may ONLY cite URLs that appear verbatim in the search results below. Never invent, guess, or modify a URL — do not add path segments, keywords, or punctuation to a URL you copied.
+- If you cannot find a suitable URL in the search results, omit that resource entirely (return fewer resources) rather than inventing one.
+- Never return search-results pages (e.g. developer.mozilla.org/en-US/search?q=...) — a search page is not a learning resource.
+- If no real video URL is present, prefer docs/blogs over fabricating a video.
+
+TYPE SEMANTICS:
+- "video": a single watchable video (youtube watch?v=, youtu.be, or a Vimeo video).
+- "playlist": only a real YouTube playlist (playlist?list=...).
+- "doc" / "blog": articles, official documentation, or reference pages.
+
+If the search results contain a real video URL for this stage, include it and type it "video".
 
 Search results:
 ${formatSearchContext(searchContext)}
@@ -52,7 +66,7 @@ Return at most 4 resources.`;
 export function buildCertificationsPrompt(topic: string, searchContext: SearchResult[]): string {
   return `For the topic "${topic}", rank the best PAID certifications (Coursera/Udemy/AWS/Google/Microsoft-type) by actual learning value, not just popularity.
 
-CRITICAL: Only cite URLs present in the search results below.
+CRITICAL: Only cite URLs present in the search results below, copied verbatim. Never invent, guess, or modify a URL, and never cite a search-results page.
 
 Search results:
 ${formatSearchContext(searchContext)}

@@ -8,6 +8,8 @@ import type { Roadmap } from "@/types/roadmap";
 import type { UserProgress } from "@/types/progress";
 import { downloadBlobAsFile } from "@/lib/ics";
 import { slugify } from "@/lib/slugify";
+import { ApiClientError } from "@/lib/api-client";
+import { toast } from "@/components/ui/toast";
 
 export function useGenerateRoadmap() {
   const setRoadmap = useRoadmapStore((s) => s.setRoadmap);
@@ -99,15 +101,20 @@ export function useUpdateProgress() {
       setProgress(optimistic);
       return { previous };
     },
-    onError: (_err, { roadmapId }, context) => {
+    onError: (err, { roadmapId }, context) => {
       if (context?.previous) {
         queryClient.setQueryData(["progress", roadmapId], context.previous);
         setProgress(context.previous);
       }
+      toast.error(
+        "Couldn't update progress",
+        err instanceof ApiClientError ? err.message : "Please try again."
+      );
     },
     onSuccess: (data) => {
       setProgress(data);
       queryClient.setQueryData(["progress", data.roadmapId], data);
+      toast.success("Stage complete 🎉", "Your next stage is now unlocked.");
     },
     onSettled: (_data, _err, { roadmapId }) => {
       void queryClient.invalidateQueries({ queryKey: ["progress", roadmapId] });
@@ -126,7 +133,7 @@ export function useExportCalendar() {
     mutationFn: async ({ roadmapId, topic, format }: ExportCalendarVars) => {
       if (format === "ics") {
         const blob = await downloadBlob(`/roadmaps/${roadmapId}/export-calendar`, { format });
-        downloadBlobAsFile(`pathmind-${slugify(topic)}.ics`, blob);
+        downloadBlobAsFile(`vidhyora-${slugify(topic)}.ics`, blob);
         return { format: "ics" as const };
       }
       const result = await apiClient.post<{ eventsCreated: number; eventLinks: string[] }>(

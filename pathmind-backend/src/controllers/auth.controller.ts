@@ -5,6 +5,7 @@ import { asyncHandler } from "@/utils/asyncHandler";
 import { comparePassword, compareToken, hashPassword, hashToken } from "@/utils/bcrypt";
 import { clearAuthCookies, setAuthCookies } from "@/utils/cookies";
 import { signAccessToken, signRefreshToken, verifyRefreshToken } from "@/utils/jwt";
+import { getGoogleLoginUrl, isGoogleCalendarConfigured } from "@/services/calendar/googleCalendar.service";
 import type { LoginInput, RegisterInput } from "@/schemas/auth.schema";
 
 export const register = asyncHandler(async (req: Request, res: Response) => {
@@ -31,6 +32,9 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
 
   const user = await User.findOne({ email }).select("+passwordHash");
   if (!user) throw ApiError.unauthorized("Invalid email or password");
+  if (!user.passwordHash) {
+    throw ApiError.unauthorized("This account uses Google sign-in. Use \"Continue with Google\" instead.");
+  }
 
   const valid = await comparePassword(password, user.passwordHash);
   if (!valid) throw ApiError.unauthorized("Invalid email or password");
@@ -84,4 +88,51 @@ export const logout = asyncHandler(async (req: Request, res: Response) => {
   }
   clearAuthCookies(res);
   res.status(204).send();
+});
+
+/**
+ * @openapi
+ * /auth/google:
+ *   get:
+ *     summary: "Redirect to Google's consent screen for 'Continue with Google' sign-in"
+ *     tags: [Auth]
+ *     parameters:
+ *       - in: query
+ *         name: next
+ *         required: false
+ *         schema: { type: string }
+ *         description: Frontend path to land on after sign-in (default /)
+ *     responses:
+ *       302: { description: Redirect to Google's consent screen }
+ *       409: { description: Google OAuth not configured on this server }
+ */
+export const googleLogin = asyncHandler(async (req: Request, res: Response) => {
+  if (!isGoogleCalendarConfigured()) {
+    throw ApiError.conflict(
+      "Google OAuth is not configured on this server. Set GOOGLE_CALENDAR_CLIENT_ID/SECRET."
+    );
+  }
+
+  const next =
+    typeof req.query.next === "string" && req.query.next.startsWith("/")
+      ? req.query.next.slice(0, 200)
+      : "/";
+  // The callback dispatches on mode in state: "login" signs the user in,
+  // "connect" (with a uid) links Calendar to an already-logged-in account.
+  const state = JSON.stringify({ mode: "login", next });
+  res.redirect(getGoogleLoginUrl(state));
+});
+
+export const me = asyncHandler(async (req: Request, res: Response) => {
+  if (!req.auth) throw ApiError.unauthorized("Not authenticated");
+  const user = await User.findById(req.auth.userId);
+  if (!user) throw ApiError.unauthorized("User not found");
+  res.status(200).json({
+    user: {
+      id: user._id.toString(),
+      email: user.email,
+      name: user.name,
+      avatar: user.avatar,
+    },
+  });
 });

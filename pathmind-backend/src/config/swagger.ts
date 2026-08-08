@@ -5,7 +5,7 @@ const options: swaggerJsdoc.Options = {
   definition: {
     openapi: "3.0.3",
     info: {
-      title: "PathMind API",
+      title: "Vidhyora API",
       version: "1.0.0",
       description:
         "AI-generated, sequenced learning roadmaps — syllabus, free resources, certifications, practice links, and timelines, with server-enforced difficulty-aware unlock progression.",

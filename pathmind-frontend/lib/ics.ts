@@ -5,7 +5,7 @@
 import type { TimelineDay } from "@/types/roadmap";
 
 export function buildIcsText(topic: string, timeline: TimelineDay[], startDate = tomorrow()): string {
-  const lines: string[] = ["BEGIN:VCALENDAR", "VERSION:2.0", `PRODID:-//PathMind//${topic}//EN`];
+  const lines: string[] = ["BEGIN:VCALENDAR", "VERSION:2.0", `PRODID:-//Vidhyora//${topic}//EN`];
 
   timeline.forEach((day) => {
     const start = new Date(startDate);
@@ -16,10 +16,10 @@ export function buildIcsText(topic: string, timeline: TimelineDay[], startDate =
 
     lines.push(
       "BEGIN:VEVENT",
-      `UID:pathmind-${topic}-day-${day.day}@pathmind.app`,
+      `UID:vidhyora-${topic}-day-${day.day}@vidhyora.app`,
       `DTSTART:${toIcsDate(start)}`,
       `DTEND:${toIcsDate(end)}`,
-      `SUMMARY:PathMind — ${topic} (Day ${day.day})`,
+      `SUMMARY:Vidhyora — ${topic} (Day ${day.day})`,
       `DESCRIPTION:${day.tasks.join("\\n")}`,
       "END:VEVENT"
     );

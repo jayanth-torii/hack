@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { exportCalendar, googleCallback, googleConnect } from "@/controllers/calendar.controller";
+import { exportCalendar, googleCallback, googleConnect, googleStatus } from "@/controllers/calendar.controller";
 import { optionalAuth, requireAuth } from "@/middleware/auth.middleware";
 import { validate } from "@/middleware/validate.middleware";
 import { exportCalendarSchema } from "@/schemas/calendar.schema";
@@ -51,6 +51,18 @@ calendarRouter.post(
  */
 export const googleAuthRouter = Router();
 googleAuthRouter.get("/connect", requireAuth, googleConnect);
+
+/**
+ * @openapi
+ * /auth/google/status:
+ *   get:
+ *     summary: Whether the current user has connected Google Calendar
+ *     tags: [Calendar]
+ *     responses:
+ *       200: { description: "{ connected: boolean }" }
+ *       401: { description: Not authenticated }
+ */
+googleAuthRouter.get("/status", requireAuth, googleStatus);
 
 /**
  * @openapi

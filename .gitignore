@@ -42,3 +42,15 @@ coverage/
 # Misc
 .cache/
 *.local
+
+# Local tool data (Freebuff app database)
+.freebuff/
+
+# Design reference templates — kept local, too large for git
+/templates/
+
+# Working notes
+PROJECT_MEMORY.md
+
+# Root-level media duplicates (the app copies live in public/videos)
+/intro (2).mp4

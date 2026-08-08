@@ -1,8 +1,14 @@
 import { Types } from "mongoose";
 import { Roadmap, type RoadmapDocument, type Stage } from "@/models/Roadmap";
 import { getAIProvider } from "@/services/ai/aiService";
+import { ApiError } from "@/utils/apiError";
+import { normalizeResources } from "@/services/ai/normalizeResources";
+import { verifyResourceLinks } from "@/services/ai/verifyResources";
 import { webSearch } from "@/services/ai/webSearch";
-import { resolvePracticeLinks } from "@/services/practiceLinks/practiceLinks.service";
+import {
+  resolvePracticeLinks,
+  verifyPracticeLinks,
+} from "@/services/practiceLinks/practiceLinks.service";
 import { cacheRoadmap, getCachedRoadmapByTopic } from "@/services/cache/cacheService";
 import { normalizeTopic, slugify } from "@/utils/slugify";
 import { env } from "@/config/env";
@@ -37,9 +43,14 @@ export async function generateOrGetRoadmap(topic: string): Promise<RoadmapDocume
   }
 
   logger.info({ topic }, "roadmap cache miss — generating via AI");
-  const roadmap = await generateRoadmapFromScratch(topic, normalizedTopic);
-  await cacheRoadmap(roadmap);
-  return roadmap;
+  try {
+    const roadmap = await generateRoadmapFromScratch(topic, normalizedTopic);
+    await cacheRoadmap(roadmap);
+    return roadmap;
+  } catch (err: any) {
+    logger.error({ err, topic }, "Failed to generate roadmap via AI");
+    throw new ApiError(502, err.message || "Failed to generate roadmap");
+  }
 }
 
 async function generateRoadmapFromScratch(
@@ -69,13 +80,35 @@ async function generateRoadmapFromScratch(
       const resourceDrafts = await ai.generateFreeResources(topic, draft, resourceSearch);
 
       // 3b. Practice links — AI suggests tags/difficulty only; the verification
-      // module resolves them to guaranteed-real problem URLs.
+      // module resolves them to guaranteed-real problem URLs. Any fallback
+      // (platform tag-browse) links are liveness-checked so they verify too.
       const tagSuggestions = await ai.suggestPracticeTags(topic, draft);
-      const practiceLinks = resolvePracticeLinks(
+      const resolved = resolvePracticeLinks(
         tagSuggestions.map((t) => ({ tag: t.tag, difficulty: t.difficulty }))
       );
+      const practiceLinks = env.VERIFY_LINKS && !env.MOCK_MODE
+        ? await verifyPracticeLinks(resolved)
+        : resolved;
 
       const now = new Date();
+      // Normalize: canonicalize real watch?v= video URLs, drop YouTube
+      // search/channel/search-page links, and fix type mislabels — so every
+      // generated roadmap ships deep-linkable resources the frontend can
+      // preview. Then liveness-check each surviving URL (drops definitive
+      // 404/410 links) so students never land on a dead page.
+      const normalized = normalizeResources(resourceDrafts);
+      // Skip liveness checks in MOCK_MODE — mock links are fake anyway, and
+      // the mock checker would deterministically drop ~10% of them.
+      const resources = env.VERIFY_LINKS && !env.MOCK_MODE
+        ? await verifyResourceLinks(normalized)
+        : normalized;
+      if (resources.length === 0 && resourceDrafts.length > 0) {
+        logger.warn(
+          { topic, stage: draft.title, dropped: resourceDrafts.length },
+          "All AI resource drafts for a stage were dropped during normalization/verification"
+        );
+      }
+
       return {
         _id: stageObjectIds[index]!,
         order: draft.order,
@@ -86,7 +119,7 @@ async function generateRoadmapFromScratch(
           draft.prerequisiteOrder === null ? null : stageObjectIds[draft.prerequisiteOrder]!,
         syllabus: draft.syllabus,
         estimatedDays: draft.estimatedDays,
-        freeResources: resourceDrafts.map((r) => ({
+        freeResources: resources.map((r) => ({
           title: r.title,
           url: r.url,
           type: r.type,

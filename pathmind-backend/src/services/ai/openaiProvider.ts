@@ -19,7 +19,14 @@ import {
   buildTimelinePrompt,
 } from "./promptBuilder";
 
+import { friendlyError } from "./aiErrors";
+
 const MODEL = env.OPENAI_MODEL;
+
+// Fail fast (90s) instead of letting the SDK hang for its default 10 minutes
+// when the API is slow or rate-limited.
+const REQUEST_TIMEOUT_MS = 90_000;
+const MAX_RETRIES = 2;
 
 const stageDraftSchema = z.object({
   order: z.number(),
@@ -83,16 +90,23 @@ export class OpenAIProvider implements AIProvider {
     this.client = new OpenAI({
       apiKey: env.OPENAI_API_KEY || undefined,
       baseURL: env.OPENAI_BASE_URL || undefined,
+      timeout: REQUEST_TIMEOUT_MS,
+      maxRetries: MAX_RETRIES,
     });
   }
 
   private async complete(prompt: string): Promise<string> {
-    const response = await this.client.chat.completions.create({
-      model: MODEL,
-      messages: [{ role: "user", content: prompt }],
-      max_tokens: 2048,
-    });
-    return response.choices[0]?.message?.content || "";
+    try {
+      const response = await this.client.chat.completions.create({
+        model: MODEL,
+        messages: [{ role: "user", content: prompt }],
+        max_tokens: 2048,
+      });
+      return response.choices[0]?.message?.content || "";
+    } catch (err) {
+      logger.error({ err, model: MODEL }, "OpenAI generation failed");
+      throw friendlyError(err);
+    }
   }
 
   async generateSyllabus(topic: string, searchContext: SearchResult[]): Promise<StageDraft[]> {

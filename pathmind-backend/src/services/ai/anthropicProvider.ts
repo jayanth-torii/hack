@@ -19,7 +19,14 @@ import {
   buildTimelinePrompt,
 } from "./promptBuilder";
 
+import { friendlyError } from "./aiErrors";
+
 const MODEL = env.ANTHROPIC_MODEL;
+
+// A generation step that stalls shouldn't tie up the request for the SDK's
+// default 10 minutes — fail fast (90s) with a friendly message instead.
+const REQUEST_TIMEOUT_MS = 90_000;
+const MAX_RETRIES = 2;
 
 const stageDraftSchema = z.object({
   order: z.number(),
@@ -86,17 +93,24 @@ export class AnthropicProvider implements AIProvider {
       authToken: env.ANTHROPIC_AUTH_TOKEN || undefined,
       apiKey: env.ANTHROPIC_API_KEY || undefined,
       baseURL: env.ANTHROPIC_BASE_URL || undefined,
+      timeout: REQUEST_TIMEOUT_MS,
+      maxRetries: MAX_RETRIES,
     });
   }
 
   private async complete(prompt: string): Promise<string> {
-    const message = await this.client.messages.create({
-      model: MODEL,
-      max_tokens: 2048,
-      messages: [{ role: "user", content: prompt }],
-    });
-    const block = message.content[0];
-    return block && block.type === "text" ? block.text : "";
+    try {
+      const message = await this.client.messages.create({
+        model: MODEL,
+        max_tokens: 2048,
+        messages: [{ role: "user", content: prompt }],
+      });
+      const block = message.content[0];
+      return block && block.type === "text" ? block.text : "";
+    } catch (err) {
+      logger.error({ err, model: MODEL }, "Anthropic generation failed");
+      throw friendlyError(err);
+    }
   }
 
   async generateSyllabus(topic: string, searchContext: SearchResult[]): Promise<StageDraft[]> {
