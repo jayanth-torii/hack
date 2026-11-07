@@ -1,26 +1,26 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import Link from "next/link";
 import { useRoadmap, useRoadmapProgress } from "@/hooks/useRoadmapQuery";
 import { ProgressDashboard } from "@/components/sections/ProgressDashboard";
-import { ThemeToggle } from "@/components/home/ThemeToggle";
+import { AppBar } from "@/components/ui/AppBar";
+import { BottomNav } from "@/components/ui/BottomNav";
+import { DashboardSkeleton } from "@/components/ui/Skeleton";
+import { StateView } from "@/components/ui/StateView";
 
 export default function DashboardPage() {
   const { id } = useParams<{ id: string }>();
   const roadmapQuery = useRoadmap(id);
   useRoadmapProgress(id); // hydrates the store's `progress` used by useUnlockLogic
 
-  if (roadmapQuery.isLoading || !roadmapQuery.data) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-ink">
-        <div className="h-10 w-10 animate-spin rounded-full border-2 border-accent/30 border-t-accent" />
-      </div>
-    );
-  }
+  const actions = [
+    { href: `/roadmap/${id}`, label: "Journey" },
+    { href: `/roadmap/${id}/calendar`, label: "Calendar" },
+    { href: "/saved", label: "Saved" },
+  ];
 
   return (
-    <div className="relative min-h-screen bg-ink">
+    <div className="relative min-h-screen-safe bg-ink">
       {/* Ambient glows + noise (site theme) */}
       <div
         aria-hidden
@@ -28,44 +28,28 @@ export default function DashboardPage() {
       />
       <div aria-hidden className="pointer-events-none fixed inset-0 bg-noise opacity-[0.04]" />
 
-      {/* Glassy header */}
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-line/10 bg-card/60 backdrop-blur-2xl backdrop-saturate-150">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/70 to-transparent"
-        />
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-          <Link href="/" className="group flex items-center gap-2.5" aria-label="Vidhyora home">
-            <span className="logo-chip flex h-9 w-9 items-center justify-center transition-transform duration-300 group-hover:scale-110">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/vidhyora-logo.png" alt="" width={36} height={36} className="h-9 w-9" />
-            </span>
-            <span className="font-display text-lg font-semibold tracking-tight text-paper">
-              Vidhyora
-            </span>
-          </Link>
-          <div className="flex items-center gap-5 text-sm">
-            <Link
-              href={`/roadmap/${id}`}
-              className="text-subtle transition-colors hover:text-accent"
-            >
-              Journey
-            </Link>
-            <Link
-              href={`/roadmap/${id}/calendar`}
-              className="text-subtle transition-colors hover:text-accent"
-            >
-              Calendar
-            </Link>
-            <Link href="/saved" className="text-subtle transition-colors hover:text-accent">
-              Saved
-            </Link>
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
+      <AppBar title="Progress" back={`/roadmap/${id}`} actions={actions} />
 
-      <ProgressDashboard roadmap={roadmapQuery.data} />
+      <main id="main">
+        {roadmapQuery.isLoading ? (
+          <DashboardSkeleton />
+        ) : roadmapQuery.isError || !roadmapQuery.data ? (
+          <div className="pt-app-bar pb-nav flex min-h-screen-safe items-center justify-center">
+            <StateView
+              tone="error"
+              title="We couldn't load your progress"
+              description="The roadmap behind this dashboard didn't come back. Try again, or head to the journey view."
+              illustration="no-data"
+              primary={{ label: "Try again", onClick: () => void roadmapQuery.refetch() }}
+              secondary={{ label: "Open journey", href: `/roadmap/${id}` }}
+            />
+          </div>
+        ) : (
+          <ProgressDashboard roadmap={roadmapQuery.data} />
+        )}
+      </main>
+
+      <BottomNav />
     </div>
   );
 }

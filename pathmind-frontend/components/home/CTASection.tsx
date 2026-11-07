@@ -102,7 +102,7 @@ export function CTASection() {
       <GeometryShapes variant="cta" />
 
       {/* Main Centered Content (Open Layout) */}
-      <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-6 text-center">
+      <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-4 text-center sm:px-6">
         
         {/* Monospace Eyebrow Badge */}
         <motion.span

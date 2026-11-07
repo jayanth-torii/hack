@@ -71,7 +71,7 @@ export function FeaturesSection() {
   return (
     <section id="features" className="relative overflow-hidden bg-ink py-28">
       <GeometryShapes variant="features" />
-      <div className="relative z-10 mx-auto max-w-7xl px-6">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6">
         <div className="grid gap-14 lg:grid-cols-12">
           <Reveal className="lg:col-span-4">
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-text">
@@ -129,7 +129,7 @@ export function FeaturesSection() {
                 <p className="mt-3 text-sm leading-relaxed text-muted">{feature.copy}</p>
                 <Link
                   href="#start"
-                  className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-subtle transition-colors hover:text-accent"
+                  className="mt-3 inline-flex min-h-touch-min items-center gap-2 text-sm font-medium text-subtle transition-colors duration-fast hover:text-accent"
                 >
                   <span className="border-b border-current pb-0.5">Try it</span>
                   <span className="transition-transform group-hover:translate-x-1">{LINK_ICON}</span>

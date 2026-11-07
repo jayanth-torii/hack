@@ -27,9 +27,9 @@ export function Footer() {
   return (
     <footer className="relative overflow-hidden bg-ink">
       <GeometryShapes variant="footer" />
-      <div className="relative z-10 mx-auto grid max-w-7xl gap-12 px-6 py-20 md:grid-cols-2 lg:grid-cols-4">
+      <div className="relative z-10 mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:gap-12 sm:px-6 sm:py-20 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <Link href="/" className="flex items-center gap-2.5">
+          <Link href="/" className="inline-flex min-h-touch-min items-center gap-2.5">
             <span className="logo-chip flex h-10 w-10 items-center justify-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -59,12 +59,12 @@ export function Footer() {
           </h4>
           <ul className="mt-5 space-y-3 text-sm text-muted">
             <li>
-              <a href="mailto:hello@vidhyora.app" className="transition-colors hover:text-accent">
+              <a href="mailto:hello@vidhyora.app" className="-my-2.5 inline-flex min-h-touch-min items-center transition-colors duration-fast hover:text-accent">
                 hello@vidhyora.app
               </a>
             </li>
             <li>
-              <a href="#start" className="transition-colors hover:text-accent">
+              <a href="#start" className="-my-2.5 inline-flex min-h-touch-min items-center transition-colors duration-fast hover:text-accent">
                 Start learning free
               </a>
             </li>
@@ -73,13 +73,13 @@ export function Footer() {
       </div>
 
       <div className="relative z-10 border-t border-line/10">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 py-6 text-xs text-muted sm:flex-row">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-6 text-xs text-muted sm:flex-row sm:px-6">
           <p>© 2026 Vidhyora. All rights reserved.</p>
           <div className="flex gap-6">
-            <a href="#" className="transition-colors hover:text-accent">
+            <a href="#" className="-my-2.5 inline-flex min-h-touch-min items-center transition-colors duration-fast hover:text-accent">
               Terms &amp; Conditions
             </a>
-            <a href="#" className="transition-colors hover:text-accent">
+            <a href="#" className="-my-2.5 inline-flex min-h-touch-min items-center transition-colors duration-fast hover:text-accent">
               Privacy Policy
             </a>
           </div>
@@ -119,7 +119,10 @@ function FooterColumn({
       <ul className="mt-5 space-y-3 text-sm">
         {links.map((link) => (
           <li key={link.label}>
-            <Link href={link.href} className="text-slate-500 transition-colors hover:text-accent">
+            <Link
+              href={link.href}
+              className="-my-2.5 inline-flex min-h-touch-min items-center text-muted transition-colors duration-fast hover:text-accent"
+            >
               {link.label}
             </Link>
           </li>

@@ -6,7 +6,8 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useAuthStore } from "@/store/authStore";
 import { useSavedRoadmaps } from "@/hooks/useRoadmapQuery";
-import { ThemeToggle } from "@/components/home/ThemeToggle";
+import { AppBar } from "@/components/ui/AppBar";
+import { BottomNav } from "@/components/ui/BottomNav";
 import { GeometryShapes } from "@/components/home/GeometryShapes";
 import { Badge } from "@/components/ui/Badge";
 import { Illustration } from "@/components/ui/Illustration";
@@ -35,7 +36,7 @@ export default function ProfilePage() {
 
   if (isInitializing || !user) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-ink">
+      <div className="min-h-screen-safe flex items-center justify-center bg-ink">
         <div className="h-10 w-10 animate-spin rounded-full border-2 border-accent/30 border-t-accent" />
       </div>
     );
@@ -62,7 +63,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-ink">
+    <div className="min-h-screen-safe relative bg-ink">
       {/* Ambient glows + noise (home-theme background) */}
       <div
         aria-hidden
@@ -71,44 +72,22 @@ export default function ProfilePage() {
       <div aria-hidden className="pointer-events-none fixed inset-0 bg-noise opacity-[0.04]" />
       <GeometryShapes variant="footer" />
 
-      {/* Glassy header */}
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-line/10 bg-card/60 backdrop-blur-2xl backdrop-saturate-150">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/70 to-transparent"
-        />
-        <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6">
-          <Link href="/" className="group flex items-center gap-2.5" aria-label="Vidhyora home">
-            <span className="logo-chip flex h-9 w-9 items-center justify-center transition-transform duration-300 group-hover:scale-110">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/vidhyora-logo.png" alt="" width={36} height={36} className="h-9 w-9" />
-            </span>
-            <span className="font-display text-lg font-semibold tracking-tight text-paper">
-              Vidhyora
-            </span>
-          </Link>
+      <AppBar
+        title="Profile"
+        back="/"
+        actions={[
+          { href: "/", label: "Home" },
+          { href: "/saved", label: "Saved roadmaps" },
+        ]}
+      />
 
-          <div className="flex items-center gap-3">
-            <nav className="hidden items-center gap-6 md:flex" aria-label="Profile">
-              <Link href="/" className="text-sm text-subtle transition-colors hover:text-accent">
-                Home
-              </Link>
-              <Link href="/saved" className="text-sm text-subtle transition-colors hover:text-accent">
-                Saved roadmaps
-              </Link>
-            </nav>
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
-
-      <main className="relative z-10 mx-auto max-w-5xl px-6 pb-24 pt-32">
+      <main id="main" className="pt-app-bar pb-nav relative z-10 mx-auto max-w-5xl px-4 sm:px-6">
         {/* Profile card */}
         <motion.section
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="relative overflow-hidden rounded-3xl border border-line/10 bg-card/60 p-8 backdrop-blur-xl sm:p-10"
+          className="relative mt-8 overflow-hidden rounded-xl border border-line/10 bg-card/60 p-5 backdrop-blur-xl sm:p-10"
         >
           <div
             aria-hidden
@@ -120,8 +99,8 @@ export default function ProfilePage() {
           />
 
           <div className="relative flex flex-col items-start gap-8 md:flex-row md:items-center md:justify-between">
-            <div className="flex items-center gap-5">
-              <div className="flex h-20 w-20 flex-none items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-accent/90 to-brand-400/80 shadow-lg shadow-accent/25">
+            <div className="flex min-w-0 items-center gap-4 sm:gap-5">
+              <div className="flex h-16 w-16 flex-none items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-accent/90 to-brand-400/80 shadow-e2 sm:h-20 sm:w-20 sm:rounded-2xl">
                 {user.avatar ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={user.avatar} alt="" width={80} height={80} className="h-full w-full object-cover" />
@@ -135,7 +114,7 @@ export default function ProfilePage() {
                 <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-text">
                   {"// Your profile"}
                 </p>
-                <h1 className="mt-1.5 font-display text-3xl font-semibold tracking-tight text-paper sm:text-4xl">
+                <h1 className="mt-1.5 font-display text-2xl font-semibold tracking-tight text-paper sm:text-4xl">
                   {displayName}
                 </h1>
                 <p className="mt-1.5 text-muted">{user.email}</p>
@@ -260,6 +239,7 @@ export default function ProfilePage() {
           )}
         </section>
       </main>
+      <BottomNav />
     </div>
   );
 }

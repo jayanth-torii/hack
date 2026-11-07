@@ -87,6 +87,9 @@ function ThumbnailLayer({ parsed }: { parsed: ParsedVideo }) {
       loading="lazy"
       referrerPolicy="no-referrer"
       onError={() => setFailed(true)}
+      onLoad={(e) => {
+        if (e.currentTarget.naturalWidth <= 120) setFailed(true);
+      }}
       className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
     />
   );
@@ -148,7 +151,7 @@ export function VideoPreview({ url, title, className }: VideoPreviewProps) {
       target="_blank"
       rel="noreferrer"
       className={clsx(
-        "group relative block aspect-video w-full overflow-hidden rounded-2xl border border-line/10 bg-ink",
+        "press group relative block aspect-video w-full overflow-hidden rounded-md border border-line/10 bg-ink",
         className
       )}
       aria-label={`Watch on ${providerLabel}: ${title}`}
@@ -169,7 +172,7 @@ export function VideoPreview({ url, title, className }: VideoPreviewProps) {
 
       {/* play button */}
       <span className="absolute inset-0 flex items-center justify-center">
-        <span className="relative flex h-14 w-14 items-center justify-center rounded-full bg-white/95 text-[#0b0b0b] shadow-xl shadow-black/40 transition-transform duration-300 group-hover:scale-110 group-hover:bg-accent group-hover:text-on-accent">
+        <span className="relative flex h-12 w-12 items-center justify-center rounded-full bg-white/95 text-[#0b0b0b] shadow-e3 transition-transform duration-base group-hover:scale-110 group-hover:bg-accent group-hover:text-on-accent sm:h-14 sm:w-14">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
             <path d="M8 5.5v13l11-6.5-11-6.5Z" />
           </svg>

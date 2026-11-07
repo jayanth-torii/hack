@@ -141,7 +141,7 @@ export function HowItWorks() {
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-noise opacity-[0.04]" />
       <GeometryShapes variant="how" />
 
-      <div className="relative z-10 mx-auto max-w-6xl px-6">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
         {/* Section header */}
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-2xl">

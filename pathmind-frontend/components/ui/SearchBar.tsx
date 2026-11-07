@@ -56,21 +56,21 @@ export function SearchBar() {
       >
         <Input
           placeholder="Type any topic — e.g. Dynamic Programming, React"
-          className="border-0 bg-transparent px-4 py-3 text-paper placeholder:text-muted focus:ring-0"
+          className="min-h-touch border-0 bg-transparent px-4 text-paper placeholder:text-muted focus-visible:ring-0"
           {...register("topic")}
         />
         <Button
           type="submit"
           variant="accent"
           isLoading={generate.isPending}
-          className="shrink-0 rounded-full px-7 py-3 sm:w-auto"
+          className="w-full shrink-0 rounded-full px-7 sm:w-auto"
         >
           {generate.isPending ? "Generating…" : "Build my path"}
         </Button>
       </form>
-      {errors.topic && <p className="mt-2 text-xs text-rose-400">{errors.topic.message}</p>}
+      {errors.topic && <p role="alert" className="mt-2 text-xs text-danger">{errors.topic.message}</p>}
       {generate.isError && (
-        <p className="mt-2 text-xs text-rose-400">Couldn&apos;t generate a roadmap. Please try again.</p>
+        <p role="alert" className="mt-2 text-xs text-danger">Couldn&apos;t generate a roadmap. Please try again.</p>
       )}
 
       <div className="mt-4 flex flex-wrap gap-2">

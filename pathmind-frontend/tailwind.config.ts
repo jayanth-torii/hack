@@ -44,6 +44,54 @@ const config: Config = {
         muted: "rgb(var(--color-muted) / <alpha-value>)",
         subtle: "rgb(var(--color-subtle) / <alpha-value>)",
         line: "rgb(var(--color-line) / <alpha-value>)",
+        // Semantic status roles — always paired with an icon or label in the
+        // UI so status is never communicated by colour alone.
+        success: "rgb(var(--color-success) / <alpha-value>)",
+        warning: "rgb(var(--color-warning) / <alpha-value>)",
+        danger: "rgb(var(--color-danger) / <alpha-value>)",
+        info: "rgb(var(--color-info) / <alpha-value>)",
+      },
+      // Shape scale — see --radius-* in globals.css.
+      borderRadius: {
+        xs: "var(--radius-xs)",
+        sm: "var(--radius-sm)",
+        md: "var(--radius-md)",
+        lg: "var(--radius-lg)",
+        xl: "var(--radius-xl)",
+      },
+      // Elevation scale — hierarchy, not decoration.
+      boxShadow: {
+        e1: "var(--elev-1)",
+        e2: "var(--elev-2)",
+        e3: "var(--elev-3)",
+      },
+      transitionTimingFunction: {
+        standard: "var(--ease-standard)",
+        emphasized: "var(--ease-emphasized)",
+      },
+      transitionDuration: {
+        fast: "var(--dur-fast)",
+        base: "var(--dur-base)",
+        slow: "var(--dur-slow)",
+      },
+      // Fixed-chrome metrics + safe-area insets, so spacing utilities can
+      // reference them directly (e.g. `h-app-bar`, `pb-safe-bottom`).
+      spacing: {
+        "app-bar": "var(--app-bar-h)",
+        "bottom-nav": "var(--bottom-nav-h)",
+        "safe-top": "var(--safe-top)",
+        "safe-bottom": "var(--safe-bottom)",
+        // Minimum comfortable touch target (48px) and the iOS floor (44px).
+        touch: "3rem",
+        "touch-min": "2.75rem",
+      },
+      minHeight: {
+        touch: "3rem",
+        "touch-min": "2.75rem",
+      },
+      minWidth: {
+        touch: "3rem",
+        "touch-min": "2.75rem",
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],

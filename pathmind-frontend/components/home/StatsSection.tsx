@@ -18,7 +18,7 @@ const STATS = [
 export function StatsSection() {
   return (
     <section id="stats" className="border-y border-line/10 bg-ink py-24">
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <p className="text-center text-xs font-semibold uppercase tracking-[0.3em] text-accent-text">
           {"// Vidhyora in numbers"}
         </p>

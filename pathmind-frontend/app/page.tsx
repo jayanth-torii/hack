@@ -9,6 +9,7 @@ import { HowItWorks } from "@/components/home/HowItWorks";
 import { StatsSection } from "@/components/home/StatsSection";
 import { CTASection } from "@/components/home/CTASection";
 import { Footer } from "@/components/home/Footer";
+import { BottomNav } from "@/components/ui/BottomNav";
 
 // Vidhyora landing page, restyled on the Acjon "Digital Agency" template
 // (templates/acjon/index.html): preloader, glassy header, dark hero + 3D
@@ -20,7 +21,9 @@ export default function HomePage() {
       <CustomCursor />
       <Preloader />
       <Header />
-      <main>
+      {/* pb-nav clears the mobile bottom navigation so the footer's last
+          row is never trapped behind it. */}
+      <main id="main" className="pb-nav">
         <Hero />
         <IntroVideo />
         <Marquee />
@@ -30,6 +33,7 @@ export default function HomePage() {
         <CTASection />
       </main>
       <Footer />
+      <BottomNav />
     </>
   );
 }

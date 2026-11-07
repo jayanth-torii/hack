@@ -5,6 +5,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { clsx } from "@/lib/clsx";
 import { ThemeToggle } from "./ThemeToggle";
+import { MobileMenu } from "./MobileMenu";
 import { useAuthStore } from "@/store/authStore";
 import { confirm } from "@/components/ui/ConfirmDialog";
 import { toast } from "@/components/ui/toast";
@@ -51,7 +52,7 @@ export function Header() {
       initial={{ y: -64, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="fixed inset-x-0 top-0 z-50 border-b border-line/10 bg-card/60 backdrop-blur-2xl backdrop-saturate-150"
+      className="pt-safe fixed inset-x-0 top-0 z-50 border-b border-line/10 bg-card/60 backdrop-blur-2xl backdrop-saturate-150"
     >
       {/* Glass top shine */}
       <div
@@ -59,8 +60,12 @@ export function Header() {
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/70 to-transparent"
       />
 
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        <Link href="/" className="group flex items-center gap-2.5" aria-label="Vidhyora home">
+      <div className="mx-auto flex h-app-bar max-w-7xl items-center justify-between px-4 sm:px-6 md:h-16">
+        <Link
+          href="/"
+          className="group flex min-h-touch-min items-center gap-2.5"
+          aria-label="Vidhyora home"
+        >
           {/* Dark rounded chip keeps the black-bg logo seamless in both themes */}
           <span className="logo-chip flex h-9 w-9 items-center justify-center transition-transform duration-300 group-hover:scale-110">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -82,7 +87,7 @@ export function Header() {
             <Link
               key={link.label}
               href={link.href}
-              className="text-sm text-subtle transition-colors hover:text-accent"
+              className="flex min-h-touch items-center rounded-sm text-sm text-subtle transition-colors duration-fast hover:text-accent"
             >
               {link.label}
             </Link>
@@ -137,8 +142,9 @@ export function Header() {
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
-            aria-label="Toggle menu"
-            className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden"
+            aria-controls="mobile-menu"
+            aria-label={open ? "Close menu" : "Open menu"}
+            className="press -mr-1 flex h-touch w-touch flex-col items-center justify-center gap-1.5 rounded-full md:hidden"
           >
             <span className={clsx("h-0.5 w-5 bg-paper transition-transform", open && "translate-y-2 rotate-45")} />
             <span className={clsx("h-0.5 w-5 bg-paper transition-opacity", open && "opacity-0")} />
@@ -147,67 +153,13 @@ export function Header() {
         </div>
       </div>
 
-      {open && (
-        <motion.div
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.25 }}
-          className="border-t border-line/10 bg-card/70 px-6 py-4 backdrop-blur-2xl md:hidden"
-        >
-          <nav className="flex flex-col gap-3" aria-label="Mobile">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className="text-sm text-subtle hover:text-accent"
-              >
-                {link.label}
-              </Link>
-            ))}
-            {user && (
-              <Link
-                href="/profile"
-                onClick={() => setOpen(false)}
-                className="text-sm text-subtle hover:text-accent"
-              >
-                Profile
-              </Link>
-            )}
-            <div className="mt-2 flex gap-3">
-              {user ? (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setOpen(false);
-                    void handleLogout();
-                  }}
-                  className="flex-1 rounded-full bg-accent px-4 py-2 text-center text-sm font-bold tracking-tight text-on-accent"
-                >
-                  Log out
-                </button>
-              ) : (
-                <>
-                  <Link
-                    href="/auth/login"
-                    onClick={() => setOpen(false)}
-                    className="flex-1 rounded-full border border-line/15 px-4 py-2 text-center text-sm text-subtle"
-                  >
-                    Log in
-                  </Link>
-                  <Link
-                    href="/auth/register"
-                    onClick={() => setOpen(false)}
-                    className="flex-1 rounded-full bg-accent px-4 py-2 text-center text-sm font-bold tracking-tight text-on-accent"
-                  >
-                    Get started
-                  </Link>
-                </>
-              )}
-            </div>
-          </nav>
-        </motion.div>
-      )}
+      <MobileMenu
+        open={open}
+        onClose={() => setOpen(false)}
+        links={NAV_LINKS}
+        user={user ? { email: user.email } : null}
+        onLogout={() => void handleLogout()}
+      />
     </motion.header>
   );
 }

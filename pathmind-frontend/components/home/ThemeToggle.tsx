@@ -21,7 +21,7 @@ export function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <span aria-hidden className="block h-10 w-10 rounded-full border border-line/15 bg-card/50" />
+      <span aria-hidden className="block h-touch w-touch rounded-full border border-line/15 bg-card/50" />
     );
   }
 
@@ -30,7 +30,7 @@ export function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label={isLight ? "Switch to dark mode" : "Switch to light mode"}
-      className="group relative flex h-10 w-10 items-center justify-center rounded-full border border-line/15 bg-card/50 text-subtle backdrop-blur-md transition-colors hover:border-accent/60 hover:text-accent"
+      className="press group relative flex h-touch w-touch items-center justify-center rounded-full border border-line/15 bg-card/50 text-subtle backdrop-blur-md transition-colors duration-fast hover:border-accent/60 hover:text-accent"
     >
       {/* soft glow on hover */}
       <span

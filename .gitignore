@@ -58,3 +58,15 @@ PROJECT_MEMORY.md
 
 # Root-level media duplicates (the app copies live in public/videos)
 /intro (2).mp4
+
+# AGY AI INTERNAL MEMORY
+agy-memory/
+AGY-MEMORY/
+.agy/
+.agy-memory/
+AGY_CONTEXT.md
+AGY_CAPSULES.md
+AGY_PROJECT_MEMORY.md
+
+# Browser-automation scratch output (screenshots, snapshots, logs)
+.playwright-mcp/

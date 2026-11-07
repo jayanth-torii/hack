@@ -2,13 +2,14 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
-import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { useRoadmap, useExportCalendar } from "@/hooks/useRoadmapQuery";
 import { useGoogleCalendarStatus, googleConnectUrl } from "@/hooks/useGoogleCalendar";
 import { useAuthStore } from "@/store/authStore";
 import { GeometryShapes } from "@/components/home/GeometryShapes";
-import { ThemeToggle } from "@/components/home/ThemeToggle";
+import { AppBar } from "@/components/ui/AppBar";
+import { DashboardSkeleton } from "@/components/ui/Skeleton";
+import { BottomNav } from "@/components/ui/BottomNav";
 import { Illustration } from "@/components/ui/Illustration";
 import { clsx } from "@/lib/clsx";
 import { toast } from "@/components/ui/toast";
@@ -60,8 +61,10 @@ export default function CalendarExportPage() {
 
   if (roadmapQuery.isLoading || !roadmapQuery.data) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-ink">
-        <div className="h-10 w-10 animate-spin rounded-full border-2 border-accent/30 border-t-accent" />
+      <div className="min-h-screen-safe bg-ink">
+        <AppBar title="Study plan" back />
+        <DashboardSkeleton />
+        <BottomNav />
       </div>
     );
   }
@@ -94,7 +97,7 @@ export default function CalendarExportPage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-ink">
+    <div className="min-h-screen-safe relative bg-ink">
       {/* Ambient glows + noise + geometry (site theme) */}
       <div
         aria-hidden
@@ -103,44 +106,17 @@ export default function CalendarExportPage() {
       <div aria-hidden className="pointer-events-none fixed inset-0 bg-noise opacity-[0.04]" />
       <GeometryShapes variant="footer" />
 
-      {/* Glassy header */}
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-line/10 bg-card/60 backdrop-blur-2xl backdrop-saturate-150">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/70 to-transparent"
-        />
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-          <Link href="/" className="group flex items-center gap-2.5" aria-label="Vidhyora home">
-            <span className="logo-chip flex h-9 w-9 items-center justify-center transition-transform duration-300 group-hover:scale-110">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/vidhyora-logo.png" alt="" width={36} height={36} className="h-9 w-9" />
-            </span>
-            <span className="font-display text-lg font-semibold tracking-tight text-paper">
-              Vidhyora
-            </span>
-          </Link>
-          <div className="flex items-center gap-5 text-sm">
-            <Link
-              href={`/roadmap/${id}`}
-              className="text-subtle transition-colors hover:text-accent"
-            >
-              Journey
-            </Link>
-            <Link
-              href={`/roadmap/${id}/dashboard`}
-              className="text-subtle transition-colors hover:text-accent"
-            >
-              Dashboard
-            </Link>
-            <Link href="/saved" className="text-subtle transition-colors hover:text-accent">
-              Saved
-            </Link>
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
+      <AppBar
+        title="Study plan"
+        back={`/roadmap/${id}`}
+        actions={[
+          { href: `/roadmap/${id}`, label: "Journey" },
+          { href: `/roadmap/${id}/dashboard`, label: "Dashboard" },
+          { href: "/saved", label: "Saved" },
+        ]}
+      />
 
-      <main className="relative z-10 mx-auto max-w-6xl px-6 pb-28 pt-32">
+      <main id="main" className="pt-app-bar pb-nav relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
         {/* ── Hero band ── */}
         <motion.section
           initial={reduce ? undefined : { opacity: 0, y: 24 }}
@@ -152,7 +128,7 @@ export default function CalendarExportPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-text">
               {"// Your study calendar"}
             </p>
-            <h1 className="mt-3 font-display text-4xl font-semibold leading-[1.12] tracking-tight text-paper sm:text-5xl">
+            <h1 className="mt-3 font-display text-[1.75rem] font-semibold leading-[1.14] tracking-tight text-paper sm:text-5xl">
               {roadmap.topic}
             </h1>
             <p className="mt-4 max-w-xl text-muted">
@@ -407,6 +383,7 @@ export default function CalendarExportPage() {
           </motion.div>
         </section>
       </main>
+      <BottomNav />
     </div>
   );
 }

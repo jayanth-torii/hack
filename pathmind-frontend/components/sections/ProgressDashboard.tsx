@@ -58,10 +58,10 @@ export function ProgressDashboard({ roadmap }: { roadmap: Roadmap }) {
   const CIRC = 2 * Math.PI * R;
 
   return (
-    <div className="relative overflow-hidden pb-28 pt-28">
+    <div className="relative overflow-hidden pb-16 pt-6 sm:pt-10">
       <GeometryShapes variant="features" />
 
-      <div className="relative z-10 mx-auto max-w-5xl px-6">
+      <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6">
         {/* ── Hero band ── */}
         <motion.section
           initial={reduce ? undefined : { opacity: 0, y: 24 }}
@@ -77,7 +77,7 @@ export function ProgressDashboard({ roadmap }: { roadmap: Roadmap }) {
                 {"// Progress dashboard"}
               </p>
             </div>
-            <h1 className="mt-3 font-display text-4xl font-semibold leading-[1.12] tracking-tight text-paper sm:text-5xl">
+            <h1 className="mt-3 font-display text-[1.75rem] font-semibold leading-[1.14] tracking-tight text-paper sm:text-4xl lg:text-5xl">
               {roadmap.topic}
             </h1>
             <p className="mt-4 max-w-xl text-muted">
@@ -149,7 +149,7 @@ export function ProgressDashboard({ roadmap }: { roadmap: Roadmap }) {
         </motion.section>
 
         {/* ── Stat cards ── */}
-        <dl className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <dl className="mt-10 grid grid-cols-3 gap-2.5 sm:mt-12 sm:gap-4">
           {[
             { value: completedCount, label: "Completed", tone: "text-emerald-300" },
             { value: activeCount, label: "In progress", tone: "text-accent" },
@@ -160,10 +160,12 @@ export function ProgressDashboard({ roadmap }: { roadmap: Roadmap }) {
               initial={reduce ? undefined : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.12 + i * 0.08, duration: 0.5 }}
-              className="rounded-2xl border border-line/10 bg-card/50 p-5 backdrop-blur"
+              className="rounded-md border border-line/10 bg-card/50 p-3.5 backdrop-blur sm:p-5"
             >
-              <dd className={clsx("font-display text-3xl font-semibold", stat.tone)}>{stat.value}</dd>
-              <dt className="mt-1 text-xs text-muted">{stat.label}</dt>
+              <dd className={clsx("font-display text-2xl font-semibold tabular-nums sm:text-3xl", stat.tone)}>
+                {stat.value}
+              </dd>
+              <dt className="mt-1 text-[0.6875rem] leading-tight text-muted sm:text-xs">{stat.label}</dt>
             </motion.div>
           ))}
         </dl>

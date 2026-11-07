@@ -20,6 +20,48 @@
   /* accent used as small *text* on surfaces — deeper in light mode for contrast */
   --color-accent-text: 201 243 29;
   --color-cyan-text: 34 211 238;
+
+  /* ── Status roles ─────────────────────────────────────────────────────
+     Semantic, theme-flippable. Always paired with an icon or text in the
+     UI — status is never communicated by colour alone. */
+  --color-success: 52 211 153;
+  --color-warning: 251 191 36;
+  --color-danger: 248 113 113;
+  --color-info: 56 189 248;
+
+  /* ── Shape scale ──────────────────────────────────────────────────────
+     Small controls 8 · inputs/buttons 12 · cards 16 · sheets 24. */
+  --radius-xs: 0.5rem;
+  --radius-sm: 0.75rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.5rem;
+
+  /* ── Elevation ────────────────────────────────────────────────────────
+     Hierarchy, not decoration: e1 for resting cards, e2 for raised/hover,
+     e3 for floating surfaces (sheets, dialogs, the bottom nav). */
+  --elev-1: 0 1px 2px rgb(0 0 0 / 0.18), 0 1px 3px rgb(0 0 0 / 0.12);
+  --elev-2: 0 4px 10px rgb(0 0 0 / 0.22), 0 2px 4px rgb(0 0 0 / 0.14);
+  --elev-3: 0 12px 32px rgb(0 0 0 / 0.34), 0 4px 10px rgb(0 0 0 / 0.2);
+
+  /* ── Motion ───────────────────────────────────────────────────────────
+     Micro-interactions 120–250ms; larger transitions longer when earned. */
+  --dur-fast: 140ms;
+  --dur-base: 220ms;
+  --dur-slow: 380ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ── Mobile chrome metrics ────────────────────────────────────────────
+     Shared by the app bar, the bottom nav and every screen's scroll
+     padding so nothing is ever hidden behind fixed chrome. */
+  --app-bar-h: 3.5rem;
+  --bottom-nav-h: 4rem;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+
   color-scheme: dark;
 }
 
@@ -36,17 +78,105 @@ html.light {
   --color-accent-hover: 148 190 0;
   --color-accent-text: 107 142 0;
   --color-cyan-text: 8 145 178;
+
+  /* Status roles deepened for contrast on the light canvas (all ≥4.5:1 on
+     the --color-card white surface). */
+  --color-success: 4 120 87;
+  --color-warning: 180 83 9;
+  --color-danger: 190 18 60;
+  --color-info: 8 145 178;
+
+  /* Shadows read as grey smudges on white — keep them tight and faint and
+     let borders carry most of the separation. */
+  --elev-1: 0 1px 2px rgb(13 17 20 / 0.06), 0 1px 3px rgb(13 17 20 / 0.05);
+  --elev-2: 0 4px 10px rgb(13 17 20 / 0.08), 0 2px 4px rgb(13 17 20 / 0.05);
+  --elev-3: 0 12px 32px rgb(13 17 20 / 0.12), 0 4px 10px rgb(13 17 20 / 0.07);
+
   color-scheme: light;
 }
 
 html {
   scroll-behavior: smooth;
+  /* Anchor jumps must clear the fixed app bar. */
+  scroll-padding-top: calc(var(--app-bar-h) + var(--safe-top) + 1rem);
+  /* Respect the OS text-size setting instead of locking it. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 html,
 body {
   background-color: rgb(var(--color-ink));
   color: rgb(var(--color-subtle));
+}
+
+body {
+  /* A phone must never scroll sideways. */
+  overflow-x: hidden;
+  /* Honour the display cutout gutters in landscape. */
+  padding-left: var(--safe-left);
+  padding-right: var(--safe-right);
+}
+
+/* ── Touch ergonomics ───────────────────────────────────────────────────
+   Kill the grey flash but always replace it with a real pressed state, and
+   drop the 300ms tap delay on anything interactive. */
+a,
+button,
+[role="button"],
+input,
+select,
+textarea,
+label {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+[role="button"],
+a[href],
+summary {
+  touch-action: manipulation;
+}
+
+/* iOS Safari zooms the whole page when a focused field is under 16px.
+   Lock the mobile font-size at 16px; desktop can go back to 14px. */
+input,
+select,
+textarea {
+  font-size: 16px;
+}
+@media (min-width: 768px) {
+  input,
+  select,
+  textarea {
+    font-size: 0.875rem;
+  }
+}
+
+/* Visible focus for keyboard users on every interactive element — never
+   removed without a replacement. */
+:focus-visible {
+  outline: 2px solid rgb(var(--color-accent));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────────────
+   Movement off, content still in its final readable state. GSAP and
+   framer-motion are gated separately in JS; this covers everything
+   declarative (CSS keyframes, transitions, smooth scroll). */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Brief cross-fade applied only while the theme is being toggled (added by
@@ -102,4 +232,108 @@ html.lenis {
 ::-webkit-scrollbar-thumb {
   background: rgb(var(--color-muted) / 0.55);
   border-radius: 4px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Mobile layout utilities
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* Full-height sections. 100vh is wrong on phones — it ignores the browser
+   chrome and makes the hero jump as the URL bar collapses. 100svh is the
+   smallest (stable) viewport height, so the layout never shifts. */
+.min-h-screen-safe {
+  min-height: 100vh; /* fallback for browsers without svh */
+  min-height: 100svh;
+}
+
+/* Safe-area padding helpers. Apply ONE of these per element — a safe-area
+   padded bar inside a safe-area padded container double-pads. */
+.pt-safe {
+  padding-top: var(--safe-top);
+}
+.pb-safe {
+  padding-bottom: var(--safe-bottom);
+}
+
+/* Scroll room so fixed chrome never covers the end of a screen's content.
+   `pb-nav` is for scroll containers that sit under the bottom navigation. */
+.pb-nav {
+  padding-bottom: calc(var(--bottom-nav-h) + var(--safe-bottom) + 1.5rem);
+}
+@media (min-width: 768px) {
+  /* The bottom nav is mobile-only, so desktop reclaims the space. */
+  .pb-nav {
+    padding-bottom: 1.5rem;
+  }
+}
+
+/* Top offset for screens sitting under the fixed app bar. */
+.pt-app-bar {
+  padding-top: calc(var(--app-bar-h) + var(--safe-top));
+}
+
+/* Hover affordances must not apply on touch — `:hover` sticks after a tap
+   on mobile. Wrap hover-only styling in this query. */
+@media (hover: hover) and (pointer: fine) {
+  .hover-lift {
+    transition:
+      transform var(--dur-base) var(--ease-standard),
+      box-shadow var(--dur-base) var(--ease-standard);
+  }
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--elev-2);
+  }
+}
+
+/* Pressed state for touch — replaces the tap highlight we removed above. */
+.press {
+  transition: transform var(--dur-fast) var(--ease-standard);
+}
+.press:active {
+  transform: scale(0.97);
+}
+
+/* Skeleton placeholder. Matches the real layout's dimensions at the call
+   site so content arriving causes no layout shift. */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgb(var(--color-line) / 0.07);
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(var(--color-line) / 0.08),
+    transparent
+  );
+  animation: skeleton-sweep 1.6s ease-in-out infinite;
+}
+@keyframes skeleton-sweep {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Horizontal chip/tab rails: edge-to-edge scroll with snapping, no visible
+   scrollbar, and the screen gutter preserved at both ends. */
+.rail {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.rail::-webkit-scrollbar {
+  display: none;
+}
+.rail > * {
+  scroll-snap-align: start;
+  flex: none;
 }

@@ -127,7 +127,7 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-noise opacity-[0.05]" />
       <GeometryShapes variant="hero" />
 
-      <div className="relative z-10 mx-auto grid w-full max-w-6xl items-stretch gap-10 px-6 lg:grid-cols-2 lg:gap-14">
+      <div className="relative z-10 mx-auto grid w-full max-w-6xl items-stretch gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14">
         {/* ── Brand panel (left) ── */}
         <motion.div
           {...stagger(0.05)}
@@ -283,7 +283,9 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
                   {...register("email")}
                 />
               </div>
-              {errors.email && <p className="text-xs text-rose-400">{errors.email.message}</p>}
+              {errors.email && (
+                <p role="alert" className="text-xs text-danger">{errors.email.message}</p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -292,7 +294,7 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
                   Password
                 </label>
                 {isLogin && (
-                  <a href="#" className="text-xs text-muted transition-colors hover:text-accent-text">
+                  <a href="#" className="-my-2 flex min-h-touch-min items-center px-1 text-xs text-muted transition-colors duration-fast hover:text-accent-text">
                     Forgot password?
                   </a>
                 )}
@@ -309,14 +311,14 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
                   placeholder="Min. 8 characters"
                   type={showPassword ? "text" : "password"}
                   autoComplete={isLogin ? "current-password" : "new-password"}
-                  className="w-full border-line/10 bg-ink/50 py-3.5 pl-11 pr-11 text-paper placeholder:text-muted focus-visible:border-accent/60 focus-visible:ring-accent/30"
+                  className="w-full border-line/10 bg-ink/50 py-3.5 pl-11 pr-14 text-paper placeholder:text-muted focus-visible:border-accent/60 focus-visible:ring-accent/30"
                   {...register("password")}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
                   aria-label={showPassword ? "Hide password" : "Show password"}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 rounded-lg p-1 text-muted transition-colors hover:text-accent-text"
+                  className="press absolute right-1.5 top-1/2 flex h-touch w-touch -translate-y-1/2 items-center justify-center rounded-full text-muted transition-colors duration-fast hover:text-accent-text"
                 >
                   {showPassword ? (
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -332,14 +334,17 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
                   )}
                 </button>
               </div>
-              {errors.password && <p className="text-xs text-rose-400">{errors.password.message}</p>}
+              {errors.password && (
+                <p role="alert" className="text-xs text-danger">{errors.password.message}</p>
+              )}
             </div>
 
             {serverError && (
               <motion.p
                 initial={{ opacity: 0, y: -6 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="rounded-xl border border-rose-400/30 bg-rose-400/10 px-4 py-3 text-sm text-rose-300"
+                role="alert"
+                className="rounded-sm border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger"
               >
                 {serverError}
               </motion.p>
@@ -349,7 +354,7 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
               type="submit"
               isLoading={isSubmitting}
               className={clsx(
-                "w-full rounded-full bg-accent py-4 text-base font-bold tracking-tight text-on-accent transition-all hover:bg-accent/90 hover:shadow-xl hover:shadow-accent/25"
+                "min-h-[3.25rem] w-full rounded-full text-base"
               )}
             >
               {isLogin ? "Log in" : "Create my account"}

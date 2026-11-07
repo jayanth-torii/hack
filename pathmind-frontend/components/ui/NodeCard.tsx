@@ -67,7 +67,7 @@ export function NodeCard({ stage, state, roadmapId, topic, compact }: NodeCardPr
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       className={clsx(
-        "relative overflow-hidden rounded-3xl border bg-card/70 shadow-xl shadow-black/30 backdrop-blur-xl",
+        "relative overflow-hidden rounded-lg border bg-card/70 shadow-e3 backdrop-blur-xl",
         locked
           ? "border-line/8 opacity-80"
           : state === "completed"
@@ -89,7 +89,7 @@ export function NodeCard({ stage, state, roadmapId, topic, compact }: NodeCardPr
         )}
       />
 
-      <div className="p-5">
+      <div className="p-4 sm:p-5">
         {/* Header row */}
         <div className="mb-3 flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
@@ -141,7 +141,7 @@ export function NodeCard({ stage, state, roadmapId, topic, compact }: NodeCardPr
         </p>
 
         {locked ? (
-          <div className="mt-5 flex items-center gap-3 rounded-2xl border border-line/10 bg-ink/40 px-4 py-3.5">
+          <div className="mt-5 flex items-center gap-3 rounded-md border border-line/10 bg-ink/40 px-4 py-3.5">
             <span className="flex h-8 w-8 flex-none items-center justify-center rounded-full border border-line/15 text-muted">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <rect x="4.5" y="10" width="15" height="10" rx="2.5" stroke="currentColor" strokeWidth="1.6" />
@@ -175,7 +175,7 @@ export function NodeCard({ stage, state, roadmapId, topic, compact }: NodeCardPr
                 <ul className="space-y-3">
                   {stage.resources.map((r) => (
                     <li key={r.url}>
-                      <div className="flex items-center justify-between gap-2 rounded-xl border border-line/10 bg-ink/30 px-3.5 py-2.5 transition-colors hover:border-accent/30">
+                      <div className="flex min-h-touch items-center justify-between gap-2 rounded-sm border border-line/10 bg-ink/30 px-3.5 py-2.5 transition-colors duration-fast hover:border-accent/30">
                         <a
                           href={r.url}
                           target="_blank"
@@ -201,7 +201,7 @@ export function NodeCard({ stage, state, roadmapId, topic, compact }: NodeCardPr
                     .map((c) => (
                       <li
                         key={c.url}
-                        className="flex items-center justify-between gap-2 rounded-xl border border-line/10 bg-ink/30 px-3.5 py-2.5 transition-colors hover:border-accent/30"
+                        className="flex min-h-touch items-center justify-between gap-2 rounded-sm border border-line/10 bg-ink/30 px-3.5 py-2.5 transition-colors duration-fast hover:border-accent/30"
                       >
                         <a
                           href={c.url}
@@ -226,7 +226,7 @@ export function NodeCard({ stage, state, roadmapId, topic, compact }: NodeCardPr
                   {stage.practiceLinks.map((p) => (
                     <li
                       key={p.url}
-                      className="flex items-center justify-between gap-2 rounded-xl border border-line/10 bg-ink/30 px-3.5 py-2.5 transition-colors hover:border-accent/30"
+                      className="flex min-h-touch items-center justify-between gap-2 rounded-sm border border-line/10 bg-ink/30 px-3.5 py-2.5 transition-colors duration-fast hover:border-accent/30"
                     >
                       <a
                         href={p.url}

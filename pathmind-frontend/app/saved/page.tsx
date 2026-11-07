@@ -1,32 +1,29 @@
-import Link from "next/link";
 import { Suspense } from "react";
 import { SavedRoadmaps } from "@/components/sections/SavedRoadmaps";
+import { AppBar } from "@/components/ui/AppBar";
+import { BottomNav } from "@/components/ui/BottomNav";
+import { CardGridSkeleton } from "@/components/ui/Skeleton";
 
 export default function SavedPage() {
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-line/10 bg-card/70 px-6 py-4 backdrop-blur-xl">
-        <Link href="/" className="flex w-fit items-center gap-2.5" aria-label="Vidhyora home">
-          <span className="logo-chip flex h-7 w-7 items-center justify-center">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/vidhyora-logo.png"
-              alt=""
-              width={30}
-              height={30}
-              className="h-7 w-7"
-            />
-          </span>
-          <span className="font-display text-lg font-semibold tracking-tight text-paper">
-            Vidhyora
-          </span>
-        </Link>
-      </header>
-      <main className="pt-24">
-        <Suspense fallback={<p className="px-6 py-16 text-center text-muted">Loading your saved roadmaps…</p>}>
+      {/* The library is a top-level destination, so no back affordance —
+          the bottom nav is the way between it and the other destinations. */}
+      <AppBar actions={[{ href: "/profile", label: "Profile" }]} />
+
+      <main id="main" className="pt-app-bar pb-nav min-h-screen-safe bg-ink">
+        <Suspense
+          fallback={
+            <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
+              <CardGridSkeleton />
+            </div>
+          }
+        >
           <SavedRoadmaps />
         </Suspense>
       </main>
+
+      <BottomNav />
     </>
   );
 }

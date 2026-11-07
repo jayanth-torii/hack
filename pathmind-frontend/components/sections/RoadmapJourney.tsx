@@ -56,7 +56,7 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
   const CIRC = 2 * Math.PI * R;
 
   return (
-    <div className="relative overflow-hidden bg-ink pb-28 pt-28">
+    <div className="relative overflow-hidden bg-ink pb-16 pt-6 sm:pt-10">
       {/* Ambient glows + noise */}
       <div
         aria-hidden
@@ -65,7 +65,7 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-noise opacity-[0.05]" />
       <GeometryShapes variant="hero" />
 
-      <div className="relative z-10 mx-auto max-w-6xl px-6">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
         {/* ── Hero band ── */}
         <motion.section
           initial={reduce ? undefined : { opacity: 0, y: 24 }}
@@ -81,7 +81,7 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
                 {"// Your learning path"}
               </p>
             </div>
-            <h1 className="mt-3 font-display text-4xl font-semibold leading-[1.12] tracking-tight text-paper sm:text-5xl">
+            <h1 className="mt-3 font-display text-[1.75rem] font-semibold leading-[1.14] tracking-tight text-paper sm:text-4xl lg:text-5xl">
               {roadmap.topic}
             </h1>
             <p className="mt-4 max-w-xl text-muted">
@@ -90,25 +90,27 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
               built in.
             </p>
 
-            <div className="mt-7 flex flex-wrap items-center gap-3">
+            <div className="mt-7 flex flex-wrap items-center gap-2 sm:gap-3">
               {(["beginner", "intermediate", "advanced"] as const).map((d) => (
                 <span
                   key={d}
-                  className="rounded-full border border-line/12 bg-card/50 px-3.5 py-1.5 text-xs font-medium text-subtle backdrop-blur"
+                  className="rounded-full border border-line/12 bg-card/50 px-3 py-1.5 text-xs font-medium text-subtle backdrop-blur"
                 >
                   {difficultyCounts[d] ?? 0} {d}
                 </span>
               ))}
-              <div className="flex gap-3">
+              {/* Hidden on phones: these two destinations live in the bottom
+                  navigation there, so repeating them is redundant chrome. */}
+              <div className="hidden gap-3 md:flex">
                 <Link
                   href={`/roadmap/${roadmap.id}/dashboard`}
-                  className="rounded-full bg-accent px-5 py-2.5 text-sm font-bold tracking-tight text-on-accent shadow-lg shadow-accent/25 transition-colors hover:bg-accent/90"
+                  className="press inline-flex min-h-touch items-center rounded-full bg-accent px-5 text-sm font-bold tracking-tight text-on-accent shadow-e2 transition-colors duration-fast hover:bg-accent-hover"
                 >
                   Dashboard
                 </Link>
                 <Link
                   href={`/roadmap/${roadmap.id}/calendar`}
-                  className="rounded-full border border-line/15 px-5 py-2.5 text-sm font-medium text-subtle transition-colors hover:border-accent/50 hover:text-accent"
+                  className="press inline-flex min-h-touch items-center rounded-full border border-line/15 px-5 text-sm font-medium text-subtle transition-colors duration-fast hover:border-accent/50 hover:text-accent"
                 >
                   Calendar
                 </Link>
@@ -121,9 +123,9 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
             initial={reduce ? undefined : { opacity: 0, scale: 0.85 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
-            className="relative flex flex-none flex-col items-center gap-8 xl:flex-row xl:gap-12"
+            className="relative flex w-full flex-col items-center gap-6 md:w-auto md:flex-none xl:flex-row xl:gap-12"
           >
-            <div className="relative h-36 w-36">
+            <div className="relative h-28 w-28 sm:h-36 sm:w-36">
               <svg viewBox="0 0 120 120" className="h-full w-full -rotate-90">
                 <circle cx="60" cy="60" r={R} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="9" />
                 <motion.circle
@@ -167,7 +169,7 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
         </motion.section>
 
         {/* ── Glowing path timeline ── */}
-        <section className="relative mt-20">
+        <section className="relative mt-14 sm:mt-20">
           {/* spine */}
           <motion.div
             aria-hidden
@@ -175,19 +177,19 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
             whileInView={{ scaleY: 1 }}
             viewport={{ once: true, margin: "-15% 0px" }}
             transition={{ duration: 1.4, ease: "easeOut" }}
-            className="absolute left-5 top-0 h-full w-px origin-top bg-gradient-to-b from-accent via-brand-400/60 to-transparent md:left-1/2"
+            className="absolute left-3 top-0 h-full w-px origin-top bg-gradient-to-b from-accent via-brand-400/60 to-transparent sm:left-5 md:left-1/2"
           />
           {/* spine glow */}
           <div
             aria-hidden
-            className="absolute left-5 top-0 h-full w-px -translate-x-1/2 blur-[2px] md:left-1/2"
+            className="absolute left-3 top-0 h-full w-px -translate-x-1/2 blur-[2px] sm:left-5 md:left-1/2"
             style={{
               background:
                 "linear-gradient(to bottom, rgba(201,243,29,0.6), rgba(56,189,248,0.3), transparent)",
             }}
           />
 
-          <ol className="space-y-10">
+          <ol className="space-y-8 sm:space-y-10">
             {stages.map((stage, i) => {
               const state = isCompleted(stage.id)
                 ? "completed"
@@ -212,7 +214,7 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
                   className="relative md:grid md:grid-cols-2 md:gap-10 lg:gap-16"
                 >
                   {/* node marker */}
-                  <div className="absolute left-5 top-6 z-10 -translate-x-1/2 md:left-1/2">
+                  <div className="absolute left-3 top-6 z-10 -translate-x-1/2 sm:left-5 md:left-1/2">
                     <span className="relative block h-4 w-4">
                       {isActive && !reduce && (
                         <span className="absolute inset-0 animate-ping rounded-full bg-accent/50" />
@@ -236,7 +238,7 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
                   {/* card side */}
                   <div
                     className={clsx(
-                      "pl-12 md:pl-0",
+                      "pl-8 sm:pl-12 md:pl-0",
                       even ? "md:col-start-1 md:pr-3" : "md:col-start-2 md:pl-3"
                     )}
                   >
@@ -246,7 +248,7 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
                   {/* opposite column: video preview on the alternate side */}
                   <div
                     className={clsx(
-                      "pl-12 pt-2 md:flex md:items-center md:pl-0 md:pt-0",
+                      "pl-8 pt-3 sm:pl-12 md:flex md:items-center md:pl-0 md:pt-0",
                       even ? "md:col-start-2 md:pl-3" : "md:col-start-1 md:row-start-1 md:pr-3"
                     )}
                   >
@@ -256,7 +258,7 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
                         title={videoResource.title}
                         type={videoResource.type}
                         verified={videoResource.verified}
-                        className="md:rounded-2xl"
+                        className="md:rounded-lg"
                       />
                     ) : (
                       <div aria-hidden className="hidden md:block" />

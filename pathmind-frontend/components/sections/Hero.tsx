@@ -86,7 +86,9 @@ export function Hero() {
     <section
       ref={sectionRef}
       id="top"
-      className="relative flex min-h-screen items-center overflow-hidden bg-ink pt-24"
+      // min-h-screen-safe uses 100svh: 100vh ignores the mobile browser
+      // chrome, so the hero used to jump as the URL bar collapsed.
+      className="min-h-screen-safe relative flex items-center overflow-hidden bg-ink pt-20 sm:pt-24"
     >
       {/* Ambient glows + film-grain noise (Acjon hero texture equivalent) */}
       <div
@@ -100,7 +102,7 @@ export function Hero() {
       {/* Floating geometry fills the empty corners of the hero */}
       <GeometryShapes variant="hero" />
 
-      <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-16 px-6 pb-24 pt-10 lg:grid-cols-12">
+      <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-16 px-4 pb-16 pt-8 sm:px-6 sm:pb-24 sm:pt-10 lg:grid-cols-12">
         <div className="lg:col-span-7">
           <p
             data-hero-eyebrow
@@ -109,7 +111,7 @@ export function Hero() {
             {"// AI digital twin for learning"}
           </p>
 
-          <h1 className="font-display text-4xl font-semibold leading-[1.12] tracking-tight text-paper sm:text-5xl xl:text-6xl">
+          <h1 className="font-display text-[2rem] font-semibold leading-[1.14] tracking-tight text-paper sm:text-5xl xl:text-6xl">
             {HEADLINE.map((line, lineIdx) => (
               <span key={line} data-hero-line className="block overflow-hidden pb-1">
                 <span className={clsx("block will-change-transform", lineIdx === HEADLINE.length - 1 && "text-accent")}>
@@ -135,7 +137,7 @@ export function Hero() {
                 <p className="text-sm text-subtle">Login to start building your path.</p>
                 <a
                   href="/auth/login"
-                  className="inline-block rounded-full bg-accent px-7 py-3 text-sm font-bold tracking-tight text-on-accent transition-colors hover:bg-accent/90"
+                  className="press inline-flex min-h-touch w-full items-center justify-center rounded-full bg-accent px-7 text-sm font-bold tracking-tight text-on-accent shadow-e2 transition-colors duration-fast hover:bg-accent-hover sm:w-auto"
                 >
                   Login to build your path
                 </a>
@@ -145,14 +147,16 @@ export function Hero() {
 
           <dl
             data-hero-stats
-            className="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-line/10 pt-8"
+            className="mt-10 grid max-w-lg grid-cols-3 gap-x-3 gap-y-4 border-t border-line/10 pt-7 sm:mt-12 sm:gap-6 sm:pt-8"
           >
             {HERO_STATS.map((stat) => (
               <div key={stat.label}>
-                <dd className="font-display text-2xl font-semibold text-accent sm:text-3xl">
+                <dd className="font-display text-xl font-semibold tabular-nums text-accent sm:text-3xl">
                   {stat.value}
                 </dd>
-                <dt className="mt-1 text-xs leading-snug text-muted">{stat.label}</dt>
+                <dt className="mt-1 text-[0.6875rem] leading-snug text-muted sm:text-xs">
+                  {stat.label}
+                </dt>
               </div>
             ))}
           </dl>
