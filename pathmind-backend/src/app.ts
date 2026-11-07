@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import pinoHttp from "pino-http";
 import swaggerUi from "swagger-ui-express";
 import { env } from "./config/env";
+import { dbStatus } from "./config/db";
 import { logger } from "./config/logger";
 import { swaggerSpec } from "./config/swagger";
 import { globalLimiter } from "./config/rateLimits";
@@ -59,8 +60,30 @@ export function createApp(): Express {
   );
   app.use(globalLimiter);
 
+  // Liveness: the process is up and serving. Deliberately always 200 so a
+  // database outage doesn't make the platform kill a container that is
+  // otherwise healthy and retrying.
   app.get("/health", (_req, res) => {
-    res.status(200).json({ status: "ok", mockMode: env.MOCK_MODE });
+    res.status(200).json({ status: "ok", mockMode: env.MOCK_MODE, db: dbStatus() });
+  });
+
+  // Readiness: can this instance actually serve database-backed traffic?
+  // 503 while the connection is down, so the real cause is visible from the
+  // outside instead of being buried in a crash loop.
+  app.get("/ready", (_req, res) => {
+    const db = dbStatus();
+    const ready = db === "connected";
+    res.status(ready ? 200 : 503).json({
+      status: ready ? "ready" : "degraded",
+      db,
+      ...(ready
+        ? {}
+        : {
+            detail:
+              "The API is running but cannot reach MongoDB. Check the Atlas IP Access List, " +
+              "whether a free-tier cluster has auto-paused, and MONGO_URI.",
+          }),
+    });
   });
 
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));

@@ -1,12 +1,13 @@
 import { createApp } from "./app";
 import { env } from "./config/env";
 import { logger } from "./config/logger";
-import { connectDB, disconnectDB } from "./config/db";
+import { connectDB, connectWithRetry, disconnectDB } from "./config/db";
 import { startCronJobs } from "./workers/cronScheduler";
 
 let appPromise: ReturnType<typeof createApp> | null = null;
 
-// Initialize app and DB for serverless environments (like Vercel)
+// Serverless (Vercel) path: a function invocation has no long-lived process
+// to retry in, so it must have a live connection before handling the request.
 async function initApp() {
   if (!appPromise) {
     await connectDB();
@@ -19,9 +20,24 @@ async function initApp() {
 if (process.env.VERCEL !== "1") {
   let server: ReturnType<typeof import("http").createServer> | null = null;
   let shuttingDown = false;
+  let cronStarted = false;
 
   async function main(): Promise<void> {
-    const app = await initApp();
+    // Bind the port FIRST, then connect to the database in the background.
+    //
+    // Previously this awaited connectDB() before listen(), so an unreachable
+    // database meant the port was never opened: the host's port scan failed
+    // ("No open ports detected"), the process exited 1, and the deploy
+    // crash-looped — hiding the real cause behind a startup failure.
+    //
+    // Now the service always comes up. /health reports the database as down
+    // (503) until it connects, and the connection self-heals without a
+    // redeploy once the database is reachable again.
+    const app = createApp();
+    // Cache it so the exported serverless handler reuses this instance
+    // rather than building a second one.
+    appPromise = app;
+
     server = app.listen(env.PORT, () => {
       logger.info(
         {
@@ -37,12 +53,26 @@ if (process.env.VERCEL !== "1") {
       logger.info(`Swagger docs: http://localhost:${env.PORT}/api-docs`);
     });
 
-    startCronJobs();
+    // Cron jobs touch the database, so they only start once it is reachable.
+    connectWithRetry(() => {
+      if (!cronStarted) {
+        cronStarted = true;
+        startCronJobs();
+      }
+    });
   }
 
+  // Only a genuine startup failure (e.g. the port is already in use) is
+  // fatal now — a database outage no longer kills the process.
   main().catch((err) => {
     logger.error({ err }, "Fatal error during startup");
     process.exit(1);
+  });
+
+  // A rejected promise anywhere in the app would otherwise terminate the
+  // process on Node 15+ with no useful log line.
+  process.on("unhandledRejection", (reason) => {
+    logger.error({ err: reason }, "Unhandled promise rejection");
   });
 
   const shutdown = (signal: string) => {
