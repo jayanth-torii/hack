@@ -6,6 +6,21 @@ export interface CompletedStageEntry {
   completedAt: Date;
 }
 
+/**
+ * The syllabus items a learner has ticked inside one stage.
+ *
+ * Items are addressed by their index in the stage's `syllabus` array rather
+ * than by text. A generated roadmap's stages are an immutable template once
+ * written — many learners share one cached roadmap document and nothing
+ * rewrites its syllabus — so the index is stable for the life of the roadmap,
+ * and it stays correct when two items happen to have the same wording.
+ */
+export interface StageItemsEntry {
+  stageId: Types.ObjectId;
+  /** Sorted, de-duplicated indexes into `stage.syllabus`. */
+  itemIndexes: number[];
+}
+
 export interface UserProgressDocument extends Document {
   _id: Types.ObjectId;
   userId: Types.ObjectId;
@@ -26,6 +41,12 @@ export interface UserProgressDocument extends Document {
    * best-known timestamp rather than inventing a precise one.
    */
   completedStages: CompletedStageEntry[];
+  /**
+   * Per-stage lesson ticks. A stage can have items ticked long before it is
+   * complete, so this cannot live on `completedStages` — it is its own list,
+   * holding only stages the learner has actually touched.
+   */
+  completedItems: StageItemsEntry[];
   unlockedStageIds: Types.ObjectId[];
   updatedAt: Date;
   createdAt: Date;
@@ -39,6 +60,14 @@ const completedStageSchema = new Schema<CompletedStageEntry>(
   { _id: false }
 );
 
+const stageItemsSchema = new Schema<StageItemsEntry>(
+  {
+    stageId: { type: Schema.Types.ObjectId, required: true },
+    itemIndexes: { type: [Number], default: [] },
+  },
+  { _id: false }
+);
+
 // Kept separate from the Roadmap template document so many students can share
 // one cached/generated roadmap without write contention on that shared doc.
 const userProgressSchema = new Schema<UserProgressDocument>(
@@ -47,6 +76,7 @@ const userProgressSchema = new Schema<UserProgressDocument>(
     roadmapId: { type: Schema.Types.ObjectId, ref: "Roadmap", required: true },
     completedStageIds: [{ type: Schema.Types.ObjectId }],
     completedStages: { type: [completedStageSchema], default: [] },
+    completedItems: { type: [stageItemsSchema], default: [] },
     unlockedStageIds: [{ type: Schema.Types.ObjectId }],
   },
   { timestamps: true }

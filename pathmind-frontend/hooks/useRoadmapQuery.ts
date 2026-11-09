@@ -90,12 +90,21 @@ export function useUpdateProgress() {
       const completingIndex = stages.findIndex((s) => s.id === stageId);
       const nextStage = completingIndex >= 0 ? stages[completingIndex + 1] : undefined;
 
+      // Completing a stage ticks all of its lessons, server-side and here, so
+      // the rows inside the card flip with the card rather than a beat later.
+      const completingStage = stages[completingIndex];
       const optimistic: UserProgress = {
         roadmapId,
         completedStageIds: [...new Set([...(previous?.completedStageIds ?? []), stageId])],
         unlockedStageIds: [
           ...new Set([...(previous?.unlockedStageIds ?? []), ...(nextStage ? [nextStage.id] : [])]),
         ],
+        completedItems: {
+          ...(previous?.completedItems ?? {}),
+          [stageId]: completingStage
+            ? completingStage.syllabus.map((_, index) => index)
+            : (previous?.completedItems?.[stageId] ?? []),
+        },
       };
       queryClient.setQueryData(key, optimistic);
       setProgress(optimistic);
@@ -141,6 +150,73 @@ export function useExportCalendar() {
         { format }
       );
       return { format: "google" as const, ...result };
+    },
+  });
+}
+
+interface ToggleStageItemVars {
+  roadmapId: string;
+  stageId: string;
+  index: number;
+  done: boolean;
+}
+
+/**
+ * Ticks or unticks one syllabus row.
+ *
+ * Optimistic, because a checkbox that waits on a round trip feels broken. The
+ * server owns whether the tick also completed the stage — only its response can
+ * unlock the next one — so the optimistic patch deliberately moves the tick and
+ * nothing else, and `onSuccess` replaces the whole thing with server truth.
+ */
+export function useToggleStageItem() {
+  const queryClient = useQueryClient();
+  const setProgress = useRoadmapStore((s) => s.setProgress);
+
+  return useMutation({
+    mutationFn: async ({ roadmapId, stageId, index, done }: ToggleStageItemVars) => {
+      const res = await apiClient.put<
+        Omit<UserProgress, "roadmapId"> & { stageCompleted: boolean }
+      >(`/roadmaps/${roadmapId}/progress/${stageId}/items`, { index, done });
+      return { ...res, roadmapId };
+    },
+    onMutate: async ({ roadmapId, stageId, index, done }) => {
+      const key = ["progress", roadmapId];
+      const previous = queryClient.getQueryData<UserProgress>(key);
+      if (!previous) return { previous };
+
+      const current = previous.completedItems?.[stageId] ?? [];
+      const next = done
+        ? [...new Set([...current, index])].sort((a, b) => a - b)
+        : current.filter((i) => i !== index);
+
+      const optimistic: UserProgress = {
+        ...previous,
+        completedItems: { ...(previous.completedItems ?? {}), [stageId]: next },
+      };
+      queryClient.setQueryData(key, optimistic);
+      setProgress(optimistic);
+      return { previous };
+    },
+    onError: (err, { roadmapId }, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData(["progress", roadmapId], context.previous);
+        setProgress(context.previous);
+      }
+      toast.error(
+        "Couldn't save that",
+        err instanceof ApiClientError ? err.message : "Please try again."
+      );
+    },
+    onSuccess: ({ stageCompleted, ...data }) => {
+      setProgress(data);
+      queryClient.setQueryData(["progress", data.roadmapId], data);
+      if (stageCompleted) {
+        toast.success("Stage complete 🎉", "Your next stage is now unlocked.");
+      }
+    },
+    onSettled: (_data, _err, { roadmapId }) => {
+      void queryClient.invalidateQueries({ queryKey: ["progress", roadmapId] });
     },
   });
 }

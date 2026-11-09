@@ -6,7 +6,8 @@ import Link from "next/link";
 import { clsx } from "@/lib/clsx";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ProgressRing } from "@/components/ui/ProgressRing";
-import { useUpdateProgress } from "@/hooks/useRoadmapQuery";
+import { StageTimeline, type StageState } from "@/components/sections/StageTimeline";
+import { useToggleStageItem, useUpdateProgress } from "@/hooks/useRoadmapQuery";
 import { useIssueCertificate, useCertificates } from "@/hooks/useProfileQuery";
 import type { Roadmap, Stage } from "@/types/roadmap";
 import type { UserProgress } from "@/types/progress";
@@ -14,14 +15,11 @@ import {
   ArrowRightIcon,
   BookIcon,
   CheckCircleIcon,
-  CircleIcon,
   ChartIcon,
   ClockIcon,
   DownloadIcon,
   LayersIcon,
-  LockIcon,
   MedalIcon,
-  PlayIcon,
   TargetIcon,
   TrophyIcon,
 } from "@/components/profile/ProfileIcons";
@@ -31,14 +29,7 @@ interface RoadmapJourneyProps {
   progress?: UserProgress;
 }
 
-type StageState = "completed" | "active" | "locked";
 type Tab = "roadmap" | "resources" | "practice";
-
-const STATE_LABEL: Record<StageState, string> = {
-  completed: "Completed",
-  active: "In progress",
-  locked: "Not started",
-};
 
 /**
  * The learning journey.
@@ -49,13 +40,12 @@ const STATE_LABEL: Record<StageState, string> = {
  * validates before advancing anything.
  *
  * Only the tabs with real data exist. There is no Notes, Projects or Discussion
- * tab because nothing in the data model backs them, and a stage's `syllabus` is
- * a flat list of strings with no per-item completion state, so those render as
- * a reading list rather than checkboxes that could not be ticked.
+ * tab because nothing in the data model backs them.
  */
 export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
   const [tab, setTab] = useState<Tab>("roadmap");
   const updateProgress = useUpdateProgress();
+  const toggleItem = useToggleStageItem();
   const issueCertificate = useIssueCertificate();
   const certificates = useCertificates();
 
@@ -128,23 +118,8 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
 
         {/* ── Header ───────────────────────────────────────────────── */}
         <header className="relative mt-4 overflow-hidden rounded-xl border border-accent/25 bg-card/40 p-5 shadow-[0_0_60px_-26px_rgb(var(--color-accent)/0.65)] backdrop-blur-sm sm:p-7">
-          <div
-            aria-hidden
-            data-scene-stage
-            className="pointer-events-none absolute right-0 top-0 hidden h-full w-[34%] items-center justify-end lg:flex"
-          >
-            <Image
-              src="/3d/how-header.png"
-              alt=""
-              width={846}
-              height={356}
-              sizes="26vw"
-              className="h-auto w-full max-w-xs select-none opacity-85"
-            />
-          </div>
-
-          <div className="relative flex flex-wrap items-start gap-6">
-            <div className="min-w-0 flex-1">
+          <div className="relative grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+            <div className="min-w-0">
               <Eyebrow>Your learning path</Eyebrow>
               <h1 className="mt-2 font-display text-2xl font-bold leading-tight tracking-tight text-paper sm:text-4xl">
                 {roadmap.topic}
@@ -203,7 +178,21 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
               </div>
             </div>
 
-            <ProgressRing percent={percent} size={118} sublabel="progress" />
+            {/* Ring, then the scene — both in flow, so neither can land on top
+                of the other the way an absolutely-positioned backdrop did. */}
+            <div className="flex items-center gap-6 lg:justify-end">
+              <ProgressRing percent={percent} size={118} sublabel="progress" />
+              <div aria-hidden data-scene-stage className="hidden shrink-0 xl:block">
+                <Image
+                  src="/3d/how-header.png"
+                  alt=""
+                  width={846}
+                  height={356}
+                  sizes="22vw"
+                  className="h-auto w-64 select-none opacity-85"
+                />
+              </div>
+            </div>
           </div>
         </header>
 
@@ -236,138 +225,21 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
           ))}
         </div>
 
-        {/* ── Roadmap timeline ─────────────────────────────────────── */}
+        {/* ── Roadmap timeline ─────────────────────── */}
         {tab === "roadmap" && (
-          <ol className="relative mt-6 space-y-4">
-            {/* Spine, desktop only — on phones the numbered badge carries the
-                sequence and a vertical rule would just add noise. */}
-            <span
-              aria-hidden
-              className="absolute bottom-8 left-[27px] top-8 hidden w-px bg-accent/20 lg:block"
-            />
-
-            {stages.map((stage, index) => {
-              const state = stateOf(stage);
-              return (
-                <li key={stage.id} id={`stage-${stage.id}`} className="relative lg:pl-24">
-                  <span
-                    aria-hidden
-                    className={clsx(
-                      "absolute left-0 top-6 hidden h-14 w-14 items-center justify-center rounded-full border bg-ink font-display text-sm font-bold lg:flex",
-                      state === "completed"
-                        ? "border-success/50 text-success"
-                        : state === "active"
-                          ? "border-accent/60 text-accent shadow-[0_0_22px_rgb(var(--color-accent)/0.35)]"
-                          : "border-line/20 text-muted"
-                    )}
-                  >
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-
-                  <article
-                    className={clsx(
-                      "rounded-xl border bg-card/40 p-5 backdrop-blur-sm transition-colors duration-base sm:p-6",
-                      state === "locked"
-                        ? "border-line/12"
-                        : "border-accent/25 shadow-[0_0_50px_-26px_rgb(var(--color-accent)/0.6)]"
-                    )}
-                  >
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-                      <div className="min-w-0">
-                        <p className="flex items-center gap-2.5 text-[0.6875rem] font-bold uppercase tracking-[0.2em] text-subtle">
-                          <span className="lg:hidden">Stage {String(index + 1).padStart(2, "0")}</span>
-                          <span className="hidden lg:inline">Stage</span>
-                          <span aria-hidden className="h-px w-4 bg-line/20" />
-                          <span className="capitalize text-muted">{stage.difficulty}</span>
-                        </p>
-                        <h2 className="mt-1.5 font-display text-lg font-bold tracking-tight text-paper sm:text-xl">
-                          {stage.title}
-                        </h2>
-                      </div>
-
-                      {/* Status is a labelled chip, never colour alone. */}
-                      <span
-                        className={clsx(
-                          "inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold",
-                          state === "completed"
-                            ? "bg-success/12 text-success"
-                            : state === "active"
-                              ? "bg-accent/12 text-accent-text"
-                              : "bg-line/10 text-muted"
-                        )}
-                      >
-                        {state === "completed" ? (
-                          <CheckCircleIcon className="h-3.5 w-3.5" />
-                        ) : state === "active" ? (
-                          <PlayIcon className="h-3.5 w-3.5" />
-                        ) : (
-                          <LockIcon className="h-3.5 w-3.5" />
-                        )}
-                        {STATE_LABEL[state]}
-                      </span>
-                    </div>
-
-                    {stage.syllabus.length > 0 && (
-                      <ul className="mt-4 space-y-2">
-                        {stage.syllabus.map((item) => (
-                          <li key={item} className="flex items-start gap-2.5 text-sm">
-                            {state === "completed" ? (
-                              <CheckCircleIcon className="mt-0.5 h-4 w-4 shrink-0 text-success" />
-                            ) : (
-                              <CircleIcon className="mt-0.5 h-4 w-4 shrink-0 text-muted" />
-                            )}
-                            <span className={state === "locked" ? "text-muted" : "text-subtle"}>
-                              {item}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-
-                    <div className="mt-5 flex flex-wrap items-center gap-3">
-                      {state === "active" && (
-                        <button
-                          type="button"
-                          onClick={() =>
-                            updateProgress.mutate({ roadmapId: roadmap.id, stageId: stage.id })
-                          }
-                          disabled={updateProgress.isPending}
-                          aria-busy={updateProgress.isPending}
-                          className="press inline-flex min-h-touch items-center gap-2 rounded-full bg-accent px-5 text-sm font-bold text-on-accent transition-colors duration-fast hover:bg-accent-hover disabled:bg-line/15 disabled:text-muted"
-                        >
-                          <CheckCircleIcon className="h-4 w-4" />
-                          {updateProgress.isPending ? "Saving…" : "Mark complete"}
-                        </button>
-                      )}
-
-                      {stage.resources.length > 0 && (
-                        <button
-                          type="button"
-                          onClick={() => setTab("resources")}
-                          className="press inline-flex min-h-touch items-center gap-2 rounded-full border border-line/20 px-4 text-sm font-semibold text-subtle transition-colors duration-fast hover:border-accent/50 hover:text-accent-text"
-                        >
-                          <BookIcon className="h-4 w-4" />
-                          {stage.resources.length} resources
-                        </button>
-                      )}
-
-                      {stage.estimatedDays > 0 && (
-                        <span className="inline-flex items-center gap-1.5 text-xs text-muted">
-                          <ClockIcon className="h-3.5 w-3.5" />~{stage.estimatedDays} days
-                        </span>
-                      )}
-
-                      {state === "locked" && (
-                        <span className="text-xs text-muted">
-                          Finish the previous stage to unlock this one.
-                        </span>
-                      )}
-                    </div>
-                  </article>
-                </li>
-              );
-            })}
-          </ol>
+          <StageTimeline
+            stages={stages}
+            stateOf={stateOf}
+            completedItems={progress?.completedItems ?? {}}
+            isSaving={toggleItem.isPending || updateProgress.isPending}
+            onToggleItem={(stage, index, done) =>
+              toggleItem.mutate({ roadmapId: roadmap.id, stageId: stage.id, index, done })
+            }
+            onMarkComplete={(stage) =>
+              updateProgress.mutate({ roadmapId: roadmap.id, stageId: stage.id })
+            }
+            onShowResources={() => setTab("resources")}
+          />
         )}
 
         {/* ── Resources ────────────────────────────────────────────── */}
