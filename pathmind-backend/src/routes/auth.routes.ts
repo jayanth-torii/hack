@@ -2,6 +2,8 @@ import { Router } from "express";
 import { googleLogin, login, logout, refresh, register, me } from "../controllers/auth.controller";
 import { authLimiter } from "../config/rateLimits";
 import { requireAuth } from "../middleware/auth.middleware";
+import { changePassword } from "../controllers/me.controller";
+import { changePasswordSchema } from "../schemas/profile.schema";
 import { validate } from "../middleware/validate.middleware";
 import { loginSchema, registerSchema } from "../schemas/auth.schema";
 
@@ -102,3 +104,22 @@ authRouter.post("/logout", logout);
  *       401: { description: Not authenticated }
  */
 authRouter.get("/me", requireAuth, me);
+
+/**
+ * @openapi
+ * /auth/change-password:
+ *   post:
+ *     summary: Change the account password (requires the current one)
+ *     tags: [Auth]
+ *     responses:
+ *       200: { description: Password changed }
+ *       400: { description: Current password wrong, or account has no password }
+ *       401: { description: Not authenticated }
+ */
+authRouter.post(
+  "/change-password",
+  authLimiter,
+  requireAuth,
+  validate(changePasswordSchema),
+  changePassword
+);

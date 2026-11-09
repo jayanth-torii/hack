@@ -10,6 +10,7 @@ import { useUpdateProgress } from "@/hooks/useRoadmapQuery";
 import { GeometryShapes } from "@/components/home/GeometryShapes";
 import { Illustration } from "@/components/ui/Illustration";
 import { clsx } from "@/lib/clsx";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 
 const DIFFICULTY_STYLE: Record<Roadmap["stages"][number]["difficulty"], string> = {
   beginner: "border-emerald-400/30 bg-emerald-400/10 text-emerald-300",
@@ -73,9 +74,7 @@ export function ProgressDashboard({ roadmap }: { roadmap: Roadmap }) {
             <div className="flex items-center gap-3">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/illustrations/progress_2.png" alt="" className="h-10 w-10 rounded-xl object-cover shadow-md shadow-accent/10" />
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-text">
-                {"// Progress dashboard"}
-              </p>
+              <Eyebrow>Progress dashboard</Eyebrow>
             </div>
             <h1 className="mt-3 font-display text-[1.75rem] font-semibold leading-[1.14] tracking-tight text-paper sm:text-4xl lg:text-5xl">
               {roadmap.topic}
@@ -126,7 +125,7 @@ export function ProgressDashboard({ roadmap }: { roadmap: Roadmap }) {
                 />
                 <defs>
                   <linearGradient id="dash-ring" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stopColor="#c9f31d" />
+                    <stop offset="0%" stopColor="rgb(var(--color-accent))" />
                     <stop offset="100%" stopColor="#38bdf8" />
                   </linearGradient>
                 </defs>

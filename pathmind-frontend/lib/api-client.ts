@@ -8,7 +8,7 @@ export class ApiClientError extends Error {
 }
 
 interface RequestOptions {
-  method?: "GET" | "POST" | "PATCH" | "DELETE";
+  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   body?: unknown;
   signal?: AbortSignal;
 }
@@ -59,7 +59,39 @@ export const apiClient = {
     request<T>(path, { method: "POST", body, signal }),
   patch: <T>(path: string, body?: unknown, signal?: AbortSignal) =>
     request<T>(path, { method: "PATCH", body, signal }),
+  put: <T>(path: string, body?: unknown, signal?: AbortSignal) =>
+    request<T>(path, { method: "PUT", body, signal }),
+  del: <T>(path: string, signal?: AbortSignal) =>
+    request<T>(path, { method: "DELETE", signal }),
 };
+
+/**
+ * Fetches a binary response (currently the certificate PDF) and triggers a
+ * browser download. Kept separate from `apiClient` because the response is not
+ * JSON and must not go through the JSON error-shape parsing above.
+ */
+export async function downloadFile(path: string, fallbackName: string): Promise<void> {
+  const res = await fetch(`${API_URL}${path}`, { method: "GET", credentials: "include" });
+  if (!res.ok) {
+    throw new ApiClientError(res.status, "Download failed");
+  }
+
+  // Prefer the server's filename; it already sanitises the topic.
+  const disposition = res.headers.get("content-disposition") ?? "";
+  const match = /filename="?([^";]+)"?/.exec(disposition);
+  const filename = match?.[1] ?? fallbackName;
+
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  // Revoking immediately can cancel the download in some browsers.
+  setTimeout(() => URL.revokeObjectURL(url), 10_000);
+}
 
 export async function downloadBlob(path: string, body?: unknown): Promise<Blob> {
   const res = await fetch(`${API_URL}${path}`, {

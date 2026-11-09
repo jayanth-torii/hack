@@ -5,6 +5,7 @@ process.env.MOCK_MODE = "true";
 process.env.JWT_ACCESS_SECRET = "test-access-secret";
 process.env.JWT_REFRESH_SECRET = "test-refresh-secret";
 process.env.GENERATE_RATE_LIMIT_MAX = "1000"; // don't let rate limiting interfere with unrelated tests
+process.env.AUTH_RATE_LIMIT_MAX = "1000"; // a suite registers many throwaway accounts per file
 process.env.VERIFY_LINKS = "false"; // keep generation hermetic — no network HEAD checks in tests
 
 // dotenv never overrides already-set vars, so pin these to empty to keep the

@@ -1,23 +1,60 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
 import { useAuthStore } from "@/store/authStore";
+import { useProfile, useProgressSummary } from "@/hooks/useProfileQuery";
 import { useSavedRoadmaps } from "@/hooks/useRoadmapQuery";
 import { AppBar } from "@/components/ui/AppBar";
 import { BottomNav } from "@/components/ui/BottomNav";
-import { GeometryShapes } from "@/components/home/GeometryShapes";
-import { Badge } from "@/components/ui/Badge";
-import { Illustration } from "@/components/ui/Illustration";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 import { confirm } from "@/components/ui/ConfirmDialog";
 import { toast } from "@/components/ui/toast";
+import { clsx } from "@/lib/clsx";
+import { ProfileOverview } from "@/components/profile/ProfileOverview";
+import { RoadmapProgressList } from "@/components/profile/RoadmapProgressList";
+import { ProfileCertificates } from "@/components/profile/ProfileCertificates";
+import { ProfileProgress } from "@/components/profile/ProfileProgress";
+import { ProfileActivity } from "@/components/profile/ProfileActivity";
+import { ProfileSettings } from "@/components/profile/ProfileSettings";
+import {
+  ArrowRightIcon,
+  CalendarIcon,
+  ChartIcon,
+  CheckCircleIcon,
+  GearIcon,
+  GridIcon,
+  HistoryIcon,
+  LayersIcon,
+  MedalIcon,
+  PencilIcon,
+  SignOutIcon,
+} from "@/components/profile/ProfileIcons";
+
+type TabKey = "overview" | "roadmaps" | "certificates" | "progress" | "activity" | "settings";
+
+const TABS: { key: TabKey; label: string; icon: typeof GridIcon }[] = [
+  { key: "overview", label: "Overview", icon: GridIcon },
+  { key: "roadmaps", label: "Roadmaps", icon: LayersIcon },
+  { key: "certificates", label: "Certificates", icon: MedalIcon },
+  { key: "progress", label: "Progress", icon: ChartIcon },
+  { key: "activity", label: "Activity", icon: HistoryIcon },
+  { key: "settings", label: "Settings", icon: GearIcon },
+];
+
+function formatJoined(iso: string | undefined): string {
+  if (!iso) return "";
+  return new Date(iso).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+}
 
 /**
- * Personal profile page: avatar + email, learning stats (saved roadmaps,
- * total stages, topics), the user's saved roadmap cards, and sign-out.
- * Auth-guarded — redirects to /auth/login when signed out.
+ * Learner profile.
+ *
+ * Auth-guarded, with six tabs over the `/me/*` endpoints. Everything shown here
+ * is server data — there are no illustrative numbers on this screen, so a panel
+ * with nothing behind it renders an empty state rather than a plausible figure.
  */
 export default function ProfilePage() {
   const router = useRouter();
@@ -25,10 +62,11 @@ export default function ProfilePage() {
   const isInitializing = useAuthStore((state) => state.isInitializing);
   const logout = useAuthStore((state) => state.logout);
 
-  const saved = useSavedRoadmaps();
-  const roadmaps = saved.data ?? [];
+  const [tab, setTab] = useState<TabKey>("overview");
 
-  const totalStages = roadmaps.reduce((sum, r) => sum + r.stages.length, 0);
+  const profile = useProfile();
+  const summary = useProgressSummary();
+  const saved = useSavedRoadmaps();
 
   useEffect(() => {
     if (!isInitializing && !user) router.replace("/auth/login");
@@ -37,16 +75,26 @@ export default function ProfilePage() {
   if (isInitializing || !user) {
     return (
       <div className="min-h-screen-safe flex items-center justify-center bg-ink">
-        <div className="h-10 w-10 animate-spin rounded-full border-2 border-accent/30 border-t-accent" />
+        <div
+          role="status"
+          aria-label="Loading your profile"
+          className="h-10 w-10 animate-spin rounded-full border-2 border-accent/30 border-t-accent"
+        />
       </div>
     );
   }
 
+  // Password accounts have no name, so the email local-part is the only
+  // identifier available — tidied rather than shown raw.
   const displayName =
+    profile.data?.name ??
     user.name ??
     ((user.email.split("@")[0] ?? "")
       .replace(/[._-]+/g, " ")
-      .replace(/\b\w/g, (c) => c.toUpperCase()) || "Learner");
+      .replace(/\b\w/g, (c) => c.toUpperCase()) ||
+      "Learner");
+
+  const initial = displayName.charAt(0).toUpperCase();
 
   const handleLogout = async () => {
     const ok = await confirm({
@@ -58,188 +106,166 @@ export default function ProfilePage() {
     });
     if (!ok) return;
     await logout();
-    toast.success("Signed out", "See you soon! 👋");
-    router.push("/");
+    toast.success("Signed out", "See you soon!");
+    router.replace("/");
   };
 
   return (
-    <div className="min-h-screen-safe relative bg-ink">
-      {/* Ambient glows + noise (home-theme background) */}
-      <div
-        aria-hidden
-        className="pointer-events-none fixed inset-0 bg-[radial-gradient(46rem_30rem_at_15%_-5%,rgba(201,243,29,0.1),transparent_60%),radial-gradient(40rem_30rem_at_100%_15%,rgba(56,189,248,0.09),transparent_60%)]"
-      />
-      <div aria-hidden className="pointer-events-none fixed inset-0 bg-noise opacity-[0.04]" />
-      <GeometryShapes variant="footer" />
+    <>
+      <AppBar title="Profile" back="/" />
 
-      <AppBar
-        title="Profile"
-        back="/"
-        actions={[
-          { href: "/", label: "Home" },
-          { href: "/saved", label: "Saved roadmaps" },
-        ]}
-      />
+      <main id="main" className="pt-app-bar pb-nav min-h-screen-safe bg-ink">
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
+          {/* ── Header card ──────────────────────────────────────────── */}
+          <header className="relative overflow-hidden rounded-xl border border-accent/25 bg-card/40 shadow-[0_0_60px_-24px_rgb(var(--color-accent)/0.65)] backdrop-blur-sm">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 bg-[radial-gradient(40rem_20rem_at_80%_20%,rgb(var(--color-accent)/0.18),transparent_65%)]"
+            />
+            {/* Decorative only — the scene repeats information already in the
+                copy, so it is hidden from assistive tech. */}
+            <div
+              aria-hidden
+              data-scene-stage
+              className="pointer-events-none absolute right-0 top-0 hidden h-full w-[38%] items-center justify-end md:flex"
+            >
+              <Image
+                src="/3d/how-header.png"
+                alt=""
+                width={846}
+                height={356}
+                sizes="30vw"
+                className="h-auto w-full max-w-sm select-none opacity-90"
+              />
+            </div>
 
-      <main id="main" className="pt-app-bar pb-nav relative z-10 mx-auto max-w-5xl px-4 sm:px-6">
-        {/* Profile card */}
-        <motion.section
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="relative mt-8 overflow-hidden rounded-xl border border-line/10 bg-card/60 p-5 backdrop-blur-xl sm:p-10"
-        >
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(201,243,29,0.18),transparent_65%)]"
-          />
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -bottom-28 -left-20 h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.14),transparent_65%)]"
-          />
-
-          <div className="relative flex flex-col items-start gap-8 md:flex-row md:items-center md:justify-between">
-            <div className="flex min-w-0 items-center gap-4 sm:gap-5">
-              <div className="flex h-16 w-16 flex-none items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-accent/90 to-brand-400/80 shadow-e2 sm:h-20 sm:w-20 sm:rounded-2xl">
-                {user.avatar ? (
+            <div className="relative flex flex-wrap items-start gap-5 p-5 sm:p-7">
+              <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-accent to-accent-hover font-display text-3xl font-bold text-on-accent shadow-e2 sm:h-24 sm:w-24 sm:text-4xl">
+                {profile.data?.avatar ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={user.avatar} alt="" width={80} height={80} className="h-full w-full object-cover" />
+                  <img
+                    src={profile.data.avatar}
+                    alt=""
+                    className="h-full w-full rounded-xl object-cover"
+                  />
                 ) : (
-                  <span className="font-display text-3xl font-bold text-on-accent">
-                    {user.email.charAt(0).toUpperCase()}
-                  </span>
+                  initial
                 )}
-              </div>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-text">
-                  {"// Your profile"}
-                </p>
-                <h1 className="mt-1.5 font-display text-2xl font-semibold tracking-tight text-paper sm:text-4xl">
+              </span>
+
+              <div className="min-w-0 flex-1">
+                <Eyebrow>Your profile</Eyebrow>
+                <h1 className="mt-1.5 font-display text-2xl font-bold tracking-tight text-paper sm:text-3xl">
                   {displayName}
                 </h1>
-                <p className="mt-1.5 text-muted">{user.email}</p>
+                <p className="mt-1 truncate text-sm text-muted">{user.email}</p>
+                <p className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-subtle">
+                  <span className="inline-flex items-center gap-1.5">
+                    <CalendarIcon className="h-3.5 w-3.5 text-accent-text" />
+                    Joined {formatJoined(profile.data?.joinedAt)}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <CheckCircleIcon className="h-3.5 w-3.5 text-success" />
+                    Learner
+                  </span>
+                </p>
+              </div>
+
+              <div className="flex w-full flex-col gap-2 sm:w-auto">
+                <button
+                  type="button"
+                  onClick={() => setTab("settings")}
+                  className="press inline-flex min-h-touch items-center justify-center gap-2 rounded-full bg-accent px-5 text-sm font-bold text-on-accent transition-colors duration-fast hover:bg-accent-hover"
+                >
+                  <PencilIcon className="h-4 w-4" />
+                  Edit profile
+                </button>
+                <button
+                  type="button"
+                  onClick={() => void handleLogout()}
+                  className="press inline-flex min-h-touch items-center justify-center gap-2 rounded-full border border-line/20 px-5 text-sm font-semibold text-subtle transition-colors duration-fast hover:border-danger/50 hover:text-danger"
+                >
+                  <SignOutIcon className="h-4 w-4" />
+                  Sign out
+                </button>
               </div>
             </div>
+          </header>
 
-            <div className="flex flex-none items-center gap-6">
-              <Illustration
-                name="profile"
-                className="hidden h-24 w-44 lg:block"
-                imgClassName="object-contain p-1"
-              />
+          {/* ── Tabs ─────────────────────────────────────────────────── */}
+          <div
+            role="tablist"
+            aria-label="Profile sections"
+            className="rail mt-5 rounded-xl border border-line/12 bg-card/30 p-1.5 backdrop-blur-sm"
+            onKeyDown={(event) => {
+              const i = TABS.findIndex((t) => t.key === tab);
+              if (event.key === "ArrowRight") {
+                event.preventDefault();
+                setTab(TABS[(i + 1) % TABS.length]!.key);
+              } else if (event.key === "ArrowLeft") {
+                event.preventDefault();
+                setTab(TABS[(i - 1 + TABS.length) % TABS.length]!.key);
+              }
+            }}
+          >
+            {TABS.map(({ key, label, icon: Icon }) => (
               <button
-                type="button"
-                onClick={handleLogout}
-                className="rounded-full border border-line/15 px-5 py-2.5 text-sm font-medium text-subtle transition-colors hover:border-rose-400/50 hover:text-rose-400"
+                key={key}
+                role="tab"
+                id={`tab-${key}`}
+                aria-selected={tab === key}
+                aria-controls={`panel-${key}`}
+                tabIndex={tab === key ? 0 : -1}
+                onClick={() => setTab(key)}
+                className={clsx(
+                  "press inline-flex min-h-touch items-center gap-2 rounded-full px-4 text-sm font-semibold transition-colors duration-fast",
+                  tab === key
+                    ? "bg-accent text-on-accent"
+                    : "text-muted hover:text-paper"
+                )}
               >
-                Sign out
+                <Icon className="h-4 w-4" />
+                {label}
               </button>
-            </div>
-          </div>
-
-          {/* Stats */}
-          <dl className="relative mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
-            {[
-              { value: roadmaps.length, label: "Saved roadmaps", suffix: roadmaps.length === 1 ? "" : "s" },
-              { value: totalStages, label: "Stages unlocked across", suffix: totalStages === 1 ? " roadmap" : " roadmaps" },
-              { value: new Set(roadmaps.map((r) => r.topic)).size, label: "Topics explored", suffix: "" },
-            ].map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.15 + i * 0.08, duration: 0.5 }}
-                className="rounded-2xl border border-line/10 bg-ink/40 p-5"
-              >
-                <dd className="font-display text-3xl font-semibold text-accent">
-                  {stat.value}
-                  <span className="text-base text-muted">{stat.suffix}</span>
-                </dd>
-                <dt className="mt-1 text-xs text-muted">{stat.label}</dt>
-              </motion.div>
             ))}
-          </dl>
-        </motion.section>
-
-        {/* Saved roadmaps */}
-        <section className="mt-14">
-          <div className="mb-6 flex items-end justify-between">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-text">
-                {"// Continue learning"}
-              </p>
-              <h2 className="mt-1.5 font-display text-2xl font-semibold tracking-tight text-paper">
-                Your saved roadmaps
-              </h2>
-            </div>
-            <Link
-              href="/"
-              className="hidden text-sm text-subtle transition-colors hover:text-accent sm:block"
-            >
-              Generate a new one →
-            </Link>
           </div>
 
-          {saved.isLoading ? (
-            <p className="py-10 text-center text-muted">Loading your roadmaps…</p>
-          ) : roadmaps.length === 0 ? (
-            <div className="flex flex-col items-center rounded-3xl border border-dashed border-line/15 bg-card/30 px-6 py-16 text-center">
-              <Illustration
-                name="save-to-bookmarks"
-                className="h-40 w-64"
-                imgClassName="object-contain p-2"
-                glow
-              />
-              <p className="mt-6 text-muted">No saved roadmaps yet.</p>
-              <Link
-                href="/"
-                className="mt-4 inline-block rounded-full bg-accent px-6 py-2.5 text-sm font-bold tracking-tight text-on-accent transition-colors hover:bg-accent/90"
-              >
-                Build your first path
-              </Link>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {roadmaps.map((roadmap, i) => (
-                <motion.div
-                  key={roadmap.id}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + i * 0.06, duration: 0.5 }}
-                >
-                  <Link
-                    href={`/roadmap/${roadmap.id}`}
-                    className="group block rounded-2xl border border-line/10 bg-card/50 p-5 backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-xl hover:shadow-accent/10"
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <h3 className="font-display text-lg font-semibold text-paper transition-colors group-hover:text-accent">
-                        {roadmap.topic}
-                      </h3>
-                      <span
-                        aria-hidden
-                        className="mt-0.5 flex h-7 w-7 flex-none items-center justify-center rounded-full border border-line/15 text-muted transition-all group-hover:border-accent/50 group-hover:text-accent"
-                      >
-                        →
-                      </span>
-                    </div>
-                    <div className="mt-3 flex flex-wrap items-center gap-2">
-                      <Badge tone="brand">{roadmap.stages.length} stages</Badge>
-                      <span className="text-xs text-muted">
-                        {new Date(roadmap.createdAt).toLocaleDateString(undefined, {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                        })}
-                      </span>
-                    </div>
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          )}
-        </section>
+          {/* ── Panels ───────────────────────────────────────────────── */}
+          <div
+            id={`panel-${tab}`}
+            role="tabpanel"
+            aria-labelledby={`tab-${tab}`}
+            tabIndex={0}
+            className="mt-5 focus-visible:outline-none"
+          >
+            {tab === "overview" && <ProfileOverview summary={summary.data ?? []} />}
+
+            {tab === "roadmaps" && (
+              <div className="space-y-4">
+                <p className="text-sm text-muted">
+                  Your full library — with filters, sorting and favourites — lives on the{" "}
+                  <Link href="/saved" className="font-semibold text-accent-text hover:underline">
+                    saved roadmaps
+                  </Link>{" "}
+                  page.
+                </p>
+                <RoadmapProgressList
+                  roadmaps={saved.data ?? []}
+                  summary={summary.data ?? []}
+                  isPending={saved.isPending}
+                />
+              </div>
+            )}
+
+            {tab === "certificates" && <ProfileCertificates />}
+            {tab === "progress" && <ProfileProgress />}
+            {tab === "activity" && <ProfileActivity />}
+            {tab === "settings" && <ProfileSettings />}
+          </div>
+        </div>
       </main>
+
       <BottomNav />
-    </div>
+    </>
   );
 }

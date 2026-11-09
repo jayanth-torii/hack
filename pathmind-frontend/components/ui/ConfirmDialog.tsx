@@ -134,7 +134,7 @@ export function ConfirmDialogHost() {
             />
             <div
               aria-hidden
-              className="pointer-events-none absolute -top-20 left-1/2 h-40 w-64 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(201,243,29,0.12),transparent_65%)]"
+              className="pointer-events-none absolute -top-20 left-1/2 h-40 w-64 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgb(var(--color-accent)/0.12),transparent_65%)]"
             />
 
             <div className="relative">

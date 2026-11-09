@@ -40,7 +40,7 @@ export function Illustration({
       {glow && (
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 rounded-[2rem] bg-[radial-gradient(circle_at_50%_35%,rgba(201,243,29,0.28),transparent_72%)] blur-2xl"
+          className="pointer-events-none absolute inset-0 -z-10 rounded-[2rem] bg-[radial-gradient(circle_at_50%_35%,rgb(var(--color-accent)/0.28),transparent_72%)] blur-2xl"
         />
       )}
       <div className="h-full w-full overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#f0f2f8] via-[#f8f9fc] to-[#e6e9f2] shadow-inner ring-1 ring-inset ring-black/[0.06]">

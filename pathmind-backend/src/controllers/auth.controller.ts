@@ -156,6 +156,9 @@ export const me = asyncHandler(async (req: Request, res: Response) => {
       email: user.email,
       name: user.name,
       avatar: user.avatar,
+      // Exposed so the profile header can show "joined" without a second call.
+      // It was already stored via `timestamps: true`, just never returned.
+      joinedAt: user.createdAt,
     },
   });
 });

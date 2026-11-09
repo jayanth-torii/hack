@@ -49,6 +49,11 @@ const envSchema = z.object({
 
   GENERATE_RATE_LIMIT_MAX: z.coerce.number().default(5),
   GENERATE_RATE_LIMIT_WINDOW_MS: z.coerce.number().default(3_600_000),
+  // Defaults are the values this limiter has always enforced; they are only
+  // surfaced as env so the integration suite can register more than 20 accounts
+  // in a run without the production limit being relaxed.
+  AUTH_RATE_LIMIT_MAX: z.coerce.number().default(20),
+  AUTH_RATE_LIMIT_WINDOW_MS: z.coerce.number().default(900_000),
 
   FRESHNESS_CRON_SCHEDULE: z.string().default("0 3 * * *"),
   FRESHNESS_STALE_DAYS: z.coerce.number().default(7),

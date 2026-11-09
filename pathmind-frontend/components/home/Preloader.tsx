@@ -43,7 +43,7 @@ export function Preloader() {
       className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#010103]"
       aria-hidden
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(40rem_28rem_at_50%_20%,rgba(201,243,29,0.1),transparent_60%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(40rem_28rem_at_50%_20%,rgb(var(--color-accent)/0.1),transparent_60%)]" />
 
       {/* Full Vidhyora lockup (icon + wordmark + tagline); blend removes the black box */}
       {/* eslint-disable-next-line @next/next/no-img-element */}

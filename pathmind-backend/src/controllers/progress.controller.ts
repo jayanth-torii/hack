@@ -2,7 +2,8 @@ import type { Request, Response } from "express";
 import { Types } from "mongoose";
 import { asyncHandler } from "../utils/asyncHandler";
 import { ApiError } from "../utils/apiError";
-import { UserProgress } from "../models/UserProgress";
+import { UserProgress, backfillCompletedStages } from "../models/UserProgress";
+import { recordActivity } from "../services/activity.service";
 import { getRoadmapById } from "../services/roadmap.service";
 import { isStageUnlocked, recomputeUnlockedStageIds } from "../services/unlock.service";
 
@@ -17,8 +18,13 @@ async function getOrCreateProgress(userId: string, roadmapId: string) {
       userId,
       roadmapId,
       completedStageIds: [],
+      completedStages: [],
       unlockedStageIds,
     });
+  } else if (backfillCompletedStages(progress)) {
+    // Document predates the dated-completions field; repair it in place rather
+    // than running a migration against a live database.
+    await progress.save();
   }
   return { roadmap, progress };
 }
@@ -62,6 +68,7 @@ export const updateProgress = asyncHandler(async (req: Request, res: Response) =
   const alreadyCompleted = progress.completedStageIds.some((id_) => id_.equals(stageObjectId));
   if (!alreadyCompleted) {
     progress.completedStageIds.push(stageObjectId);
+    progress.completedStages.push({ stageId: stageObjectId, completedAt: new Date() });
   }
 
   progress.unlockedStageIds = recomputeUnlockedStageIds(roadmap.stages, progress.completedStageIds);
@@ -77,6 +84,21 @@ export const updateProgress = asyncHandler(async (req: Request, res: Response) =
     },
     "Stage progress updated"
   );
+
+  // Only a genuinely new completion is history. Re-marking an already complete
+  // stage must not inflate the streak or the activity chart.
+  if (!alreadyCompleted) {
+    const stage = roadmap.stages.find((s) => s._id.equals(stageObjectId));
+    await recordActivity({
+      userId,
+      type: "stage_completed",
+      roadmapId: id,
+      stageId,
+      ...(stage?.title ? { title: stage.title } : {}),
+      subtitle: roadmap.topic,
+    });
+  }
+
   res.status(200).json({
     completedStageIds: progress.completedStageIds,
     unlockedStageIds: progress.unlockedStageIds,

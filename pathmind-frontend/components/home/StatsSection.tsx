@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { animate, useInView, useReducedMotion } from "framer-motion";
 import { Reveal } from "./Reveal";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 
 // Acjon fun-fact strip (index.html "funfact area end") reimagined with
 // count-up numbers in the display font. Counters animate once when scrolled
@@ -19,9 +20,7 @@ export function StatsSection() {
   return (
     <section id="stats" className="border-y border-line/10 bg-ink py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <p className="text-center text-xs font-semibold uppercase tracking-[0.3em] text-accent-text">
-          {"// Vidhyora in numbers"}
-        </p>
+        <Eyebrow align="center">Vidhyora in numbers</Eyebrow>
         <Reveal stagger={0.1} className="mt-14 grid grid-cols-2 gap-10 lg:grid-cols-4">
           {STATS.map((stat) => (
             <div key={stat.label} className="text-center">

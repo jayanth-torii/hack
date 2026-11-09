@@ -13,12 +13,12 @@
   --color-muted: 148 163 184; /* secondary text (slate-400) */
   --color-subtle: 203 213 225; /* strong secondary text (slate-300) */
   --color-line: 255 255 255; /* borders — combined with /alpha utilities */
-  --color-accent: 201 243 29; /* signature lime */
-  --color-accent-hover: 180 222 18;
+  --color-accent: 249 115 22; /* signature orange */
+  --color-accent-hover: 234 88 12;
   /* text/border color used ON accent surfaces — stays dark in both themes */
   --color-on-accent: 1 1 3;
   /* accent used as small *text* on surfaces — deeper in light mode for contrast */
-  --color-accent-text: 201 243 29;
+  --color-accent-text: 251 146 60;
   --color-cyan-text: 34 211 238;
 
   /* ── Status roles ─────────────────────────────────────────────────────
@@ -66,7 +66,7 @@
 }
 
 /* Light theme — a completely different palette: warm off-white canvas,
-   near-black text, deeper lime accent for contrast, white cards. */
+   near-black text, deeper orange accent for contrast, white cards. */
 html.light {
   --color-ink: 246 248 246;
   --color-paper: 13 17 20;
@@ -74,9 +74,9 @@ html.light {
   --color-muted: 84 94 110;
   --color-subtle: 41 51 64;
   --color-line: 10 14 20;
-  --color-accent: 168 214 8;
-  --color-accent-hover: 148 190 0;
-  --color-accent-text: 107 142 0;
+  --color-accent: 234 88 12;
+  --color-accent-hover: 194 65 12;
+  --color-accent-text: 194 65 12;
   --color-cyan-text: 8 145 178;
 
   /* Status roles deepened for contrast on the light canvas (all ≥4.5:1 on
@@ -222,7 +222,7 @@ html.lenis {
 }
 
 ::selection {
-  background: #c9f31d;
+  background: rgb(var(--color-accent));
   color: #010103;
 }
 
@@ -336,4 +336,29 @@ html.lenis {
 .rail > * {
   scroll-snap-align: start;
   flex: none;
+}
+
+/* ── Dark 3D scene artwork on the light canvas ──────────────────────────
+   The hero and feature scenes are rendered on black with their glow baked
+   in, so on the near-white light-mode canvas they would read as a dark
+   smudge. In light mode only, the scene sits on a deliberate dark stage —
+   the same trick a product shot uses — so it looks intentional instead of
+   broken. Dark mode needs nothing: the artwork already matches the page. */
+html.light [data-scene-stage] {
+  background: radial-gradient(
+    120% 100% at 50% 20%,
+    #14100c 0%,
+    #0a0907 55%,
+    #060605 100%
+  );
+  border-radius: var(--radius-xl);
+  box-shadow: var(--elev-3);
+  padding: 1.25rem 1rem;
+}
+
+/* Decorative corner glyphs sit on white cards in light mode, where their
+   baked glow has nothing to glow against — dial them back rather than
+   letting them muddy the card. */
+html.light [data-scene-glyph] {
+  opacity: 0.5;
 }

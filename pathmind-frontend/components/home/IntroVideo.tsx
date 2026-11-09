@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 
 /**
  * Intro strip right under the hero: the Vidhyora intro reel plays
@@ -37,11 +38,11 @@ export function IntroVideo() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-ink py-14 sm:py-20 md:py-24">
+    <section id="demo" className="relative overflow-hidden bg-ink py-14 sm:py-20 md:py-24">
       {/* Ambient glow echoing the hero */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(46rem_30rem_at_15%_10%,rgba(201,243,29,0.08),transparent_60%),radial-gradient(40rem_28rem_at_90%_90%,rgba(56,189,248,0.07),transparent_60%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(46rem_30rem_at_15%_10%,rgb(var(--color-accent)/0.08),transparent_60%),radial-gradient(40rem_28rem_at_90%_90%,rgba(56,189,248,0.07),transparent_60%)]"
       />
 
       <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 sm:gap-12 lg:grid-cols-12 lg:gap-16">
@@ -59,7 +60,7 @@ export function IntroVideo() {
               aria-hidden
               className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
               style={{
-                boxShadow: "0 0 60px rgba(201,243,29,0.18), inset 0 0 30px rgba(201,243,29,0.06)",
+                boxShadow: "0 0 60px rgb(var(--color-accent)/0.18), inset 0 0 30px rgb(var(--color-accent)/0.06)",
               }}
             />
 
@@ -116,9 +117,7 @@ export function IntroVideo() {
           transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
           className="lg:col-span-5"
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-text">
-            {"// Meet Vidhyora"}
-          </p>
+          <Eyebrow>Meet Vidhyora</Eyebrow>
           <h2 className="mt-4 font-display text-[1.625rem] font-semibold leading-tight text-paper sm:text-3xl md:text-4xl">
             Your AI twin.{" "}
             <span className="bg-gradient-to-r from-accent to-cyan-400 bg-clip-text text-transparent">

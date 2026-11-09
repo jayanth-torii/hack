@@ -24,7 +24,7 @@ export default function DashboardPage() {
       {/* Ambient glows + noise (site theme) */}
       <div
         aria-hidden
-        className="pointer-events-none fixed inset-0 bg-[radial-gradient(46rem_30rem_at_15%_-5%,rgba(201,243,29,0.1),transparent_60%),radial-gradient(40rem_30rem_at_100%_15%,rgba(56,189,248,0.09),transparent_60%)]"
+        className="pointer-events-none fixed inset-0 bg-[radial-gradient(46rem_30rem_at_15%_-5%,rgb(var(--color-accent)/0.1),transparent_60%),radial-gradient(40rem_30rem_at_100%_15%,rgba(56,189,248,0.09),transparent_60%)]"
       />
       <div aria-hidden className="pointer-events-none fixed inset-0 bg-noise opacity-[0.04]" />
 

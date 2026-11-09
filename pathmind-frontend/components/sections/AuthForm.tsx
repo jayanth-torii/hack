@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -11,9 +12,9 @@ import { googleLoginUrl } from "@/hooks/useGoogleCalendar";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { GeometryShapes } from "@/components/home/GeometryShapes";
-import { Illustration } from "@/components/ui/Illustration";
 import { clsx } from "@/lib/clsx";
 import { toast } from "@/components/ui/toast";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 
 const FEATURE_POINTS = [
   {
@@ -122,7 +123,20 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
       {/* Ambient glows + noise */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(52rem_36rem_at_12%_-10%,rgba(201,243,29,0.12),transparent_60%),radial-gradient(44rem_32rem_at_100%_20%,rgba(56,189,248,0.1),transparent_60%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(52rem_36rem_at_12%_-10%,rgb(var(--color-accent)/0.14),transparent_60%),radial-gradient(44rem_32rem_at_100%_20%,rgb(var(--color-accent)/0.12),transparent_60%)]"
+      />
+      {/* Corner swooshes — warm light bleeding in from opposite corners */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-40 -top-36 h-[28rem] w-[34rem] rounded-full bg-[radial-gradient(circle,rgb(var(--color-accent)/0.30),transparent_68%)] blur-3xl"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-44 -left-28 h-[26rem] w-[30rem] rounded-full bg-[radial-gradient(circle,rgb(var(--color-accent)/0.22),transparent_70%)] blur-3xl"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-40 -right-36 h-[24rem] w-[32rem] rounded-full bg-[radial-gradient(circle,rgb(var(--color-accent)/0.18),transparent_70%)] blur-3xl"
       />
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-noise opacity-[0.05]" />
       <GeometryShapes variant="hero" />
@@ -131,20 +145,32 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
         {/* ── Brand panel (left) ── */}
         <motion.div
           {...stagger(0.05)}
-          className="relative hidden flex-col justify-between overflow-hidden rounded-3xl border border-line/10 bg-card/50 p-10 backdrop-blur-xl lg:flex"
+          className="relative hidden flex-col justify-between overflow-hidden rounded-xl border border-accent/25 bg-card/40 p-10 shadow-[0_0_70px_-24px_rgb(var(--color-accent)/0.6)] backdrop-blur-xl lg:flex"
         >
           {/* corner glow */}
           <div
             aria-hidden
-            className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(201,243,29,0.16),transparent_65%)]"
+            className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgb(var(--color-accent)/0.16),transparent_65%)]"
           />
 
           <div className="relative">
-            <span className="logo-chip flex h-11 w-11 items-center justify-center">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/vidhyora-logo.png" alt="" width={44} height={44} className="h-11 w-11" />
-            </span>
-            <h2 className="mt-8 font-display text-4xl font-semibold leading-[1.15] tracking-tight text-paper">
+            <div className="flex items-center gap-3">
+              <span className="logo-chip flex h-11 w-11 items-center justify-center">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/vidhyora-logo.png" alt="" width={44} height={44} className="h-11 w-11" />
+              </span>
+              <span className="font-display text-2xl font-bold tracking-tight text-paper">
+                Vidhyora
+              </span>
+            </div>
+
+            <div className="mt-8 inline-flex items-center rounded-full border border-accent/40 bg-accent/[0.07] px-4 py-2">
+              <Eyebrow className="!tracking-[0.22em]">
+                {isLogin ? "Welcome to Vidhyora" : "Start for free"}
+              </Eyebrow>
+            </div>
+
+            <h2 className="mt-5 font-display text-4xl font-bold leading-[1.1] tracking-tight text-paper">
               Turn any topic into a{" "}
               <span className="text-accent">learning roadmap.</span>
             </h2>
@@ -154,20 +180,24 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
             </p>
           </div>
 
-          {/* Brand illustration — recolored scene in a light window frame */}
-          <div className="relative mt-10 min-h-44 flex-1">
-            <Illustration
-              name={isLogin ? "secure-login" : "authentication"}
-              className="mx-auto h-44 w-full max-w-sm xl:h-52"
-              imgClassName="object-contain p-2"
-              glow
+          {/* Brand scene. This reuses the "how it works" render — there is no
+              dedicated login artwork yet, and inventing one would mean shipping
+              a different visual language on this screen. */}
+          <div aria-hidden data-scene-stage className="relative mt-8 flex-1">
+            <Image
+              src="/3d/how-header.png"
+              alt=""
+              width={846}
+              height={356}
+              sizes="38vw"
+              className="mx-auto h-auto w-full max-w-md select-none"
             />
           </div>
 
-          <ul className="relative mt-10 space-y-5">
+          <ul className="relative mt-8 space-y-5">
             {FEATURE_POINTS.map((point) => (
               <li key={point.title} className="flex items-start gap-4">
-                <span className="mt-0.5 flex h-8 w-8 flex-none items-center justify-center rounded-xl bg-accent/15 text-accent">
+                <span className="mt-0.5 flex h-10 w-10 flex-none items-center justify-center rounded-md border border-accent/35 bg-accent/[0.10] text-accent shadow-[0_0_18px_rgb(var(--color-accent)/0.22)]">
                   {point.icon}
                 </span>
                 <div>
@@ -178,7 +208,7 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
             ))}
           </ul>
 
-          <p className="relative mt-12 border-t border-line/10 pt-6 text-xs text-muted">
+          <p className="relative mt-8 border-t border-line/10 pt-5 text-xs text-muted">
             {isLogin ? "Welcome back — pick up exactly where you left off." : "Free to start. Your progress syncs across devices."}
           </p>
         </motion.div>
@@ -186,17 +216,19 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
         {/* ── Form card (right) ── */}
         <motion.div
           {...stagger(0.12)}
-          className="relative overflow-hidden rounded-3xl border border-line/10 bg-card/60 p-8 backdrop-blur-xl sm:p-12"
+          // The card stretches to the brand panel's height so both columns
+          // line up. Centring the content vertically keeps the leftover height
+          // balanced above and below instead of dumping it all under the
+          // submit button.
+          className="relative flex flex-col justify-center overflow-hidden rounded-xl border border-accent/30 bg-card/50 p-6 shadow-[0_0_70px_-20px_rgb(var(--color-accent)/0.65)] backdrop-blur-xl sm:p-10"
         >
           <div
             aria-hidden
-            className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(201,243,29,0.12),transparent_65%)]"
+            className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgb(var(--color-accent)/0.12),transparent_65%)]"
           />
 
           <div className="relative">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-text">
-              {isLogin ? "// Welcome back" : "// Join Vidhyora"}
-            </p>
+            <Eyebrow>{isLogin ? "Welcome back" : "Join Vidhyora"}</Eyebrow>
             <h3 className="mt-3 font-display text-3xl font-semibold tracking-tight text-paper sm:text-4xl">
               {isLogin ? "Log in to your account." : "Create your account."}
             </h3>
@@ -354,7 +386,9 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
               type="submit"
               isLoading={isSubmitting}
               className={clsx(
-                "min-h-[3.25rem] w-full rounded-full text-base"
+                "min-h-[3.25rem] w-full rounded-full text-base",
+                "bg-gradient-to-r from-accent-hover via-accent to-accent-hover",
+                "shadow-[0_8px_30px_rgb(var(--color-accent)/0.35)]"
               )}
             >
               {isLogin ? "Log in" : "Create my account"}

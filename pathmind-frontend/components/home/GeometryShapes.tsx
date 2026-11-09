@@ -62,7 +62,7 @@ const VARIANTS: Record<Variant, ShapeSpec[]> = {
     },
     {
       key: "triangle",
-      className: "top-1/3 -left-5 h-20 w-20 text-brand-400/25 md:h-24 md:w-24",
+      className: "top-1/3 -left-5 h-20 w-20 text-accent/20 md:h-24 md:w-24",
       shape: <Triangle />,
       duration: 8,
       delay: 0.4,
@@ -92,7 +92,7 @@ const VARIANTS: Record<Variant, ShapeSpec[]> = {
     },
     {
       key: "square",
-      className: "top-1/4 -left-7 h-16 w-16 text-brand-400/20",
+      className: "top-1/4 -left-7 h-16 w-16 text-accent/16",
       shape: <Square />,
       duration: 7.5,
       delay: 0.3,
@@ -116,7 +116,7 @@ const VARIANTS: Record<Variant, ShapeSpec[]> = {
     },
     {
       key: "ring",
-      className: "-bottom-10 -left-8 h-28 w-28 text-brand-400/15",
+      className: "-bottom-10 -left-8 h-28 w-28 text-accent/12",
       shape: <Ring dashed />,
       duration: 9,
       delay: 0.5,

@@ -36,7 +36,7 @@ export function ThemeToggle() {
       <span
         aria-hidden
         className="pointer-events-none absolute inset-0 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        style={{ boxShadow: "0 0 18px rgba(201,243,29,0.25), inset 0 0 10px rgba(201,243,29,0.08)" }}
+        style={{ boxShadow: "0 0 18px rgb(var(--color-accent)/0.25), inset 0 0 10px rgb(var(--color-accent)/0.08)" }}
       />
       <motion.span
         key={theme}

@@ -6,16 +6,16 @@ import { clsx } from "@/lib/clsx";
 /**
  * Generated cover art for video preview panels. Deterministic per title/url
  * (no network, no external thumbnail service): an ink canvas with signature
- * lime/cyan glows, floating geometry and the resource title set in Poppins —
+ * orange/cyan glows, floating geometry and the resource title set in Poppins —
  * so every stage's preview looks like a designed video cover.
  */
 
 const PALETTES = [
-  { glow: "#c9f31d", glow2: "#38bdf8", accentText: "#c9f31d" },
+  { glow: "#f97316", glow2: "#38bdf8", accentText: "#fb923c" },
   { glow: "#38bdf8", glow2: "#8b5cf6", accentText: "#7dd3fc" },
-  { glow: "#8b5cf6", glow2: "#c9f31d", accentText: "#c4b5fd" },
+  { glow: "#8b5cf6", glow2: "#f97316", accentText: "#c4b5fd" },
   { glow: "#34d399", glow2: "#38bdf8", accentText: "#6ee7b7" },
-  { glow: "#f472b6", glow2: "#c9f31d", accentText: "#f9a8d4" },
+  { glow: "#f472b6", glow2: "#f97316", accentText: "#f9a8d4" },
 ];
 
 function hashCode(str: string): number {

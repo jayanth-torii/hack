@@ -13,6 +13,7 @@ import { BottomNav } from "@/components/ui/BottomNav";
 import { Illustration } from "@/components/ui/Illustration";
 import { clsx } from "@/lib/clsx";
 import { toast } from "@/components/ui/toast";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 
 const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const MONTH_LABELS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -101,7 +102,7 @@ export default function CalendarExportPage() {
       {/* Ambient glows + noise + geometry (site theme) */}
       <div
         aria-hidden
-        className="pointer-events-none fixed inset-0 bg-[radial-gradient(46rem_30rem_at_15%_-5%,rgba(201,243,29,0.1),transparent_60%),radial-gradient(40rem_30rem_at_100%_15%,rgba(56,189,248,0.09),transparent_60%)]"
+        className="pointer-events-none fixed inset-0 bg-[radial-gradient(46rem_30rem_at_15%_-5%,rgb(var(--color-accent)/0.1),transparent_60%),radial-gradient(40rem_30rem_at_100%_15%,rgba(56,189,248,0.09),transparent_60%)]"
       />
       <div aria-hidden className="pointer-events-none fixed inset-0 bg-noise opacity-[0.04]" />
       <GeometryShapes variant="footer" />
@@ -125,9 +126,7 @@ export default function CalendarExportPage() {
           className="flex flex-col items-start justify-between gap-10 lg:flex-row lg:items-end"
         >
           <div className="max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-text">
-              {"// Your study calendar"}
-            </p>
+            <Eyebrow>Your study calendar</Eyebrow>
             <h1 className="mt-3 font-display text-[1.75rem] font-semibold leading-[1.14] tracking-tight text-paper sm:text-5xl">
               {roadmap.topic}
             </h1>
@@ -262,7 +261,7 @@ export default function CalendarExportPage() {
             className="absolute left-5 top-0 h-full w-px -translate-x-1/2 blur-[2px] md:left-1/2"
             style={{
               background:
-                "linear-gradient(to bottom, rgba(201,243,29,0.6), rgba(56,189,248,0.3), transparent)",
+                "linear-gradient(to bottom, rgb(var(--color-accent)/0.6), rgba(56,189,248,0.3), transparent)",
             }}
           />
 
@@ -284,7 +283,7 @@ export default function CalendarExportPage() {
                       {!reduce && (
                         <span className="absolute inset-0 animate-ping rounded-full bg-accent/40" />
                       )}
-                      <span className="absolute inset-0 rounded-full border-2 border-accent bg-ink shadow-[0_0_12px_rgba(201,243,29,0.6)]" />
+                      <span className="absolute inset-0 rounded-full border-2 border-accent bg-ink shadow-[0_0_12px_rgb(var(--color-accent)/0.6)]" />
                     </span>
                   </div>
 
@@ -302,7 +301,7 @@ export default function CalendarExportPage() {
                       />
                       <div
                         aria-hidden
-                        className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(201,243,29,0.1),transparent_65%)]"
+                        className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-[radial-gradient(circle,rgb(var(--color-accent)/0.1),transparent_65%)]"
                       />
 
                       <div className="relative flex items-start justify-between gap-4">

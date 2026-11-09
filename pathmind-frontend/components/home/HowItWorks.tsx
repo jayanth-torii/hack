@@ -1,302 +1,289 @@
 "use client";
 
+import Image from "next/image";
 import { useRef } from "react";
-import { motion, useReducedMotion } from "framer-motion";
-import { gsap, ScrollTrigger } from "@/lib/gsap-config";
+import { gsap } from "@/lib/gsap-config";
 import { useIsomorphicLayoutEffect } from "@/lib/useIsomorphicLayoutEffect";
-import { TextReveal } from "./TextReveal";
-import { GeometryShapes } from "./GeometryShapes";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 
-// "From curiosity to competence" — a dark journey timeline that matches the
-// Vidhyora theme: a glowing lime→cyan spine draws itself with scroll (GSAP
-// scrub) while a lime "traveler dot" rides down it; four dark-glass step
-// cards each carry their own live progress indicator. Framer-motion handles
-// node pops, card entrances and hover lifts. Reduced-motion users get a
-// static, fully-visible layout.
+/**
+ * "From curiosity to competence" — the four-step journey.
+ *
+ * Layout: a header (eyebrow, headline, value line, CTA) beside the desk
+ * scene, then four wide step cards hung off a vertical timeline rail. Each
+ * card carries its step label, a title whose final word is accented, the
+ * explanation, a journey meter and a 3D illustration, with a ghost numeral
+ * behind it.
+ *
+ * Motion is GSAP throughout (CLAUDE.md §1 — this section is entirely
+ * scroll-driven, so it stays on one library): the rail fill and traveller dot
+ * scrub with scroll position, cards rise as they enter, and each meter fills
+ * once. Under prefers-reduced-motion nothing animates and the final state
+ * renders directly.
+ */
 
 const STEPS = [
   {
     n: "01",
-    tag: "Step 01",
-    title: "Type any topic",
-    accent: "text-accent-text",
-    accentBg: "bg-accent",
-    glow: "shadow-accent/40",
-    accentBorder: "border-accent/40",
+    title: "Type any",
+    accent: "topic",
     copy: "Dynamic Programming, System Design, Sanskrit, Piano — just type what you want to master.",
     percent: 25,
+    art: "/3d/step-search.png",
+    artW: 526,
+    artH: 230,
   },
   {
     n: "02",
-    tag: "Step 02",
-    title: "AI builds your path",
-    accent: "text-cyan-text",
-    accentBg: "bg-cyan-400",
-    glow: "shadow-cyan-400/40",
-    accentBorder: "border-cyan-400/40",
+    title: "AI builds your",
+    accent: "path",
     copy: "A syllabus, free resources, certifications, practice problems and a daily timeline — all sequenced by difficulty.",
     percent: 50,
+    art: "/3d/step-ai.png",
+    artW: 593,
+    artH: 244,
   },
   {
     n: "03",
-    tag: "Step 03",
-    title: "Learn & unlock",
-    accent: "text-accent-text",
-    accentBg: "bg-accent",
-    glow: "shadow-accent/40",
-    accentBorder: "border-accent/40",
+    title: "Learn &",
+    accent: "unlock",
     copy: "Finish a stage to unlock the next. Progress is enforced server-side, so it always sticks — no cheating your twin.",
     percent: 75,
+    art: "/3d/step-unlock.png",
+    artW: 592,
+    artH: 267,
   },
   {
     n: "04",
-    tag: "Step 04",
-    title: "Export & track",
-    accent: "text-cyan-text",
-    accentBg: "bg-cyan-400",
-    glow: "shadow-cyan-400/40",
-    accentBorder: "border-cyan-400/40",
+    title: "Export &",
+    accent: "track",
     copy: "Push the plan to your calendar, revisit your roadmap, and watch your progress dashboard fill up in real time.",
     percent: 100,
+    art: "/3d/step-export.png",
+    artW: 593,
+    artH: 267,
   },
 ];
 
 export function HowItWorks() {
   const sectionRef = useRef<HTMLElement>(null);
-  const fillRef = useRef<HTMLDivElement>(null);
-  const dotRef = useRef<HTMLSpanElement>(null);
-  const reduce = useReducedMotion();
 
-  // GSAP: the spine fill + traveler dot scrub with the scroll position,
-  // and each step card slides in from the left as it enters the viewport.
   useIsomorphicLayoutEffect(() => {
-    if (reduce) return;
     const section = sectionRef.current;
     if (!section) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const ctx = gsap.context(() => {
-      if (fillRef.current) {
-        gsap.fromTo(
-          fillRef.current,
-          { scaleY: 0 },
-          {
-            scaleY: 1,
-            ease: "none",
-            transformOrigin: "top center",
-            scrollTrigger: {
-              trigger: section,
-              start: "top 65%",
-              end: "bottom 70%",
-              scrub: 0.6,
-            },
-          }
-        );
-      }
-      if (dotRef.current) {
-        gsap.fromTo(
-          dotRef.current,
-          { top: "0%" },
-          {
-            top: "100%",
-            ease: "none",
-            scrollTrigger: {
-              trigger: section,
-              start: "top 65%",
-              end: "bottom 70%",
-              scrub: 0.6,
-            },
-          }
-        );
-      }
-      gsap.utils.toArray<HTMLElement>(".how-card").forEach((card) => {
+      const scrub = {
+        trigger: "[data-rail]",
+        start: "top 70%",
+        end: "bottom 75%",
+        scrub: 0.6,
+      };
+
+      // The rail fills and the traveller rides it, both driven by scroll.
+      // Transform-only (scaleY / y) so neither touches layout.
+      gsap.fromTo(
+        "[data-rail-fill]",
+        { scaleY: 0 },
+        { scaleY: 1, ease: "none", transformOrigin: "top center", scrollTrigger: scrub }
+      );
+      gsap.fromTo(
+        "[data-rail-dot]",
+        { y: 0 },
+        {
+          // Function-based so a resize recomputes the travel distance instead
+          // of leaving the dot short of the end of the rail.
+          y: () => document.querySelector("[data-rail-track]")?.clientHeight ?? 0,
+          ease: "none",
+          scrollTrigger: { ...scrub, invalidateOnRefresh: true },
+        }
+      );
+
+      gsap.utils.toArray<HTMLElement>("[data-step-card]").forEach((card) => {
         gsap.fromTo(
           card,
-          { autoAlpha: 0, x: -48, y: 24 },
+          { autoAlpha: 0, y: 32 },
           {
             autoAlpha: 1,
-            x: 0,
             y: 0,
-            duration: 0.9,
+            duration: 0.8,
             ease: "power3.out",
-            scrollTrigger: { trigger: card, start: "top 82%" },
+            scrollTrigger: { trigger: card, start: "top 85%" },
+          }
+        );
+      });
+
+      gsap.utils.toArray<HTMLElement>("[data-meter]").forEach((meter) => {
+        gsap.fromTo(
+          meter,
+          { scaleX: 0 },
+          {
+            scaleX: 1,
+            duration: 1.1,
+            ease: "power2.out",
+            transformOrigin: "left center",
+            scrollTrigger: { trigger: meter, start: "top 92%" },
           }
         );
       });
     }, section);
 
     return () => ctx.revert();
-  }, [reduce]);
+  }, []);
 
   return (
     <section
       id="how"
       ref={sectionRef}
-      className="relative overflow-hidden bg-ink py-28 text-paper"
+      className="relative overflow-hidden bg-ink py-20 text-paper sm:py-24"
     >
-      {/* Ambient glow echoing the hero */}
+      {/* Corner swooshes — warm light bleeding in from the edges */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(46rem_30rem_at_10%_0%,rgba(201,243,29,0.07),transparent_60%),radial-gradient(40rem_28rem_at_95%_100%,rgba(56,189,248,0.06),transparent_60%)]"
+        className="pointer-events-none absolute -right-32 -top-40 h-[26rem] w-[34rem] rounded-full bg-[radial-gradient(circle,rgb(var(--color-accent)/0.26),transparent_68%)] blur-3xl"
       />
-      <div aria-hidden className="pointer-events-none absolute inset-0 bg-noise opacity-[0.04]" />
-      <GeometryShapes variant="how" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-44 -left-36 h-[26rem] w-[32rem] rounded-full bg-[radial-gradient(circle,rgb(var(--color-accent)/0.20),transparent_70%)] blur-3xl"
+      />
 
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
-        {/* Section header */}
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <div className="max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-text">
-              {"// How it works"}
-            </p>
-            <h2 className="mt-4 font-display text-3xl font-semibold leading-tight md:text-5xl">
-              <TextReveal
-                lines={["From curiosity to", "competence in four steps"]}
-                accentLines={[1]}
-              />
+        {/* ── Header ─────────────────────────────────────────────────── */}
+        <div className="grid items-center gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <Eyebrow>How it works</Eyebrow>
+
+            <h2 className="mt-5 font-display text-[2rem] font-bold leading-[1.1] tracking-tight sm:text-4xl lg:text-[2.75rem]">
+              From curiosity to
+              <br />
+              <span className="text-accent">competence in four steps</span>
             </h2>
-            <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted md:text-base">
-              One stage at a time — each step unlocks the next, so your momentum
-              compounds and you never feel lost.
+
+            <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted sm:text-base">
+              One stage at a time — each step unlocks the next, so your momentum compounds
+              and you never feel lost.
             </p>
+
+            <a
+              href="#start"
+              className="press group mt-8 inline-flex min-h-touch items-center gap-2.5 rounded-full bg-accent px-7 text-sm font-bold tracking-tight text-on-accent shadow-[0_8px_30px_rgb(var(--color-accent)/0.25)] transition-colors duration-fast hover:bg-accent-hover"
+            >
+              Start now
+              <span aria-hidden className="transition-transform duration-base group-hover:translate-x-1">
+                →
+              </span>
+            </a>
           </div>
-          <a
-            href="#start"
-            className="group hidden items-center gap-2 rounded-full bg-accent px-7 py-3 text-sm font-bold tracking-tight text-on-accent transition-all hover:bg-accent/90 hover:shadow-xl hover:shadow-accent/25 md:inline-flex"
-          >
-            Start now
-            <span className="transition-transform group-hover:translate-x-1">→</span>
-          </a>
+
+          <div aria-hidden data-scene-stage className="relative lg:col-span-5">
+            <Image
+              src="/3d/how-header.png"
+              alt=""
+              width={846}
+              height={356}
+              sizes="(max-width: 1024px) 80vw, 38vw"
+              className="mx-auto h-auto w-full max-w-sm select-none lg:max-w-none"
+            />
+          </div>
         </div>
 
-        {/* Journey timeline */}
-        <div className="relative mt-16 md:mt-20">
-          {/* Spine track */}
-          <div
-            aria-hidden
-            className="absolute bottom-6 left-[21px] top-2 w-[2px] overflow-hidden rounded-full bg-line/10 md:left-[27px]"
-          >
-            {/* Glowing fill — drawn by GSAP scrub */}
-            <div
-              ref={fillRef}
-              className="absolute inset-0 rounded-full bg-gradient-to-b from-accent via-lime-300 to-cyan-400"
-            />
-            {/* Traveler dot */}
-            <span
-              ref={dotRef}
-              className="absolute left-1/2 h-3 w-3 -translate-x-1/2 rounded-full bg-accent shadow-[0_0_14px_4px_rgba(184,255,0,0.65)]"
-            />
+        {/* ── Steps ──────────────────────────────────────────────────── */}
+        <div data-rail className="relative mt-14 sm:mt-16">
+          {/* Timeline rail — desktop only. On phones the step label carries the
+              sequence, so the rail would be redundant decoration. */}
+          <div aria-hidden className="absolute bottom-10 left-[27px] top-10 hidden w-px lg:block">
+            <div data-rail-track className="relative h-full w-px bg-accent/20">
+              <div
+                data-rail-fill
+                className="absolute inset-0 w-px bg-gradient-to-b from-accent to-accent-hover"
+              />
+              <span
+                data-rail-dot
+                className="absolute -left-[3px] top-0 h-[7px] w-[7px] rounded-full bg-accent shadow-[0_0_12px_3px_rgb(var(--color-accent)/0.55)]"
+              />
+            </div>
           </div>
 
-          {/* Steps */}
-          <ol className="space-y-10 md:space-y-14">
-            {STEPS.map((step, i) => (
-              <li key={step.n} className="relative pl-14 md:pl-24">
-                {/* Node on the spine */}
-                <motion.span
-                  initial={reduce ? false : { scale: 0, opacity: 0 }}
-                  whileInView={{ scale: 1, opacity: 1 }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ type: "spring", stiffness: 260, damping: 18, delay: 0.1 }}
-                  className={`absolute left-0 top-0 flex h-[44px] w-[44px] items-center justify-center rounded-full border border-line/15 bg-card text-sm font-semibold shadow-xl shadow-black/20 md:h-[56px] md:w-[56px] md:text-base ${step.accent}`}
+          <ol className="space-y-5 sm:space-y-6">
+            {STEPS.map((step) => (
+              <li key={step.n} className="relative lg:pl-24">
+                {/* Rail node */}
+                <span
+                  aria-hidden
+                  className="absolute left-0 top-9 hidden h-14 w-14 items-center justify-center rounded-full border border-accent/50 bg-ink font-display text-sm font-bold text-accent shadow-[0_0_22px_rgb(var(--color-accent)/0.28)] lg:flex"
                 >
-                  <span className="relative font-display">
-                    {step.n}
-                    <motion.span
-                      aria-hidden
-                      className={`pointer-events-none absolute inset-0 -m-2 rounded-full border ${step.accentBorder}`}
-                      animate={
-                        reduce
-                          ? undefined
-                          : { scale: [1, 1.35], opacity: [0.6, 0] }
-                      }
-                      transition={{
-                        duration: 1.8,
-                        repeat: Infinity,
-                        delay: i * 0.4,
-                        ease: "easeOut",
-                      }}
-                    />
-                  </span>
-                </motion.span>
+                  {step.n}
+                </span>
 
-                {/* Dark glass card */}
-                <motion.article
-                  className="how-card group relative rounded-3xl border border-line/10 bg-card/60 p-6 shadow-xl shadow-black/10 backdrop-blur-md transition-colors duration-500 hover:border-accent/40 hover:bg-card/80 md:p-8"
-                  whileHover={reduce ? undefined : { y: -6 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 22 }}
+                <article
+                  data-step-card
+                  className="relative overflow-hidden rounded-xl border border-accent/20 bg-card/40 p-5 shadow-[0_0_60px_-20px_rgb(var(--color-accent)/0.5)] backdrop-blur-sm transition-colors duration-base hover:border-accent/45 sm:p-7"
                 >
-                  {/* Ghost number watermark */}
+                  {/* Ghost numeral */}
                   <span
                     aria-hidden
-                    className="pointer-events-none absolute -top-6 right-3 select-none font-display text-7xl font-semibold leading-none text-paper/[0.06] md:text-8xl"
+                    className="pointer-events-none absolute -top-3 right-4 select-none font-display text-6xl font-bold leading-none text-paper/[0.05] sm:text-7xl lg:text-8xl"
                   >
                     {step.n}
                   </span>
 
-                  <div className="flex items-center gap-2.5">
-                    <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-muted">
-                      {step.tag}
-                    </span>
-                    <span className="h-px w-6 bg-line/15" />
-                    <span
-                      className={`inline-block h-1.5 w-1.5 rounded-full ${step.accentBg} ${step.glow} shadow-lg`}
-                    />
-                  </div>
-
-                  <h3 className="mt-3 font-display text-2xl font-semibold md:text-3xl">
-                    {step.title.split(" ").map((word, w) => {
-                      const words = step.title.split(" ");
-                      const isAccent = w === words.length - 1;
-                      return (
-                        <span
-                          key={w}
-                          className={
-                            isAccent
-                              ? `bg-gradient-to-r from-accent to-cyan-400 bg-clip-text text-transparent`
-                              : undefined
-                          }
-                        >
-                          {word}
-                          {w < words.length - 1 ? " " : ""}
+                  <div className="grid items-center gap-5 sm:grid-cols-[1fr_auto] sm:gap-6">
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2.5">
+                        <span className="text-[0.6875rem] font-bold uppercase tracking-[0.22em] text-subtle">
+                          Step {step.n}
                         </span>
-                      );
-                    })}
-                  </h3>
+                        <span aria-hidden className="h-px w-5 bg-line/20" />
+                        <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
+                      </div>
 
-                  <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted md:text-base">
-                    {step.copy}
-                  </p>
+                      <h3 className="mt-2.5 font-display text-xl font-bold tracking-tight sm:text-2xl">
+                        {step.title} <span className="text-accent">{step.accent}</span>
+                      </h3>
 
-                  {/* Per-step progress indicator */}
-                  <div className="mt-6">
-                    <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-[0.22em] text-muted">
-                      <span>Journey progress</span>
-                      <span className={step.accent}>{step.percent}%</span>
+                      <p className="mt-2 max-w-md text-sm leading-relaxed text-muted">
+                        {step.copy}
+                      </p>
+
+                      {/* Journey meter — how far through the four steps this
+                          stage sits, not a live reading of the user's own
+                          progress. The label says "journey" for that reason. */}
+                      <div className="mt-5 max-w-md">
+                        <div className="flex items-center justify-between text-[0.625rem] font-bold uppercase tracking-[0.2em]">
+                          <span className="text-subtle">Journey progress</span>
+                          <span className="text-accent">{step.percent}%</span>
+                        </div>
+                        <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-line/12">
+                          <div
+                            data-meter
+                            className="h-full rounded-full bg-gradient-to-r from-accent-hover to-accent"
+                            style={{ width: `${step.percent}%` }}
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-line/10">
-                      <motion.div
-                        className={`h-full rounded-full bg-gradient-to-r from-accent to-cyan-400`}
-                        initial={{ width: "0%" }}
-                        whileInView={{ width: `${step.percent}%` }}
-                        viewport={{ once: true, margin: "-60px" }}
-                        transition={{ duration: 1.1, ease: "easeOut", delay: 0.15 }}
+
+                    {/* Step illustration */}
+                    <div
+                      aria-hidden
+                      data-scene-stage
+                      className="relative mx-auto w-44 shrink-0 sm:w-52 lg:w-64"
+                    >
+                      <Image
+                        src={step.art}
+                        alt=""
+                        width={step.artW}
+                        height={step.artH}
+                        sizes="(max-width: 640px) 40vw, 14rem"
+                        className="h-auto w-full select-none"
                       />
                     </div>
                   </div>
-                </motion.article>
+                </article>
               </li>
             ))}
           </ol>
-        </div>
-
-        {/* Mobile CTA */}
-        <div className="mt-14 text-center md:hidden">
-          <a
-            href="#start"
-            className="inline-flex items-center gap-2 rounded-full bg-accent px-8 py-3.5 text-sm font-bold tracking-tight text-on-accent"
-          >
-            Start your journey now →
-          </a>
         </div>
       </div>
     </section>

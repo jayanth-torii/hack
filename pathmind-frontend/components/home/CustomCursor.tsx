@@ -49,8 +49,10 @@ const SEGMENTS = 26; // line segments in the drawn trail
 const LIFETIME_MS = 340; // how long a point stays visible behind the head
 const MIN_STEP = 3; // px of mouse travel before a new point is sampled
 
-// Brand ink colors for the drawn line (tail → head)
-const LIME: [number, number, number] = [201, 243, 29];
+// Brand ink colors for the drawn line (tail → head). These are mixed numerically
+// every frame, so they have to be literal triples — keep them in step with
+// --color-accent / --color-cyan-text in globals.css.
+const BRAND: [number, number, number] = [249, 115, 22];
 const CYAN: [number, number, number] = [56, 189, 248];
 
 const ACCENT = "rgb(var(--color-accent))";
@@ -130,7 +132,7 @@ export function CustomCursor() {
           line.setAttribute("y2", String(b.y));
           line.setAttribute("stroke-opacity", String(0.04 + keep * 0.55));
           line.setAttribute("stroke-width", String(1 + keep * 3.5));
-          line.setAttribute("stroke", `rgb(${mix(CYAN, LIME, keep).join(",")})`);
+          line.setAttribute("stroke", `rgb(${mix(CYAN, BRAND, keep).join(",")})`);
         } else {
           line.setAttribute("stroke-opacity", "0");
         }
@@ -218,7 +220,7 @@ export function CustomCursor() {
         <svg
           ref={svgRef}
           className="absolute left-0 top-0 h-full w-full"
-          style={{ filter: "drop-shadow(0 0 3px rgba(201,243,29,0.16))" }}
+          style={{ filter: "drop-shadow(0 0 3px rgb(var(--color-accent)/0.16))" }}
         >
           {Array.from({ length: SEGMENTS }).map((_, i) => (
             <line
@@ -226,7 +228,7 @@ export function CustomCursor() {
               ref={(el) => {
                 lineRefs.current[i] = el;
               }}
-              stroke="#c9f31d"
+              className="stroke-accent"
               strokeLinecap="round"
               strokeOpacity="0"
             />
@@ -236,7 +238,7 @@ export function CustomCursor() {
         {/* Fingertip head */}
         <div
           ref={headRef}
-          className="absolute h-2 w-2 rounded-full bg-accent shadow-[0_0_10px_rgba(201,243,29,0.8)] will-change-transform"
+          className="absolute h-2 w-2 rounded-full bg-accent shadow-[0_0_10px_rgb(var(--color-accent)/0.8)] will-change-transform"
         />
       </div>
     </>

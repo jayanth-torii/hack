@@ -1,273 +1,489 @@
 "use client";
 
-import { useEffect } from "react";
+import { useMemo, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
-import type { Roadmap, UserProgress } from "@/types";
-import { useRoadmapStore } from "@/store/roadmapStore";
-import { useUnlockLogic } from "@/hooks/useUnlockLogic";
-import { NodeCard } from "@/components/ui/NodeCard";
-import { VideoPreview, isVideoUrl } from "@/components/ui/VideoPreview";
-import { GeometryShapes } from "@/components/home/GeometryShapes";
-import { Illustration } from "@/components/ui/Illustration";
 import { clsx } from "@/lib/clsx";
+import { Eyebrow } from "@/components/ui/Eyebrow";
+import { ProgressRing } from "@/components/ui/ProgressRing";
+import { useUpdateProgress } from "@/hooks/useRoadmapQuery";
+import { useIssueCertificate, useCertificates } from "@/hooks/useProfileQuery";
+import type { Roadmap, Stage } from "@/types/roadmap";
+import type { UserProgress } from "@/types/progress";
+import {
+  ArrowRightIcon,
+  BookIcon,
+  CheckCircleIcon,
+  CircleIcon,
+  ChartIcon,
+  ClockIcon,
+  DownloadIcon,
+  LayersIcon,
+  LockIcon,
+  MedalIcon,
+  PlayIcon,
+  TargetIcon,
+  TrophyIcon,
+} from "@/components/profile/ProfileIcons";
 
 interface RoadmapJourneyProps {
   roadmap: Roadmap;
   progress?: UserProgress;
 }
 
+type StageState = "completed" | "active" | "locked";
+type Tab = "roadmap" | "resources" | "practice";
+
+const STATE_LABEL: Record<StageState, string> = {
+  completed: "Completed",
+  active: "In progress",
+  locked: "Not started",
+};
+
 /**
- * Creative journey view: a cinematic hero band (topic, progress ring,
- * difficulty breakdown) above a glowing spine timeline where checkpoints
- * alternate left/right. Each stage renders the full NodeCard — the same
- * component the 3D view and dashboard use, so content never drifts.
+ * The learning journey.
  *
- * Motion: framer-motion whileInView reveals per checkpoint (spine draws
- * via scaleY, nodes pop in with a ring pulse); hero ring animates on mount.
- * Reduced-motion users get static-but-ordered layout.
+ * Stage state is read from the server's `unlockedStageIds` / `completedStageIds`
+ * — the locked styling here is a reflection of that, never the gate itself.
+ * Marking a stage complete goes through `useUpdateProgress`, which the backend
+ * validates before advancing anything.
+ *
+ * Only the tabs with real data exist. There is no Notes, Projects or Discussion
+ * tab because nothing in the data model backs them, and a stage's `syllabus` is
+ * a flat list of strings with no per-item completion state, so those render as
+ * a reading list rather than checkboxes that could not be ticked.
  */
 export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
-  const setRoadmap = useRoadmapStore((s) => s.setRoadmap);
-  const setProgress = useRoadmapStore((s) => s.setProgress);
-  const reduce = useReducedMotion();
-  const { isUnlocked, isCompleted } = useUnlockLogic();
+  const [tab, setTab] = useState<Tab>("roadmap");
+  const updateProgress = useUpdateProgress();
+  const issueCertificate = useIssueCertificate();
+  const certificates = useCertificates();
 
-  useEffect(() => {
-    setRoadmap(roadmap);
-  }, [roadmap, setRoadmap]);
+  const stages = useMemo(
+    () => [...roadmap.stages].sort((a, b) => a.order - b.order),
+    [roadmap.stages]
+  );
 
-  useEffect(() => {
-    if (progress) setProgress(progress);
-  }, [progress, setProgress]);
+  const completedSet = useMemo(
+    () => new Set(progress?.completedStageIds ?? []),
+    [progress?.completedStageIds]
+  );
+  const unlockedSet = useMemo(() => {
+    const set = new Set(progress?.unlockedStageIds ?? []);
+    // Before progress lands, only the first stage can be open — matching the
+    // server's own rule rather than optimistically unlocking everything.
+    if (!progress && stages[0]) set.add(stages[0].id);
+    return set;
+  }, [progress, stages]);
 
-  const stages = [...roadmap.stages].sort((a, b) => a.order - b.order);
-  const completedCount = stages.filter((s) => isCompleted(s.id)).length;
-  const activeIndex = stages.findIndex((s) => isUnlocked(s.id) && !isCompleted(s.id));
-  const pct = stages.length > 0 ? Math.round((completedCount / stages.length) * 100) : 0;
+  const stateOf = (stage: Stage): StageState => {
+    if (completedSet.has(stage.id)) return "completed";
+    if (unlockedSet.has(stage.id)) return "active";
+    return "locked";
+  };
 
-  const difficultyCounts = stages.reduce<Record<string, number>>((acc, s) => {
-    acc[s.difficulty] = (acc[s.difficulty] ?? 0) + 1;
-    return acc;
-  }, {});
+  const completedCount = stages.filter((s) => completedSet.has(s.id)).length;
+  const percent = stages.length === 0 ? 0 : Math.round((completedCount / stages.length) * 100);
+  const isFinished = stages.length > 0 && completedCount === stages.length;
+  const totalDays = stages.reduce((sum, s) => sum + (s.estimatedDays ?? 0), 0);
 
-  // SVG ring — circumference for r=52
-  const R = 52;
-  const CIRC = 2 * Math.PI * R;
+  // The dominant difficulty across stages is a fair summary for the header.
+  const headlineDifficulty = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const s of stages) counts.set(s.difficulty, (counts.get(s.difficulty) ?? 0) + 1);
+    return [...counts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? "beginner";
+  }, [stages]);
+
+  const existingCertificate = (certificates.data ?? []).find(
+    (c) => c.roadmapId === roadmap.id
+  );
+
+  const nextStage = stages.find((s) => unlockedSet.has(s.id) && !completedSet.has(s.id));
+
+  const allResources = useMemo(
+    () => stages.flatMap((s) => s.resources.map((r) => ({ ...r, stageTitle: s.title }))),
+    [stages]
+  );
+  const allPractice = useMemo(
+    () => stages.flatMap((s) => s.practiceLinks.map((p) => ({ ...p, stageTitle: s.title }))),
+    [stages]
+  );
 
   return (
-    <div className="relative overflow-hidden bg-ink pb-16 pt-6 sm:pt-10">
-      {/* Ambient glows + noise */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(52rem_36rem_at_15%_-10%,rgba(201,243,29,0.12),transparent_60%),radial-gradient(44rem_32rem_at_100%_10%,rgba(56,189,248,0.1),transparent_60%)]"
-      />
-      <div aria-hidden className="pointer-events-none absolute inset-0 bg-noise opacity-[0.05]" />
-      <GeometryShapes variant="hero" />
-
-      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
-        {/* ── Hero band ── */}
-        <motion.section
-          initial={reduce ? undefined : { opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="flex flex-col items-start justify-between gap-10 md:flex-row md:items-center"
-        >
-          <div className="max-w-2xl">
-            <div className="flex items-center gap-3">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/illustrations/roadmap_2.png" alt="" className="h-10 w-10 rounded-xl object-cover shadow-md shadow-accent/10" />
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-text">
-                {"// Your learning path"}
-              </p>
-            </div>
-            <h1 className="mt-3 font-display text-[1.75rem] font-semibold leading-[1.14] tracking-tight text-paper sm:text-4xl lg:text-5xl">
+    <div className="pt-app-bar pb-nav">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
+        <nav aria-label="Breadcrumb" className="text-xs text-muted">
+          <ol className="flex items-center gap-2">
+            <li>
+              <Link href="/saved" className="transition-colors hover:text-accent-text">
+                Roadmaps
+              </Link>
+            </li>
+            <li aria-hidden>›</li>
+            <li aria-current="page" className="truncate text-subtle">
               {roadmap.topic}
-            </h1>
-            <p className="mt-4 max-w-xl text-muted">
-              {stages.length} difficulty-sequenced checkpoints — complete each one to
-              unlock the next. Freshness-verified resources and a day-by-day plan
-              built in.
-            </p>
+            </li>
+          </ol>
+        </nav>
 
-            <div className="mt-7 flex flex-wrap items-center gap-2 sm:gap-3">
-              {(["beginner", "intermediate", "advanced"] as const).map((d) => (
-                <span
-                  key={d}
-                  className="rounded-full border border-line/12 bg-card/50 px-3 py-1.5 text-xs font-medium text-subtle backdrop-blur"
-                >
-                  {difficultyCounts[d] ?? 0} {d}
-                </span>
-              ))}
-              {/* Hidden on phones: these two destinations live in the bottom
-                  navigation there, so repeating them is redundant chrome. */}
-              <div className="hidden gap-3 md:flex">
+        {/* ── Header ───────────────────────────────────────────────── */}
+        <header className="relative mt-4 overflow-hidden rounded-xl border border-accent/25 bg-card/40 p-5 shadow-[0_0_60px_-26px_rgb(var(--color-accent)/0.65)] backdrop-blur-sm sm:p-7">
+          <div
+            aria-hidden
+            data-scene-stage
+            className="pointer-events-none absolute right-0 top-0 hidden h-full w-[34%] items-center justify-end lg:flex"
+          >
+            <Image
+              src="/3d/how-header.png"
+              alt=""
+              width={846}
+              height={356}
+              sizes="26vw"
+              className="h-auto w-full max-w-xs select-none opacity-85"
+            />
+          </div>
+
+          <div className="relative flex flex-wrap items-start gap-6">
+            <div className="min-w-0 flex-1">
+              <Eyebrow>Your learning path</Eyebrow>
+              <h1 className="mt-2 font-display text-2xl font-bold leading-tight tracking-tight text-paper sm:text-4xl">
+                {roadmap.topic}
+              </h1>
+              <p className="mt-2.5 max-w-xl text-sm leading-relaxed text-muted">
+                A structured path of {stages.length}{" "}
+                {stages.length === 1 ? "stage" : "stages"}, sequenced by difficulty and unlocked
+                one at a time as you finish the one before it.
+              </p>
+
+              <ul className="mt-4 flex flex-wrap gap-2">
+                <li className="inline-flex items-center gap-1.5 rounded-full border border-line/15 bg-ink/40 px-3 py-1.5 text-xs text-subtle">
+                  <LayersIcon className="h-3.5 w-3.5 text-accent-text" />
+                  {stages.length} stages
+                </li>
+                {totalDays > 0 && (
+                  <li className="inline-flex items-center gap-1.5 rounded-full border border-line/15 bg-ink/40 px-3 py-1.5 text-xs text-subtle">
+                    <ClockIcon className="h-3.5 w-3.5 text-accent-text" />~{totalDays} days
+                  </li>
+                )}
+                <li className="inline-flex items-center gap-1.5 rounded-full border border-line/15 bg-ink/40 px-3 py-1.5 text-xs capitalize text-subtle">
+                  <ChartIcon className="h-3.5 w-3.5 text-accent-text" />
+                  {headlineDifficulty}
+                </li>
+              </ul>
+
+              <div className="mt-5 flex flex-wrap gap-3">
+                {nextStage ? (
+                  <a
+                    href={`#stage-${nextStage.id}`}
+                    className="press inline-flex min-h-touch items-center gap-2 rounded-full bg-accent px-6 text-sm font-bold text-on-accent transition-colors duration-fast hover:bg-accent-hover"
+                  >
+                    Continue learning
+                    <ArrowRightIcon className="h-4 w-4" />
+                  </a>
+                ) : (
+                  <span className="inline-flex min-h-touch items-center gap-2 rounded-full border border-success/40 bg-success/10 px-5 text-sm font-bold text-success">
+                    <CheckCircleIcon className="h-4 w-4" />
+                    All stages complete
+                  </span>
+                )}
                 <Link
                   href={`/roadmap/${roadmap.id}/dashboard`}
-                  className="press inline-flex min-h-touch items-center rounded-full bg-accent px-5 text-sm font-bold tracking-tight text-on-accent shadow-e2 transition-colors duration-fast hover:bg-accent-hover"
+                  className="press inline-flex min-h-touch items-center gap-2 rounded-full border border-line/20 px-5 text-sm font-semibold text-subtle transition-colors duration-fast hover:border-accent/50 hover:text-accent-text"
                 >
+                  <ChartIcon className="h-4 w-4" />
                   Dashboard
                 </Link>
                 <Link
                   href={`/roadmap/${roadmap.id}/calendar`}
-                  className="press inline-flex min-h-touch items-center rounded-full border border-line/15 px-5 text-sm font-medium text-subtle transition-colors duration-fast hover:border-accent/50 hover:text-accent"
+                  className="press inline-flex min-h-touch items-center gap-2 rounded-full border border-line/20 px-5 text-sm font-semibold text-subtle transition-colors duration-fast hover:border-accent/50 hover:text-accent-text"
                 >
+                  <ClockIcon className="h-4 w-4" />
                   Calendar
                 </Link>
               </div>
             </div>
+
+            <ProgressRing percent={percent} size={118} sublabel="progress" />
           </div>
+        </header>
 
-          {/* Progress ring */}
-          <motion.div
-            initial={reduce ? undefined : { opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
-            className="relative flex w-full flex-col items-center gap-6 md:w-auto md:flex-none xl:flex-row xl:gap-12"
-          >
-            <div className="relative h-28 w-28 sm:h-36 sm:w-36">
-              <svg viewBox="0 0 120 120" className="h-full w-full -rotate-90">
-                <circle cx="60" cy="60" r={R} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="9" />
-                <motion.circle
-                  cx="60"
-                  cy="60"
-                  r={R}
-                  fill="none"
-                  stroke="url(#journey-ring)"
-                  strokeWidth="9"
-                  strokeLinecap="round"
-                  strokeDasharray={CIRC}
-                  initial={reduce ? { strokeDashoffset: CIRC - (CIRC * pct) / 100 } : { strokeDashoffset: CIRC }}
-                  animate={{ strokeDashoffset: CIRC - (CIRC * pct) / 100 }}
-                  transition={{ duration: 1.2, delay: 0.4, ease: "easeOut" }}
-                />
-                <defs>
-                  <linearGradient id="journey-ring" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stopColor="#c9f31d" />
-                    <stop offset="100%" stopColor="#38bdf8" />
-                  </linearGradient>
-                </defs>
-              </svg>
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="font-display text-3xl font-semibold text-paper">{pct}%</span>
-                <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted">
-                  complete
-                </span>
-              </div>
-            </div>
-            <p className="mt-3 text-xs text-muted">
-              {completedCount} of {stages.length} checkpoints
-            </p>
+        {/* ── Tabs ─────────────────────────────────────────────────── */}
+        <div
+          role="tablist"
+          aria-label="Roadmap views"
+          className="rail mt-5 rounded-xl border border-line/12 bg-card/30 p-1.5 backdrop-blur-sm"
+        >
+          {(
+            [
+              { key: "roadmap", label: "Roadmap", icon: LayersIcon },
+              { key: "resources", label: `Resources (${allResources.length})`, icon: BookIcon },
+              { key: "practice", label: `Practice (${allPractice.length})`, icon: TargetIcon },
+            ] as const
+          ).map(({ key, label, icon: Icon }) => (
+            <button
+              key={key}
+              role="tab"
+              aria-selected={tab === key}
+              onClick={() => setTab(key)}
+              className={clsx(
+                "press inline-flex min-h-touch items-center gap-2 rounded-full px-4 text-sm font-semibold transition-colors duration-fast",
+                tab === key ? "bg-accent text-on-accent" : "text-muted hover:text-paper"
+              )}
+            >
+              <Icon className="h-4 w-4" />
+              {label}
+            </button>
+          ))}
+        </div>
 
-            <Illustration
-              name="adventure-map"
-              className="hidden h-40 w-72 xl:block"
-              imgClassName="object-contain p-1"
-              glow
+        {/* ── Roadmap timeline ─────────────────────────────────────── */}
+        {tab === "roadmap" && (
+          <ol className="relative mt-6 space-y-4">
+            {/* Spine, desktop only — on phones the numbered badge carries the
+                sequence and a vertical rule would just add noise. */}
+            <span
+              aria-hidden
+              className="absolute bottom-8 left-[27px] top-8 hidden w-px bg-accent/20 lg:block"
             />
-          </motion.div>
-        </motion.section>
 
-        {/* ── Glowing path timeline ── */}
-        <section className="relative mt-14 sm:mt-20">
-          {/* spine */}
-          <motion.div
-            aria-hidden
-            initial={reduce ? undefined : { scaleY: 0 }}
-            whileInView={{ scaleY: 1 }}
-            viewport={{ once: true, margin: "-15% 0px" }}
-            transition={{ duration: 1.4, ease: "easeOut" }}
-            className="absolute left-3 top-0 h-full w-px origin-top bg-gradient-to-b from-accent via-brand-400/60 to-transparent sm:left-5 md:left-1/2"
-          />
-          {/* spine glow */}
-          <div
-            aria-hidden
-            className="absolute left-3 top-0 h-full w-px -translate-x-1/2 blur-[2px] sm:left-5 md:left-1/2"
-            style={{
-              background:
-                "linear-gradient(to bottom, rgba(201,243,29,0.6), rgba(56,189,248,0.3), transparent)",
-            }}
-          />
-
-          <ol className="space-y-8 sm:space-y-10">
-            {stages.map((stage, i) => {
-              const state = isCompleted(stage.id)
-                ? "completed"
-                : isUnlocked(stage.id)
-                  ? "active"
-                  : "locked";
-              const even = i % 2 === 0;
-              const isActive = i === activeIndex;
-              // Prefer real video URLs regardless of their stored type label —
-              // some "playlist" entries are actually article links (e.g.
-              // freeCodeCamp), and the actual YouTube links may be typed "doc".
-              const videoResource =
-                stage.resources.find((r) => isVideoUrl(r.url)) ?? null;
-
+            {stages.map((stage, index) => {
+              const state = stateOf(stage);
               return (
-                <motion.li
-                  key={stage.id}
-                  initial={reduce ? undefined : { opacity: 0, y: 28 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-8% 0px" }}
-                  transition={{ duration: 0.6, delay: 0.05, ease: "easeOut" }}
-                  className="relative md:grid md:grid-cols-2 md:gap-10 lg:gap-16"
-                >
-                  {/* node marker */}
-                  <div className="absolute left-3 top-6 z-10 -translate-x-1/2 sm:left-5 md:left-1/2">
-                    <span className="relative block h-4 w-4">
-                      {isActive && !reduce && (
-                        <span className="absolute inset-0 animate-ping rounded-full bg-accent/50" />
-                      )}
+                <li key={stage.id} id={`stage-${stage.id}`} className="relative lg:pl-24">
+                  <span
+                    aria-hidden
+                    className={clsx(
+                      "absolute left-0 top-6 hidden h-14 w-14 items-center justify-center rounded-full border bg-ink font-display text-sm font-bold lg:flex",
+                      state === "completed"
+                        ? "border-success/50 text-success"
+                        : state === "active"
+                          ? "border-accent/60 text-accent shadow-[0_0_22px_rgb(var(--color-accent)/0.35)]"
+                          : "border-line/20 text-muted"
+                    )}
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+
+                  <article
+                    className={clsx(
+                      "rounded-xl border bg-card/40 p-5 backdrop-blur-sm transition-colors duration-base sm:p-6",
+                      state === "locked"
+                        ? "border-line/12"
+                        : "border-accent/25 shadow-[0_0_50px_-26px_rgb(var(--color-accent)/0.6)]"
+                    )}
+                  >
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <p className="flex items-center gap-2.5 text-[0.6875rem] font-bold uppercase tracking-[0.2em] text-subtle">
+                          <span className="lg:hidden">Stage {String(index + 1).padStart(2, "0")}</span>
+                          <span className="hidden lg:inline">Stage</span>
+                          <span aria-hidden className="h-px w-4 bg-line/20" />
+                          <span className="capitalize text-muted">{stage.difficulty}</span>
+                        </p>
+                        <h2 className="mt-1.5 font-display text-lg font-bold tracking-tight text-paper sm:text-xl">
+                          {stage.title}
+                        </h2>
+                      </div>
+
+                      {/* Status is a labelled chip, never colour alone. */}
                       <span
                         className={clsx(
-                          "absolute inset-0 rounded-full border-2",
-                          state === "completed" && "border-emerald-400 bg-emerald-400",
-                          state === "active" && "border-accent bg-ink shadow-[0_0_12px_rgba(201,243,29,0.7)]",
-                          state === "locked" && "border-line/30 bg-ink"
+                          "inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold",
+                          state === "completed"
+                            ? "bg-success/12 text-success"
+                            : state === "active"
+                              ? "bg-accent/12 text-accent-text"
+                              : "bg-line/10 text-muted"
                         )}
-                      />
-                      {state === "completed" && (
-                        <span className="absolute inset-0 flex items-center justify-center text-[8px] font-bold text-on-accent">
-                          ✓
+                      >
+                        {state === "completed" ? (
+                          <CheckCircleIcon className="h-3.5 w-3.5" />
+                        ) : state === "active" ? (
+                          <PlayIcon className="h-3.5 w-3.5" />
+                        ) : (
+                          <LockIcon className="h-3.5 w-3.5" />
+                        )}
+                        {STATE_LABEL[state]}
+                      </span>
+                    </div>
+
+                    {stage.syllabus.length > 0 && (
+                      <ul className="mt-4 space-y-2">
+                        {stage.syllabus.map((item) => (
+                          <li key={item} className="flex items-start gap-2.5 text-sm">
+                            {state === "completed" ? (
+                              <CheckCircleIcon className="mt-0.5 h-4 w-4 shrink-0 text-success" />
+                            ) : (
+                              <CircleIcon className="mt-0.5 h-4 w-4 shrink-0 text-muted" />
+                            )}
+                            <span className={state === "locked" ? "text-muted" : "text-subtle"}>
+                              {item}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+
+                    <div className="mt-5 flex flex-wrap items-center gap-3">
+                      {state === "active" && (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            updateProgress.mutate({ roadmapId: roadmap.id, stageId: stage.id })
+                          }
+                          disabled={updateProgress.isPending}
+                          aria-busy={updateProgress.isPending}
+                          className="press inline-flex min-h-touch items-center gap-2 rounded-full bg-accent px-5 text-sm font-bold text-on-accent transition-colors duration-fast hover:bg-accent-hover disabled:bg-line/15 disabled:text-muted"
+                        >
+                          <CheckCircleIcon className="h-4 w-4" />
+                          {updateProgress.isPending ? "Saving…" : "Mark complete"}
+                        </button>
+                      )}
+
+                      {stage.resources.length > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => setTab("resources")}
+                          className="press inline-flex min-h-touch items-center gap-2 rounded-full border border-line/20 px-4 text-sm font-semibold text-subtle transition-colors duration-fast hover:border-accent/50 hover:text-accent-text"
+                        >
+                          <BookIcon className="h-4 w-4" />
+                          {stage.resources.length} resources
+                        </button>
+                      )}
+
+                      {stage.estimatedDays > 0 && (
+                        <span className="inline-flex items-center gap-1.5 text-xs text-muted">
+                          <ClockIcon className="h-3.5 w-3.5" />~{stage.estimatedDays} days
                         </span>
                       )}
-                    </span>
-                  </div>
 
-                  {/* card side */}
-                  <div
-                    className={clsx(
-                      "pl-8 sm:pl-12 md:pl-0",
-                      even ? "md:col-start-1 md:pr-3" : "md:col-start-2 md:pl-3"
-                    )}
-                  >
-                    <NodeCard stage={stage} state={state} roadmapId={roadmap.id} topic={roadmap.topic} />
-                  </div>
-
-                  {/* opposite column: video preview on the alternate side */}
-                  <div
-                    className={clsx(
-                      "pl-8 pt-3 sm:pl-12 md:flex md:items-center md:pl-0 md:pt-0",
-                      even ? "md:col-start-2 md:pl-3" : "md:col-start-1 md:row-start-1 md:pr-3"
-                    )}
-                  >
-                    {videoResource ? (
-                      <VideoPreview
-                        url={videoResource.url}
-                        title={videoResource.title}
-                        type={videoResource.type}
-                        verified={videoResource.verified}
-                        className="md:rounded-lg"
-                      />
-                    ) : (
-                      <div aria-hidden className="hidden md:block" />
-                    )}
-                  </div>
-                </motion.li>
+                      {state === "locked" && (
+                        <span className="text-xs text-muted">
+                          Finish the previous stage to unlock this one.
+                        </span>
+                      )}
+                    </div>
+                  </article>
+                </li>
               );
             })}
           </ol>
+        )}
+
+        {/* ── Resources ────────────────────────────────────────────── */}
+        {tab === "resources" && (
+          <div className="mt-6">
+            {allResources.length === 0 ? (
+              <p className="rounded-xl border border-line/12 bg-card/30 px-6 py-12 text-center text-sm text-muted">
+                No resources attached to this roadmap yet.
+              </p>
+            ) : (
+              <ul className="grid gap-3 sm:grid-cols-2">
+                {allResources.map((resource) => (
+                  <li
+                    key={`${resource.stageTitle}-${resource.url}`}
+                    className="rounded-md border border-line/12 bg-card/40 p-4 transition-colors duration-fast hover:border-accent/40"
+                  >
+                    <a
+                      href={resource.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block min-h-touch-min"
+                    >
+                      <p className="text-[0.625rem] font-bold uppercase tracking-[0.2em] text-accent-text">
+                        {resource.type}
+                      </p>
+                      <p className="mt-1.5 font-semibold leading-snug text-paper">
+                        {resource.title}
+                      </p>
+                      <p className="mt-1 truncate text-xs text-muted">{resource.stageTitle}</p>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
+
+        {/* ── Practice ─────────────────────────────────────────────── */}
+        {tab === "practice" && (
+          <div className="mt-6">
+            {allPractice.length === 0 ? (
+              <p className="rounded-xl border border-line/12 bg-card/30 px-6 py-12 text-center text-sm text-muted">
+                No practice problems attached to this roadmap yet.
+              </p>
+            ) : (
+              <ul className="grid gap-3 sm:grid-cols-2">
+                {allPractice.map((problem) => (
+                  <li
+                    key={`${problem.stageTitle}-${problem.url}`}
+                    className="rounded-md border border-line/12 bg-card/40 p-4 transition-colors duration-fast hover:border-accent/40"
+                  >
+                    <a
+                      href={problem.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block min-h-touch-min"
+                    >
+                      <p className="text-[0.625rem] font-bold uppercase tracking-[0.2em] text-accent-text">
+                        {problem.platform}
+                      </p>
+                      <p className="mt-1.5 font-semibold leading-snug text-paper">
+                        {problem.title}
+                      </p>
+                      <p className="mt-1 truncate text-xs capitalize text-muted">
+                        {problem.difficulty} · {problem.stageTitle}
+                      </p>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
+
+        {/* ── Completion / certificate ─────────────────────────────── */}
+        <section className="mt-6 overflow-hidden rounded-xl border border-accent/30 bg-gradient-to-r from-accent/[0.12] to-transparent p-5 sm:p-6">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex min-w-0 items-center gap-4">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-accent/40 bg-accent/[0.12] text-accent-text">
+                <TrophyIcon className="h-6 w-6" />
+              </span>
+              <div className="min-w-0">
+                <h2 className="font-display text-lg font-bold tracking-tight text-paper">
+                  Complete the roadmap
+                </h2>
+                <p className="mt-0.5 text-sm text-muted">
+                  {isFinished
+                    ? "Every stage is done — claim your certificate."
+                    : `Finish all ${stages.length} stages to earn a completion certificate (${completedCount} done).`}
+                </p>
+              </div>
+            </div>
+
+            {existingCertificate ? (
+              <Link
+                href="/profile"
+                className="press inline-flex min-h-touch shrink-0 items-center gap-2 rounded-full bg-accent px-5 text-sm font-bold text-on-accent transition-colors duration-fast hover:bg-accent-hover"
+              >
+                <DownloadIcon className="h-4 w-4" />
+                Download certificate
+              </Link>
+            ) : (
+              <button
+                type="button"
+                onClick={() => issueCertificate.mutate(roadmap.id)}
+                disabled={!isFinished || issueCertificate.isPending}
+                aria-busy={issueCertificate.isPending}
+                // Disabled rather than hidden so the reward is visible from the
+                // start; the copy above says exactly what unlocks it.
+                className="press inline-flex min-h-touch shrink-0 items-center gap-2 rounded-full bg-accent px-5 text-sm font-bold text-on-accent transition-colors duration-fast hover:bg-accent-hover disabled:bg-line/15 disabled:text-muted"
+              >
+                <MedalIcon className="h-4 w-4" />
+                {issueCertificate.isPending ? "Issuing…" : "Earn certificate"}
+              </button>
+            )}
+          </div>
         </section>
       </div>
     </div>
