@@ -70,3 +70,18 @@ AGY_PROJECT_MEMORY.md
 
 # Browser-automation scratch output (screenshots, snapshots, logs)
 .playwright-mcp/
+
+# Report/deck generation workspace (node_modules, generated .docx/.pdf/.pptx)
+report_gen/
+
+# Video render workspace (large mp4 + intermediate frames)
+output/
+
+# Design-iteration screenshots and reference PDFs at repo root
+/*.png
+/*.pdf
+/ai_travel_report_summary.txt
+
+# macOS resource-fork droppings
+._*
+**/._*
