@@ -112,7 +112,29 @@ export default function ProfilePage() {
 
   return (
     <>
-      <AppBar title="Profile" back="/" />
+      <AppBar title="Profile" back="/">
+        {/* Icon-only below md: a 56px bar at 360px cannot hold two labelled
+            buttons, a title and the theme toggle. The accessible name carries
+            the meaning at every width. */}
+        <button
+          type="button"
+          onClick={() => setTab("settings")}
+          aria-label="Edit profile"
+          className="press flex min-h-touch items-center gap-2 rounded-full bg-accent px-3 text-sm font-bold text-on-accent transition-colors duration-fast hover:bg-accent-hover md:px-4"
+        >
+          <PencilIcon className="h-4 w-4" />
+          <span className="hidden md:inline">Edit profile</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => void handleLogout()}
+          aria-label="Sign out"
+          className="press flex min-h-touch items-center gap-2 rounded-full border border-line/20 px-3 text-sm font-semibold text-subtle transition-colors duration-fast hover:border-danger/50 hover:text-danger md:px-4"
+        >
+          <SignOutIcon className="h-4 w-4" />
+          <span className="hidden md:inline">Sign out</span>
+        </button>
+      </AppBar>
 
       <main id="main" className="pt-app-bar pb-nav min-h-screen-safe bg-ink">
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
@@ -122,24 +144,8 @@ export default function ProfilePage() {
               aria-hidden
               className="pointer-events-none absolute inset-0 bg-[radial-gradient(40rem_20rem_at_80%_20%,rgb(var(--color-accent)/0.18),transparent_65%)]"
             />
-            {/* Decorative only — the scene repeats information already in the
-                copy, so it is hidden from assistive tech. */}
-            <div
-              aria-hidden
-              data-scene-stage
-              className="pointer-events-none absolute right-0 top-0 hidden h-full w-[38%] items-center justify-end md:flex"
-            >
-              <Image
-                src="/3d/how-header.png"
-                alt=""
-                width={846}
-                height={356}
-                sizes="30vw"
-                className="h-auto w-full max-w-sm select-none opacity-90"
-              />
-            </div>
-
-            <div className="relative flex flex-wrap items-start gap-5 p-5 sm:p-7">
+            <div className="relative grid items-center gap-5 p-5 sm:p-7 lg:grid-cols-[minmax(0,1fr)_auto]">
+              <div className="flex min-w-0 items-start gap-5">
               <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-accent to-accent-hover font-display text-3xl font-bold text-on-accent shadow-e2 sm:h-24 sm:w-24 sm:text-4xl">
                 {profile.data?.avatar ? (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -171,23 +177,19 @@ export default function ProfilePage() {
                 </p>
               </div>
 
-              <div className="flex w-full flex-col gap-2 sm:w-auto">
-                <button
-                  type="button"
-                  onClick={() => setTab("settings")}
-                  className="press inline-flex min-h-touch items-center justify-center gap-2 rounded-full bg-accent px-5 text-sm font-bold text-on-accent transition-colors duration-fast hover:bg-accent-hover"
-                >
-                  <PencilIcon className="h-4 w-4" />
-                  Edit profile
-                </button>
-                <button
-                  type="button"
-                  onClick={() => void handleLogout()}
-                  className="press inline-flex min-h-touch items-center justify-center gap-2 rounded-full border border-line/20 px-5 text-sm font-semibold text-subtle transition-colors duration-fast hover:border-danger/50 hover:text-danger"
-                >
-                  <SignOutIcon className="h-4 w-4" />
-                  Sign out
-                </button>
+              </div>
+
+              {/* Decorative only — the scene repeats information already in the
+                  copy, so it is hidden from assistive tech. */}
+              <div aria-hidden data-scene-stage className="hidden shrink-0 lg:block">
+                <Image
+                  src="/3d/how-header.png"
+                  alt=""
+                  width={846}
+                  height={356}
+                  sizes="28vw"
+                  className="h-auto w-72 select-none opacity-90 xl:w-80"
+                />
               </div>
             </div>
           </header>
