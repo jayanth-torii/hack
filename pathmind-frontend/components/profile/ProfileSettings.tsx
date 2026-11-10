@@ -46,10 +46,15 @@ function Toggle({
           checked ? "bg-accent" : "bg-line/25"
         )}
       >
+        {/* `left-0` is load-bearing: without a horizontal offset an absolutely
+            positioned child falls back to its static position, and a button
+            centres its content — so the knob started mid-track and the "on"
+            state pushed it off the right edge. Anchored at 0, the translate
+            values are the real insets: 2px off, 22px on, inside a 44px track. */}
         <span
           aria-hidden
           className={clsx(
-            "absolute top-0.5 h-5 w-5 rounded-full bg-paper transition-transform duration-base ease-standard",
+            "absolute left-0 top-0.5 h-5 w-5 rounded-full bg-paper shadow-e1 transition-transform duration-base ease-standard",
             checked ? "translate-x-[1.375rem]" : "translate-x-0.5"
           )}
         />
