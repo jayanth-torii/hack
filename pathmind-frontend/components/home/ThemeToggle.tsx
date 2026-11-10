@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { useTheme } from "@/lib/useTheme";
+import { LIGHT_MODE_ENABLED, useTheme } from "@/lib/useTheme";
 
 /**
  * Sun/moon toggle that flips the whole site between dark and light themes.
+ * Currently dormant: `LIGHT_MODE_ENABLED` is false, so this renders nothing.
  * The icon cross-fades with a spring rotation; reduced-motion users get the
  * same switch without the flourish (framer-motion ignores it via CSS motion
  * reduce only when set — the transition is short and non-blocking).
@@ -18,6 +19,11 @@ export function ThemeToggle() {
   // Render only after mount so the icon matches the applied theme (no flash
   // when the stored/system preference is light).
   useEffect(() => setMounted(true), []);
+
+  // Light mode is hidden, so there is nothing to toggle. Rendering nothing
+  // (rather than a disabled control) keeps the bar's trailing cluster honest —
+  // a dead switch is worse than no switch.
+  if (!LIGHT_MODE_ENABLED) return null;
 
   if (!mounted) {
     return (
