@@ -1,0 +1,2830 @@
+[
+  {
+    "topic": "HTML and CSS",
+    "category": "Web Development",
+    "summary": "Build semantic, responsive web pages with modern CSS layout, custom properties and a maintainable stylesheet architecture.",
+    "stages": [
+      {
+        "title": "Semantic HTML Documents",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Document structure, head metadata and the viewport tag",
+          "Headings, paragraphs, lists and links",
+          "Sectioning elements: header, nav, main, article, footer",
+          "Images, figure/figcaption and alt text",
+          "Forms, labels, inputs and native validation",
+          "Tables for tabular data"
+        ],
+        "resources": [
+          {
+            "title": "HTML: HyperText Markup Language",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/HTML",
+            "type": "doc"
+          },
+          {
+            "title": "HTML Living Standard",
+            "url": "https://html.spec.whatwg.org/multipage/",
+            "type": "doc"
+          },
+          {
+            "title": "W3C WAI Page Structure Tutorial",
+            "url": "https://www.w3.org/WAI/tutorials/page-structure/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "CSS Fundamentals and the Cascade",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Selectors, combinators and pseudo-classes",
+          "Specificity, inheritance and the cascade",
+          "The box model, box-sizing and margin collapse",
+          "Units: px, rem, em, percentages and clamp()",
+          "Colors, backgrounds and borders",
+          "Typography: font stacks, line-height and spacing"
+        ],
+        "resources": [
+          {
+            "title": "CSS: Cascading Style Sheets",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/CSS",
+            "type": "doc"
+          },
+          {
+            "title": "Learn CSS",
+            "url": "https://web.dev/learn/css/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Responsive Layout with Flexbox and Grid",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Normal flow, positioning and stacking contexts",
+          "Flexbox axes, wrapping, grow/shrink and alignment",
+          "Grid templates, areas, auto-fit and minmax()",
+          "Media queries and mobile-first breakpoints",
+          "Fluid typography and intrinsic sizing",
+          "Container queries for component-level layout"
+        ],
+        "resources": [
+          {
+            "title": "A Complete Guide to Flexbox",
+            "url": "https://css-tricks.com/snippets/css/a-guide-to-flexbox/",
+            "type": "blog"
+          },
+          {
+            "title": "A Complete Guide to CSS Grid",
+            "url": "https://css-tricks.com/snippets/css/complete-guide-grid/",
+            "type": "blog"
+          },
+          {
+            "title": "Learn Responsive Design",
+            "url": "https://web.dev/learn/design/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Build a Responsive Page",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Translate a design mockup into semantic markup",
+          "Build a responsive header and navigation drawer",
+          "Lay out a card grid that reflows at each breakpoint",
+          "Style an accessible, labelled contact form",
+          "Debug layout with the browser element and layout panels"
+        ],
+        "resources": [
+          {
+            "title": "W3C WAI Forms Tutorial",
+            "url": "https://www.w3.org/WAI/tutorials/forms/",
+            "type": "doc"
+          },
+          {
+            "title": "Chrome DevTools Documentation",
+            "url": "https://developer.chrome.com/docs/devtools/",
+            "type": "doc"
+          }
+        ],
+        "practiceTags": [
+          "html",
+          "css",
+          "responsive"
+        ]
+      },
+      {
+        "title": "Modern CSS Architecture and Motion",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Custom properties and theming with dark mode",
+          "Cascade layers, :is(), :where() and nesting",
+          "Transitions, keyframe animations and reduced motion",
+          "Naming conventions and component-scoped styles",
+          "Preprocessors and PostCSS build pipelines",
+          "Progressive enhancement and feature queries"
+        ],
+        "resources": [
+          {
+            "title": "Sass Documentation",
+            "url": "https://sass-lang.com/documentation/",
+            "type": "doc"
+          },
+          {
+            "title": "PostCSS",
+            "url": "https://postcss.org/",
+            "type": "doc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Tailwind CSS",
+    "category": "Web Development",
+    "summary": "Style production interfaces with utility-first CSS, responsive variants, theme tokens and a reusable component library.",
+    "stages": [
+      {
+        "title": "Utility-First Styling",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Installing Tailwind and wiring up the build step",
+          "Spacing, sizing and color utility scales",
+          "Typography and text utilities",
+          "Flexbox and grid utilities",
+          "Composing utilities instead of writing custom CSS"
+        ],
+        "resources": [
+          {
+            "title": "Tailwind CSS Installation",
+            "url": "https://tailwindcss.com/docs/installation",
+            "type": "doc"
+          },
+          {
+            "title": "Learn CSS",
+            "url": "https://web.dev/learn/css/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Responsive Design and State Variants",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Mobile-first breakpoint prefixes",
+          "hover, focus, active and disabled variants",
+          "Group and peer variants for parent and sibling state",
+          "Dark mode strategies",
+          "Arbitrary values and arbitrary variants"
+        ],
+        "resources": [
+          {
+            "title": "Responsive Design",
+            "url": "https://tailwindcss.com/docs/responsive-design",
+            "type": "doc"
+          },
+          {
+            "title": "@media at-rule",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/@media",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Theming and Design Tokens",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Extending the theme: colors, spacing and fonts",
+          "CSS custom properties as design tokens",
+          "Plugins and custom utility generation",
+          "Layering base, components and utilities",
+          "Sharing one token set across projects"
+        ],
+        "resources": [
+          {
+            "title": "Using CSS custom properties",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties",
+            "type": "doc"
+          },
+          {
+            "title": "PostCSS",
+            "url": "https://postcss.org/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Build a Component Library",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Buttons, inputs and badges with consistent variants",
+          "Accessible modal, dropdown and tab components",
+          "Responsive navigation and app shell",
+          "Extracting repeated utility sets into components",
+          "Documenting components in an isolated workbench"
+        ],
+        "resources": [
+          {
+            "title": "Headless UI",
+            "url": "https://headlessui.com/",
+            "type": "doc"
+          },
+          {
+            "title": "Storybook Documentation",
+            "url": "https://storybook.js.org/docs",
+            "type": "doc"
+          }
+        ],
+        "practiceTags": [
+          "tailwind",
+          "css",
+          "components"
+        ]
+      },
+      {
+        "title": "Production Builds and Design Systems",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "How class detection keeps the CSS bundle small",
+          "Avoiding dynamic class names that get stripped",
+          "Critical CSS and font loading strategy",
+          "Linting and formatting class lists consistently",
+          "Migrating a legacy stylesheet to utilities"
+        ],
+        "resources": [
+          {
+            "title": "Learn Performance",
+            "url": "https://web.dev/learn/performance/",
+            "type": "doc"
+          },
+          {
+            "title": "Vite Guide",
+            "url": "https://vite.dev/guide/",
+            "type": "doc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Next.js",
+    "category": "Web Development",
+    "summary": "Ship full-stack React applications with the App Router, server components, server actions and production-grade caching.",
+    "stages": [
+      {
+        "title": "App Router Fundamentals",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "File-system routing, nested layouts and templates",
+          "Pages, loading and error boundaries",
+          "Dynamic segments and route groups",
+          "Linking, navigation and the router API",
+          "Static assets, fonts and image optimization"
+        ],
+        "resources": [
+          {
+            "title": "Learn Next.js",
+            "url": "https://nextjs.org/learn",
+            "type": "doc"
+          },
+          {
+            "title": "Next.js App Router Documentation",
+            "url": "https://nextjs.org/docs/app",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Server and Client Components",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Where server components run and what they can import",
+          "The use client boundary and prop serialization",
+          "Passing server-rendered content as children",
+          "State, effects and event handlers in client components",
+          "Streaming UI with Suspense fallbacks"
+        ],
+        "resources": [
+          {
+            "title": "React: Learn",
+            "url": "https://react.dev/learn",
+            "type": "doc"
+          },
+          {
+            "title": "React Reference",
+            "url": "https://react.dev/reference/react",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Data Fetching, Mutations and Caching",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Fetching in server components and request deduplication",
+          "Route handlers for JSON endpoints",
+          "Server actions for forms and mutations",
+          "Revalidation: time-based, tag-based and on-demand",
+          "Connecting a database through an ORM",
+          "Environment variables and secrets handling"
+        ],
+        "resources": [
+          {
+            "title": "Prisma Documentation",
+            "url": "https://www.prisma.io/docs",
+            "type": "doc"
+          },
+          {
+            "title": "HTTP Caching",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Build a Full-Stack App",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Model the data and scaffold routes and layouts",
+          "Add session-based sign-in and protected routes",
+          "Implement create and update flows with server actions",
+          "Handle optimistic UI and form validation errors",
+          "Cover the main journeys with end-to-end tests"
+        ],
+        "resources": [
+          {
+            "title": "Auth.js Documentation",
+            "url": "https://authjs.dev/",
+            "type": "doc"
+          },
+          {
+            "title": "Playwright Getting Started",
+            "url": "https://playwright.dev/docs/intro",
+            "type": "doc"
+          }
+        ],
+        "practiceTags": [
+          "nextjs",
+          "react",
+          "fullstack"
+        ]
+      },
+      {
+        "title": "Rendering Strategies and Deployment",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Static, dynamic and partial prerendering trade-offs",
+          "Edge versus Node runtimes and middleware",
+          "Bundle analysis and reducing client JavaScript",
+          "Core Web Vitals budgets and image strategy",
+          "Build output, caching headers and CDN behaviour",
+          "Instrumentation, logging and error reporting"
+        ],
+        "resources": [
+          {
+            "title": "Learn Performance",
+            "url": "https://web.dev/learn/performance/",
+            "type": "doc"
+          },
+          {
+            "title": "Vercel Documentation",
+            "url": "https://vercel.com/docs",
+            "type": "doc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Vue.js",
+    "category": "Web Development",
+    "summary": "Build reactive Vue applications with the Composition API, routing, shared state and server-side rendering.",
+    "stages": [
+      {
+        "title": "Template Syntax and Reactivity",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Creating an app and mounting it",
+          "Interpolation, v-bind and v-on",
+          "ref, reactive and the reactivity model",
+          "Conditional rendering and list rendering with keys",
+          "Computed properties versus methods",
+          "Form input bindings with v-model"
+        ],
+        "resources": [
+          {
+            "title": "Vue.js Guide: Introduction",
+            "url": "https://vuejs.org/guide/introduction.html",
+            "type": "doc"
+          },
+          {
+            "title": "JavaScript Guide",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Components, Props and Slots",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Single-file components and scoped styles",
+          "Props, prop validation and one-way data flow",
+          "Custom events and v-model on components",
+          "Default, named and scoped slots",
+          "Lifecycle hooks and template refs",
+          "Project tooling with a Vite dev server"
+        ],
+        "resources": [
+          {
+            "title": "Components Basics",
+            "url": "https://vuejs.org/guide/essentials/component-basics.html",
+            "type": "doc"
+          },
+          {
+            "title": "Vite Guide",
+            "url": "https://vite.dev/guide/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Composition API and State Practice",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Extract reusable logic into composables",
+          "watch versus watchEffect for side effects",
+          "Share cross-component state with a store",
+          "provide and inject for deeply nested components",
+          "Unit test components and composables"
+        ],
+        "resources": [
+          {
+            "title": "TypeScript Handbook",
+            "url": "https://www.typescriptlang.org/docs/handbook/intro.html",
+            "type": "doc"
+          },
+          {
+            "title": "Vitest Guide",
+            "url": "https://vitest.dev/guide/",
+            "type": "doc"
+          },
+          {
+            "title": "Pinia — Vue Store",
+            "url": "https://pinia.vuejs.org/",
+            "type": "doc"
+          }
+        ],
+        "practiceTags": [
+          "vue",
+          "javascript",
+          "state-management"
+        ]
+      },
+      {
+        "title": "Routing and Data Fetching",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Route definitions, params and nested routes",
+          "Navigation guards and route meta fields",
+          "Lazy-loaded route components",
+          "Fetching data with loading and error states",
+          "Pagination, caching and request cancellation"
+        ],
+        "resources": [
+          {
+            "title": "Nuxt Routing",
+            "url": "https://nuxt.com/docs/getting-started/routing",
+            "type": "doc"
+          },
+          {
+            "title": "Fetch API",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API",
+            "type": "doc"
+          },
+          {
+            "title": "Vue Router",
+            "url": "https://router.vuejs.org/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Server Rendering and Production",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "SSR, SSG and hydration trade-offs",
+          "File-based routing and data loading in Nuxt",
+          "SEO metadata and social preview tags",
+          "Code splitting and async components",
+          "Performance budgets and Core Web Vitals",
+          "Build output and deployment targets"
+        ],
+        "resources": [
+          {
+            "title": "Nuxt: Getting Started",
+            "url": "https://nuxt.com/docs/getting-started/introduction",
+            "type": "doc"
+          },
+          {
+            "title": "Learn Performance",
+            "url": "https://web.dev/learn/performance/",
+            "type": "doc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Angular",
+    "category": "Web Development",
+    "summary": "Develop typed, testable Angular applications using signals, dependency injection, reactive forms and RxJS-driven state.",
+    "stages": [
+      {
+        "title": "Components, Templates and the CLI",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Generating a project and components with the CLI",
+          "Standalone components and imports",
+          "Template bindings, control flow and pipes",
+          "Component inputs and outputs",
+          "Styles, view encapsulation and host bindings"
+        ],
+        "resources": [
+          {
+            "title": "Learn Angular",
+            "url": "https://angular.dev/tutorials/learn-angular",
+            "type": "doc"
+          },
+          {
+            "title": "TypeScript Handbook",
+            "url": "https://www.typescriptlang.org/docs/handbook/intro.html",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Signals, Services and Dependency Injection",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "signal, computed and effect",
+          "Injectable services and provider scopes",
+          "Injection tokens and hierarchical injectors",
+          "Observables, subscriptions and the async pipe",
+          "Converting between signals and observables"
+        ],
+        "resources": [
+          {
+            "title": "Angular Signals",
+            "url": "https://angular.dev/guide/signals",
+            "type": "doc"
+          },
+          {
+            "title": "RxJS Overview",
+            "url": "https://rxjs.dev/guide/overview",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Forms, Routing and HTTP Practice",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Build reactive forms with typed form groups",
+          "Write synchronous and async validators",
+          "Configure routes, params and lazy loading",
+          "Protect routes with guards and resolvers",
+          "Call a REST API with interceptors for auth and errors"
+        ],
+        "resources": [
+          {
+            "title": "TypeScript: Everyday Types",
+            "url": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
+            "type": "doc"
+          },
+          {
+            "title": "Fetch API",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API",
+            "type": "doc"
+          }
+        ],
+        "practiceTags": [
+          "angular",
+          "typescript",
+          "forms"
+        ]
+      },
+      {
+        "title": "State Management with RxJS",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Operators: map, switchMap, combineLatest, debounceTime",
+          "Subjects, replay and multicasting",
+          "Store, actions, reducers and selectors",
+          "Side effects and async workflows",
+          "Avoiding leaks by unsubscribing on destroy"
+        ],
+        "resources": [
+          {
+            "title": "NgRx Store Guide",
+            "url": "https://ngrx.io/guide/store",
+            "type": "doc"
+          },
+          {
+            "title": "RxJS Operators",
+            "url": "https://rxjs.dev/guide/operators",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Testing and Production Builds",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Unit testing components with TestBed",
+          "Mocking services and HTTP requests",
+          "End-to-end testing of critical flows",
+          "Change detection strategy and zoneless performance",
+          "Lazy loading, budgets and bundle analysis",
+          "Server-side rendering and hydration"
+        ],
+        "resources": [
+          {
+            "title": "Playwright Getting Started",
+            "url": "https://playwright.dev/docs/intro",
+            "type": "doc"
+          },
+          {
+            "title": "Learn Performance",
+            "url": "https://web.dev/learn/performance/",
+            "type": "doc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Svelte and SvelteKit",
+    "category": "Web Development",
+    "summary": "Build compiled, reactive UIs in Svelte and ship full-stack SvelteKit apps with routing, form actions and SSR.",
+    "stages": [
+      {
+        "title": "Svelte Components and Reactivity",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Component markup, script and style blocks",
+          "Declaring state and reacting to changes",
+          "Props and default values",
+          "Conditional blocks, each blocks and keyed lists",
+          "Event handlers and DOM bindings"
+        ],
+        "resources": [
+          {
+            "title": "Svelte Tutorial",
+            "url": "https://svelte.dev/tutorial",
+            "type": "doc"
+          },
+          {
+            "title": "JavaScript Guide",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Runes, Stores and Component Composition",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Runes for state, derived values and effects",
+          "Shared state with stores",
+          "Slots and snippets for composition",
+          "Context API for implicit dependencies",
+          "Transitions, animations and actions",
+          "Project setup with a Vite dev server"
+        ],
+        "resources": [
+          {
+            "title": "TypeScript Handbook",
+            "url": "https://www.typescriptlang.org/docs/handbook/intro.html",
+            "type": "doc"
+          },
+          {
+            "title": "Vite Guide",
+            "url": "https://vite.dev/guide/",
+            "type": "doc"
+          },
+          {
+            "title": "Svelte Documentation",
+            "url": "https://svelte.dev/docs/svelte/overview",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "SvelteKit Routing and Load Functions",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "File-based routes, layouts and error pages",
+          "Universal versus server load functions",
+          "Form actions and progressive enhancement",
+          "API endpoints and request handling",
+          "Hooks for auth and request interception"
+        ],
+        "resources": [
+          {
+            "title": "SvelteKit Introduction",
+            "url": "https://svelte.dev/docs/kit/introduction",
+            "type": "doc"
+          },
+          {
+            "title": "Fetch API",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Build a SvelteKit Application",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Scaffold routes, layouts and shared navigation",
+          "Load data on the server and stream slow parts",
+          "Handle create and edit flows with form actions",
+          "Add session cookies and route protection",
+          "Write component and end-to-end tests"
+        ],
+        "resources": [
+          {
+            "title": "Vitest Guide",
+            "url": "https://vitest.dev/guide/",
+            "type": "doc"
+          },
+          {
+            "title": "Playwright Getting Started",
+            "url": "https://playwright.dev/docs/intro",
+            "type": "doc"
+          }
+        ],
+        "practiceTags": [
+          "svelte",
+          "javascript",
+          "fullstack"
+        ]
+      },
+      {
+        "title": "Rendering Modes and Deployment",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "SSR, prerendering and client-side rendering per route",
+          "Adapters and deployment targets",
+          "Caching headers and edge delivery",
+          "Code splitting, preloading and bundle size",
+          "Core Web Vitals and hydration cost",
+          "Error handling and observability in production"
+        ],
+        "resources": [
+          {
+            "title": "Vercel Documentation",
+            "url": "https://vercel.com/docs",
+            "type": "doc"
+          },
+          {
+            "title": "Learn Performance",
+            "url": "https://web.dev/learn/performance/",
+            "type": "doc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Node.js and Express",
+    "category": "Web Development",
+    "summary": "Write server-side JavaScript and build, test and harden HTTP APIs with Express, middleware and a real datastore.",
+    "stages": [
+      {
+        "title": "The Node Runtime and Modules",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "The event loop and non-blocking I/O",
+          "CommonJS versus ES modules",
+          "Working with the file system and paths",
+          "process, argv and environment variables",
+          "Reading and writing JSON data"
+        ],
+        "resources": [
+          {
+            "title": "Learn Node.js",
+            "url": "https://nodejs.org/en/learn",
+            "type": "doc"
+          },
+          {
+            "title": "JavaScript Guide",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Async Patterns, Streams and npm",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Callbacks, promises and async/await",
+          "Error propagation and unhandled rejections",
+          "EventEmitter and the streams API",
+          "Buffers and binary data",
+          "package.json, semver and lockfiles",
+          "Scripts, dependencies and dev dependencies"
+        ],
+        "resources": [
+          {
+            "title": "Node.js API Reference",
+            "url": "https://nodejs.org/api/",
+            "type": "doc"
+          },
+          {
+            "title": "npm Documentation",
+            "url": "https://docs.npmjs.com/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Express Routing and Middleware",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Routes, route params and query strings",
+          "Routers for modular endpoint groups",
+          "Built-in and third-party middleware",
+          "Body parsing, cookies and static files",
+          "Centralised error-handling middleware",
+          "Request validation and input sanitising"
+        ],
+        "resources": [
+          {
+            "title": "Express Routing Guide",
+            "url": "https://expressjs.com/en/guide/routing.html",
+            "type": "doc"
+          },
+          {
+            "title": "Using Express Middleware",
+            "url": "https://expressjs.com/en/guide/using-middleware.html",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Build and Test a REST Service",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Design resources and wire CRUD endpoints",
+          "Persist data with a database driver or ODM",
+          "Model schemas, indexes and validation",
+          "Write unit tests for services and handlers",
+          "Write integration tests against the HTTP layer"
+        ],
+        "resources": [
+          {
+            "title": "Mongoose Guide",
+            "url": "https://mongoosejs.com/docs/guide.html",
+            "type": "doc"
+          },
+          {
+            "title": "Jest Getting Started",
+            "url": "https://jestjs.io/docs/getting-started",
+            "type": "doc"
+          }
+        ],
+        "practiceTags": [
+          "node",
+          "express",
+          "api"
+        ]
+      },
+      {
+        "title": "Security, Performance and Deployment",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Common web vulnerabilities and how to block them",
+          "CORS, security headers and rate limiting",
+          "Secrets management and config per environment",
+          "Clustering, worker threads and graceful shutdown",
+          "Structured logging, metrics and health checks",
+          "Process management and zero-downtime restarts"
+        ],
+        "resources": [
+          {
+            "title": "OWASP Top Ten",
+            "url": "https://owasp.org/www-project-top-ten/",
+            "type": "doc"
+          },
+          {
+            "title": "Cross-Origin Resource Sharing (CORS)",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS",
+            "type": "doc"
+          },
+          {
+            "title": "PM2 Quick Start",
+            "url": "https://pm2.keymetrics.io/docs/usage/quick-start/",
+            "type": "doc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "REST API Design",
+    "category": "Web Development",
+    "summary": "Design HTTP APIs that are predictable to consume: clean resources, consistent errors, versioning, caching and security.",
+    "stages": [
+      {
+        "title": "HTTP Foundations",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Request and response anatomy",
+          "Methods and their safety and idempotency",
+          "Status code families and when to use each",
+          "Headers: content negotiation, auth and caching",
+          "Statelessness and the uniform interface"
+        ],
+        "resources": [
+          {
+            "title": "MDN HTTP Documentation",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP",
+            "type": "doc"
+          },
+          {
+            "title": "RFC 9110: HTTP Semantics",
+            "url": "https://datatracker.ietf.org/doc/html/rfc9110",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Resource Modeling and URI Design",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Nouns, collections and sub-resources",
+          "Naming, pluralisation and casing conventions",
+          "Relationships, nesting depth and linking",
+          "Filtering, sorting and sparse field selection",
+          "Modelling actions that are not CRUD"
+        ],
+        "resources": [
+          {
+            "title": "Google API Design Guide",
+            "url": "https://cloud.google.com/apis/design",
+            "type": "doc"
+          },
+          {
+            "title": "JSON:API Specification",
+            "url": "https://jsonapi.org/format/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Pagination, Errors and Versioning",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Offset versus cursor pagination",
+          "Consistent machine-readable error payloads",
+          "Validation errors and field-level detail",
+          "Versioning strategies and deprecation policy",
+          "Idempotency keys for safe retries",
+          "Rate limit headers and backoff guidance"
+        ],
+        "resources": [
+          {
+            "title": "RFC 9457: Problem Details for HTTP APIs",
+            "url": "https://datatracker.ietf.org/doc/html/rfc9457",
+            "type": "doc"
+          },
+          {
+            "title": "Stripe API Reference",
+            "url": "https://docs.stripe.com/api",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Specify an API with OpenAPI",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Describe paths, parameters and request bodies",
+          "Define reusable schemas and components",
+          "Document error responses and auth schemes",
+          "Generate reference docs and client stubs",
+          "Contract-test an implementation against the spec"
+        ],
+        "resources": [
+          {
+            "title": "OpenAPI Specification",
+            "url": "https://spec.openapis.org/oas/latest.html",
+            "type": "doc"
+          },
+          {
+            "title": "Swagger Specification",
+            "url": "https://swagger.io/specification/",
+            "type": "doc"
+          }
+        ],
+        "practiceTags": [
+          "api",
+          "rest",
+          "openapi"
+        ]
+      },
+      {
+        "title": "Security, Caching and Evolution",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Authentication schemes and scoped authorization",
+          "Top API security risks and mitigations",
+          "Cache-Control, ETags and conditional requests",
+          "Bulk, batch and long-running operations",
+          "Webhooks and event delivery guarantees",
+          "Backwards-compatible change checklists"
+        ],
+        "resources": [
+          {
+            "title": "OWASP API Security Project",
+            "url": "https://owasp.org/www-project-api-security/",
+            "type": "doc"
+          },
+          {
+            "title": "HTTP Caching",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching",
+            "type": "doc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "GraphQL",
+    "category": "Web Development",
+    "summary": "Design GraphQL schemas, write resolvers and clients, and run a performant, secure graph API in production.",
+    "stages": [
+      {
+        "title": "Queries, Types and the Schema",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Queries, fields and arguments",
+          "Scalars, objects, enums and lists",
+          "Nullability and the type system",
+          "Variables, aliases and fragments",
+          "Exploring a schema with introspection"
+        ],
+        "resources": [
+          {
+            "title": "Introduction to GraphQL",
+            "url": "https://graphql.org/learn/",
+            "type": "doc"
+          },
+          {
+            "title": "How to GraphQL",
+            "url": "https://www.howtographql.com/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Schema Design and Resolvers",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Schema definition language and documentation strings",
+          "Resolver signatures and the context object",
+          "Mutations and input types",
+          "Interfaces and unions for polymorphic data",
+          "Modelling errors as part of the schema",
+          "Running a GraphQL server over HTTP"
+        ],
+        "resources": [
+          {
+            "title": "GraphQL Schemas and Types",
+            "url": "https://graphql.org/learn/schema/",
+            "type": "doc"
+          },
+          {
+            "title": "Apollo Server Documentation",
+            "url": "https://www.apollographql.com/docs/apollo-server",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Client Integration and Caching",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Executing queries and mutations from the client",
+          "Normalized client caches and cache keys",
+          "Optimistic updates and refetching",
+          "Pagination with connections and cursors",
+          "Subscriptions for live data"
+        ],
+        "resources": [
+          {
+            "title": "Apollo Client for React",
+            "url": "https://www.apollographql.com/docs/react",
+            "type": "doc"
+          },
+          {
+            "title": "Relay Documentation",
+            "url": "https://relay.dev/docs/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Build a Graph API",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Model a domain as a schema and wire resolvers",
+          "Batch and cache loads to kill N+1 queries",
+          "Add field-level authorization checks",
+          "Expose cursor-based pagination on a list field",
+          "Test queries and resolvers end to end"
+        ],
+        "resources": [
+          {
+            "title": "graphql-js Reference Implementation",
+            "url": "https://github.com/graphql/graphql-js",
+            "type": "doc"
+          },
+          {
+            "title": "DataLoader",
+            "url": "https://github.com/graphql/dataloader",
+            "type": "doc"
+          }
+        ],
+        "practiceTags": [
+          "graphql",
+          "api",
+          "backend"
+        ]
+      },
+      {
+        "title": "Production Graphs: Security and Scale",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Query depth and complexity limits",
+          "Persisted queries and safelisting",
+          "Schema evolution without versioning",
+          "Federating a graph across services",
+          "Tracing, metrics and field-level usage data",
+          "Authorization patterns and common API risks"
+        ],
+        "resources": [
+          {
+            "title": "Principled GraphQL",
+            "url": "https://principledgraphql.com/",
+            "type": "doc"
+          },
+          {
+            "title": "OWASP API Security Project",
+            "url": "https://owasp.org/www-project-api-security/",
+            "type": "doc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Django",
+    "category": "Web Development",
+    "summary": "Build database-backed Django sites and REST APIs, from models and the admin to background tasks and deployment.",
+    "stages": [
+      {
+        "title": "Project Anatomy, URLs and Views",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Projects, apps and settings layout",
+          "URL configuration and path converters",
+          "Function-based views and HttpResponse",
+          "Templates, context and template inheritance",
+          "Static files and the development server"
+        ],
+        "resources": [
+          {
+            "title": "Django Tutorial Part 1",
+            "url": "https://docs.djangoproject.com/en/stable/intro/tutorial01/",
+            "type": "doc"
+          },
+          {
+            "title": "The Python Tutorial",
+            "url": "https://docs.python.org/3/tutorial/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Models, the ORM and the Admin",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Field types, relationships and Meta options",
+          "Migrations and schema evolution",
+          "QuerySets, filtering and aggregation",
+          "select_related and prefetch_related",
+          "Registering and customising admin views",
+          "Managers and custom query methods"
+        ],
+        "resources": [
+          {
+            "title": "Django Models",
+            "url": "https://docs.djangoproject.com/en/stable/topics/db/models/",
+            "type": "doc"
+          },
+          {
+            "title": "PostgreSQL Documentation",
+            "url": "https://www.postgresql.org/docs/current/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Forms, Auth and Class-Based Views",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Build ModelForms with custom validation",
+          "Wire up sign-up, login and password reset",
+          "Enforce permissions and login-required views",
+          "Refactor views to generic class-based views",
+          "Write tests with the Django test client"
+        ],
+        "resources": [
+          {
+            "title": "OWASP Django Security Cheat Sheet",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Django_Security_Cheat_Sheet.html",
+            "type": "doc"
+          },
+          {
+            "title": "pytest Documentation",
+            "url": "https://docs.pytest.org/en/stable/",
+            "type": "doc"
+          }
+        ],
+        "practiceTags": [
+          "django",
+          "python",
+          "auth"
+        ]
+      },
+      {
+        "title": "REST APIs with Django REST Framework",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Serializers and model serializers",
+          "ViewSets, routers and generic views",
+          "Authentication classes and permissions",
+          "Pagination, filtering and throttling",
+          "Nested and writable serializers",
+          "Browsable API and schema generation"
+        ],
+        "resources": [
+          {
+            "title": "Django REST Framework",
+            "url": "https://www.django-rest-framework.org/",
+            "type": "doc"
+          },
+          {
+            "title": "DRF Quickstart",
+            "url": "https://www.django-rest-framework.org/tutorial/quickstart/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Background Tasks, Caching and Deployment",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Offloading work to a task queue",
+          "Scheduled and periodic jobs",
+          "Caching views, fragments and querysets",
+          "Settings per environment and secret handling",
+          "Serving with a WSGI application server",
+          "Static and media files behind a CDN"
+        ],
+        "resources": [
+          {
+            "title": "Celery Documentation",
+            "url": "https://docs.celeryq.dev/en/stable/",
+            "type": "doc"
+          },
+          {
+            "title": "Gunicorn Documentation",
+            "url": "https://docs.gunicorn.org/en/stable/",
+            "type": "doc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Flask",
+    "category": "Web Development",
+    "summary": "Build small, explicit Python web services with Flask: routing, blueprints, SQLAlchemy models, auth and deployment.",
+    "stages": [
+      {
+        "title": "Routing, Requests and Templates",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Creating an app and running the dev server",
+          "Route decorators, converters and HTTP methods",
+          "The request object: args, form and JSON",
+          "Responses, redirects and status codes",
+          "Jinja templates, inheritance and static files"
+        ],
+        "resources": [
+          {
+            "title": "Flask Quickstart",
+            "url": "https://flask.palletsprojects.com/en/stable/quickstart/",
+            "type": "doc"
+          },
+          {
+            "title": "The Python Tutorial",
+            "url": "https://docs.python.org/3/tutorial/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Blueprints, Config and App Factories",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Structuring a project with blueprints",
+          "The application factory pattern",
+          "Configuration objects and environment variables",
+          "Application and request contexts",
+          "Error handlers and custom error pages",
+          "Testing with the Flask test client"
+        ],
+        "resources": [
+          {
+            "title": "Flask Tutorial",
+            "url": "https://flask.palletsprojects.com/en/stable/tutorial/",
+            "type": "doc"
+          },
+          {
+            "title": "pytest Documentation",
+            "url": "https://docs.pytest.org/en/stable/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Databases with SQLAlchemy",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Declarative models and relationships",
+          "Sessions, transactions and scoping",
+          "Querying, joins and eager loading",
+          "Migrations and schema versioning",
+          "Connection pooling and engine options"
+        ],
+        "resources": [
+          {
+            "title": "Flask-SQLAlchemy Documentation",
+            "url": "https://flask-sqlalchemy.readthedocs.io/en/stable/",
+            "type": "doc"
+          },
+          {
+            "title": "SQLAlchemy 2.0 Documentation",
+            "url": "https://docs.sqlalchemy.org/en/20/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Build a JSON API with Authentication",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Expose CRUD endpoints returning JSON",
+          "Validate and serialize request payloads",
+          "Add session or token-based login",
+          "Hash passwords and protect routes",
+          "Test endpoints including the auth paths"
+        ],
+        "resources": [
+          {
+            "title": "Flask-Login Documentation",
+            "url": "https://flask-login.readthedocs.io/en/latest/",
+            "type": "doc"
+          },
+          {
+            "title": "OWASP Authentication Cheat Sheet",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html",
+            "type": "doc"
+          }
+        ],
+        "practiceTags": [
+          "flask",
+          "python",
+          "api"
+        ]
+      },
+      {
+        "title": "Production Deployment and Operations",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Serving behind a WSGI server and reverse proxy",
+          "Worker models, timeouts and concurrency",
+          "Containerising the app and its dependencies",
+          "Logging, health checks and error reporting",
+          "Caching and rate limiting hot endpoints",
+          "Zero-downtime releases and rollbacks"
+        ],
+        "resources": [
+          {
+            "title": "Gunicorn Documentation",
+            "url": "https://docs.gunicorn.org/en/stable/",
+            "type": "doc"
+          },
+          {
+            "title": "Docker Get Started",
+            "url": "https://docs.docker.com/get-started/",
+            "type": "doc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Spring Boot",
+    "category": "Web Development",
+    "summary": "Build and operate Java web services with Spring Boot: REST controllers, JPA persistence, testing, security and deployment.",
+    "stages": [
+      {
+        "title": "Spring Boot Essentials",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Starters, auto-configuration and the embedded server",
+          "Application properties and profiles",
+          "Beans, components and the application context",
+          "Constructor injection and configuration classes",
+          "Running and packaging an application"
+        ],
+        "resources": [
+          {
+            "title": "Spring Guides",
+            "url": "https://spring.io/guides",
+            "type": "doc"
+          },
+          {
+            "title": "Spring Boot Reference Documentation",
+            "url": "https://docs.spring.io/spring-boot/index.html",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Web Layer and REST Controllers",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "RestController, request mappings and path variables",
+          "Request bodies, DTOs and JSON serialization",
+          "Bean validation and constraint annotations",
+          "Exception handlers and consistent error responses",
+          "Build tooling, dependencies and the build lifecycle"
+        ],
+        "resources": [
+          {
+            "title": "Baeldung: Spring Boot Tutorials",
+            "url": "https://www.baeldung.com/spring-boot",
+            "type": "blog"
+          },
+          {
+            "title": "Maven Guides",
+            "url": "https://maven.apache.org/guides/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Data Access with JPA",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Entities, identifiers and relationship mappings",
+          "Repositories and derived query methods",
+          "JPQL and native queries",
+          "Transactions, lazy loading and the N+1 problem",
+          "Schema migrations and seed data",
+          "Connection pooling and datasource tuning"
+        ],
+        "resources": [
+          {
+            "title": "Hibernate ORM Documentation",
+            "url": "https://hibernate.org/orm/documentation/",
+            "type": "doc"
+          },
+          {
+            "title": "PostgreSQL Documentation",
+            "url": "https://www.postgresql.org/docs/current/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Build and Test a Service",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Implement a layered service with repository and API",
+          "Unit test business logic with mocks",
+          "Slice test the web layer with MockMvc",
+          "Integration test against a real database",
+          "Seed fixtures and assert on JSON payloads"
+        ],
+        "resources": [
+          {
+            "title": "JUnit 5 User Guide",
+            "url": "https://junit.org/junit5/docs/current/user-guide/",
+            "type": "doc"
+          },
+          {
+            "title": "Baeldung: Testing in Spring Boot",
+            "url": "https://www.baeldung.com/spring-boot-testing",
+            "type": "blog"
+          }
+        ],
+        "practiceTags": [
+          "spring",
+          "java",
+          "api"
+        ]
+      },
+      {
+        "title": "Security, Observability and Deployment",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Authentication filters and method-level authorization",
+          "Password storage and token-based login",
+          "Health, metrics and info endpoints",
+          "Structured logging and distributed tracing",
+          "Containerising a JVM service",
+          "Config, secrets and profiles per environment"
+        ],
+        "resources": [
+          {
+            "title": "OWASP Top Ten",
+            "url": "https://owasp.org/www-project-top-ten/",
+            "type": "doc"
+          },
+          {
+            "title": "Docker Get Started",
+            "url": "https://docs.docker.com/get-started/",
+            "type": "doc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Laravel",
+    "category": "Web Development",
+    "summary": "Build PHP web applications with Laravel: routing, Blade views, Eloquent models, authentication, queues and deployment.",
+    "stages": [
+      {
+        "title": "Routing, Controllers and Blade",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Project structure and the artisan console",
+          "Routes, route parameters and named routes",
+          "Controllers and resource routing",
+          "Blade templates, layouts and components",
+          "Requests, responses and redirects"
+        ],
+        "resources": [
+          {
+            "title": "Laravel Installation",
+            "url": "https://laravel.com/docs/11.x/installation",
+            "type": "doc"
+          },
+          {
+            "title": "PHP Manual",
+            "url": "https://www.php.net/manual/en/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Eloquent ORM and Migrations",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Models, mass assignment and casts",
+          "Migrations, schema builder and seeders",
+          "Relationships: hasMany, belongsTo, many-to-many",
+          "Query scopes and eager loading",
+          "Factories for test and demo data",
+          "Collections and result transformation"
+        ],
+        "resources": [
+          {
+            "title": "Eloquent ORM",
+            "url": "https://laravel.com/docs/11.x/eloquent",
+            "type": "doc"
+          },
+          {
+            "title": "MySQL Documentation",
+            "url": "https://dev.mysql.com/doc/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Validation, Middleware and Authentication",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Form requests and validation rules",
+          "Middleware, groups and route protection",
+          "Sessions, cookies and CSRF protection",
+          "Login, registration and password hashing",
+          "Gates and policies for authorization"
+        ],
+        "resources": [
+          {
+            "title": "OWASP Authentication Cheat Sheet",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html",
+            "type": "doc"
+          },
+          {
+            "title": "Symfony Documentation",
+            "url": "https://symfony.com/doc/current/index.html",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Build and Test an Application",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Model the domain and generate migrations",
+          "Implement CRUD with resource controllers",
+          "Expose a JSON API with API resources",
+          "Write feature tests for the main flows",
+          "Manage packages and autoloading"
+        ],
+        "resources": [
+          {
+            "title": "PHPUnit Documentation",
+            "url": "https://phpunit.de/documentation.html",
+            "type": "doc"
+          },
+          {
+            "title": "Composer Documentation",
+            "url": "https://getcomposer.org/doc/",
+            "type": "doc"
+          }
+        ],
+        "practiceTags": [
+          "laravel",
+          "php",
+          "testing"
+        ]
+      },
+      {
+        "title": "Queues, Caching and Deployment",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Jobs, queues and workers",
+          "Events, listeners and broadcasting",
+          "Scheduled tasks and the task scheduler",
+          "Cache drivers and cache invalidation",
+          "Config and route caching for production",
+          "Containerised deployment and log handling"
+        ],
+        "resources": [
+          {
+            "title": "Redis Documentation",
+            "url": "https://redis.io/docs/latest/",
+            "type": "doc"
+          },
+          {
+            "title": "Docker Get Started",
+            "url": "https://docs.docker.com/get-started/",
+            "type": "doc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Web Performance Optimization",
+    "category": "Web Development",
+    "summary": "Measure and improve real-user web performance: Core Web Vitals, loading strategy, asset delivery and runtime profiling.",
+    "stages": [
+      {
+        "title": "Measuring with Core Web Vitals",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "LCP, INP and CLS and what each measures",
+          "Lab versus field data",
+          "Running and reading a Lighthouse report",
+          "Setting performance budgets",
+          "Prioritising fixes by user impact"
+        ],
+        "resources": [
+          {
+            "title": "Web Vitals",
+            "url": "https://web.dev/articles/vitals",
+            "type": "doc"
+          },
+          {
+            "title": "Lighthouse Overview",
+            "url": "https://developer.chrome.com/docs/lighthouse/overview/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Loading and Delivery",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "The critical rendering path",
+          "Render-blocking CSS and JavaScript",
+          "defer, async and module loading",
+          "Preload, preconnect and resource hints",
+          "Compression, HTTP/2 and CDN delivery",
+          "Code splitting and lazy loading routes"
+        ],
+        "resources": [
+          {
+            "title": "Learn Performance",
+            "url": "https://web.dev/learn/performance/",
+            "type": "doc"
+          },
+          {
+            "title": "MDN Web Performance",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/Performance",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Images, Fonts and Caching",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Responsive images with srcset and sizes",
+          "Modern image formats and compression",
+          "Font loading, font-display and subsetting",
+          "Cache-Control, ETags and immutable assets",
+          "Reserving space to avoid layout shift"
+        ],
+        "resources": [
+          {
+            "title": "HTTP Caching",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching",
+            "type": "doc"
+          },
+          {
+            "title": "HTTP Archive Reports",
+            "url": "https://httparchive.org/reports",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Profile and Fix a Slow Page",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Record and read a performance trace",
+          "Find long tasks and main-thread blocking work",
+          "Diagnose layout thrashing and forced reflow",
+          "Trim and defer third-party scripts",
+          "Re-measure and document the gains"
+        ],
+        "resources": [
+          {
+            "title": "Chrome DevTools Performance Panel",
+            "url": "https://developer.chrome.com/docs/devtools/performance/",
+            "type": "doc"
+          },
+          {
+            "title": "WebPageTest",
+            "url": "https://www.webpagetest.org/",
+            "type": "doc"
+          }
+        ],
+        "practiceTags": [
+          "performance",
+          "javascript",
+          "web"
+        ]
+      },
+      {
+        "title": "Runtime Performance and Real-User Monitoring",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Collecting field metrics from real sessions",
+          "Performance timing APIs and custom marks",
+          "Interaction latency and input responsiveness",
+          "Memory leaks and detached DOM nodes",
+          "Web workers for off-main-thread work",
+          "Regression alerts in continuous integration"
+        ],
+        "resources": [
+          {
+            "title": "web-vitals Library",
+            "url": "https://github.com/GoogleChrome/web-vitals",
+            "type": "doc"
+          },
+          {
+            "title": "Navigation Timing Level 2",
+            "url": "https://www.w3.org/TR/navigation-timing-2/",
+            "type": "doc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Web Accessibility",
+    "category": "Web Development",
+    "summary": "Build interfaces people can actually use: semantics, keyboard support, ARIA patterns and WCAG-conformant auditing.",
+    "stages": [
+      {
+        "title": "Accessibility Principles and Semantics",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Perceivable, operable, understandable, robust",
+          "Disability types and assistive technologies",
+          "Semantic HTML as the accessibility baseline",
+          "Headings, landmarks and document outline",
+          "Text alternatives for images and media"
+        ],
+        "resources": [
+          {
+            "title": "Accessibility Principles",
+            "url": "https://www.w3.org/WAI/fundamentals/accessibility-principles/",
+            "type": "doc"
+          },
+          {
+            "title": "Learn Accessibility",
+            "url": "https://web.dev/learn/accessibility/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Keyboard, Focus and Forms",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Tab order, tabindex and focus visibility",
+          "Skip links and focus management on navigation",
+          "Accessible labels, hints and error messages",
+          "Focus trapping in dialogs and menus",
+          "Target size and pointer alternatives"
+        ],
+        "resources": [
+          {
+            "title": "WebAIM: Keyboard Accessibility",
+            "url": "https://webaim.org/techniques/keyboard/",
+            "type": "doc"
+          },
+          {
+            "title": "MDN Accessibility",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/Accessibility",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "ARIA and Interactive Patterns",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Roles, states and properties",
+          "The first rule of ARIA: prefer native elements",
+          "Accessible name computation",
+          "Patterns: tabs, dialog, combobox, disclosure",
+          "Live regions and status announcements",
+          "Reduced motion and animation safety"
+        ],
+        "resources": [
+          {
+            "title": "ARIA Authoring Practices Guide",
+            "url": "https://www.w3.org/WAI/ARIA/apg/",
+            "type": "doc"
+          },
+          {
+            "title": "MDN ARIA Reference",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Audit a Real Interface",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Run an automated scan and triage findings",
+          "Check color contrast across themes",
+          "Walk the page using only the keyboard",
+          "Inspect the accessibility tree for key components",
+          "Write up issues with severity and a fix"
+        ],
+        "resources": [
+          {
+            "title": "axe Accessibility Testing Tools",
+            "url": "https://www.deque.com/axe/",
+            "type": "doc"
+          },
+          {
+            "title": "WebAIM Contrast Checker",
+            "url": "https://webaim.org/resources/contrastchecker/",
+            "type": "doc"
+          }
+        ],
+        "practiceTags": [
+          "accessibility",
+          "html",
+          "testing"
+        ]
+      },
+      {
+        "title": "Conformance, Testing and Process",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "WCAG success criteria and conformance levels",
+          "Testing with screen readers on desktop and mobile",
+          "Accessibility checks in CI and design review",
+          "Writing an accessibility statement",
+          "Accessible component libraries and design tokens",
+          "Including people with disabilities in user testing"
+        ],
+        "resources": [
+          {
+            "title": "The A11Y Project Checklist",
+            "url": "https://www.a11yproject.com/checklist/",
+            "type": "doc"
+          },
+          {
+            "title": "Accessibility for Teams",
+            "url": "https://digital.gov/guides/accessibility-for-teams/",
+            "type": "doc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Browser Rendering and the DOM",
+    "category": "Web Development",
+    "summary": "Understand how browsers parse, render and update a page, and script the DOM efficiently without a framework.",
+    "stages": [
+      {
+        "title": "The DOM Tree and Selection",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Nodes, elements, attributes and text nodes",
+          "Querying with selectors and traversal",
+          "Creating, inserting and removing nodes",
+          "Classes, datasets and inline styles",
+          "Document fragments and template elements"
+        ],
+        "resources": [
+          {
+            "title": "Document Object Model",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model",
+            "type": "doc"
+          },
+          {
+            "title": "DOM Living Standard",
+            "url": "https://dom.spec.whatwg.org/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Events, Delegation and Forms",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Capture, target and bubble phases",
+          "addEventListener options and removal",
+          "Event delegation for dynamic lists",
+          "Default actions and preventDefault",
+          "Form events, constraint validation and FormData",
+          "Custom events for component communication"
+        ],
+        "resources": [
+          {
+            "title": "EventTarget.addEventListener",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener",
+            "type": "doc"
+          },
+          {
+            "title": "HTML Living Standard",
+            "url": "https://html.spec.whatwg.org/multipage/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Parsing and the Critical Rendering Path",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "HTML parsing, the preload scanner and blocking scripts",
+          "CSSOM construction and style recalculation",
+          "Layout, paint and compositing",
+          "Reflow triggers and layout thrashing",
+          "requestAnimationFrame and frame budgets"
+        ],
+        "resources": [
+          {
+            "title": "Learn Performance",
+            "url": "https://web.dev/learn/performance/",
+            "type": "doc"
+          },
+          {
+            "title": "Chrome DevTools Documentation",
+            "url": "https://developer.chrome.com/docs/devtools/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Build an Interactive Widget Without a Framework",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Render a list from data and patch it on change",
+          "Batch DOM reads and writes to avoid thrashing",
+          "Add keyboard interaction and focus handling",
+          "Animate with transforms instead of layout properties",
+          "Profile the widget and remove dropped frames"
+        ],
+        "resources": [
+          {
+            "title": "Chrome DevTools Performance Panel",
+            "url": "https://developer.chrome.com/docs/devtools/performance/",
+            "type": "doc"
+          },
+          {
+            "title": "Web Vitals",
+            "url": "https://web.dev/articles/vitals",
+            "type": "doc"
+          }
+        ],
+        "practiceTags": [
+          "dom",
+          "javascript",
+          "performance"
+        ]
+      },
+      {
+        "title": "Shadow DOM, Components and Observers",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Custom elements and lifecycle callbacks",
+          "Shadow roots, slots and style encapsulation",
+          "MutationObserver for DOM changes",
+          "IntersectionObserver for visibility and lazy loading",
+          "ResizeObserver and container-aware components",
+          "Virtualising long lists for smooth scrolling"
+        ],
+        "resources": [
+          {
+            "title": "Web Components Introduction",
+            "url": "https://www.webcomponents.org/introduction",
+            "type": "doc"
+          },
+          {
+            "title": "Intersection Observer",
+            "url": "https://www.w3.org/TR/intersection-observer/",
+            "type": "doc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Authentication and Authorization",
+    "category": "Web Development",
+    "summary": "Implement safe sign-in and access control for web apps: sessions, password handling, OAuth 2.0, OIDC, MFA and RBAC.",
+    "stages": [
+      {
+        "title": "HTTP Authentication and Sessions",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Authentication versus authorization",
+          "The HTTP authentication framework and schemes",
+          "Cookies: Secure, HttpOnly, SameSite and scope",
+          "Server-side sessions versus stateless tokens",
+          "CSRF and why session cookies need protection"
+        ],
+        "resources": [
+          {
+            "title": "HTTP Authentication",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication",
+            "type": "doc"
+          },
+          {
+            "title": "HTTP Cookies",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Credentials and Session Management",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Password hashing with a slow, salted algorithm",
+          "Password policy, breach lists and throttling",
+          "Account recovery and email verification flows",
+          "Session lifetime, rotation and invalidation",
+          "Protecting against enumeration and brute force",
+          "Logging and alerting on auth events"
+        ],
+        "resources": [
+          {
+            "title": "OWASP Authentication Cheat Sheet",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html",
+            "type": "doc"
+          },
+          {
+            "title": "OWASP Session Management Cheat Sheet",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "OAuth 2.0 and OpenID Connect",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Roles: resource owner, client, authorization server",
+          "Authorization code flow with PKCE",
+          "Access tokens, refresh tokens and scopes",
+          "ID tokens and the OIDC identity layer",
+          "Redirect URI validation and state parameters",
+          "Choosing a flow for SPAs, mobile and servers"
+        ],
+        "resources": [
+          {
+            "title": "OAuth 2.0",
+            "url": "https://oauth.net/2/",
+            "type": "doc"
+          },
+          {
+            "title": "RFC 6749: The OAuth 2.0 Authorization Framework",
+            "url": "https://datatracker.ietf.org/doc/html/rfc6749",
+            "type": "doc"
+          },
+          {
+            "title": "How OpenID Connect Works",
+            "url": "https://openid.net/developers/how-connect-works/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Implement Login and Protected Routes",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Wire up a sign-in form with hashed credentials",
+          "Issue and verify a signed token or session cookie",
+          "Add a social or identity-provider login",
+          "Guard API routes and refresh expiring sessions",
+          "Test the happy path and the failure paths"
+        ],
+        "resources": [
+          {
+            "title": "JWT Introduction",
+            "url": "https://jwt.io/introduction",
+            "type": "doc"
+          },
+          {
+            "title": "Auth.js Documentation",
+            "url": "https://authjs.dev/",
+            "type": "doc"
+          }
+        ],
+        "practiceTags": [
+          "authentication",
+          "security",
+          "api"
+        ]
+      },
+      {
+        "title": "MFA, Passkeys and Access Control Models",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "TOTP, push and recovery codes",
+          "WebAuthn ceremonies and passkey registration",
+          "Phishing resistance and device binding",
+          "Role-based versus attribute-based access control",
+          "Multi-tenant permissions and policy evaluation",
+          "Token signing, key rotation and claim validation"
+        ],
+        "resources": [
+          {
+            "title": "WebAuthn Guide",
+            "url": "https://webauthn.guide/",
+            "type": "doc"
+          },
+          {
+            "title": "Web Authentication Level 2",
+            "url": "https://www.w3.org/TR/webauthn-2/",
+            "type": "doc"
+          },
+          {
+            "title": "RFC 7519: JSON Web Token",
+            "url": "https://datatracker.ietf.org/doc/html/rfc7519",
+            "type": "doc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "WebSockets and Realtime Apps",
+    "category": "Web Development",
+    "summary": "Build live features over WebSockets and server-sent events, then scale them with pub/sub, presence and backpressure control.",
+    "stages": [
+      {
+        "title": "Realtime Transports and the WebSocket Protocol",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Why polling falls short for live data",
+          "The HTTP upgrade handshake",
+          "Frames, text and binary messages",
+          "Client API: open, message, close and error",
+          "Close codes, timeouts and reconnection"
+        ],
+        "resources": [
+          {
+            "title": "WebSockets API",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API",
+            "type": "doc"
+          },
+          {
+            "title": "RFC 6455: The WebSocket Protocol",
+            "url": "https://datatracker.ietf.org/doc/html/rfc6455",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Choosing a Transport: SSE, Polling or Sockets",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Server-sent events and EventSource",
+          "One-way streams versus duplex channels",
+          "Long polling as a fallback",
+          "Proxies, load balancers and connection limits",
+          "Message formats and schema versioning"
+        ],
+        "resources": [
+          {
+            "title": "Server-sent Events",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events",
+            "type": "doc"
+          },
+          {
+            "title": "WebSockets Explained",
+            "url": "https://ably.com/topic/websockets",
+            "type": "blog"
+          }
+        ]
+      },
+      {
+        "title": "Building a Realtime Server",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Accepting upgrades and managing connections",
+          "Rooms, channels and broadcast targeting",
+          "Authenticating a socket at connect time",
+          "Heartbeats, ping/pong and idle cleanup",
+          "Acknowledgements and delivery semantics"
+        ],
+        "resources": [
+          {
+            "title": "Socket.IO Documentation",
+            "url": "https://socket.io/docs/v4/",
+            "type": "doc"
+          },
+          {
+            "title": "ws: Node.js WebSocket Library",
+            "url": "https://github.com/websockets/ws",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Build a Realtime Chat with Presence",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Stream messages to a room in real time",
+          "Track online presence and typing indicators",
+          "Persist history and replay on reconnect",
+          "Handle dropped connections and resume state",
+          "Load test with many concurrent clients"
+        ],
+        "resources": [
+          {
+            "title": "Socket.IO Tutorial",
+            "url": "https://socket.io/docs/v4/tutorial/introduction",
+            "type": "doc"
+          },
+          {
+            "title": "Node.js API Reference",
+            "url": "https://nodejs.org/api/",
+            "type": "doc"
+          }
+        ],
+        "practiceTags": [
+          "websockets",
+          "node",
+          "realtime"
+        ]
+      },
+      {
+        "title": "Scaling Realtime Systems",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Horizontal scaling with a pub/sub backplane",
+          "Sticky sessions versus stateless gateways",
+          "Backpressure, buffering and slow consumers",
+          "Fan-out strategies and message batching",
+          "Peer-to-peer media and data channels",
+          "Monitoring connection health and drop rates"
+        ],
+        "resources": [
+          {
+            "title": "Redis Documentation",
+            "url": "https://redis.io/docs/latest/",
+            "type": "doc"
+          },
+          {
+            "title": "WebRTC Getting Started",
+            "url": "https://webrtc.org/getting-started/overview",
+            "type": "doc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Microservices Architecture",
+    "category": "Web Development",
+    "summary": "Split systems into independently deployable services and run them with sound communication, data and observability patterns.",
+    "stages": [
+      {
+        "title": "Service Boundaries and Trade-offs",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "What microservices buy you and what they cost",
+          "Finding boundaries from business capabilities",
+          "The modular monolith as a starting point",
+          "Team ownership and Conway's law",
+          "Configuration, statelessness and disposability"
+        ],
+        "resources": [
+          {
+            "title": "Microservices",
+            "url": "https://martinfowler.com/articles/microservices.html",
+            "type": "blog"
+          },
+          {
+            "title": "The Twelve-Factor App",
+            "url": "https://12factor.net/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Inter-Service Communication",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Synchronous HTTP and gRPC calls",
+          "Protocol buffers and schema evolution",
+          "Asynchronous messaging and event streams",
+          "At-least-once delivery and idempotent consumers",
+          "API gateways and backend-for-frontend",
+          "Contract testing between services"
+        ],
+        "resources": [
+          {
+            "title": "gRPC Documentation",
+            "url": "https://grpc.io/docs/",
+            "type": "doc"
+          },
+          {
+            "title": "Apache Kafka Documentation",
+            "url": "https://kafka.apache.org/documentation/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Data, Transactions and Resilience Patterns",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Database per service and shared-data pitfalls",
+          "Saga pattern for distributed workflows",
+          "Outbox pattern and reliable event publishing",
+          "CQRS and read models",
+          "Circuit breakers, retries and timeouts",
+          "Bulkheads and graceful degradation"
+        ],
+        "resources": [
+          {
+            "title": "Microservice Architecture Patterns",
+            "url": "https://microservices.io/patterns/index.html",
+            "type": "doc"
+          },
+          {
+            "title": "Circuit Breaker",
+            "url": "https://martinfowler.com/bliki/CircuitBreaker.html",
+            "type": "blog"
+          }
+        ]
+      },
+      {
+        "title": "Containerize and Deploy Services",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Split a small app into two or three services",
+          "Build images and run them with compose",
+          "Deploy to a cluster with deployments and services",
+          "Externalise config and secrets",
+          "Add health probes and rolling updates"
+        ],
+        "resources": [
+          {
+            "title": "Docker Get Started",
+            "url": "https://docs.docker.com/get-started/",
+            "type": "doc"
+          },
+          {
+            "title": "Kubernetes Concepts",
+            "url": "https://kubernetes.io/docs/concepts/",
+            "type": "doc"
+          }
+        ],
+        "practiceTags": [
+          "microservices",
+          "docker",
+          "kubernetes"
+        ]
+      },
+      {
+        "title": "Observability and Service Mesh",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Distributed tracing and context propagation",
+          "Metrics, SLOs and error budgets",
+          "Structured, correlated logging across services",
+          "Service mesh: mTLS, traffic shifting, retries",
+          "Canary and blue-green release strategies",
+          "Debugging latency across a call graph"
+        ],
+        "resources": [
+          {
+            "title": "OpenTelemetry Documentation",
+            "url": "https://opentelemetry.io/docs/",
+            "type": "doc"
+          },
+          {
+            "title": "Istio Documentation",
+            "url": "https://istio.io/latest/docs/",
+            "type": "doc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Testing JavaScript Applications",
+    "category": "Web Development",
+    "summary": "Build a trustworthy test suite for JavaScript apps: unit tests, component tests, network mocking and end-to-end coverage in CI.",
+    "stages": [
+      {
+        "title": "Unit Testing Fundamentals",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Test structure: arrange, act, assert",
+          "Assertions, matchers and failure messages",
+          "Pure functions and testable design",
+          "The test pyramid and what to test where",
+          "Watch mode and fast feedback loops"
+        ],
+        "resources": [
+          {
+            "title": "Jest Getting Started",
+            "url": "https://jestjs.io/docs/getting-started",
+            "type": "doc"
+          },
+          {
+            "title": "The Practical Test Pyramid",
+            "url": "https://martinfowler.com/articles/practical-test-pyramid.html",
+            "type": "blog"
+          }
+        ]
+      },
+      {
+        "title": "Test Doubles and Async Code",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Spies, stubs, mocks and fakes",
+          "Mocking modules and timers",
+          "Testing promises, async/await and rejections",
+          "Snapshot tests and when they help",
+          "Coverage reports and their limits",
+          "Configuring a modern test runner"
+        ],
+        "resources": [
+          {
+            "title": "Vitest Guide",
+            "url": "https://vitest.dev/guide/",
+            "type": "doc"
+          },
+          {
+            "title": "Jest Mock Functions",
+            "url": "https://jestjs.io/docs/mock-functions",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Component Testing",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Rendering components in a test environment",
+          "Querying by role, label and text",
+          "Simulating user interaction realistically",
+          "Asserting on accessible output, not internals",
+          "Testing async UI states and error boundaries"
+        ],
+        "resources": [
+          {
+            "title": "Testing Library Documentation",
+            "url": "https://testing-library.com/docs/",
+            "type": "doc"
+          },
+          {
+            "title": "React Testing Library",
+            "url": "https://testing-library.com/docs/react-testing-library/intro/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Integration Tests with Network Mocking",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Intercept HTTP requests at the network layer",
+          "Define handlers for success, error and delay",
+          "Share mock handlers across tests and the dev server",
+          "Test loading, empty and failure states",
+          "Keep fixtures in sync with the real API"
+        ],
+        "resources": [
+          {
+            "title": "Mock Service Worker Documentation",
+            "url": "https://mswjs.io/docs/",
+            "type": "doc"
+          },
+          {
+            "title": "Vitest Mocking",
+            "url": "https://vitest.dev/guide/mocking",
+            "type": "doc"
+          }
+        ],
+        "practiceTags": [
+          "testing",
+          "javascript",
+          "mocking"
+        ]
+      },
+      {
+        "title": "End-to-End Testing and CI",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Writing resilient selectors and auto-waiting",
+          "Authentication state reuse across specs",
+          "Fixtures, parallelism and test isolation",
+          "Flake triage with traces, video and retries",
+          "Running the suite on every pull request",
+          "Visual and accessibility checks in the pipeline"
+        ],
+        "resources": [
+          {
+            "title": "Playwright Getting Started",
+            "url": "https://playwright.dev/docs/intro",
+            "type": "doc"
+          },
+          {
+            "title": "Playwright Best Practices",
+            "url": "https://playwright.dev/docs/best-practices",
+            "type": "doc"
+          },
+          {
+            "title": "GitHub Actions Documentation",
+            "url": "https://docs.github.com/en/actions",
+            "type": "doc"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,1808 @@
+[
+  {
+    "topic": "SQL and Relational Databases",
+    "category": "Data & AI",
+    "summary": "Query, model and tune relational data so you can answer real business questions and design schemas that hold up.",
+    "stages": [
+      {
+        "title": "Querying with SELECT",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "SELECT, FROM and column aliases",
+          "Filtering with WHERE and boolean logic",
+          "ORDER BY, LIMIT and OFFSET",
+          "Aggregates: COUNT, SUM, AVG, MIN, MAX",
+          "GROUP BY and HAVING"
+        ],
+        "resources": [
+          { "title": "SQLBolt Interactive SQL Lessons", "url": "https://sqlbolt.com/", "type": "doc" },
+          { "title": "PostgreSQL Tutorial: Querying a Table", "url": "https://www.postgresql.org/docs/current/tutorial.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Relational Modelling and Joins",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Primary keys and foreign keys",
+          "INNER, LEFT, RIGHT and FULL joins",
+          "Many-to-many tables and junction rows",
+          "Normalisation up to third normal form",
+          "NULL semantics and three-valued logic"
+        ],
+        "resources": [
+          { "title": "PostgreSQL: Joins Between Tables", "url": "https://www.postgresql.org/docs/current/tutorial-join.html", "type": "doc" },
+          { "title": "MySQL Reference Manual: JOIN Clause", "url": "https://dev.mysql.com/doc/refman/8.0/en/join.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Analytical Queries",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Subqueries and correlated subqueries",
+          "Common table expressions and recursion",
+          "Window functions: ROW_NUMBER, RANK, LAG",
+          "CASE expressions and conditional aggregates",
+          "UNION, INTERSECT and EXCEPT"
+        ],
+        "resources": [
+          { "title": "PostgreSQL Exercises", "url": "https://pgexercises.com/", "type": "doc" },
+          { "title": "PostgreSQL: Window Functions", "url": "https://www.postgresql.org/docs/current/tutorial-window.html", "type": "doc" },
+          { "title": "Modern SQL Reference", "url": "https://modern-sql.com/", "type": "blog" }
+        ],
+        "practiceTags": ["sql", "analytics"]
+      },
+      {
+        "title": "Transactions and Indexing",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 3,
+        "syllabus": [
+          "ACID properties and transaction boundaries",
+          "Isolation levels and anomalies",
+          "B-tree indexes and index selectivity",
+          "Reading query plans with EXPLAIN",
+          "Locking, blocking and deadlocks"
+        ],
+        "resources": [
+          { "title": "Use The Index, Luke!", "url": "https://use-the-index-luke.com/", "type": "doc" },
+          { "title": "PostgreSQL: Concurrency Control", "url": "https://www.postgresql.org/docs/current/mvcc.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Design a Production Schema",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Requirements to entity-relationship model",
+          "Constraints, defaults and generated columns",
+          "Versioned migrations and backfills",
+          "Seed data and query benchmarking",
+          "Tuning the three slowest queries"
+        ],
+        "resources": [
+          { "title": "PostgreSQL: Data Definition", "url": "https://www.postgresql.org/docs/current/ddl.html", "type": "doc" },
+          { "title": "MySQL: Optimization", "url": "https://dev.mysql.com/doc/refman/8.0/en/optimization.html", "type": "doc" },
+          { "title": "SQLite Query Language Reference", "url": "https://sqlite.org/lang.html", "type": "doc" }
+        ],
+        "practiceTags": ["sql", "database-design"]
+      }
+    ]
+  },
+  {
+    "topic": "PostgreSQL",
+    "category": "Data & AI",
+    "summary": "Run PostgreSQL with confidence: model data, write advanced SQL, tune queries and operate backups and replication.",
+    "stages": [
+      {
+        "title": "Getting Started with Postgres",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Installing Postgres and connecting with psql",
+          "Databases, schemas and search_path",
+          "Core data types and type casting",
+          "Creating tables and loading data with COPY",
+          "Roles, ownership and basic privileges"
+        ],
+        "resources": [
+          { "title": "PostgreSQL Tutorial", "url": "https://www.postgresql.org/docs/current/tutorial.html", "type": "doc" },
+          { "title": "psql Reference", "url": "https://www.postgresql.org/docs/current/app-psql.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Constraints and Relationships",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "PRIMARY KEY, UNIQUE and CHECK constraints",
+          "Foreign keys and ON DELETE behaviour",
+          "NOT NULL and sensible defaults",
+          "ALTER TABLE and safe schema changes",
+          "Sequences, identity columns and UUID keys"
+        ],
+        "resources": [
+          { "title": "PostgreSQL: Constraints", "url": "https://www.postgresql.org/docs/current/ddl-constraints.html", "type": "doc" },
+          { "title": "PostgreSQL Exercises", "url": "https://pgexercises.com/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Advanced SQL in Postgres",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "CTEs and recursive queries",
+          "Window functions over partitions",
+          "JSONB storage, operators and indexing",
+          "Arrays and set-returning functions",
+          "Full-text search with tsvector"
+        ],
+        "resources": [
+          { "title": "PostgreSQL: JSON Functions and Operators", "url": "https://www.postgresql.org/docs/current/functions-json.html", "type": "doc" },
+          { "title": "PostgreSQL: Full Text Search", "url": "https://www.postgresql.org/docs/current/textsearch.html", "type": "doc" },
+          { "title": "PostgreSQL Tutorial Site", "url": "https://www.postgresqltutorial.com/", "type": "blog" }
+        ],
+        "practiceTags": ["postgresql", "sql"]
+      },
+      {
+        "title": "Performance and Indexing",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "EXPLAIN ANALYZE and plan nodes",
+          "B-tree, GIN, GiST and partial indexes",
+          "Table statistics and the query planner",
+          "VACUUM, autovacuum and bloat",
+          "Connection pooling and work_mem tuning"
+        ],
+        "resources": [
+          { "title": "Use The Index, Luke!", "url": "https://use-the-index-luke.com/", "type": "doc" },
+          { "title": "PostgreSQL: Indexes", "url": "https://www.postgresql.org/docs/current/indexes.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Operating Postgres in Production",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Logical backups with pg_dump and pg_restore",
+          "WAL archiving and point-in-time recovery",
+          "Streaming replication and failover",
+          "Row-level security and role design",
+          "Monitoring with pg_stat_statements"
+        ],
+        "resources": [
+          { "title": "PostgreSQL: Backup and Restore", "url": "https://www.postgresql.org/docs/current/backup.html", "type": "doc" },
+          { "title": "PostgreSQL: High Availability and Replication", "url": "https://www.postgresql.org/docs/current/high-availability.html", "type": "doc" },
+          { "title": "PostgreSQL Community Wiki", "url": "https://wiki.postgresql.org/wiki/Main_Page", "type": "doc" }
+        ],
+        "practiceTags": ["postgresql", "operations"]
+      }
+    ]
+  },
+  {
+    "topic": "MongoDB",
+    "category": "Data & AI",
+    "summary": "Model, query and scale document data in MongoDB, from first CRUD calls to sharded, replicated deployments.",
+    "stages": [
+      {
+        "title": "Documents and Collections",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "BSON types and the _id field",
+          "insert, find, update and delete operations",
+          "Query operators and dot notation",
+          "Projections and cursor options",
+          "Working in mongosh"
+        ],
+        "resources": [
+          { "title": "MongoDB Manual", "url": "https://www.mongodb.com/docs/manual/", "type": "doc" },
+          { "title": "mongosh Documentation", "url": "https://www.mongodb.com/docs/mongodb-shell/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Schema Design for Documents",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Embedding versus referencing",
+          "One-to-many and many-to-many patterns",
+          "Document size limits and the working set",
+          "Schema validation rules",
+          "Denormalisation trade-offs"
+        ],
+        "resources": [
+          { "title": "MongoDB: Data Modeling Introduction", "url": "https://www.mongodb.com/docs/manual/core/data-modeling-introduction/", "type": "doc" },
+          { "title": "MongoDB: Schema Validation", "url": "https://www.mongodb.com/docs/manual/core/schema-validation/", "type": "doc" },
+          { "title": "Mongoose Schemas Guide", "url": "https://mongoosejs.com/docs/guide.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "The Aggregation Pipeline",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "$match, $group and $project stages",
+          "$unwind for array flattening",
+          "$lookup joins across collections",
+          "Faceted search with $facet",
+          "Pipeline optimisation and stage order"
+        ],
+        "resources": [
+          { "title": "MongoDB: Aggregation Operations", "url": "https://www.mongodb.com/docs/manual/aggregation/", "type": "doc" },
+          { "title": "MongoDB: Aggregation Pipeline Optimization", "url": "https://www.mongodb.com/docs/manual/core/aggregation-pipeline-optimization/", "type": "doc" }
+        ],
+        "practiceTags": ["mongodb", "aggregation"]
+      },
+      {
+        "title": "Indexes and Query Performance",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Single-field and compound indexes",
+          "Index prefixes and sort support",
+          "Text and geospatial indexes",
+          "Reading explain() output",
+          "Covered queries and index intersection"
+        ],
+        "resources": [
+          { "title": "MongoDB: Indexes", "url": "https://www.mongodb.com/docs/manual/indexes/", "type": "doc" },
+          { "title": "MongoDB: Explain Results", "url": "https://www.mongodb.com/docs/manual/reference/explain-results/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Replication, Sharding and Deployment",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Replica sets and elections",
+          "Read preference and write concern",
+          "Choosing a shard key",
+          "Deploying a cluster on Atlas",
+          "Backup, restore and monitoring"
+        ],
+        "resources": [
+          { "title": "MongoDB: Replication", "url": "https://www.mongodb.com/docs/manual/replication/", "type": "doc" },
+          { "title": "MongoDB: Sharding", "url": "https://www.mongodb.com/docs/manual/sharding/", "type": "doc" },
+          { "title": "MongoDB Atlas Documentation", "url": "https://www.mongodb.com/docs/atlas/", "type": "doc" }
+        ],
+        "practiceTags": ["mongodb", "scaling"]
+      }
+    ]
+  },
+  {
+    "topic": "Redis",
+    "category": "Data & AI",
+    "summary": "Use Redis as a cache and data structure server, then run it durably with persistence, replication and clustering.",
+    "stages": [
+      {
+        "title": "Key-Value Basics",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 2,
+        "syllabus": [
+          "Strings, SET, GET and atomic counters",
+          "Key naming conventions and namespaces",
+          "Expiry with EXPIRE and TTL",
+          "Using redis-cli interactively",
+          "Single-threaded execution model"
+        ],
+        "resources": [
+          { "title": "Redis Documentation", "url": "https://redis.io/docs/latest/", "type": "doc" },
+          { "title": "Redis Commands Reference", "url": "https://redis.io/commands/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Core Data Structures",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Lists as queues and stacks",
+          "Hashes for object storage",
+          "Sets and set algebra",
+          "Sorted sets for leaderboards",
+          "Bitmaps and HyperLogLog for counting"
+        ],
+        "resources": [
+          { "title": "Redis Data Types", "url": "https://redis.io/docs/latest/develop/data-types/", "type": "doc" },
+          { "title": "redis-py Documentation", "url": "https://redis-py.readthedocs.io/en/stable/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Caching and Messaging Patterns",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Cache-aside and write-through strategies",
+          "Eviction policies and maxmemory",
+          "Rate limiting with counters and sorted sets",
+          "Pub/Sub versus Streams",
+          "Pipelining and transactions with MULTI"
+        ],
+        "resources": [
+          { "title": "Amazon ElastiCache: What Is ElastiCache", "url": "https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/WhatIs.html", "type": "doc" },
+          { "title": "Redis Commands Reference", "url": "https://redis.io/commands/", "type": "doc" }
+        ],
+        "practiceTags": ["redis", "caching"]
+      },
+      {
+        "title": "Durability and Scale",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "RDB snapshots versus AOF logging",
+          "Primary-replica replication",
+          "High availability with Sentinel",
+          "Redis Cluster and hash slots",
+          "Latency and memory monitoring"
+        ],
+        "resources": [
+          { "title": "Redis Documentation", "url": "https://redis.io/docs/latest/", "type": "doc" },
+          { "title": "Prometheus: Overview", "url": "https://prometheus.io/docs/introduction/overview/", "type": "doc" }
+        ],
+        "practiceTags": ["redis", "scaling"]
+      }
+    ]
+  },
+  {
+    "topic": "Data Analysis with Pandas",
+    "category": "Data & AI",
+    "summary": "Load, clean, reshape and summarise real datasets with pandas, and keep the analysis fast and reproducible.",
+    "stages": [
+      {
+        "title": "Series and DataFrames",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Creating frames from dicts, CSV and Excel",
+          "dtypes and memory layout",
+          "Selection with loc and iloc",
+          "Boolean masking and query()",
+          "describe(), value_counts() and quick summaries"
+        ],
+        "resources": [
+          { "title": "10 Minutes to pandas", "url": "https://pandas.pydata.org/docs/user_guide/10min.html", "type": "doc" },
+          { "title": "NumPy: Absolute Beginner's Guide", "url": "https://numpy.org/doc/stable/user/absolute_beginners.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Cleaning Messy Data",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Detecting and filling missing values",
+          "Type conversion and astype pitfalls",
+          "Dropping and flagging duplicates",
+          "String accessor methods and regex",
+          "Parsing dates and handling bad rows"
+        ],
+        "resources": [
+          { "title": "pandas: Working with Missing Data", "url": "https://pandas.pydata.org/docs/user_guide/missing_data.html", "type": "doc" },
+          { "title": "pandas: Working with Text Data", "url": "https://pandas.pydata.org/docs/user_guide/text.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Reshaping and Aggregation",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "groupby split-apply-combine",
+          "agg, transform and filter",
+          "pivot_table and crosstab",
+          "merge, join and concat semantics",
+          "melt, stack and MultiIndex frames"
+        ],
+        "resources": [
+          { "title": "pandas: Group By", "url": "https://pandas.pydata.org/docs/user_guide/groupby.html", "type": "doc" },
+          { "title": "pandas: Merge, Join and Concatenate", "url": "https://pandas.pydata.org/docs/user_guide/merging.html", "type": "doc" }
+        ],
+        "practiceTags": ["pandas", "data-analysis"]
+      },
+      {
+        "title": "Time Series and Windows",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 3,
+        "syllabus": [
+          "DatetimeIndex and frequency aliases",
+          "Resampling and upsampling",
+          "Rolling and expanding windows",
+          "Shifts, lags and percentage change",
+          "Time zones and daylight saving"
+        ],
+        "resources": [
+          { "title": "pandas: Time Series / Date Functionality", "url": "https://pandas.pydata.org/docs/user_guide/timeseries.html", "type": "doc" },
+          { "title": "Polars User Guide", "url": "https://docs.pola.rs/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Scaling an Analysis",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Vectorisation instead of apply loops",
+          "Categorical dtype and memory reduction",
+          "Parquet and Arrow-backed columns",
+          "Chunked reads for large files",
+          "Packaging a reproducible analysis notebook"
+        ],
+        "resources": [
+          { "title": "pandas: Enhancing Performance", "url": "https://pandas.pydata.org/docs/user_guide/enhancingperf.html", "type": "doc" },
+          { "title": "Apache Arrow Python Documentation", "url": "https://arrow.apache.org/docs/python/", "type": "doc" },
+          { "title": "Dask Documentation", "url": "https://docs.dask.org/en/stable/", "type": "doc" }
+        ],
+        "practiceTags": ["pandas", "performance"]
+      }
+    ]
+  },
+  {
+    "topic": "Data Visualization",
+    "category": "Data & AI",
+    "summary": "Choose the right chart and build clear, accessible static and interactive visuals that support real decisions.",
+    "stages": [
+      {
+        "title": "Grammar of Charts",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Matching chart type to data question",
+          "Encoding channels: position, length, colour",
+          "Scales, axes and baselines",
+          "Colour use and perceptual pitfalls",
+          "Removing chart junk"
+        ],
+        "resources": [
+          { "title": "From Data to Viz", "url": "https://www.data-to-viz.com/", "type": "doc" },
+          { "title": "Fundamentals of Data Visualization", "url": "https://clauswilke.com/dataviz/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Plotting with Matplotlib",
+        "type": "practice",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Figure and Axes object model",
+          "Line, bar and scatter plots",
+          "Subplots and shared axes",
+          "Titles, labels and annotations",
+          "Styling and saving publication figures"
+        ],
+        "resources": [
+          { "title": "Matplotlib Tutorials", "url": "https://matplotlib.org/stable/tutorials/index.html", "type": "doc" },
+          { "title": "Matplotlib Quick Start Guide", "url": "https://matplotlib.org/stable/users/explain/quick_start.html", "type": "doc" }
+        ],
+        "practiceTags": ["matplotlib", "python"]
+      },
+      {
+        "title": "Statistical Graphics with Seaborn",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Distribution plots: hist, kde, ecdf",
+          "Categorical plots: box, violin, strip",
+          "Relational plots and regression overlays",
+          "Faceting with FacetGrid and relplot",
+          "Themes and colour palettes"
+        ],
+        "resources": [
+          { "title": "Seaborn User Guide and Tutorial", "url": "https://seaborn.pydata.org/tutorial.html", "type": "doc" },
+          { "title": "Seaborn: Choosing Color Palettes", "url": "https://seaborn.pydata.org/tutorial/color_palettes.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Interactive Charts and Dashboards",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Plotly figures and traces",
+          "Hover text, zoom and selection",
+          "Declarative specs with Vega-Lite",
+          "Laying out a multi-chart dashboard",
+          "Callbacks and filters in Dash"
+        ],
+        "resources": [
+          { "title": "Plotly Python Graphing Library", "url": "https://plotly.com/python/", "type": "doc" },
+          { "title": "Vega-Lite Documentation", "url": "https://vega.github.io/vega-lite/docs/", "type": "doc" },
+          { "title": "Dash Documentation", "url": "https://dash.plotly.com/", "type": "doc" }
+        ],
+        "practiceTags": ["plotly", "dashboards"]
+      },
+      {
+        "title": "Designing for an Audience",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Accessible colour and contrast ratios",
+          "Small multiples versus overlaid series",
+          "Annotation-led narrative charts",
+          "Dashboards versus one-off reports",
+          "Running a design critique"
+        ],
+        "resources": [
+          { "title": "WCAG 2.2 Quick Reference", "url": "https://www.w3.org/WAI/WCAG22/quickref/", "type": "doc" },
+          { "title": "10 Usability Heuristics for User Interface Design", "url": "https://www.nngroup.com/articles/ten-usability-heuristics/", "type": "blog" }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Statistics for Data Science",
+    "category": "Data & AI",
+    "summary": "Reason about uncertainty: summarise data, run valid hypothesis tests, fit regressions and design trustworthy experiments.",
+    "stages": [
+      {
+        "title": "Descriptive Statistics",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Mean, median and mode",
+          "Variance, standard deviation and IQR",
+          "Quantiles, outliers and robust summaries",
+          "Shapes of distributions and skew",
+          "Sampling, bias and representativeness"
+        ],
+        "resources": [
+          { "title": "OpenIntro Statistics", "url": "https://www.openintro.org/book/os/", "type": "doc" },
+          { "title": "Khan Academy: Statistics and Probability", "url": "https://www.khanacademy.org/math/statistics-probability", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Probability Foundations",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Random variables and distributions",
+          "Conditional probability and Bayes' rule",
+          "Binomial, Poisson and normal models",
+          "Expectation, variance and covariance",
+          "Law of large numbers and the CLT"
+        ],
+        "resources": [
+          { "title": "Seeing Theory", "url": "https://seeing-theory.brown.edu/", "type": "doc" },
+          { "title": "SciPy Tutorial", "url": "https://docs.scipy.org/doc/scipy/tutorial/index.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Inference and Hypothesis Testing",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Sampling distributions and standard error",
+          "Confidence intervals",
+          "t-tests and chi-square tests",
+          "p-values, type I and type II errors",
+          "Multiple comparison corrections"
+        ],
+        "resources": [
+          { "title": "statsmodels Documentation", "url": "https://www.statsmodels.org/stable/index.html", "type": "doc" },
+          { "title": "SciPy: Statistical Functions", "url": "https://docs.scipy.org/doc/scipy/reference/stats.html", "type": "doc" }
+        ],
+        "practiceTags": ["statistics", "hypothesis-testing"]
+      },
+      {
+        "title": "Regression Modelling",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Simple and multiple linear regression",
+          "Residual diagnostics and assumptions",
+          "Categorical predictors and interactions",
+          "Logistic regression and odds ratios",
+          "R-squared, AIC and model comparison"
+        ],
+        "resources": [
+          { "title": "statsmodels: Linear Regression", "url": "https://www.statsmodels.org/stable/regression.html", "type": "doc" },
+          { "title": "scikit-learn: Linear Models", "url": "https://scikit-learn.org/stable/modules/linear_model.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Experiment Design and A/B Testing",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Randomisation units and interference",
+          "Power analysis and sample size",
+          "Primary metrics and guardrails",
+          "Peeking and sequential testing pitfalls",
+          "Reporting effect sizes and intervals"
+        ],
+        "resources": [
+          { "title": "SciPy: Statistical Functions", "url": "https://docs.scipy.org/doc/scipy/reference/stats.html", "type": "doc" },
+          { "title": "OpenIntro Statistics", "url": "https://www.openintro.org/book/os/", "type": "doc" }
+        ],
+        "practiceTags": ["statistics", "experimentation"]
+      }
+    ]
+  },
+  {
+    "topic": "Linear Algebra for Machine Learning",
+    "category": "Data & AI",
+    "summary": "Build the vector and matrix intuition behind ML models, and compute it efficiently with NumPy and SciPy.",
+    "stages": [
+      {
+        "title": "Vectors and Matrices",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Vector addition, scaling and span",
+          "Dot products, norms and angles",
+          "Matrix multiplication as composition",
+          "Identity, inverse and transpose",
+          "Linear transformations geometrically"
+        ],
+        "resources": [
+          { "title": "MIT OCW 18.06 Linear Algebra", "url": "https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/", "type": "doc" },
+          { "title": "3Blue1Brown: Essence of Linear Algebra", "url": "https://www.3blue1brown.com/topics/linear-algebra", "type": "blog" }
+        ]
+      },
+      {
+        "title": "Numerical Linear Algebra with NumPy",
+        "type": "practice",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "ndarray shapes, axes and strides",
+          "Broadcasting rules",
+          "matmul, solve and inverse",
+          "Slicing, reshaping and stacking",
+          "Timing vectorised versus looped code"
+        ],
+        "resources": [
+          { "title": "NumPy: Absolute Beginner's Guide", "url": "https://numpy.org/doc/stable/user/absolute_beginners.html", "type": "doc" },
+          { "title": "NumPy: Linear Algebra Routines", "url": "https://numpy.org/doc/stable/reference/routines.linalg.html", "type": "doc" }
+        ],
+        "practiceTags": ["numpy", "linear-algebra"]
+      },
+      {
+        "title": "Spaces, Rank and Decompositions",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Linear independence and basis",
+          "Column space, null space and rank",
+          "LU and QR factorisation",
+          "Eigenvalues and eigenvectors",
+          "Singular value decomposition"
+        ],
+        "resources": [
+          { "title": "Mathematics for Machine Learning", "url": "https://mml-book.github.io/", "type": "doc" },
+          { "title": "SciPy: Linear Algebra", "url": "https://docs.scipy.org/doc/scipy/reference/linalg.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Linear Algebra Behind ML Models",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Least squares and the normal equations",
+          "PCA computed through SVD",
+          "Gradients in matrix notation",
+          "Geometry of L1 and L2 regularisation",
+          "Low-rank approximation and compression"
+        ],
+        "resources": [
+          { "title": "scikit-learn: Decomposing Signals in Components", "url": "https://scikit-learn.org/stable/modules/decomposition.html", "type": "doc" },
+          { "title": "Mathematics for Machine Learning", "url": "https://mml-book.github.io/", "type": "doc" }
+        ],
+        "practiceTags": ["linear-algebra", "machine-learning"]
+      }
+    ]
+  },
+  {
+    "topic": "Deep Learning",
+    "category": "Data & AI",
+    "summary": "Train and evaluate modern neural networks, from first gradients to convolutional, attention-based and production models.",
+    "stages": [
+      {
+        "title": "Neural Network Foundations",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Neurons, layers and activation functions",
+          "The forward pass",
+          "Loss functions for regression and classification",
+          "Gradient descent and learning rate",
+          "Train, validation and test splits"
+        ],
+        "resources": [
+          { "title": "Dive into Deep Learning", "url": "https://d2l.ai/", "type": "doc" },
+          { "title": "Deep Learning Book", "url": "https://www.deeplearningbook.org/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Training Deep Networks",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Backpropagation through layers",
+          "SGD, momentum and Adam",
+          "Learning-rate schedules and warmup",
+          "Weight initialisation strategies",
+          "Batch and layer normalisation"
+        ],
+        "resources": [
+          { "title": "Stanford CS231n Course Notes", "url": "https://cs231n.github.io/", "type": "doc" },
+          { "title": "PyTorch: Learn the Basics", "url": "https://pytorch.org/tutorials/beginner/basics/intro.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Convolutional Networks",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Convolution, stride and padding",
+          "Pooling and receptive fields",
+          "ResNet-style skip connections",
+          "Data augmentation pipelines",
+          "Transfer learning from pretrained weights"
+        ],
+        "resources": [
+          { "title": "PyTorch Tutorials", "url": "https://pytorch.org/tutorials/", "type": "doc" },
+          { "title": "TensorFlow Tutorials", "url": "https://www.tensorflow.org/tutorials", "type": "doc" }
+        ],
+        "practiceTags": ["deep-learning", "cnn"]
+      },
+      {
+        "title": "Sequence Models and Attention",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "RNNs, LSTMs and their limitations",
+          "Embeddings and sequence batching",
+          "Scaled dot-product self-attention",
+          "Multi-head attention and positional encoding",
+          "Encoder-decoder transformer stacks"
+        ],
+        "resources": [
+          { "title": "Attention Is All You Need", "url": "https://arxiv.org/abs/1706.03762", "type": "doc" },
+          { "title": "Hugging Face NLP Course", "url": "https://huggingface.co/learn/nlp-course", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Regularisation and a Capstone Model",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Diagnosing overfitting from learning curves",
+          "Dropout, weight decay and early stopping",
+          "Hyperparameter search strategies",
+          "Mixed-precision and gradient accumulation",
+          "Exporting a model for inference"
+        ],
+        "resources": [
+          { "title": "PyTorch Documentation", "url": "https://pytorch.org/docs/stable/index.html", "type": "doc" },
+          { "title": "Keras Developer Guides", "url": "https://keras.io/guides/", "type": "doc" },
+          { "title": "TensorFlow Guide", "url": "https://www.tensorflow.org/guide", "type": "doc" }
+        ],
+        "practiceTags": ["deep-learning", "training"]
+      }
+    ]
+  },
+  {
+    "topic": "Neural Networks from Scratch",
+    "category": "Data & AI",
+    "summary": "Implement neurons, backpropagation and a full training loop in plain NumPy, then rebuild a miniature autograd engine.",
+    "stages": [
+      {
+        "title": "The Single Neuron",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Weights, bias and the weighted sum",
+          "Sigmoid, tanh and ReLU",
+          "Mean squared error and its gradient",
+          "Hand-coding a forward pass in NumPy",
+          "Visualising a decision boundary"
+        ],
+        "resources": [
+          { "title": "Stanford CS231n Course Notes", "url": "https://cs231n.github.io/", "type": "doc" },
+          { "title": "NumPy: Absolute Beginner's Guide", "url": "https://numpy.org/doc/stable/user/absolute_beginners.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "The Calculus of Backpropagation",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Partial derivatives of a loss",
+          "The chain rule across layers",
+          "Computational graphs",
+          "Deriving two-layer gradients by hand",
+          "Numerical gradient checking"
+        ],
+        "resources": [
+          { "title": "Deep Learning Book", "url": "https://www.deeplearningbook.org/", "type": "doc" },
+          { "title": "Dive into Deep Learning", "url": "https://d2l.ai/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Build an MLP in NumPy",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Layer and parameter abstractions",
+          "Softmax with cross-entropy loss",
+          "Mini-batch SGD training loop",
+          "Training on a handwritten-digit dataset",
+          "Plotting loss and accuracy curves"
+        ],
+        "resources": [
+          { "title": "NumPy: Linear Algebra Routines", "url": "https://numpy.org/doc/stable/reference/routines.linalg.html", "type": "doc" },
+          { "title": "scikit-learn: Dataset Loading Utilities", "url": "https://scikit-learn.org/stable/datasets.html", "type": "doc" }
+        ],
+        "practiceTags": ["numpy", "neural-networks"]
+      },
+      {
+        "title": "From Scratch to Autograd",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "A reverse-mode autograd engine in 200 lines",
+          "Comparing gradients against PyTorch",
+          "Implementing SGD and Adam yourself",
+          "Effect of initialisation on convergence",
+          "Profiling the training loop"
+        ],
+        "resources": [
+          { "title": "PyTorch: Learn the Basics", "url": "https://pytorch.org/tutorials/beginner/basics/intro.html", "type": "doc" },
+          { "title": "PyTorch: Autograd Mechanics", "url": "https://pytorch.org/docs/stable/notes/autograd.html", "type": "doc" }
+        ],
+        "practiceTags": ["autograd", "pytorch"]
+      }
+    ]
+  },
+  {
+    "topic": "Natural Language Processing",
+    "category": "Data & AI",
+    "summary": "Process text end to end: preprocessing, classical models, embeddings, transformers and a fine-tuned model you ship.",
+    "stages": [
+      {
+        "title": "Text Preprocessing",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Tokenisation and sentence splitting",
+          "Stemming versus lemmatisation",
+          "Stop words and case normalisation",
+          "Regex cleaning of raw text",
+          "N-grams and vocabulary building"
+        ],
+        "resources": [
+          { "title": "NLTK Book", "url": "https://www.nltk.org/book/", "type": "doc" },
+          { "title": "spaCy 101", "url": "https://spacy.io/usage/spacy-101", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Classical Text Representations",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Bag of words and count vectors",
+          "TF-IDF weighting",
+          "Cosine similarity and nearest neighbours",
+          "Naive Bayes and logistic text classifiers",
+          "Precision, recall and F1 for text"
+        ],
+        "resources": [
+          { "title": "scikit-learn: Feature Extraction", "url": "https://scikit-learn.org/stable/modules/feature_extraction.html", "type": "doc" },
+          { "title": "scikit-learn: Working With Text Data", "url": "https://scikit-learn.org/stable/tutorial/text_analytics/working_with_text_data.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Embeddings and Sequence Labelling",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "word2vec and GloVe intuition",
+          "Contextual versus static embeddings",
+          "Part-of-speech tagging",
+          "Named entity recognition with spaCy",
+          "Dependency parsing basics"
+        ],
+        "resources": [
+          { "title": "spaCy: Linguistic Features", "url": "https://spacy.io/usage/linguistic-features", "type": "doc" },
+          { "title": "Speech and Language Processing (Jurafsky & Martin)", "url": "https://web.stanford.edu/~jurafsky/slp3/", "type": "doc" }
+        ],
+        "practiceTags": ["nlp", "embeddings"]
+      },
+      {
+        "title": "Transformers for NLP",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Self-attention in language models",
+          "Pretraining versus fine-tuning",
+          "BERT-style encoder models",
+          "Subword tokenisers: BPE and WordPiece",
+          "Pipelines and model hubs"
+        ],
+        "resources": [
+          { "title": "Hugging Face NLP Course", "url": "https://huggingface.co/learn/nlp-course", "type": "doc" },
+          { "title": "Hugging Face Transformers Documentation", "url": "https://huggingface.co/docs/transformers/index", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Fine-tune and Ship an NLP Model",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Curating and splitting a labelled dataset",
+          "Fine-tuning a text classifier",
+          "Error analysis on misclassified examples",
+          "Latency, size and distillation trade-offs",
+          "Serving the model behind an API"
+        ],
+        "resources": [
+          { "title": "PyTorch Tutorials", "url": "https://pytorch.org/tutorials/", "type": "doc" },
+          { "title": "scikit-learn: Model Evaluation", "url": "https://scikit-learn.org/stable/modules/model_evaluation.html", "type": "doc" }
+        ],
+        "practiceTags": ["nlp", "transformers"]
+      }
+    ]
+  },
+  {
+    "topic": "Computer Vision",
+    "category": "Data & AI",
+    "summary": "Work with images from pixels to deployed models: filtering, features, CNN classifiers, detection and segmentation.",
+    "stages": [
+      {
+        "title": "Images as Arrays",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Pixels, channels and colour spaces",
+          "Resizing, cropping and interpolation",
+          "Histograms and contrast adjustment",
+          "Convolution kernels and blurring",
+          "Edge detection with Sobel and Canny"
+        ],
+        "resources": [
+          { "title": "OpenCV Documentation", "url": "https://docs.opencv.org/4.x/", "type": "doc" },
+          { "title": "scikit-image Documentation", "url": "https://scikit-image.org/docs/stable/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Classical Feature Methods",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Thresholding and morphological operations",
+          "Contours and connected components",
+          "Corner and keypoint detectors",
+          "Template matching",
+          "Feature matching and homographies"
+        ],
+        "resources": [
+          { "title": "scikit-image Example Gallery", "url": "https://scikit-image.org/docs/stable/auto_examples/", "type": "doc" },
+          { "title": "NumPy Documentation", "url": "https://numpy.org/doc/stable/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "CNNs for Image Classification",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Datasets, transforms and dataloaders",
+          "Augmentation for small datasets",
+          "Training a CNN classifier",
+          "Transfer learning with pretrained backbones",
+          "Confusion matrices and per-class errors"
+        ],
+        "resources": [
+          { "title": "Torchvision Documentation", "url": "https://pytorch.org/vision/stable/index.html", "type": "doc" },
+          { "title": "PyTorch Tutorials", "url": "https://pytorch.org/tutorials/", "type": "doc" }
+        ],
+        "practiceTags": ["computer-vision", "cnn"]
+      },
+      {
+        "title": "Detection and Segmentation",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Bounding boxes and IoU",
+          "Anchor-based versus anchor-free detectors",
+          "Semantic versus instance segmentation",
+          "mAP and precision-recall curves",
+          "Annotation formats: COCO and YOLO"
+        ],
+        "resources": [
+          { "title": "Stanford CS231n Course Notes", "url": "https://cs231n.github.io/", "type": "doc" },
+          { "title": "Ultralytics Documentation", "url": "https://docs.ultralytics.com/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Vision Capstone",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Collecting and labelling a custom dataset",
+          "Training and validation protocol",
+          "Exporting to ONNX and quantising",
+          "Serving inference behind an endpoint",
+          "Monitoring for data drift"
+        ],
+        "resources": [
+          { "title": "ONNX Runtime Documentation", "url": "https://onnxruntime.ai/docs/", "type": "doc" },
+          { "title": "TensorFlow Tutorials", "url": "https://www.tensorflow.org/tutorials", "type": "doc" },
+          { "title": "Hugging Face Transformers Documentation", "url": "https://huggingface.co/docs/transformers/index", "type": "doc" }
+        ],
+        "practiceTags": ["computer-vision", "deployment"]
+      }
+    ]
+  },
+  {
+    "topic": "PyTorch",
+    "category": "Data & AI",
+    "summary": "Go from tensors and autograd to training loops, distributed performance tricks and exported production models.",
+    "stages": [
+      {
+        "title": "Tensors and Autograd",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Creating tensors and dtypes",
+          "Device placement on CPU and GPU",
+          "Broadcasting and in-place ops",
+          "requires_grad and backward()",
+          "Detaching and no_grad contexts"
+        ],
+        "resources": [
+          { "title": "PyTorch: Learn the Basics", "url": "https://pytorch.org/tutorials/beginner/basics/intro.html", "type": "doc" },
+          { "title": "PyTorch Documentation", "url": "https://pytorch.org/docs/stable/index.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Datasets and the Training Loop",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Dataset and DataLoader",
+          "Transforms and collate functions",
+          "Defining models with nn.Module",
+          "Loss functions and optimisers",
+          "Epochs, validation and metrics"
+        ],
+        "resources": [
+          { "title": "PyTorch Tutorials", "url": "https://pytorch.org/tutorials/", "type": "doc" },
+          { "title": "PyTorch: torch.utils.data", "url": "https://pytorch.org/docs/stable/data.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Build and Train a Model",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Designing a model architecture",
+          "Checkpointing and resuming runs",
+          "Learning-rate schedulers",
+          "Tracking metrics across epochs",
+          "Seeding for reproducible results"
+        ],
+        "resources": [
+          { "title": "PyTorch Lightning Documentation", "url": "https://lightning.ai/docs/pytorch/stable/", "type": "doc" },
+          { "title": "PyTorch: Reproducibility", "url": "https://pytorch.org/docs/stable/notes/randomness.html", "type": "doc" }
+        ],
+        "practiceTags": ["pytorch", "training"]
+      },
+      {
+        "title": "Performance and Scaling",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Automatic mixed precision",
+          "torch.compile and graph capture",
+          "Profiling GPU and dataloader bottlenecks",
+          "DistributedDataParallel across GPUs",
+          "Gradient accumulation for large batches"
+        ],
+        "resources": [
+          { "title": "PyTorch: Automatic Mixed Precision Examples", "url": "https://pytorch.org/docs/stable/notes/amp_examples.html", "type": "doc" },
+          { "title": "PyTorch: Distributed Communication Package", "url": "https://pytorch.org/docs/stable/distributed.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Export and Serve",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 4,
+        "syllabus": [
+          "TorchScript and torch.export",
+          "Exporting to ONNX",
+          "Post-training quantisation",
+          "Wrapping inference in a service",
+          "Benchmarking latency and throughput"
+        ],
+        "resources": [
+          { "title": "PyTorch: torch.onnx", "url": "https://pytorch.org/docs/stable/onnx.html", "type": "doc" },
+          { "title": "ONNX Runtime Documentation", "url": "https://onnxruntime.ai/docs/", "type": "doc" }
+        ],
+        "practiceTags": ["pytorch", "deployment"]
+      }
+    ]
+  },
+  {
+    "topic": "TensorFlow",
+    "category": "Data & AI",
+    "summary": "Build models with Keras, feed them efficiently with tf.data, then deploy to servers, mobile and the browser.",
+    "stages": [
+      {
+        "title": "Tensors and Keras Basics",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Tensors, variables and eager execution",
+          "Sequential models and core layers",
+          "compile, fit and evaluate",
+          "Activations, losses and metrics",
+          "Callbacks and early stopping"
+        ],
+        "resources": [
+          { "title": "TensorFlow Tutorials", "url": "https://www.tensorflow.org/tutorials", "type": "doc" },
+          { "title": "Keras: Getting Started", "url": "https://keras.io/getting_started/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Data Pipelines with tf.data",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Building a tf.data.Dataset",
+          "map, batch, shuffle and prefetch",
+          "The TFRecord format",
+          "Augmentation inside the pipeline",
+          "Input pipeline performance tuning"
+        ],
+        "resources": [
+          { "title": "TensorFlow: tf.data Guide", "url": "https://www.tensorflow.org/guide/data", "type": "doc" },
+          { "title": "TensorFlow Guide", "url": "https://www.tensorflow.org/guide", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Custom Models and Training",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Functional API for multi-input models",
+          "Subclassing Model and Layer",
+          "Custom losses and metrics",
+          "GradientTape training loops",
+          "Visualising runs in TensorBoard"
+        ],
+        "resources": [
+          { "title": "Keras Developer Guides", "url": "https://keras.io/guides/", "type": "doc" },
+          { "title": "TensorBoard Documentation", "url": "https://www.tensorflow.org/tensorboard", "type": "doc" }
+        ],
+        "practiceTags": ["tensorflow", "keras"]
+      },
+      {
+        "title": "Deploy a TensorFlow Model",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "The SavedModel format and signatures",
+          "Serving models over REST and gRPC",
+          "Converting to TensorFlow Lite for mobile",
+          "Running models in the browser with TensorFlow.js",
+          "Model versioning and rollback"
+        ],
+        "resources": [
+          { "title": "TFX Documentation", "url": "https://www.tensorflow.org/tfx", "type": "doc" },
+          { "title": "TensorFlow Lite", "url": "https://www.tensorflow.org/lite", "type": "doc" },
+          { "title": "Keras Developer Guides", "url": "https://keras.io/guides/", "type": "doc" }
+        ],
+        "practiceTags": ["tensorflow", "deployment"]
+      }
+    ]
+  },
+  {
+    "topic": "Reinforcement Learning",
+    "category": "Data & AI",
+    "summary": "Train agents that learn from reward, from tabular Q-learning to deep policy-gradient methods and a full capstone agent.",
+    "stages": [
+      {
+        "title": "Markov Decision Processes",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "States, actions, rewards and transitions",
+          "Policies and value functions",
+          "Discount factors and returns",
+          "Bellman expectation and optimality",
+          "Exploration versus exploitation"
+        ],
+        "resources": [
+          { "title": "OpenAI Spinning Up in Deep RL", "url": "https://spinningup.openai.com/en/latest/", "type": "doc" },
+          { "title": "Gymnasium Documentation", "url": "https://gymnasium.farama.org/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Tabular Methods",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Policy iteration and value iteration",
+          "Monte Carlo prediction and control",
+          "Temporal-difference learning",
+          "Q-learning off-policy updates",
+          "SARSA and on-policy control"
+        ],
+        "resources": [
+          { "title": "Spinning Up: Introduction to RL", "url": "https://spinningup.openai.com/en/latest/spinningup/rl_intro.html", "type": "doc" },
+          { "title": "Dive into Deep Learning", "url": "https://d2l.ai/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Deep Q-Networks",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Function approximation of Q-values",
+          "Experience replay buffers",
+          "Target networks and update frequency",
+          "Epsilon-greedy schedules",
+          "Diagnosing unstable training"
+        ],
+        "resources": [
+          { "title": "PyTorch: Reinforcement Learning (DQN) Tutorial", "url": "https://pytorch.org/tutorials/intermediate/reinforcement_q_learning.html", "type": "doc" },
+          { "title": "Stable-Baselines3 Documentation", "url": "https://stable-baselines3.readthedocs.io/en/master/", "type": "doc" }
+        ],
+        "practiceTags": ["reinforcement-learning", "dqn"]
+      },
+      {
+        "title": "Policy Gradient Methods",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "REINFORCE and the policy gradient theorem",
+          "Actor-critic architectures",
+          "Generalised advantage estimation",
+          "PPO and the clipped objective",
+          "Continuous action spaces"
+        ],
+        "resources": [
+          { "title": "Spinning Up: Proximal Policy Optimization", "url": "https://spinningup.openai.com/en/latest/algorithms/ppo.html", "type": "doc" },
+          { "title": "Stable-Baselines3 Documentation", "url": "https://stable-baselines3.readthedocs.io/en/master/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "RL Agent Capstone",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Designing an environment and reward function",
+          "Hyperparameter sensitivity sweeps",
+          "Evaluation across random seeds",
+          "Logging training runs to TensorBoard",
+          "Limits of simulation-trained policies"
+        ],
+        "resources": [
+          { "title": "Gymnasium Documentation", "url": "https://gymnasium.farama.org/", "type": "doc" },
+          { "title": "TensorBoard Documentation", "url": "https://www.tensorflow.org/tensorboard", "type": "doc" }
+        ],
+        "practiceTags": ["reinforcement-learning", "gymnasium"]
+      }
+    ]
+  },
+  {
+    "topic": "Large Language Models",
+    "category": "Data & AI",
+    "summary": "Understand how LLMs work and build with them: APIs, tool calling, retrieval augmentation, fine-tuning and serving.",
+    "stages": [
+      {
+        "title": "How LLMs Work",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Tokenisation and vocabulary",
+          "Next-token prediction and sampling",
+          "Temperature, top-p and greedy decoding",
+          "Context windows and truncation",
+          "Hallucination and capability limits"
+        ],
+        "resources": [
+          { "title": "Hugging Face NLP Course", "url": "https://huggingface.co/learn/nlp-course", "type": "doc" },
+          { "title": "Hugging Face Transformers Documentation", "url": "https://huggingface.co/docs/transformers/index", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Transformer Architecture",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Self-attention and query-key-value",
+          "Multi-head attention",
+          "Positional encodings",
+          "Decoder-only stacks and causal masking",
+          "Pretraining objectives and scaling"
+        ],
+        "resources": [
+          { "title": "Attention Is All You Need", "url": "https://arxiv.org/abs/1706.03762", "type": "doc" },
+          { "title": "Dive into Deep Learning", "url": "https://d2l.ai/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Building with LLM APIs",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Chat message roles and system prompts",
+          "Streaming responses",
+          "Structured and JSON output",
+          "Tool and function calling loops",
+          "Token accounting and cost control"
+        ],
+        "resources": [
+          { "title": "Claude Docs: Build with Claude", "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview", "type": "doc" },
+          { "title": "Hugging Face Transformers Documentation", "url": "https://huggingface.co/docs/transformers/index", "type": "doc" }
+        ],
+        "practiceTags": ["llm", "api"]
+      },
+      {
+        "title": "Retrieval-Augmented Generation",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Chunking strategies for documents",
+          "Embedding models and vector stores",
+          "Hybrid search and reranking",
+          "Grounding answers with citations",
+          "Evaluating retrieval quality"
+        ],
+        "resources": [
+          { "title": "Pinecone Learning Center", "url": "https://www.pinecone.io/learn/", "type": "blog" },
+          { "title": "Qdrant Documentation", "url": "https://qdrant.tech/documentation/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Fine-tuning and Serving",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Building an instruction dataset",
+          "LoRA and QLoRA adapters",
+          "Evaluation harnesses for LLMs",
+          "Quantisation for cheaper inference",
+          "High-throughput serving with vLLM"
+        ],
+        "resources": [
+          { "title": "Hugging Face PEFT Documentation", "url": "https://huggingface.co/docs/peft/index", "type": "doc" },
+          { "title": "vLLM Documentation", "url": "https://docs.vllm.ai/en/latest/", "type": "doc" }
+        ],
+        "practiceTags": ["llm", "fine-tuning"]
+      }
+    ]
+  },
+  {
+    "topic": "Prompt Engineering",
+    "category": "Data & AI",
+    "summary": "Write prompts that behave predictably in production, with structured output, guardrails and a real evaluation loop.",
+    "stages": [
+      {
+        "title": "Prompt Anatomy",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 2,
+        "syllabus": [
+          "Instructions, context and examples",
+          "System messages and personas",
+          "Specifying an output format",
+          "Delimiters and input isolation",
+          "Common failure modes"
+        ],
+        "resources": [
+          { "title": "Prompt Engineering Guide", "url": "https://www.promptingguide.ai/", "type": "doc" },
+          { "title": "Learn Prompting", "url": "https://learnprompting.org/docs/introduction", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Core Techniques",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Zero-shot versus few-shot prompting",
+          "Chain-of-thought and step decomposition",
+          "Self-consistency sampling",
+          "Role and constraint framing",
+          "Why negative instructions underperform"
+        ],
+        "resources": [
+          { "title": "Prompting Techniques", "url": "https://www.promptingguide.ai/techniques", "type": "doc" },
+          { "title": "Claude Docs: Prompt Engineering Overview", "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Prompts Inside Applications",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Templating prompts with variables",
+          "Enforcing JSON and schema outputs",
+          "Tool-calling prompt design",
+          "Defending against prompt injection",
+          "Versioning prompts alongside code"
+        ],
+        "resources": [
+          { "title": "OWASP Top 10 for LLM Applications", "url": "https://owasp.org/www-project-top-10-for-large-language-model-applications/", "type": "doc" },
+          { "title": "Learn Prompting", "url": "https://learnprompting.org/docs/introduction", "type": "doc" }
+        ],
+        "practiceTags": ["prompting", "llm"]
+      },
+      {
+        "title": "Evaluating and Iterating",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Building a golden eval set",
+          "Automatic graders and rubrics",
+          "Pitfalls of LLM-as-judge",
+          "A/B comparing prompt variants",
+          "Regression testing prompt changes"
+        ],
+        "resources": [
+          { "title": "Hugging Face Evaluate Documentation", "url": "https://huggingface.co/docs/evaluate/index", "type": "doc" },
+          { "title": "Prompt Engineering Guide", "url": "https://www.promptingguide.ai/", "type": "doc" }
+        ],
+        "practiceTags": ["prompting", "evaluation"]
+      }
+    ]
+  },
+  {
+    "topic": "MLOps",
+    "category": "Data & AI",
+    "summary": "Take models from notebook to production: tracking, packaging, pipelines, automated retraining and drift monitoring.",
+    "stages": [
+      {
+        "title": "The ML Lifecycle",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Framing an ML problem and success metric",
+          "Data, model and code versioning",
+          "Training versus serving skew",
+          "Roles across data, ML and platform teams",
+          "MLOps maturity levels"
+        ],
+        "resources": [
+          { "title": "ML-Ops.org Principles", "url": "https://ml-ops.org/", "type": "doc" },
+          { "title": "Google Cloud: MLOps Continuous Delivery and Automation Pipelines", "url": "https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Experiment Tracking and Reproducibility",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Logging params, metrics and artifacts",
+          "Model registry and stage promotion",
+          "Pinning environments and dependencies",
+          "Versioning datasets with DVC",
+          "Deterministic seeds and run manifests"
+        ],
+        "resources": [
+          { "title": "MLflow Documentation", "url": "https://mlflow.org/docs/latest/index.html", "type": "doc" },
+          { "title": "DVC Documentation", "url": "https://dvc.org/doc", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Packaging and Serving Models",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Model packaging formats and signatures",
+          "Building a REST inference service",
+          "Containerising the service with Docker",
+          "Batch versus online inference",
+          "Load testing and capacity planning"
+        ],
+        "resources": [
+          { "title": "Docker: Get Started", "url": "https://docs.docker.com/get-started/", "type": "doc" },
+          { "title": "FastAPI Documentation", "url": "https://fastapi.tiangolo.com/", "type": "doc" }
+        ],
+        "practiceTags": ["mlops", "deployment"]
+      },
+      {
+        "title": "Pipelines and Automation",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Orchestrating training as a DAG",
+          "Continuous integration for ML code",
+          "Automated retraining triggers",
+          "Feature stores and feature reuse",
+          "Testing data and pipeline steps"
+        ],
+        "resources": [
+          { "title": "Apache Airflow Documentation", "url": "https://airflow.apache.org/docs/", "type": "doc" },
+          { "title": "Kubeflow Documentation", "url": "https://www.kubeflow.org/docs/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Monitoring Models in Production",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Data drift and concept drift detection",
+          "Serving metrics and alert thresholds",
+          "Shadow deployments and canary rollouts",
+          "Rollback and model kill switches",
+          "Post-incident review for ML failures"
+        ],
+        "resources": [
+          { "title": "Prometheus: Overview", "url": "https://prometheus.io/docs/introduction/overview/", "type": "doc" },
+          { "title": "Grafana Documentation", "url": "https://grafana.com/docs/", "type": "doc" }
+        ],
+        "practiceTags": ["mlops", "monitoring"]
+      }
+    ]
+  },
+  {
+    "topic": "Big Data with Apache Spark",
+    "category": "Data & AI",
+    "summary": "Process datasets far larger than memory with Spark SQL, streaming and lakehouse tables, and tune the jobs that run them.",
+    "stages": [
+      {
+        "title": "Spark Fundamentals",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Driver, executors and cluster managers",
+          "RDDs versus DataFrames",
+          "Lazy evaluation and the DAG",
+          "Partitions and parallelism",
+          "Submitting jobs with spark-submit"
+        ],
+        "resources": [
+          { "title": "Apache Spark Documentation", "url": "https://spark.apache.org/docs/latest/", "type": "doc" },
+          { "title": "Spark: Cluster Mode Overview", "url": "https://spark.apache.org/docs/latest/cluster-overview.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "DataFrames and Spark SQL",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Schemas and type inference",
+          "Transformations versus actions",
+          "SQL over temporary views",
+          "Join strategies and broadcast hints",
+          "UDFs and their performance cost"
+        ],
+        "resources": [
+          { "title": "Spark SQL Programming Guide", "url": "https://spark.apache.org/docs/latest/sql-programming-guide.html", "type": "doc" },
+          { "title": "PySpark API Reference", "url": "https://spark.apache.org/docs/latest/api/python/index.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Processing a Large Dataset",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Reading Parquet and CSV at scale",
+          "Partitioning and bucketing on write",
+          "Caching and persistence levels",
+          "Window functions over big tables",
+          "Writing results back to storage"
+        ],
+        "resources": [
+          { "title": "Spark SQL Performance Tuning", "url": "https://spark.apache.org/docs/latest/sql-performance-tuning.html", "type": "doc" },
+          { "title": "Apache Parquet Documentation", "url": "https://parquet.apache.org/docs/", "type": "doc" }
+        ],
+        "practiceTags": ["spark", "pyspark"]
+      },
+      {
+        "title": "Structured Streaming",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Streaming sources and sinks",
+          "Event time and watermarks",
+          "Append, update and complete output modes",
+          "Checkpointing and state stores",
+          "End-to-end delivery guarantees"
+        ],
+        "resources": [
+          { "title": "Spark Structured Streaming Programming Guide", "url": "https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html", "type": "doc" },
+          { "title": "Apache Kafka Documentation", "url": "https://kafka.apache.org/documentation/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Tuning and Lakehouse Tables",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Diagnosing shuffle and data skew",
+          "Adaptive query execution",
+          "Executor memory and core sizing",
+          "ACID tables with Delta Lake",
+          "Reading the Spark UI for slow stages"
+        ],
+        "resources": [
+          { "title": "Spark Tuning Guide", "url": "https://spark.apache.org/docs/latest/tuning.html", "type": "doc" },
+          { "title": "Delta Lake Documentation", "url": "https://docs.delta.io/latest/index.html", "type": "doc" }
+        ],
+        "practiceTags": ["spark", "performance"]
+      }
+    ]
+  },
+  {
+    "topic": "Data Engineering Pipelines",
+    "category": "Data & AI",
+    "summary": "Design, orchestrate and operate reliable data pipelines from source systems to modelled, tested analytics tables.",
+    "stages": [
+      {
+        "title": "Pipeline Building Blocks",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Batch versus streaming ingestion",
+          "ETL compared with ELT",
+          "Extraction from APIs and databases",
+          "Idempotency and safe re-runs",
+          "Data contracts between teams"
+        ],
+        "resources": [
+          { "title": "Apache Airflow Documentation", "url": "https://airflow.apache.org/docs/", "type": "doc" },
+          { "title": "dbt Documentation", "url": "https://docs.getdbt.com/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Storage and File Formats",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Row versus columnar storage",
+          "Parquet, Avro and ORC trade-offs",
+          "Partition layouts and file sizing",
+          "Object storage and lifecycle rules",
+          "Data warehouse versus data lake"
+        ],
+        "resources": [
+          { "title": "Apache Parquet Documentation", "url": "https://parquet.apache.org/docs/", "type": "doc" },
+          { "title": "Amazon S3 User Guide", "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Orchestrating with Airflow",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Authoring DAGs and task dependencies",
+          "Operators, hooks and sensors",
+          "Schedules, catchup and backfills",
+          "Retries, SLAs and alerting",
+          "Passing data between tasks"
+        ],
+        "resources": [
+          { "title": "Apache Airflow Core Documentation", "url": "https://airflow.apache.org/docs/apache-airflow/stable/index.html", "type": "doc" },
+          { "title": "Dagster Documentation", "url": "https://docs.dagster.io/", "type": "doc" }
+        ],
+        "practiceTags": ["airflow", "etl"]
+      },
+      {
+        "title": "Transformation and Modelling",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Star schemas, facts and dimensions",
+          "Slowly changing dimension types",
+          "dbt models, refs and sources",
+          "Incremental models and snapshots",
+          "Documentation and column lineage"
+        ],
+        "resources": [
+          { "title": "dbt Documentation", "url": "https://docs.getdbt.com/", "type": "doc" },
+          { "title": "BigQuery Documentation", "url": "https://cloud.google.com/bigquery/docs", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Streaming and Data Quality",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Kafka topics, partitions and consumer groups",
+          "Change data capture from databases",
+          "Schema registry and schema evolution",
+          "Freshness, volume and null-rate tests",
+          "Pipeline observability and on-call runbooks"
+        ],
+        "resources": [
+          { "title": "Apache Kafka Documentation", "url": "https://kafka.apache.org/documentation/", "type": "doc" },
+          { "title": "Debezium Documentation", "url": "https://debezium.io/documentation/", "type": "doc" }
+        ],
+        "practiceTags": ["kafka", "data-quality"]
+      }
+    ]
+  }
+]

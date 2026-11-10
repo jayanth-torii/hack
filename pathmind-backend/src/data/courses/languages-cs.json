@@ -1,0 +1,1901 @@
+[
+  {
+    "topic": "Python Programming",
+    "category": "Languages & CS",
+    "summary": "Write idiomatic, typed and tested Python programs, from first scripts to packaged projects with async I/O.",
+    "stages": [
+      {
+        "title": "Syntax, Types and Control Flow",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Variables, assignment and dynamic typing",
+          "Numbers, strings and f-strings",
+          "Lists, tuples, sets and dictionaries",
+          "if/elif/else and truthiness",
+          "for and while loops with range"
+        ],
+        "resources": [
+          { "title": "The Python Tutorial", "url": "https://docs.python.org/3/tutorial/", "type": "doc" },
+          { "title": "Built-in Types", "url": "https://docs.python.org/3/library/stdtypes.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Functions, Modules and Error Handling",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Defining functions and default arguments",
+          "*args, **kwargs and keyword-only parameters",
+          "Scope, closures and lambdas",
+          "Modules, packages and the import system",
+          "Exceptions, try/except/finally and raising"
+        ],
+        "resources": [
+          { "title": "More Control Flow Tools", "url": "https://docs.python.org/3/tutorial/controlflow.html", "type": "doc" },
+          { "title": "Errors and Exceptions", "url": "https://docs.python.org/3/tutorial/errors.html", "type": "doc" },
+          { "title": "PEP 8 - Style Guide for Python Code", "url": "https://peps.python.org/pep-0008/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Idiomatic Python Practice",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "List, dict and set comprehensions",
+          "Slicing and tuple unpacking patterns",
+          "enumerate, zip and sorted with key functions",
+          "collections: Counter, defaultdict, deque",
+          "String parsing and formatting drills"
+        ],
+        "resources": [
+          { "title": "collections - Container datatypes", "url": "https://docs.python.org/3/library/collections.html", "type": "doc" },
+          { "title": "itertools - Functions creating iterators", "url": "https://docs.python.org/3/library/itertools.html", "type": "doc" },
+          { "title": "The Hitchhiker's Guide to Python", "url": "https://docs.python-guide.org/", "type": "blog" }
+        ],
+        "practiceTags": ["strings", "collections", "comprehensions"]
+      },
+      {
+        "title": "Object-Oriented and Functional Python",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Classes, instances and __init__",
+          "Dunder methods and operator overloading",
+          "Inheritance, mixins and super()",
+          "dataclasses and named tuples",
+          "Decorators and context managers",
+          "Generators and the iterator protocol"
+        ],
+        "resources": [
+          { "title": "Classes", "url": "https://docs.python.org/3/tutorial/classes.html", "type": "doc" },
+          { "title": "dataclasses - Data Classes", "url": "https://docs.python.org/3/library/dataclasses.html", "type": "doc" },
+          { "title": "Functional Programming HOWTO", "url": "https://docs.python.org/3/howto/functional.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Typed, Tested and Packaged Projects",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 6,
+        "syllabus": [
+          "Type hints, generics and Protocol",
+          "Virtual environments and dependency pinning",
+          "Project layout with pyproject.toml",
+          "Unit testing with pytest fixtures",
+          "asyncio tasks, await and concurrency",
+          "Building and publishing a distribution"
+        ],
+        "resources": [
+          { "title": "typing - Support for type hints", "url": "https://docs.python.org/3/library/typing.html", "type": "doc" },
+          { "title": "Python Packaging User Guide", "url": "https://packaging.python.org/en/latest/", "type": "doc" },
+          { "title": "pytest Documentation", "url": "https://docs.pytest.org/en/stable/", "type": "doc" }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "JavaScript Fundamentals",
+    "category": "Languages & CS",
+    "summary": "Build confident, modern JavaScript skills: types, functions, async control flow, modules and debugging.",
+    "stages": [
+      {
+        "title": "Values, Types and Control Flow",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "let, const and block scope",
+          "Numbers, strings and template literals",
+          "Truthiness, == versus ===",
+          "Array and object literals",
+          "if/else, loops and switch"
+        ],
+        "resources": [
+          { "title": "JavaScript Guide", "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide", "type": "doc" },
+          { "title": "Eloquent JavaScript", "url": "https://eloquentjavascript.net/", "type": "blog" }
+        ]
+      },
+      {
+        "title": "Functions, Objects and Arrays",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Function declarations versus arrow functions",
+          "Default, rest and spread parameters",
+          "Array methods: map, filter, reduce",
+          "Object and array destructuring",
+          "JSON.parse and JSON.stringify"
+        ],
+        "resources": [
+          { "title": "Data Structures (Eloquent JavaScript)", "url": "https://eloquentjavascript.net/04_data.html", "type": "blog" },
+          { "title": "JavaScript Reference", "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Array and String Drills",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Chaining map, filter and reduce",
+          "Sorting with custom comparators",
+          "Grouping and deduplicating records",
+          "Regular expression matching and replace",
+          "Immutable update patterns"
+        ],
+        "resources": [
+          { "title": "Array methods", "url": "https://javascript.info/array-methods", "type": "blog" },
+          { "title": "Regular expressions", "url": "https://javascript.info/regular-expressions", "type": "blog" }
+        ],
+        "practiceTags": ["arrays", "strings", "closures"]
+      },
+      {
+        "title": "Asynchrony and the Event Loop",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "The call stack, task queue and event loop",
+          "Promises and then/catch/finally",
+          "async/await and error handling",
+          "Promise.all and controlled concurrency",
+          "Fetching data over HTTP"
+        ],
+        "resources": [
+          { "title": "Using promises", "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises", "type": "doc" },
+          { "title": "Async/await", "url": "https://javascript.info/async-await", "type": "blog" }
+        ]
+      },
+      {
+        "title": "Modules, Classes and Tooling",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "ES modules, import/export and bundlers",
+          "Classes, prototypes and dynamic dispatch",
+          "this binding with call, apply and bind",
+          "Closures, memory and common leaks",
+          "Custom Error subclasses and debugging",
+          "Publishing a small reusable library"
+        ],
+        "resources": [
+          { "title": "JavaScript modules", "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules", "type": "doc" },
+          { "title": "Classes", "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes", "type": "doc" },
+          { "title": "Node.js API Documentation", "url": "https://nodejs.org/docs/latest/api/", "type": "doc" }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "TypeScript",
+    "category": "Languages & CS",
+    "summary": "Add a precise type layer to JavaScript and model real application state with generics and type-level tools.",
+    "stages": [
+      {
+        "title": "From JavaScript to Typed Code",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Installing tsc and compiling a first file",
+          "Primitive annotations and type inference",
+          "Arrays, tuples and object types",
+          "Union and literal types",
+          "Functions, optional and default parameters"
+        ],
+        "resources": [
+          { "title": "The TypeScript Handbook", "url": "https://www.typescriptlang.org/docs/handbook/intro.html", "type": "doc" },
+          { "title": "TypeScript for JavaScript Programmers", "url": "https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Interfaces, Narrowing and tsconfig",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Interfaces versus type aliases",
+          "Structural typing and excess property checks",
+          "Type guards and control-flow narrowing",
+          "unknown, never and avoiding any",
+          "strict mode and key tsconfig options"
+        ],
+        "resources": [
+          { "title": "Everyday Types", "url": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html", "type": "doc" },
+          { "title": "Narrowing", "url": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html", "type": "doc" },
+          { "title": "TSConfig Reference", "url": "https://www.typescriptlang.org/tsconfig/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Generics and Classes",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Generic functions and constraints",
+          "Generic interfaces and classes",
+          "Classes, access modifiers and abstract members",
+          "keyof, typeof and indexed access types",
+          "Discriminated unions for modelling state"
+        ],
+        "resources": [
+          { "title": "Generics", "url": "https://www.typescriptlang.org/docs/handbook/2/generics.html", "type": "doc" },
+          { "title": "Classes", "url": "https://www.typescriptlang.org/docs/handbook/2/classes.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Type-Level Practice",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Mapped types and modifiers",
+          "Conditional types and infer",
+          "Template literal types",
+          "Utility types: Pick, Omit, Partial, Record",
+          "Refactoring any-heavy code to safe types"
+        ],
+        "resources": [
+          { "title": "Creating Types from Types", "url": "https://www.typescriptlang.org/docs/handbook/2/types-from-types.html", "type": "doc" },
+          { "title": "Utility Types", "url": "https://www.typescriptlang.org/docs/handbook/utility-types.html", "type": "doc" },
+          { "title": "Type Challenges", "url": "https://github.com/type-challenges/type-challenges", "type": "blog" }
+        ],
+        "practiceTags": ["generics", "type-inference"]
+      },
+      {
+        "title": "TypeScript in Real Projects",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Declaration files and DefinitelyTyped",
+          "Module resolution and path aliases",
+          "Project references and build performance",
+          "Typing component props and hooks",
+          "Runtime validation at system boundaries"
+        ],
+        "resources": [
+          { "title": "Declaration Files: Introduction", "url": "https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html", "type": "doc" },
+          { "title": "React TypeScript Cheatsheet", "url": "https://react-typescript-cheatsheet.netlify.app/", "type": "blog" },
+          { "title": "TypeScript Documentation", "url": "https://www.typescriptlang.org/docs/", "type": "doc" }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Java Programming",
+    "category": "Languages & CS",
+    "summary": "Go from Java syntax to collections, streams and concurrency, finishing with built and tested applications.",
+    "stages": [
+      {
+        "title": "Java Basics and the JVM",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "JDK, JRE and the JVM",
+          "Primitive types and wrapper classes",
+          "Operators, conditionals and loops",
+          "Arrays and the enhanced for loop",
+          "Compiling and running with javac and java"
+        ],
+        "resources": [
+          { "title": "Learn Java (dev.java)", "url": "https://dev.java/learn/", "type": "doc" },
+          { "title": "The Java Tutorials", "url": "https://docs.oracle.com/javase/tutorial/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Classes, Objects and Interfaces",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Classes, fields and constructors",
+          "Encapsulation and access modifiers",
+          "Inheritance and method overriding",
+          "Interfaces and default methods",
+          "Enums and records",
+          "Static versus instance members"
+        ],
+        "resources": [
+          { "title": "Classes and Objects", "url": "https://docs.oracle.com/javase/tutorial/java/javaOO/", "type": "doc" },
+          { "title": "Interfaces and Inheritance", "url": "https://docs.oracle.com/javase/tutorial/java/IandI/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Collections, Generics and Exceptions",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "List, Set, Map and their implementations",
+          "Iterators, Comparable and Comparator",
+          "Generic classes and bounded type parameters",
+          "Checked versus unchecked exceptions",
+          "try-with-resources and AutoCloseable"
+        ],
+        "resources": [
+          { "title": "The Collections Framework", "url": "https://docs.oracle.com/javase/tutorial/collections/", "type": "doc" },
+          { "title": "Java SE API Documentation", "url": "https://docs.oracle.com/en/java/javase/21/docs/api/index.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Streams and Functional Java Practice",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Lambda expressions and functional interfaces",
+          "Stream creation, map and filter",
+          "Collectors, grouping and joining",
+          "Optional and null-safe chaining",
+          "Method references and function composition"
+        ],
+        "resources": [
+          { "title": "Lambda Expressions", "url": "https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html", "type": "doc" },
+          { "title": "Learn Java (dev.java)", "url": "https://dev.java/learn/", "type": "doc" }
+        ],
+        "practiceTags": ["streams", "lambdas", "collections"]
+      },
+      {
+        "title": "Concurrency, Build Tools and Testing",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Threads, Runnable and executor services",
+          "synchronized, volatile and atomic types",
+          "Concurrent collections and CompletableFuture",
+          "Maven or Gradle project structure",
+          "Unit testing with JUnit 5",
+          "Garbage collection and basic profiling"
+        ],
+        "resources": [
+          { "title": "Concurrency", "url": "https://docs.oracle.com/javase/tutorial/essential/concurrency/", "type": "doc" },
+          { "title": "JUnit 5 User Guide", "url": "https://junit.org/junit5/docs/current/user-guide/", "type": "doc" },
+          { "title": "Maven Getting Started Guide", "url": "https://maven.apache.org/guides/getting-started/index.html", "type": "doc" }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "C Programming",
+    "category": "Languages & CS",
+    "summary": "Understand memory, pointers and the machine model well enough to write and debug real systems-level C.",
+    "stages": [
+      {
+        "title": "C Syntax and Types",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Compiling with gcc and the build pipeline",
+          "Integer, floating point and char types",
+          "Operators, control flow and loops",
+          "Functions and header declarations",
+          "Formatted I/O with printf and scanf"
+        ],
+        "resources": [
+          { "title": "Beej's Guide to C Programming", "url": "https://beej.us/guide/bgc/", "type": "blog" },
+          { "title": "C language reference", "url": "https://en.cppreference.com/w/c", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Pointers, Arrays and Strings",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Pointer declaration and dereferencing",
+          "Arrays and pointer arithmetic",
+          "Null-terminated strings and string.h",
+          "Pass-by-value versus pointer parameters",
+          "Multi-dimensional arrays and decay rules"
+        ],
+        "resources": [
+          { "title": "C string library", "url": "https://en.cppreference.com/w/c/string/byte", "type": "doc" },
+          { "title": "The GNU C Library Manual", "url": "https://www.gnu.org/software/libc/manual/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Memory, Structs and Files",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "malloc, calloc, realloc and free",
+          "Stack versus heap lifetimes",
+          "structs, unions and typedef",
+          "Hand-built linked structures",
+          "File I/O with fopen, fread and fwrite"
+        ],
+        "resources": [
+          { "title": "C dynamic memory management", "url": "https://en.cppreference.com/w/c/memory", "type": "doc" },
+          { "title": "malloc(3) manual page", "url": "https://man7.org/linux/man-pages/man3/malloc.3.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Pointer and Memory Drills",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Reimplementing strlen, strcpy and strcmp",
+          "Growable dynamic arrays",
+          "Linked list insert, delete and reverse",
+          "Finding leaks with Valgrind",
+          "Diagnosing segfaults in GDB"
+        ],
+        "resources": [
+          { "title": "Valgrind Quick Start Guide", "url": "https://valgrind.org/docs/manual/quick-start.html", "type": "doc" },
+          { "title": "GDB Documentation", "url": "https://sourceware.org/gdb/documentation/", "type": "doc" }
+        ],
+        "practiceTags": ["pointers", "memory", "strings"]
+      },
+      {
+        "title": "Systems-Level C",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "The preprocessor, macros and include guards",
+          "Multi-file projects and Makefiles",
+          "Undefined behaviour and strict aliasing",
+          "POSIX system calls: open, read, write",
+          "Socket programming basics",
+          "Static and shared libraries"
+        ],
+        "resources": [
+          { "title": "GNU Make Manual", "url": "https://www.gnu.org/software/make/manual/", "type": "doc" },
+          { "title": "Linux man-pages", "url": "https://man7.org/linux/man-pages/", "type": "doc" },
+          { "title": "Beej's Guide to Network Programming", "url": "https://beej.us/guide/bgnet/", "type": "blog" }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "C++ and STL",
+    "category": "Languages & CS",
+    "summary": "Write modern C++ with RAII, the standard containers and algorithms, templates and safe concurrency.",
+    "stages": [
+      {
+        "title": "Modern C++ Foundations",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Compiling with modern standard flags",
+          "auto, references and const correctness",
+          "Initialisation forms and value categories",
+          "Functions, overloading and default arguments",
+          "Namespaces and standard library layout"
+        ],
+        "resources": [
+          { "title": "C++ language reference", "url": "https://en.cppreference.com/w/cpp/language", "type": "doc" },
+          { "title": "Standard C++ FAQ", "url": "https://isocpp.org/faq", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Classes and RAII",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Constructors, destructors and member init lists",
+          "Copy and move semantics",
+          "Rule of zero, three and five",
+          "Operator overloading",
+          "Inheritance and virtual functions"
+        ],
+        "resources": [
+          { "title": "Classes", "url": "https://en.cppreference.com/w/cpp/language/classes", "type": "doc" },
+          { "title": "C++ Core Guidelines", "url": "https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines", "type": "doc" }
+        ]
+      },
+      {
+        "title": "STL Containers and Algorithms",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "vector, deque and list trade-offs",
+          "map, set and their unordered variants",
+          "Iterators and iterator categories",
+          "sort, find, accumulate and transform",
+          "Lambdas as algorithm predicates"
+        ],
+        "resources": [
+          { "title": "Containers library", "url": "https://en.cppreference.com/w/cpp/container", "type": "doc" },
+          { "title": "Algorithms library", "url": "https://en.cppreference.com/w/cpp/algorithm", "type": "doc" }
+        ]
+      },
+      {
+        "title": "STL Problem Drills",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Choosing the right container for a workload",
+          "Custom comparators for sorting structs",
+          "priority_queue for scheduling problems",
+          "String splitting with streams",
+          "Avoiding iterator invalidation bugs"
+        ],
+        "resources": [
+          { "title": "std::basic_string", "url": "https://en.cppreference.com/w/cpp/string/basic_string", "type": "doc" },
+          { "title": "C++ Standard Library Reference", "url": "https://learn.microsoft.com/en-us/cpp/standard-library/", "type": "doc" }
+        ],
+        "practiceTags": ["stl", "containers", "algorithms"]
+      },
+      {
+        "title": "Templates, Smart Pointers and Concurrency",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 6,
+        "syllabus": [
+          "Function and class templates",
+          "Template argument deduction and concepts",
+          "unique_ptr, shared_ptr and ownership",
+          "Exception safety guarantees",
+          "std::thread, mutex and atomics",
+          "CMake builds for multi-file projects"
+        ],
+        "resources": [
+          { "title": "Templates", "url": "https://en.cppreference.com/w/cpp/language/templates", "type": "doc" },
+          { "title": "Dynamic memory management", "url": "https://en.cppreference.com/w/cpp/memory", "type": "doc" },
+          { "title": "CMake Documentation", "url": "https://cmake.org/documentation/", "type": "doc" }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Go (Golang)",
+    "category": "Languages & CS",
+    "summary": "Learn Go's small syntax, interface-driven design and concurrency model, then ship a tested HTTP service.",
+    "stages": [
+      {
+        "title": "Go Syntax and Tooling",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "go run, go build and go mod init",
+          "Variables, constants and basic types",
+          "Functions and multiple return values",
+          "Control flow: if, for and switch",
+          "Packages, imports and exported names"
+        ],
+        "resources": [
+          { "title": "A Tour of Go", "url": "https://go.dev/tour/", "type": "doc" },
+          { "title": "Tutorial: Get started with Go", "url": "https://go.dev/doc/tutorial/getting-started", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Slices, Maps and Structs",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Arrays versus slices and append semantics",
+          "Maps, zero values and the comma-ok idiom",
+          "Structs, embedding and composite literals",
+          "Methods on value and pointer receivers",
+          "Errors as values and errors.Is"
+        ],
+        "resources": [
+          { "title": "Go Slices: usage and internals", "url": "https://go.dev/blog/slices-intro", "type": "blog" },
+          { "title": "Effective Go", "url": "https://go.dev/doc/effective_go", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Interfaces and Idiomatic Design",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Implicit interface satisfaction",
+          "Small interfaces: io.Reader and io.Writer",
+          "Type switches and type assertions",
+          "Error wrapping with %w",
+          "defer, panic and recover"
+        ],
+        "resources": [
+          { "title": "Defer, Panic and Recover", "url": "https://go.dev/blog/defer-panic-and-recover", "type": "blog" },
+          { "title": "errors package", "url": "https://pkg.go.dev/errors", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Concurrency Practice",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Goroutines and the go statement",
+          "Unbuffered and buffered channels",
+          "select with timeouts and defaults",
+          "sync.WaitGroup and sync.Mutex",
+          "Context cancellation and the race detector"
+        ],
+        "resources": [
+          { "title": "Go Concurrency Patterns: Pipelines", "url": "https://go.dev/blog/pipelines", "type": "blog" },
+          { "title": "sync package", "url": "https://pkg.go.dev/sync", "type": "doc" },
+          { "title": "context package", "url": "https://pkg.go.dev/context", "type": "doc" }
+        ],
+        "practiceTags": ["concurrency", "channels", "goroutines"]
+      },
+      {
+        "title": "Building and Shipping Go Services",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "net/http servers, handlers and middleware",
+          "Encoding and decoding JSON",
+          "Table-driven tests and benchmarks",
+          "Modules, versioning and vendoring",
+          "Profiling with pprof",
+          "Cross-compiling and minimal containers"
+        ],
+        "resources": [
+          { "title": "net/http package", "url": "https://pkg.go.dev/net/http", "type": "doc" },
+          { "title": "Managing dependencies", "url": "https://go.dev/doc/modules/managing-dependencies", "type": "doc" },
+          { "title": "Profiling Go Programs", "url": "https://go.dev/blog/pprof", "type": "blog" }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Rust Programming",
+    "category": "Languages & CS",
+    "summary": "Master ownership, traits and error handling so you can write fast Rust that the borrow checker accepts.",
+    "stages": [
+      {
+        "title": "Rust Basics and Cargo",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "cargo new, build, run and test",
+          "Variables, mutability and shadowing",
+          "Scalar and compound types",
+          "Functions, expressions and control flow",
+          "Formatting and printing macros"
+        ],
+        "resources": [
+          { "title": "The Rust Programming Language", "url": "https://doc.rust-lang.org/book/", "type": "doc" },
+          { "title": "Rust by Example", "url": "https://doc.rust-lang.org/rust-by-example/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Ownership, Borrowing and Lifetimes",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Move semantics and the ownership rules",
+          "Shared and mutable references",
+          "Slices, String and &str",
+          "Lifetime annotations in functions",
+          "Reading common borrow-checker errors"
+        ],
+        "resources": [
+          { "title": "Understanding Ownership", "url": "https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html", "type": "doc" },
+          { "title": "Lifetimes (Rust by Example)", "url": "https://doc.rust-lang.org/rust-by-example/scope/lifetime.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Structs, Enums and Error Handling",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Structs, impl blocks and associated functions",
+          "Enums and exhaustive match",
+          "Option and Result",
+          "The ? operator and custom error types",
+          "Traits, trait bounds and generics"
+        ],
+        "resources": [
+          { "title": "Error Handling", "url": "https://doc.rust-lang.org/book/ch09-00-error-handling.html", "type": "doc" },
+          { "title": "The Rust Standard Library", "url": "https://doc.rust-lang.org/stable/std/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Iterators and Collections Practice",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Vec, HashMap and the entry API",
+          "Iterator adaptors: map, filter, fold",
+          "Closures and the Fn trait family",
+          "Pattern matching with guards and bindings",
+          "Writing unit tests with assert macros"
+        ],
+        "resources": [
+          { "title": "std::iter::Iterator", "url": "https://doc.rust-lang.org/std/iter/trait.Iterator.html", "type": "doc" },
+          { "title": "Rustlings Exercises", "url": "https://github.com/rust-lang/rustlings", "type": "doc" }
+        ],
+        "practiceTags": ["iterators", "ownership", "collections"]
+      },
+      {
+        "title": "Concurrency, Smart Pointers and Crates",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 6,
+        "syllabus": [
+          "Threads, channels and Send/Sync",
+          "Arc and Mutex for shared state",
+          "Box, Rc and RefCell",
+          "async/await and executors",
+          "Modules, crates and publishing",
+          "unsafe Rust and FFI boundaries"
+        ],
+        "resources": [
+          { "title": "Fearless Concurrency", "url": "https://doc.rust-lang.org/book/ch16-00-concurrency.html", "type": "doc" },
+          { "title": "The Cargo Book", "url": "https://doc.rust-lang.org/cargo/", "type": "doc" },
+          { "title": "Asynchronous Programming in Rust", "url": "https://rust-lang.github.io/async-book/", "type": "doc" }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Kotlin",
+    "category": "Languages & CS",
+    "summary": "Write concise, null-safe Kotlin with coroutines and apply it to Android and multiplatform projects.",
+    "stages": [
+      {
+        "title": "Kotlin Syntax Essentials",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "val, var and type inference",
+          "Basic types and string templates",
+          "Conditions, when expressions and loops",
+          "Functions with default and named arguments",
+          "Nullable types, safe calls and the Elvis operator"
+        ],
+        "resources": [
+          { "title": "Basic syntax", "url": "https://kotlinlang.org/docs/basic-syntax.html", "type": "doc" },
+          { "title": "Null safety", "url": "https://kotlinlang.org/docs/null-safety.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Classes, Data and Collections",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Classes, constructors and init blocks",
+          "Data classes and destructuring",
+          "Sealed classes, objects and enums",
+          "Lists, sets and maps",
+          "Collection operations: map, filter, groupBy"
+        ],
+        "resources": [
+          { "title": "Classes", "url": "https://kotlinlang.org/docs/classes.html", "type": "doc" },
+          { "title": "Collections overview", "url": "https://kotlinlang.org/docs/collections-overview.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Idiomatic Kotlin Practice",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Scope functions: let, run, apply, also",
+          "Extension functions and properties",
+          "Higher-order functions and lambdas",
+          "Sequences for lazy pipelines",
+          "Refactoring Java-style code into Kotlin"
+        ],
+        "resources": [
+          { "title": "Kotlin Koans", "url": "https://kotlinlang.org/docs/koans.html", "type": "doc" },
+          { "title": "Coding conventions", "url": "https://kotlinlang.org/docs/coding-conventions.html", "type": "doc" }
+        ],
+        "practiceTags": ["collections", "lambdas"]
+      },
+      {
+        "title": "Coroutines and Asynchrony",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Suspending functions and coroutine builders",
+          "Structured concurrency and scopes",
+          "Dispatchers and context switching",
+          "Flow for streams of values",
+          "Cancellation and exception handling"
+        ],
+        "resources": [
+          { "title": "Coroutines guide", "url": "https://kotlinlang.org/docs/coroutines-guide.html", "type": "doc" },
+          { "title": "Asynchronous Flow", "url": "https://kotlinlang.org/docs/flow.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Kotlin for Android and Multiplatform",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Gradle Kotlin DSL project setup",
+          "App architecture with ViewModel and state",
+          "Jetpack Compose composables and recomposition",
+          "HTTP and serialization libraries",
+          "Testing coroutines and Flows",
+          "Sharing code with Kotlin Multiplatform"
+        ],
+        "resources": [
+          { "title": "Kotlin on Android", "url": "https://developer.android.com/kotlin", "type": "doc" },
+          { "title": "Jetpack Compose", "url": "https://developer.android.com/develop/ui/compose", "type": "doc" },
+          { "title": "Kotlin Multiplatform", "url": "https://kotlinlang.org/docs/multiplatform.html", "type": "doc" }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Swift",
+    "category": "Languages & CS",
+    "summary": "Learn Swift's type system, protocols and concurrency, ending with a SwiftUI app that talks to a network API.",
+    "stages": [
+      {
+        "title": "Swift Language Basics",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Constants, variables and type inference",
+          "Strings, numbers and collection types",
+          "Optionals and optional binding",
+          "Control flow and switch pattern matching",
+          "Functions and closure expressions"
+        ],
+        "resources": [
+          { "title": "The Swift Programming Language", "url": "https://docs.swift.org/swift-book/documentation/the-swift-programming-language/", "type": "doc" },
+          { "title": "Getting Started with Swift", "url": "https://www.swift.org/getting-started/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Types, Structs and Classes",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Structs versus classes and value semantics",
+          "Properties, observers and lazy values",
+          "Enums with associated values",
+          "Initialisers and deinitialisation",
+          "Error handling with throws and do/catch"
+        ],
+        "resources": [
+          { "title": "Structures and Classes", "url": "https://docs.swift.org/swift-book/documentation/the-swift-programming-language/classesandstructures", "type": "doc" },
+          { "title": "Swift Standard Library", "url": "https://developer.apple.com/documentation/swift", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Protocols and Generics",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Protocols and protocol extensions",
+          "Generic functions and type constraints",
+          "Opaque types with some and any",
+          "The Result type and error propagation",
+          "Codable for JSON encoding and decoding"
+        ],
+        "resources": [
+          { "title": "Protocols", "url": "https://docs.swift.org/swift-book/documentation/the-swift-programming-language/protocols", "type": "doc" },
+          { "title": "Foundation", "url": "https://developer.apple.com/documentation/foundation", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Collections and Closures Practice",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "map, filter, reduce and compactMap",
+          "Sorting with key paths and closures",
+          "Dictionaries, sets and grouping",
+          "String manipulation and substrings",
+          "Writing XCTest unit tests"
+        ],
+        "resources": [
+          { "title": "Collection Types", "url": "https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes", "type": "doc" },
+          { "title": "XCTest", "url": "https://developer.apple.com/documentation/xctest", "type": "doc" }
+        ],
+        "practiceTags": ["collections", "closures", "optionals"]
+      },
+      {
+        "title": "Concurrency and SwiftUI Apps",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "async/await and structured tasks",
+          "Actors and data-race safety",
+          "SwiftUI views, state and bindings",
+          "Lists, navigation and layout",
+          "Networking with URLSession",
+          "App lifecycle and dependency injection"
+        ],
+        "resources": [
+          { "title": "Concurrency", "url": "https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency", "type": "doc" },
+          { "title": "SwiftUI", "url": "https://developer.apple.com/documentation/swiftui", "type": "doc" },
+          { "title": "URLSession", "url": "https://developer.apple.com/documentation/foundation/urlsession", "type": "doc" }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "PHP",
+    "category": "Languages & CS",
+    "summary": "Build modern, object-oriented PHP applications with Composer, PDO and a tested, secure request pipeline.",
+    "stages": [
+      {
+        "title": "PHP Syntax and Web Basics",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Embedding PHP and echoing output",
+          "Variables, types and type juggling",
+          "Indexed and associative arrays",
+          "Control flow and loops",
+          "Functions, include and require"
+        ],
+        "resources": [
+          { "title": "PHP Language Reference", "url": "https://www.php.net/manual/en/langref.php", "type": "doc" },
+          { "title": "PHP: The Right Way", "url": "https://phptherightway.com/", "type": "blog" }
+        ]
+      },
+      {
+        "title": "Forms, Requests and Sessions",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Superglobals: $_GET, $_POST, $_SERVER",
+          "Validating and filtering user input",
+          "Cookies and session handling",
+          "File uploads and headers",
+          "Escaping output to prevent XSS"
+        ],
+        "resources": [
+          { "title": "Variables From External Sources", "url": "https://www.php.net/manual/en/language.variables.external.php", "type": "doc" },
+          { "title": "Session Handling", "url": "https://www.php.net/manual/en/book.session.php", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Object-Oriented PHP and Composer",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Classes, interfaces and traits",
+          "Namespaces and PSR-4 autoloading",
+          "Typed properties and constructor promotion",
+          "Exceptions and custom error handling",
+          "Composer dependencies and scripts"
+        ],
+        "resources": [
+          { "title": "Classes and Objects", "url": "https://www.php.net/manual/en/language.oop5.php", "type": "doc" },
+          { "title": "Composer Documentation", "url": "https://getcomposer.org/doc/", "type": "doc" },
+          { "title": "PSR-12: Extended Coding Style", "url": "https://www.php-fig.org/psr/psr-12/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Database Practice with PDO",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Connecting with PDO and DSNs",
+          "Prepared statements and bound parameters",
+          "Fetch modes and result iteration",
+          "Transactions and error modes",
+          "Mapping result rows to objects"
+        ],
+        "resources": [
+          { "title": "PDO", "url": "https://www.php.net/manual/en/book.pdo.php", "type": "doc" },
+          { "title": "MySQL Reference Manual", "url": "https://dev.mysql.com/doc/refman/8.0/en/", "type": "doc" }
+        ],
+        "practiceTags": ["sql", "databases", "pdo"]
+      },
+      {
+        "title": "Modern PHP Applications",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Front controller and routing patterns",
+          "Dependency injection containers",
+          "PSR-7 requests and middleware pipelines",
+          "Unit and integration tests with PHPUnit",
+          "Caching, queues and background jobs",
+          "Deployment and OPcache configuration"
+        ],
+        "resources": [
+          { "title": "PSR-7: HTTP Message Interfaces", "url": "https://www.php-fig.org/psr/psr-7/", "type": "doc" },
+          { "title": "PHPUnit Documentation", "url": "https://docs.phpunit.de/", "type": "doc" },
+          { "title": "OWASP PHP Configuration Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/cheatsheets/PHP_Configuration_Cheat_Sheet.html", "type": "doc" }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Ruby",
+    "category": "Languages & CS",
+    "summary": "Learn Ruby's object model, blocks and Enumerable, then build and test a Rails web application.",
+    "stages": [
+      {
+        "title": "Ruby Syntax and Objects",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Everything is an object",
+          "Variables, symbols and strings",
+          "Arrays, hashes and ranges",
+          "Conditionals, loops and iterators",
+          "Methods, arguments and implicit returns"
+        ],
+        "resources": [
+          { "title": "Ruby Documentation", "url": "https://www.ruby-lang.org/en/documentation/", "type": "doc" },
+          { "title": "Ruby in Twenty Minutes", "url": "https://www.ruby-lang.org/en/documentation/quickstart/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Blocks, Classes and Modules",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Blocks, procs and lambdas",
+          "yield and block_given?",
+          "Classes, attr_accessor and initialize",
+          "Modules as mixins and namespaces",
+          "Exceptions with begin, rescue and ensure"
+        ],
+        "resources": [
+          { "title": "Ruby Core Documentation", "url": "https://docs.ruby-lang.org/en/master/", "type": "doc" },
+          { "title": "The Ruby Style Guide", "url": "https://rubystyle.guide/", "type": "blog" }
+        ]
+      },
+      {
+        "title": "Enumerable Practice",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "each, map, select and reject",
+          "reduce, group_by and partition",
+          "Sorting with sort_by and comparators",
+          "Lazy enumerators for large data",
+          "String and regular expression manipulation"
+        ],
+        "resources": [
+          { "title": "Enumerable", "url": "https://docs.ruby-lang.org/en/master/Enumerable.html", "type": "doc" },
+          { "title": "Regexp", "url": "https://docs.ruby-lang.org/en/master/Regexp.html", "type": "doc" }
+        ],
+        "practiceTags": ["enumerable", "strings"]
+      },
+      {
+        "title": "Gems, Testing and Metaprogramming",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Bundler and Gemfile dependency management",
+          "Structuring and packaging a gem",
+          "RSpec describe, it and expectations",
+          "method_missing and define_method",
+          "Monkey-patching risks and refinements"
+        ],
+        "resources": [
+          { "title": "Bundler Documentation", "url": "https://bundler.io/docs.html", "type": "doc" },
+          { "title": "RSpec Documentation", "url": "https://rspec.info/documentation/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Building Web Apps with Rails",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "MVC structure and the request cycle",
+          "Active Record models and migrations",
+          "Routing, controllers and strong parameters",
+          "Views, partials and helpers",
+          "Background work with Active Job",
+          "Caching and production deployment"
+        ],
+        "resources": [
+          { "title": "Ruby on Rails Guides", "url": "https://guides.rubyonrails.org/", "type": "doc" },
+          { "title": "Active Record Basics", "url": "https://guides.rubyonrails.org/active_record_basics.html", "type": "doc" },
+          { "title": "Securing Rails Applications", "url": "https://guides.rubyonrails.org/security.html", "type": "doc" }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Data Structures",
+    "category": "Languages & CS",
+    "summary": "Pick and implement the right data structure for a problem, and justify the choice with complexity reasoning.",
+    "stages": [
+      {
+        "title": "Arrays, Strings and Complexity Basics",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Contiguous memory and random access",
+          "Dynamic arrays and amortised growth",
+          "Two-pointer and sliding-window shapes",
+          "String representation and immutability",
+          "Counting operations to estimate cost"
+        ],
+        "resources": [
+          { "title": "Algorithms, 4th Edition: Fundamentals", "url": "https://algs4.cs.princeton.edu/10fundamentals/", "type": "doc" },
+          { "title": "Big-O Cheat Sheet", "url": "https://www.bigocheatsheet.com/", "type": "blog" }
+        ]
+      },
+      {
+        "title": "Linked Lists, Stacks and Queues",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Singly and doubly linked nodes",
+          "Insertion, deletion and traversal",
+          "Stack operations and the call stack",
+          "Queues, deques and circular buffers",
+          "Choosing array versus linked storage"
+        ],
+        "resources": [
+          { "title": "Stacks and Queues", "url": "https://algs4.cs.princeton.edu/13stacks/", "type": "doc" },
+          { "title": "VisuAlgo: Data Structure Visualisations", "url": "https://visualgo.net/en", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Hash Tables and Trees",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Hash functions and load factor",
+          "Collision handling: chaining and probing",
+          "Binary search trees and traversals",
+          "Balanced trees and rotations",
+          "Tries for prefix search"
+        ],
+        "resources": [
+          { "title": "Hash Tables", "url": "https://algs4.cs.princeton.edu/34hash/", "type": "doc" },
+          { "title": "Binary Search Trees", "url": "https://algs4.cs.princeton.edu/32bst/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Heaps, Union-Find and Graph Storage",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Binary heaps and heapify",
+          "Priority queues and their applications",
+          "Disjoint-set union with path compression",
+          "Adjacency lists versus matrices",
+          "Space and time trade-offs between structures"
+        ],
+        "resources": [
+          { "title": "Priority Queues", "url": "https://algs4.cs.princeton.edu/24pq/", "type": "doc" },
+          { "title": "Disjoint Set Union", "url": "https://cp-algorithms.com/data_structures/disjoint_set_union.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Structure Selection Practice",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Designing an LRU cache",
+          "Implementing a min-heap from scratch",
+          "Range queries with prefix sums",
+          "Interval problems with sorted structures",
+          "Justifying complexity for each choice"
+        ],
+        "resources": [
+          { "title": "LeetCode Problem Set", "url": "https://leetcode.com/problemset/", "type": "doc" },
+          { "title": "Segment Tree", "url": "https://cp-algorithms.com/data_structures/segment_tree.html", "type": "doc" }
+        ],
+        "practiceTags": ["hashmaps", "trees", "heaps"]
+      }
+    ]
+  },
+  {
+    "topic": "Algorithms and Complexity",
+    "category": "Languages & CS",
+    "summary": "Analyse running time rigorously and apply sorting, recursion, greedy and dynamic programming techniques.",
+    "stages": [
+      {
+        "title": "Analysis and Searching",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Big-O, Big-Theta and Big-Omega",
+          "Best, average and worst case",
+          "Binary search and loop invariants",
+          "Linear scans and early exit",
+          "Empirical timing versus asymptotics"
+        ],
+        "resources": [
+          { "title": "Analysis of Algorithms", "url": "https://algs4.cs.princeton.edu/14analysis/", "type": "doc" },
+          { "title": "Big-O Cheat Sheet", "url": "https://www.bigocheatsheet.com/", "type": "blog" }
+        ]
+      },
+      {
+        "title": "Sorting Algorithms",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Insertion and selection sort",
+          "Merge sort and divide-and-conquer",
+          "Quicksort, pivots and partitioning",
+          "Heap sort and in-place guarantees",
+          "Stability and counting sort"
+        ],
+        "resources": [
+          { "title": "Elementary Sorts", "url": "https://algs4.cs.princeton.edu/21elementary/", "type": "doc" },
+          { "title": "Mergesort", "url": "https://algs4.cs.princeton.edu/22mergesort/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Recursion, Divide and Conquer, Greedy",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Recurrence relations and the master theorem",
+          "Backtracking with pruning",
+          "Greedy exchange arguments",
+          "Interval scheduling and Huffman coding",
+          "Recognising when greedy fails"
+        ],
+        "resources": [
+          { "title": "Algorithms for Competitive Programming", "url": "https://cp-algorithms.com/", "type": "doc" },
+          { "title": "USACO Guide", "url": "https://usaco.guide/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Dynamic Programming Practice",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Identifying overlapping subproblems",
+          "Memoisation versus bottom-up tables",
+          "Knapsack and subset-sum",
+          "Longest common subsequence and edit distance",
+          "Space-optimising DP states"
+        ],
+        "resources": [
+          { "title": "LeetCode Problem Set", "url": "https://leetcode.com/problemset/", "type": "doc" },
+          { "title": "Codeforces", "url": "https://codeforces.com/", "type": "doc" }
+        ],
+        "practiceTags": ["dynamic-programming", "recursion"]
+      },
+      {
+        "title": "Advanced Techniques and Limits",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Amortised analysis and potential functions",
+          "Randomised algorithms and expected cost",
+          "String matching with KMP and hashing",
+          "NP-completeness and reductions",
+          "Approximation and heuristic strategies"
+        ],
+        "resources": [
+          { "title": "Prefix Function and KMP", "url": "https://cp-algorithms.com/string/prefix-function.html", "type": "doc" },
+          { "title": "Substring Search", "url": "https://algs4.cs.princeton.edu/53substring/", "type": "doc" },
+          { "title": "P versus NP problem", "url": "https://en.wikipedia.org/wiki/P_versus_NP_problem", "type": "doc" }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Graph Algorithms",
+    "category": "Languages & CS",
+    "summary": "Model problems as graphs and apply traversal, shortest-path, spanning-tree and flow algorithms with confidence.",
+    "stages": [
+      {
+        "title": "Graph Models and Traversal",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Directed, undirected and weighted graphs",
+          "Adjacency list and matrix representations",
+          "Breadth-first search and distance layers",
+          "Depth-first search and the recursion stack",
+          "Connected components and visited sets"
+        ],
+        "resources": [
+          { "title": "Undirected Graphs", "url": "https://algs4.cs.princeton.edu/41graph/", "type": "doc" },
+          { "title": "Breadth-First Search", "url": "https://cp-algorithms.com/graph/breadth-first-search.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Ordering and Cycles in Directed Graphs",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Topological sort with DFS and Kahn's algorithm",
+          "Cycle detection in directed graphs",
+          "Strongly connected components",
+          "Shortest paths in a DAG",
+          "Modelling dependency resolution"
+        ],
+        "resources": [
+          { "title": "Directed Graphs", "url": "https://algs4.cs.princeton.edu/42digraph/", "type": "doc" },
+          { "title": "Topological Sorting", "url": "https://cp-algorithms.com/graph/topological-sort.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Shortest Paths and Spanning Trees",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Dijkstra with a priority queue",
+          "Bellman-Ford and negative edges",
+          "Floyd-Warshall all-pairs paths",
+          "Kruskal's MST with union-find",
+          "Prim's MST and the cut property"
+        ],
+        "resources": [
+          { "title": "Dijkstra's Algorithm", "url": "https://cp-algorithms.com/graph/dijkstra.html", "type": "doc" },
+          { "title": "Minimum Spanning Trees", "url": "https://algs4.cs.princeton.edu/43mst/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Graph Problem Practice",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Grids as implicit graphs",
+          "Bipartite checking and two-colouring",
+          "0-1 BFS and multi-source BFS",
+          "Lowest common ancestor queries",
+          "Turning state spaces into graph nodes"
+        ],
+        "resources": [
+          { "title": "0-1 BFS", "url": "https://cp-algorithms.com/graph/01_bfs.html", "type": "doc" },
+          { "title": "LeetCode Problem Set", "url": "https://leetcode.com/problemset/", "type": "doc" }
+        ],
+        "practiceTags": ["graphs", "bfs", "shortest-paths"]
+      },
+      {
+        "title": "Flows, Connectivity and Applications",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Max-flow min-cut theorem",
+          "Edmonds-Karp implementation",
+          "Bipartite matching via maximum flow",
+          "Articulation points and bridges",
+          "Applying graph models to scheduling and routing"
+        ],
+        "resources": [
+          { "title": "Maximum Flow: Ford-Fulkerson and Edmonds-Karp", "url": "https://cp-algorithms.com/graph/edmonds_karp.html", "type": "doc" },
+          { "title": "Finding Bridges in a Graph", "url": "https://cp-algorithms.com/graph/bridge-searching.html", "type": "doc" },
+          { "title": "Max-flow min-cut theorem", "url": "https://en.wikipedia.org/wiki/Max-flow_min-cut_theorem", "type": "doc" }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Object-Oriented Design",
+    "category": "Languages & CS",
+    "summary": "Design class structures that stay changeable: principled responsibilities, patterns used sparingly, clean domains.",
+    "stages": [
+      {
+        "title": "Objects, Classes and Encapsulation",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Assigning responsibilities to classes",
+          "Encapsulation and information hiding",
+          "Composition versus inheritance",
+          "Interfaces and abstract types",
+          "Polymorphism and dynamic dispatch"
+        ],
+        "resources": [
+          { "title": "Object-Oriented Programming Concepts", "url": "https://docs.oracle.com/javase/tutorial/java/concepts/", "type": "doc" },
+          { "title": "Classes and Objects", "url": "https://docs.oracle.com/javase/tutorial/java/javaOO/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "SOLID Principles",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Single responsibility in practice",
+          "Open/closed through abstraction",
+          "Liskov substitution violations",
+          "Interface segregation",
+          "Dependency inversion and injection"
+        ],
+        "resources": [
+          { "title": "SOLID", "url": "https://en.wikipedia.org/wiki/SOLID", "type": "doc" },
+          { "title": "Design Patterns Catalog", "url": "https://refactoring.guru/design-patterns/catalog", "type": "doc" },
+          { "title": "Framework Design Guidelines", "url": "https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Design Patterns",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Creational: factory, builder, singleton",
+          "Structural: adapter, decorator, facade",
+          "Behavioural: strategy, observer, command",
+          "Choosing a pattern versus over-engineering",
+          "Patterns and testability trade-offs"
+        ],
+        "resources": [
+          { "title": "Creational Design Patterns", "url": "https://refactoring.guru/design-patterns/creational-patterns", "type": "doc" },
+          { "title": "Behavioral Design Patterns", "url": "https://refactoring.guru/design-patterns/behavioral-patterns", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Refactoring Practice",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Spotting code smells in real code",
+          "Extract method and extract class",
+          "Replace conditional with polymorphism",
+          "Introducing seams for testing",
+          "Incremental refactoring with safety nets"
+        ],
+        "resources": [
+          { "title": "Refactoring Techniques", "url": "https://refactoring.guru/refactoring/techniques", "type": "doc" },
+          { "title": "Code Smells", "url": "https://refactoring.guru/refactoring/smells", "type": "doc" }
+        ],
+        "practiceTags": ["refactoring", "design-patterns"]
+      },
+      {
+        "title": "Domain Modelling and Architecture",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Entities, value objects and aggregates",
+          "Bounded contexts and ubiquitous language",
+          "Layered and ports-and-adapters architecture",
+          "Designing for change and testability",
+          "Communicating designs with diagrams"
+        ],
+        "resources": [
+          { "title": "Domain-driven design", "url": "https://en.wikipedia.org/wiki/Domain-driven_design", "type": "doc" },
+          { "title": "Cloud Design Patterns", "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/", "type": "doc" }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Operating Systems",
+    "category": "Languages & CS",
+    "summary": "Explain and reason about processes, scheduling, virtual memory, concurrency and file systems on real machines.",
+    "stages": [
+      {
+        "title": "What an Operating System Does",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Kernel mode, user mode and system calls",
+          "Processes and process control blocks",
+          "Program loading and address spaces",
+          "The shell and process creation",
+          "Interrupts, traps and exceptions"
+        ],
+        "resources": [
+          { "title": "Operating Systems: Three Easy Pieces", "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/", "type": "doc" },
+          { "title": "fork(2) manual page", "url": "https://man7.org/linux/man-pages/man2/fork.2.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Processes and CPU Scheduling",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Context switching mechanics",
+          "FIFO, shortest-job-first and round-robin",
+          "Multi-level feedback queues",
+          "Fairness, throughput and response time",
+          "Process states, orphans and zombies"
+        ],
+        "resources": [
+          { "title": "OSTEP: CPU Scheduling", "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf", "type": "doc" },
+          { "title": "The Linux Kernel Documentation", "url": "https://docs.kernel.org/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Memory Management",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Address translation and the MMU",
+          "Paging, page tables and the TLB",
+          "Demand paging and page replacement",
+          "Swapping and thrashing",
+          "mmap and shared memory regions"
+        ],
+        "resources": [
+          { "title": "OSTEP: Paging", "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-paging.pdf", "type": "doc" },
+          { "title": "mmap(2) manual page", "url": "https://man7.org/linux/man-pages/man2/mmap.2.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Concurrency and Synchronisation Practice",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Creating threads with pthreads",
+          "Locks, condition variables and semaphores",
+          "Producer-consumer and reader-writer problems",
+          "Deadlock conditions and prevention",
+          "Reproducing and fixing race conditions"
+        ],
+        "resources": [
+          { "title": "pthreads(7) manual page", "url": "https://man7.org/linux/man-pages/man7/pthreads.7.html", "type": "doc" },
+          { "title": "OSTEP: Concurrency and Threads", "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/threads-intro.pdf", "type": "doc" }
+        ],
+        "practiceTags": ["concurrency", "threads", "synchronization"]
+      },
+      {
+        "title": "File Systems, I/O and Virtualisation",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Inodes, directories and file descriptors",
+          "Journalling and crash consistency",
+          "Block devices and the page cache",
+          "Device drivers and I/O scheduling",
+          "Namespaces, cgroups and containers"
+        ],
+        "resources": [
+          { "title": "OSTEP: Files and Directories", "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/file-intro.pdf", "type": "doc" },
+          { "title": "namespaces(7) manual page", "url": "https://man7.org/linux/man-pages/man7/namespaces.7.html", "type": "doc" },
+          { "title": "OSDev Wiki", "url": "https://wiki.osdev.org/Main_Page", "type": "doc" }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Computer Networks",
+    "category": "Languages & CS",
+    "summary": "Trace a request from socket to server: addressing, TCP behaviour, DNS, TLS, HTTP and real packet inspection.",
+    "stages": [
+      {
+        "title": "Layers and Addressing",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "OSI and TCP/IP layering models",
+          "MAC addresses and Ethernet frames",
+          "IPv4 and IPv6 addressing",
+          "Subnets, CIDR and routing basics",
+          "Encapsulation across layers"
+        ],
+        "resources": [
+          { "title": "What is the OSI Model?", "url": "https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/", "type": "doc" },
+          { "title": "Internet protocol suite", "url": "https://en.wikipedia.org/wiki/Internet_protocol_suite", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Transport: TCP and UDP",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Ports, sockets and multiplexing",
+          "TCP handshake and connection teardown",
+          "Reliability, sequence numbers and ACKs",
+          "Flow control and congestion control",
+          "When UDP is the right choice"
+        ],
+        "resources": [
+          { "title": "RFC 9293: Transmission Control Protocol", "url": "https://www.rfc-editor.org/rfc/rfc9293.html", "type": "doc" },
+          { "title": "Beej's Guide to Network Programming", "url": "https://beej.us/guide/bgnet/", "type": "blog" }
+        ]
+      },
+      {
+        "title": "Application Layer: DNS, HTTP and TLS",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "DNS resolution and record types",
+          "HTTP/1.1, HTTP/2 and HTTP/3 differences",
+          "Methods, headers and status codes",
+          "TLS handshake and certificate chains",
+          "Caching and content delivery networks"
+        ],
+        "resources": [
+          { "title": "HTTP", "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP", "type": "doc" },
+          { "title": "What is DNS?", "url": "https://www.cloudflare.com/learning/dns/what-is-dns/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Network Tooling Practice",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Capturing and filtering traffic in Wireshark",
+          "Debugging DNS with dig and nslookup",
+          "Inspecting headers with curl verbose mode",
+          "ping, traceroute and latency analysis",
+          "Reading a capture of a full page load"
+        ],
+        "resources": [
+          { "title": "Wireshark User's Guide", "url": "https://www.wireshark.org/docs/wsug_html_chunked/", "type": "doc" },
+          { "title": "curl Documentation", "url": "https://curl.se/docs/", "type": "doc" }
+        ],
+        "practiceTags": ["tcp", "http", "dns"]
+      },
+      {
+        "title": "Routing, Security and Scale",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Routing tables, BGP and autonomous systems",
+          "NAT, firewalls and private networks",
+          "VPNs and tunnelling protocols",
+          "Load balancing strategies",
+          "Common network attacks and mitigations"
+        ],
+        "resources": [
+          { "title": "What is BGP?", "url": "https://www.cloudflare.com/learning/security/glossary/what-is-bgp/", "type": "doc" },
+          { "title": "RFC 9110: HTTP Semantics", "url": "https://www.rfc-editor.org/rfc/rfc9110.html", "type": "doc" },
+          { "title": "OWASP Top Ten", "url": "https://owasp.org/www-project-top-ten/", "type": "doc" }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Compilers and Language Design",
+    "category": "Languages & CS",
+    "summary": "Build a working language: scanner, parser, resolver, bytecode VM, and an understanding of real optimisation.",
+    "stages": [
+      {
+        "title": "The Compilation Pipeline",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "From source to tokens to tree to code",
+          "Interpreters versus compilers",
+          "Front end, middle end and back end",
+          "Error reporting and source positions",
+          "Designing a tiny expression language"
+        ],
+        "resources": [
+          { "title": "Crafting Interpreters", "url": "https://craftinginterpreters.com/", "type": "doc" },
+          { "title": "A Map of the Territory", "url": "https://craftinginterpreters.com/a-map-of-the-territory.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Lexing and Parsing",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Regular languages and token definitions",
+          "Writing a scanner by hand",
+          "Context-free grammars and BNF",
+          "Recursive descent parsing",
+          "Operator precedence and associativity"
+        ],
+        "resources": [
+          { "title": "Scanning", "url": "https://craftinginterpreters.com/scanning.html", "type": "doc" },
+          { "title": "GNU Bison Manual", "url": "https://www.gnu.org/software/bison/manual/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Semantic Analysis and Interpretation",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Abstract syntax trees and visitors",
+          "Scopes, environments and symbol tables",
+          "Static type checking rules",
+          "Resolving variables and closures",
+          "Tree-walking evaluation"
+        ],
+        "resources": [
+          { "title": "Representing Code", "url": "https://craftinginterpreters.com/representing-code.html", "type": "doc" },
+          { "title": "Resolving and Binding", "url": "https://craftinginterpreters.com/resolving-and-binding.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Building a Bytecode VM",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Designing an instruction set",
+          "Compiling expressions to bytecode",
+          "A stack-based execution loop",
+          "Call frames and function invocation",
+          "Garbage collection fundamentals"
+        ],
+        "resources": [
+          { "title": "A Virtual Machine", "url": "https://craftinginterpreters.com/a-virtual-machine.html", "type": "doc" },
+          { "title": "LLVM Tutorial: Implementing a Language", "url": "https://llvm.org/docs/tutorial/", "type": "doc" }
+        ],
+        "practiceTags": ["parsing", "interpreters", "bytecode"]
+      },
+      {
+        "title": "Optimisation and Code Generation",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Intermediate representations and SSA form",
+          "Constant folding and dead code elimination",
+          "Register allocation strategies",
+          "Targeting LLVM IR",
+          "Linking, calling conventions and ABIs"
+        ],
+        "resources": [
+          { "title": "LLVM Language Reference Manual", "url": "https://llvm.org/docs/LangRef.html", "type": "doc" },
+          { "title": "Static single-assignment form", "url": "https://en.wikipedia.org/wiki/Static_single-assignment_form", "type": "doc" },
+          { "title": "GNU Compiler Collection Internals", "url": "https://gcc.gnu.org/onlinedocs/gccint/", "type": "doc" }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Discrete Mathematics for CS",
+    "category": "Languages & CS",
+    "summary": "Build the proof, counting and number-theory toolkit that algorithm analysis and cryptography actually require.",
+    "stages": [
+      {
+        "title": "Logic and Proof",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Propositional logic and truth tables",
+          "Predicates and quantifiers",
+          "Direct proof and contraposition",
+          "Proof by contradiction",
+          "Common proof pitfalls and counterexamples"
+        ],
+        "resources": [
+          { "title": "Discrete Mathematics: An Open Introduction", "url": "https://discrete.openmathbooks.org/dmoi3.html", "type": "doc" },
+          { "title": "The Open Logic Project", "url": "https://openlogicproject.org/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Sets, Relations and Functions",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Set operations and identities",
+          "Cartesian products and power sets",
+          "Relations, equivalence and partial orders",
+          "Injective, surjective and bijective functions",
+          "Cardinality and countability"
+        ],
+        "resources": [
+          { "title": "MIT OCW: Mathematics for Computer Science", "url": "https://ocw.mit.edu/courses/6-042j-mathematics-for-computer-science-fall-2010/", "type": "doc" },
+          { "title": "Set (mathematics)", "url": "https://en.wikipedia.org/wiki/Set_(mathematics)", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Induction and Recurrences",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Weak and strong induction",
+          "Structural induction over trees",
+          "Setting up recurrence relations",
+          "Solving recurrences by substitution",
+          "Proving algorithm correctness with invariants"
+        ],
+        "resources": [
+          { "title": "Mathematical induction", "url": "https://en.wikipedia.org/wiki/Mathematical_induction", "type": "doc" },
+          { "title": "Recurrence relation", "url": "https://en.wikipedia.org/wiki/Recurrence_relation", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Counting and Probability Practice",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Sum and product rules",
+          "Permutations and combinations",
+          "Inclusion-exclusion problems",
+          "Pigeonhole principle arguments",
+          "Discrete probability and expected value"
+        ],
+        "resources": [
+          { "title": "Introduction to Probability, Statistics and Random Processes", "url": "https://www.probabilitycourse.com/", "type": "doc" },
+          { "title": "MIT OCW: Mathematics for Computer Science", "url": "https://ocw.mit.edu/courses/6-042j-mathematics-for-computer-science-fall-2010/", "type": "doc" }
+        ],
+        "practiceTags": ["combinatorics", "probability"]
+      },
+      {
+        "title": "Graphs, Number Theory and Boolean Algebra",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Graph terminology, trees and colourings",
+          "Modular arithmetic and congruences",
+          "Euclid's algorithm and modular inverses",
+          "Primes, RSA and modular exponentiation",
+          "Boolean algebra and logic simplification"
+        ],
+        "resources": [
+          { "title": "Binary Exponentiation", "url": "https://cp-algorithms.com/algebra/binary-exp.html", "type": "doc" },
+          { "title": "Graph theory", "url": "https://en.wikipedia.org/wiki/Graph_theory", "type": "doc" },
+          { "title": "Discrete Mathematics: An Open Introduction", "url": "https://discrete.openmathbooks.org/dmoi3.html", "type": "doc" }
+        ]
+      }
+    ]
+  }
+]

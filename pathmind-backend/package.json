@@ -5,13 +5,15 @@
   "main": "dist/server.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json && node -e \"require('fs').cpSync('src/services/practiceLinks/practiceLinks.seed.json','dist/services/practiceLinks/practiceLinks.seed.json')\"",
+    "build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json && node -e \"require('fs').cpSync('src/services/practiceLinks/practiceLinks.seed.json','dist/services/practiceLinks/practiceLinks.seed.json')\" && node -e \"require('fs').cpSync('src/data/courses','dist/data/courses',{recursive:true})\"",
     "start": "node dist/server.js",
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"src/**/*.ts\"",
     "test": "jest --runInBand",
     "test:watch": "jest --watch",
-    "seed:users": "tsx src/utils/seedUsers.ts"
+    "seed:users": "tsx src/utils/seedUsers.ts",
+    "seed:courses": "tsx src/utils/seedCourses.ts",
+    "seed:attach-roadmaps": "tsx src/utils/saveRoadmapsToUsers.ts"
   },
   "engines": {
     "node": ">=20.0.0"

@@ -1,0 +1,1648 @@
+[
+  {
+    "topic": "Git and Version Control",
+    "category": "Cloud, DevOps & Security",
+    "summary": "Track, branch and collaborate on code with Git, and recover confidently when history goes wrong.",
+    "stages": [
+      {
+        "title": "Tracking Changes",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 2,
+        "syllabus": [
+          "Initialising and cloning repositories",
+          "The working tree, index and commits",
+          "Writing useful commit messages",
+          "Ignoring files with .gitignore",
+          "Inspecting history with log and diff"
+        ],
+        "resources": [
+          { "title": "Pro Git Book", "url": "https://git-scm.com/book/en/v2", "type": "doc" },
+          { "title": "Git Reference Manual", "url": "https://git-scm.com/docs", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Branching and Merging",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Creating and switching branches",
+          "Fast-forward versus merge commits",
+          "Resolving merge conflicts",
+          "Rebase compared with merge",
+          "Stashing work in progress"
+        ],
+        "resources": [
+          { "title": "Learn Git Branching", "url": "https://learngitbranching.js.org/", "type": "doc" },
+          { "title": "Pro Git: Basic Branching and Merging", "url": "https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Collaborating on GitHub",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Remotes, fetch, pull and push",
+          "Forks and upstream syncing",
+          "Opening and reviewing pull requests",
+          "Protected branches and required checks",
+          "Linking issues to commits and PRs"
+        ],
+        "resources": [
+          { "title": "GitHub: Get Started", "url": "https://docs.github.com/en/get-started", "type": "doc" },
+          { "title": "GitHub: Pull Requests", "url": "https://docs.github.com/en/pull-requests", "type": "doc" }
+        ],
+        "practiceTags": ["git", "github"]
+      },
+      {
+        "title": "Rewriting and Recovering History",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Interactive rebase and squashing",
+          "Cherry-picking commits between branches",
+          "Recovering lost work with reflog",
+          "Finding regressions with git bisect",
+          "revert versus reset versus restore",
+          "Tags and release workflows"
+        ],
+        "resources": [
+          { "title": "git-rebase Documentation", "url": "https://git-scm.com/docs/git-rebase", "type": "doc" },
+          { "title": "git-bisect Documentation", "url": "https://git-scm.com/docs/git-bisect", "type": "doc" }
+        ],
+        "practiceTags": ["git", "workflow"]
+      }
+    ]
+  },
+  {
+    "topic": "Linux Command Line",
+    "category": "Cloud, DevOps & Security",
+    "summary": "Work fluently in a shell: navigate, transform text with pipelines, manage processes and automate with scripts.",
+    "stages": [
+      {
+        "title": "Navigating the Filesystem",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 2,
+        "syllabus": [
+          "Absolute and relative paths",
+          "ls, cd, pwd and globbing",
+          "Copying, moving and deleting safely",
+          "Viewing files with cat, less and head",
+          "Reading man pages and --help"
+        ],
+        "resources": [
+          { "title": "LinuxCommand.org", "url": "https://linuxcommand.org/", "type": "doc" },
+          { "title": "Linux man-pages Online", "url": "https://man7.org/linux/man-pages/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Text Processing and Pipes",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "stdin, stdout and stderr",
+          "Pipes and output redirection",
+          "Searching with grep and regular expressions",
+          "Editing streams with sed and awk",
+          "sort, uniq, cut and wc"
+        ],
+        "resources": [
+          { "title": "GNU Bash Reference Manual", "url": "https://www.gnu.org/software/bash/manual/bash.html", "type": "doc" },
+          { "title": "Bash Guide for Beginners", "url": "https://tldp.org/LDP/Bash-Beginners-Guide/html/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Permissions, Processes and Packages",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Users, groups and sudo",
+          "chmod, chown and umask",
+          "Inspecting processes with ps and top",
+          "Managing services with systemd",
+          "Installing software with a package manager"
+        ],
+        "resources": [
+          { "title": "Ubuntu Server Documentation", "url": "https://ubuntu.com/server/docs", "type": "doc" },
+          { "title": "Linux man-pages Online", "url": "https://man7.org/linux/man-pages/", "type": "doc" }
+        ],
+        "practiceTags": ["linux", "shell"]
+      },
+      {
+        "title": "Shell Scripting",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Variables, quoting and expansion",
+          "Conditionals, loops and case statements",
+          "Functions, exit codes and traps",
+          "Parsing script arguments",
+          "Scheduling scripts with cron",
+          "Defensive options like set -euo pipefail"
+        ],
+        "resources": [
+          { "title": "Google Shell Style Guide", "url": "https://google.github.io/styleguide/shellguide.html", "type": "doc" },
+          { "title": "ShellCheck", "url": "https://www.shellcheck.net/", "type": "doc" }
+        ],
+        "practiceTags": ["bash", "scripting"]
+      }
+    ]
+  },
+  {
+    "topic": "Docker",
+    "category": "Cloud, DevOps & Security",
+    "summary": "Package applications into containers, compose multi-service stacks, and build small hardened production images.",
+    "stages": [
+      {
+        "title": "Containers and Images",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 2,
+        "syllabus": [
+          "Images versus containers",
+          "docker run, ps, logs and exec",
+          "Publishing ports and mounting volumes",
+          "Pulling and pushing to registries",
+          "Container lifecycle and cleanup"
+        ],
+        "resources": [
+          { "title": "Docker: Get Started", "url": "https://docs.docker.com/get-started/", "type": "doc" },
+          { "title": "Docker Engine Documentation", "url": "https://docs.docker.com/engine/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Writing Dockerfiles",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Choosing a base image",
+          "Layers and build cache behaviour",
+          "COPY versus ADD",
+          "ENTRYPOINT versus CMD",
+          "Build arguments and environment variables"
+        ],
+        "resources": [
+          { "title": "Docker Build Documentation", "url": "https://docs.docker.com/build/", "type": "doc" },
+          { "title": "Dockerfile Reference", "url": "https://docs.docker.com/reference/dockerfile/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Multi-Container Apps with Compose",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Compose file services and profiles",
+          "Container networking and DNS names",
+          "Named volumes and bind mounts",
+          "Environment files and secrets",
+          "Healthchecks and startup ordering"
+        ],
+        "resources": [
+          { "title": "Docker Compose Documentation", "url": "https://docs.docker.com/compose/", "type": "doc" },
+          { "title": "The Twelve-Factor App", "url": "https://12factor.net/", "type": "doc" }
+        ],
+        "practiceTags": ["docker", "compose"]
+      },
+      {
+        "title": "Production-Grade Images",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Multi-stage builds",
+          "Shrinking images and minimal bases",
+          "Running as a non-root user",
+          "Scanning images for vulnerabilities",
+          "Tagging strategy and registry hygiene",
+          "Reusing build cache in CI"
+        ],
+        "resources": [
+          { "title": "OWASP Docker Security Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html", "type": "doc" },
+          { "title": "Docker Build Documentation", "url": "https://docs.docker.com/build/", "type": "doc" }
+        ],
+        "practiceTags": ["docker", "security"]
+      }
+    ]
+  },
+  {
+    "topic": "Kubernetes",
+    "category": "Cloud, DevOps & Security",
+    "summary": "Deploy, configure and operate containerised services on Kubernetes, up to a GitOps release of your own app.",
+    "stages": [
+      {
+        "title": "Cluster Concepts",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Control plane and node components",
+          "Pods and the container runtime",
+          "kubectl basics and contexts",
+          "Namespaces and resource scoping",
+          "Declarative YAML manifests"
+        ],
+        "resources": [
+          { "title": "Kubernetes Concepts", "url": "https://kubernetes.io/docs/concepts/", "type": "doc" },
+          { "title": "Kubernetes Basics Tutorial", "url": "https://kubernetes.io/docs/tutorials/kubernetes-basics/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Workloads and Services",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Deployments and ReplicaSets",
+          "Rolling updates and rollbacks",
+          "Services and cluster networking",
+          "Ingress and external traffic",
+          "Labels, selectors and annotations"
+        ],
+        "resources": [
+          { "title": "Kubernetes: Workloads", "url": "https://kubernetes.io/docs/concepts/workloads/", "type": "doc" },
+          { "title": "Kubernetes: Services, Load Balancing and Networking", "url": "https://kubernetes.io/docs/concepts/services-networking/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Configuration and Storage",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "ConfigMaps and Secrets",
+          "Resource requests and limits",
+          "Liveness, readiness and startup probes",
+          "PersistentVolumes and claims",
+          "StatefulSets and ordered workloads"
+        ],
+        "resources": [
+          { "title": "Kubernetes Tasks", "url": "https://kubernetes.io/docs/tasks/", "type": "doc" },
+          { "title": "Helm Documentation", "url": "https://helm.sh/docs/", "type": "doc" }
+        ],
+        "practiceTags": ["kubernetes", "kubectl"]
+      },
+      {
+        "title": "Operating Clusters",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Horizontal pod and cluster autoscaling",
+          "RBAC roles and service accounts",
+          "Network policies",
+          "Collecting metrics and logs",
+          "Debugging crashloops and pending pods"
+        ],
+        "resources": [
+          { "title": "Kubernetes: Security", "url": "https://kubernetes.io/docs/concepts/security/", "type": "doc" },
+          { "title": "Prometheus: Overview", "url": "https://prometheus.io/docs/introduction/overview/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Ship a Service to Kubernetes",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Authoring a Helm chart",
+          "Per-environment overlays with Kustomize",
+          "GitOps delivery with Argo CD",
+          "Zero-downtime deploy and rollback",
+          "Post-deploy smoke verification"
+        ],
+        "resources": [
+          { "title": "Kustomize", "url": "https://kustomize.io/", "type": "doc" },
+          { "title": "Argo CD Documentation", "url": "https://argo-cd.readthedocs.io/en/stable/", "type": "doc" }
+        ],
+        "practiceTags": ["kubernetes", "helm"]
+      }
+    ]
+  },
+  {
+    "topic": "AWS Cloud Fundamentals",
+    "category": "Cloud, DevOps & Security",
+    "summary": "Navigate the core AWS services and design a secure, resilient workload across compute, storage, network and identity.",
+    "stages": [
+      {
+        "title": "AWS Core Concepts",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Regions, availability zones and edge locations",
+          "The shared responsibility model",
+          "Console, CLI and SDK access",
+          "Accounts, billing and the free tier",
+          "IAM users, groups and roles"
+        ],
+        "resources": [
+          { "title": "AWS Documentation", "url": "https://docs.aws.amazon.com/", "type": "doc" },
+          { "title": "Overview of Amazon Web Services", "url": "https://docs.aws.amazon.com/whitepapers/latest/aws-overview/introduction.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Compute and Storage",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "EC2 instance types and AMIs",
+          "EBS volumes and snapshots",
+          "S3 buckets, prefixes and storage classes",
+          "Serverless functions with Lambda",
+          "Elastic Load Balancing basics"
+        ],
+        "resources": [
+          { "title": "Amazon EC2 Concepts", "url": "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html", "type": "doc" },
+          { "title": "Amazon S3 User Guide", "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Networking and Identity",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "VPCs, subnets and route tables",
+          "Security groups versus network ACLs",
+          "Internet and NAT gateways",
+          "IAM policy documents and conditions",
+          "Least-privilege role design"
+        ],
+        "resources": [
+          { "title": "Amazon VPC User Guide", "url": "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html", "type": "doc" },
+          { "title": "AWS IAM User Guide", "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html", "type": "doc" }
+        ],
+        "practiceTags": ["aws", "networking"]
+      },
+      {
+        "title": "Design a Resilient Workload",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Multi-AZ architecture patterns",
+          "Auto Scaling groups and health checks",
+          "RDS backups, read replicas and failover",
+          "CloudWatch metrics, logs and alarms",
+          "Cost optimisation levers",
+          "Running a Well-Architected review"
+        ],
+        "resources": [
+          { "title": "AWS Well-Architected Framework", "url": "https://aws.amazon.com/architecture/well-architected/", "type": "doc" },
+          { "title": "AWS Lambda Developer Guide", "url": "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html", "type": "doc" }
+        ],
+        "practiceTags": ["aws", "architecture"]
+      }
+    ]
+  },
+  {
+    "topic": "Microsoft Azure Fundamentals",
+    "category": "Cloud, DevOps & Security",
+    "summary": "Understand Azure's core services and governance model, then deploy and monitor a workload defined as code.",
+    "stages": [
+      {
+        "title": "Azure Foundations",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Management groups, subscriptions and resource groups",
+          "Azure Resource Manager and deployments",
+          "Regions and availability zones",
+          "Portal, Azure CLI and Cloud Shell",
+          "Pricing calculator and cost management"
+        ],
+        "resources": [
+          { "title": "Azure Documentation", "url": "https://learn.microsoft.com/en-us/azure/", "type": "doc" },
+          { "title": "Azure Resource Manager Overview", "url": "https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/overview", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Compute and Storage Services",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Virtual Machines and scale sets",
+          "App Service for web apps",
+          "Azure Functions and serverless triggers",
+          "Blob Storage tiers and redundancy",
+          "Azure SQL and managed databases"
+        ],
+        "resources": [
+          { "title": "Azure Virtual Machines Documentation", "url": "https://learn.microsoft.com/en-us/azure/virtual-machines/", "type": "doc" },
+          { "title": "Azure Storage Documentation", "url": "https://learn.microsoft.com/en-us/azure/storage/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Networking and Identity",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Virtual networks, subnets and peering",
+          "Network security groups",
+          "Load Balancer versus Application Gateway",
+          "Microsoft Entra ID users and groups",
+          "Azure RBAC role assignments"
+        ],
+        "resources": [
+          { "title": "Azure Virtual Network Documentation", "url": "https://learn.microsoft.com/en-us/azure/virtual-network/", "type": "doc" },
+          { "title": "Microsoft Entra ID Documentation", "url": "https://learn.microsoft.com/en-us/entra/identity/", "type": "doc" }
+        ],
+        "practiceTags": ["azure", "networking"]
+      },
+      {
+        "title": "Deploy and Govern a Workload",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Infrastructure as code with Bicep",
+          "Azure Monitor and Log Analytics queries",
+          "Secrets and certificates in Key Vault",
+          "Azure Policy, tags and guardrails",
+          "Well-Architected review of the workload"
+        ],
+        "resources": [
+          { "title": "Bicep Documentation", "url": "https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/", "type": "doc" },
+          { "title": "Azure Well-Architected Framework", "url": "https://learn.microsoft.com/en-us/azure/well-architected/", "type": "doc" }
+        ],
+        "practiceTags": ["azure", "iac"]
+      }
+    ]
+  },
+  {
+    "topic": "Google Cloud Platform",
+    "category": "Cloud, DevOps & Security",
+    "summary": "Build on Google Cloud: projects and IAM, serverless and container compute, BigQuery data, and a production GKE deployment.",
+    "stages": [
+      {
+        "title": "GCP Foundations",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Organisations, folders and projects",
+          "Regions, zones and global services",
+          "gcloud CLI and Cloud Shell",
+          "Billing accounts and budget alerts",
+          "Enabling APIs and quotas"
+        ],
+        "resources": [
+          { "title": "Google Cloud Documentation", "url": "https://cloud.google.com/docs", "type": "doc" },
+          { "title": "gcloud CLI Documentation", "url": "https://cloud.google.com/sdk/gcloud", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Core Compute and Storage",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Compute Engine virtual machines",
+          "Containers on Cloud Run",
+          "Cloud Storage buckets and classes",
+          "Cloud SQL managed databases",
+          "Event-driven Cloud Functions"
+        ],
+        "resources": [
+          { "title": "Cloud Run Documentation", "url": "https://cloud.google.com/run/docs", "type": "doc" },
+          { "title": "Cloud Storage Documentation", "url": "https://cloud.google.com/storage/docs", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Identity, Networking and Data",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "IAM roles, bindings and service accounts",
+          "VPC networks and firewall rules",
+          "Cloud Load Balancing options",
+          "BigQuery datasets, tables and SQL",
+          "Pub/Sub topics and subscriptions"
+        ],
+        "resources": [
+          { "title": "Google Cloud IAM Documentation", "url": "https://cloud.google.com/iam/docs", "type": "doc" },
+          { "title": "BigQuery Documentation", "url": "https://cloud.google.com/bigquery/docs", "type": "doc" }
+        ],
+        "practiceTags": ["gcp", "iam"]
+      },
+      {
+        "title": "Run a Production Workload on GCP",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Deploying to a GKE cluster",
+          "Build and release with Cloud Build",
+          "Cloud Monitoring dashboards and alerts",
+          "Committed use discounts and cost controls",
+          "Architecture Framework review"
+        ],
+        "resources": [
+          { "title": "Google Kubernetes Engine Documentation", "url": "https://cloud.google.com/kubernetes-engine/docs", "type": "doc" },
+          { "title": "Google Cloud Architecture Framework", "url": "https://cloud.google.com/architecture/framework", "type": "doc" }
+        ],
+        "practiceTags": ["gcp", "kubernetes"]
+      }
+    ]
+  },
+  {
+    "topic": "Terraform and Infrastructure as Code",
+    "category": "Cloud, DevOps & Security",
+    "summary": "Describe cloud infrastructure as versioned code, manage state safely, and roll changes out through reviewed pipelines.",
+    "stages": [
+      {
+        "title": "Declarative Infrastructure",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Why infrastructure as code, and drift",
+          "Providers, resources and the registry",
+          "HCL syntax and file layout",
+          "init, plan, apply and destroy",
+          "Reading a plan diff carefully"
+        ],
+        "resources": [
+          { "title": "Terraform Documentation", "url": "https://developer.hashicorp.com/terraform/docs", "type": "doc" },
+          { "title": "Terraform Tutorials", "url": "https://developer.hashicorp.com/terraform/tutorials", "type": "doc" }
+        ]
+      },
+      {
+        "title": "The Configuration Language",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Input variables and validation",
+          "Locals and output values",
+          "Data sources for existing resources",
+          "Expressions, functions and dynamic blocks",
+          "count versus for_each"
+        ],
+        "resources": [
+          { "title": "Terraform Language Documentation", "url": "https://developer.hashicorp.com/terraform/language", "type": "doc" },
+          { "title": "Terraform Registry", "url": "https://registry.terraform.io/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "State and Modules",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Remote state backends",
+          "State locking and concurrent applies",
+          "Writing a reusable module",
+          "Module versioning and publishing",
+          "Importing existing infrastructure"
+        ],
+        "resources": [
+          { "title": "Terraform: State", "url": "https://developer.hashicorp.com/terraform/language/state", "type": "doc" },
+          { "title": "Terraform: Modules", "url": "https://developer.hashicorp.com/terraform/language/modules", "type": "doc" }
+        ],
+        "practiceTags": ["terraform", "iac"]
+      },
+      {
+        "title": "Terraform in a Team",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Workspaces and per-environment configuration",
+          "Automated plan review in pull requests",
+          "Handling secrets and sensitive outputs",
+          "Provider upgrades and moved blocks",
+          "Staged rollouts and change windows"
+        ],
+        "resources": [
+          { "title": "Terraform CLI Documentation", "url": "https://developer.hashicorp.com/terraform/cli", "type": "doc" },
+          { "title": "GitHub Actions Documentation", "url": "https://docs.github.com/en/actions", "type": "doc" }
+        ],
+        "practiceTags": ["terraform", "ci-cd"]
+      }
+    ]
+  },
+  {
+    "topic": "CI/CD Pipelines",
+    "category": "Cloud, DevOps & Security",
+    "summary": "Automate build, test and release so changes reach production frequently, safely and with a clear path back.",
+    "stages": [
+      {
+        "title": "Continuous Integration Basics",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Trunk-based development and short branches",
+          "Building on every commit",
+          "Automated test stages and gates",
+          "Fast feedback and flaky tests",
+          "Build artifacts and versioning"
+        ],
+        "resources": [
+          { "title": "Continuous Integration (Martin Fowler)", "url": "https://martinfowler.com/articles/continuousIntegration.html", "type": "blog" },
+          { "title": "Jenkins User Documentation", "url": "https://www.jenkins.io/doc/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Build a Pipeline with GitHub Actions",
+        "type": "practice",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Workflow files and event triggers",
+          "Jobs, steps and runners",
+          "Caching dependencies between runs",
+          "Matrix builds across versions",
+          "Secrets and environment protection"
+        ],
+        "resources": [
+          { "title": "GitHub Actions Documentation", "url": "https://docs.github.com/en/actions", "type": "doc" },
+          { "title": "GitLab Documentation", "url": "https://docs.gitlab.com/", "type": "doc" }
+        ],
+        "practiceTags": ["ci-cd", "github-actions"]
+      },
+      {
+        "title": "Continuous Delivery",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Environments and promotion between them",
+          "Blue-green and canary deployments",
+          "Feature flags for decoupled release",
+          "Database migrations in a pipeline",
+          "Rollback and recovery plans"
+        ],
+        "resources": [
+          { "title": "Blue-Green Deployment", "url": "https://martinfowler.com/bliki/BlueGreenDeployment.html", "type": "blog" },
+          { "title": "Argo CD Documentation", "url": "https://argo-cd.readthedocs.io/en/stable/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Hardening the Pipeline",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Least-privilege credentials for runners",
+          "Dependency pinning and supply chain risk",
+          "Build provenance and artifact signing",
+          "Secrets management and rotation",
+          "Tracking DORA delivery metrics"
+        ],
+        "resources": [
+          { "title": "SLSA Supply Chain Framework", "url": "https://slsa.dev/", "type": "doc" },
+          { "title": "OWASP Cheat Sheet Series", "url": "https://cheatsheetseries.owasp.org/", "type": "doc" }
+        ],
+        "practiceTags": ["ci-cd", "devops"]
+      }
+    ]
+  },
+  {
+    "topic": "Site Reliability Engineering",
+    "category": "Cloud, DevOps & Security",
+    "summary": "Run services to measurable reliability targets with SLOs, observability, disciplined incident response and less toil.",
+    "stages": [
+      {
+        "title": "SRE Principles",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "How SRE relates to DevOps",
+          "Error budgets as a decision tool",
+          "Identifying and eliminating toil",
+          "Blameless engineering culture",
+          "Choosing a risk tolerance per service"
+        ],
+        "resources": [
+          { "title": "Google SRE Book", "url": "https://sre.google/sre-book/table-of-contents/", "type": "doc" },
+          { "title": "Google SRE Workbook", "url": "https://sre.google/workbook/table-of-contents/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "SLIs, SLOs and Error Budgets",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Picking indicators users actually feel",
+          "Setting realistic SLO targets",
+          "Measuring availability and latency",
+          "Burn-rate alerting",
+          "Reviewing and revising SLOs"
+        ],
+        "resources": [
+          { "title": "SRE Workbook: Implementing SLOs", "url": "https://sre.google/workbook/implementing-slos/", "type": "doc" },
+          { "title": "SRE Book: Service Level Objectives", "url": "https://sre.google/sre-book/service-level-objectives/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Monitoring and Observability",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Metrics, logs and distributed traces",
+          "Instrumenting a service with OpenTelemetry",
+          "Writing PromQL queries",
+          "Dashboards that answer a question",
+          "Alert design and reducing noise"
+        ],
+        "resources": [
+          { "title": "Prometheus: Overview", "url": "https://prometheus.io/docs/introduction/overview/", "type": "doc" },
+          { "title": "OpenTelemetry Documentation", "url": "https://opentelemetry.io/docs/", "type": "doc" },
+          { "title": "Grafana Documentation", "url": "https://grafana.com/docs/", "type": "doc" }
+        ],
+        "practiceTags": ["sre", "observability"]
+      },
+      {
+        "title": "Incident Response and Resilience",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "On-call rotations and escalation paths",
+          "Incident command roles and comms",
+          "Writing a blameless postmortem",
+          "Capacity planning and load shedding",
+          "Game days and chaos experiments"
+        ],
+        "resources": [
+          { "title": "PagerDuty Incident Response Documentation", "url": "https://response.pagerduty.com/", "type": "doc" },
+          { "title": "Principles of Chaos Engineering", "url": "https://principlesofchaos.org/", "type": "doc" }
+        ],
+        "practiceTags": ["sre", "incident-response"]
+      }
+    ]
+  },
+  {
+    "topic": "Cybersecurity Fundamentals",
+    "category": "Cloud, DevOps & Security",
+    "summary": "Build a working security foundation: core concepts, network and endpoint defence, attacker behaviour and governance.",
+    "stages": [
+      {
+        "title": "Security Foundations",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Confidentiality, integrity and availability",
+          "Threats, vulnerabilities and risk",
+          "Defence in depth and least privilege",
+          "Authentication versus authorisation",
+          "Security policies and standards"
+        ],
+        "resources": [
+          { "title": "NIST Cybersecurity Framework", "url": "https://www.nist.gov/cyberframework", "type": "doc" },
+          { "title": "CISA Cybersecurity Best Practices", "url": "https://www.cisa.gov/topics/cybersecurity-best-practices", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Network and Endpoint Security",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "TCP/IP attack surface and ports",
+          "Firewalls and network segmentation",
+          "TLS, certificates and trust chains",
+          "Endpoint hardening and patching",
+          "Malware categories and delivery"
+        ],
+        "resources": [
+          { "title": "NIST Computer Security Resource Center Publications", "url": "https://csrc.nist.gov/publications", "type": "doc" },
+          { "title": "Cloudflare Learning Center", "url": "https://www.cloudflare.com/learning/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Threats and Attacker Behaviour",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Phishing and social engineering",
+          "MITRE ATT&CK tactics and techniques",
+          "Credential theft and lateral movement",
+          "Ransomware lifecycle",
+          "Using threat intelligence feeds"
+        ],
+        "resources": [
+          { "title": "MITRE ATT&CK", "url": "https://attack.mitre.org/", "type": "doc" },
+          { "title": "CISA Known Exploited Vulnerabilities Catalog", "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Defensive Practice",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Hardening a Linux host to a benchmark",
+          "Centralised log collection and review",
+          "Running a vulnerability scan",
+          "Multi-factor authentication rollout",
+          "Drafting an incident response playbook"
+        ],
+        "resources": [
+          { "title": "CIS Benchmarks", "url": "https://www.cisecurity.org/cis-benchmarks", "type": "doc" },
+          { "title": "CISA Cybersecurity Best Practices", "url": "https://www.cisa.gov/topics/cybersecurity-best-practices", "type": "doc" }
+        ],
+        "practiceTags": ["security", "hardening"]
+      },
+      {
+        "title": "Governance, Risk and Compliance",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Risk assessment and treatment",
+          "NIST CSF functions end to end",
+          "ISO 27001 and SOC 2 at a glance",
+          "Security awareness programmes",
+          "Breach notification obligations"
+        ],
+        "resources": [
+          { "title": "NIST Cybersecurity Framework", "url": "https://www.nist.gov/cyberframework", "type": "doc" },
+          { "title": "NIST Computer Security Resource Center Publications", "url": "https://csrc.nist.gov/publications", "type": "doc" }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Web Application Security",
+    "category": "Cloud, DevOps & Security",
+    "summary": "Find and fix the vulnerability classes that actually break web apps, and build security into the delivery pipeline.",
+    "stages": [
+      {
+        "title": "The Web Security Model",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "HTTP requests, responses and state",
+          "Same-origin policy and the browser sandbox",
+          "Cookies and session management",
+          "TLS and transport security",
+          "Threat modelling a web application"
+        ],
+        "resources": [
+          { "title": "MDN: Web Security", "url": "https://developer.mozilla.org/en-US/docs/Web/Security", "type": "doc" },
+          { "title": "PortSwigger Web Security Academy", "url": "https://portswigger.net/web-security", "type": "doc" }
+        ]
+      },
+      {
+        "title": "The OWASP Top 10",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Broken access control",
+          "Injection and unsafe queries",
+          "Cryptographic failures",
+          "Insecure design and misconfiguration",
+          "Vulnerable and outdated components"
+        ],
+        "resources": [
+          { "title": "OWASP Top Ten", "url": "https://owasp.org/www-project-top-ten/", "type": "doc" },
+          { "title": "OWASP Cheat Sheet Series", "url": "https://cheatsheetseries.owasp.org/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Exploiting and Fixing Injection Flaws",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "SQL injection and parameterised queries",
+          "Reflected, stored and DOM-based XSS",
+          "CSRF and anti-forgery tokens",
+          "Server-side request forgery",
+          "Command and template injection"
+        ],
+        "resources": [
+          { "title": "PortSwigger Web Security Academy", "url": "https://portswigger.net/web-security", "type": "doc" },
+          { "title": "OWASP XSS Prevention Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html", "type": "doc" }
+        ],
+        "practiceTags": ["appsec", "owasp"]
+      },
+      {
+        "title": "Defensive Headers and Authentication",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Content Security Policy",
+          "CORS configuration mistakes",
+          "Secure, HttpOnly and SameSite cookies",
+          "Session and JWT handling",
+          "Password storage and reset flows"
+        ],
+        "resources": [
+          { "title": "OWASP Password Storage Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html", "type": "doc" },
+          { "title": "MDN: Web Security", "url": "https://developer.mozilla.org/en-US/docs/Web/Security", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Secure SDLC and Testing",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Security requirements and abuse cases",
+          "SAST and DAST stages in CI",
+          "Dependency and SCA scanning",
+          "Security-focused code review",
+          "Preparing for a penetration test"
+        ],
+        "resources": [
+          { "title": "OWASP Web Security Testing Guide", "url": "https://owasp.org/www-project-web-security-testing-guide/", "type": "doc" },
+          { "title": "OWASP Application Security Verification Standard", "url": "https://owasp.org/www-project-application-security-verification-standard/", "type": "doc" }
+        ],
+        "practiceTags": ["appsec", "secure-sdlc"]
+      }
+    ]
+  },
+  {
+    "topic": "Ethical Hacking and Penetration Testing",
+    "category": "Cloud, DevOps & Security",
+    "summary": "Run an authorised penetration test end to end: scoping, recon, web testing, lab exercises and a defensible report.",
+    "stages": [
+      {
+        "title": "Engagement Fundamentals",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Scope, rules of engagement and authorisation",
+          "Legal and ethical boundaries",
+          "Black, grey and white box testing",
+          "Standard testing methodologies",
+          "Evidence handling and data care"
+        ],
+        "resources": [
+          { "title": "OWASP Web Security Testing Guide", "url": "https://owasp.org/www-project-web-security-testing-guide/", "type": "doc" },
+          { "title": "NIST Computer Security Resource Center Publications", "url": "https://csrc.nist.gov/publications", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Reconnaissance and Scanning",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Passive OSINT collection",
+          "DNS and subdomain enumeration",
+          "Port scanning with Nmap",
+          "Service and version fingerprinting",
+          "Automated vulnerability scanning"
+        ],
+        "resources": [
+          { "title": "Nmap Network Scanning Reference Guide", "url": "https://nmap.org/book/", "type": "doc" },
+          { "title": "Kali Linux Documentation", "url": "https://www.kali.org/docs/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Web Application Testing",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Authentication and session testing",
+          "Access control and IDOR testing",
+          "Injection and input validation testing",
+          "File upload and SSRF checks",
+          "Capturing reproducible evidence"
+        ],
+        "resources": [
+          { "title": "PortSwigger Web Security Academy", "url": "https://portswigger.net/web-security", "type": "doc" },
+          { "title": "OWASP Cheat Sheet Series", "url": "https://cheatsheetseries.owasp.org/", "type": "doc" }
+        ],
+        "practiceTags": ["pentesting", "web-security"]
+      },
+      {
+        "title": "Hands-on Lab Practice",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Working through guided lab rooms",
+          "Linux privilege escalation checks",
+          "Windows enumeration basics",
+          "Exploitation frameworks in a lab network",
+          "Disciplined note-taking and timelines"
+        ],
+        "resources": [
+          { "title": "TryHackMe", "url": "https://tryhackme.com/", "type": "doc" },
+          { "title": "Hack The Box", "url": "https://www.hackthebox.com/", "type": "doc" },
+          { "title": "Metasploit Unleashed", "url": "https://www.offsec.com/metasploit-unleashed/", "type": "doc" }
+        ],
+        "practiceTags": ["pentesting", "labs"]
+      },
+      {
+        "title": "Reporting and Remediation",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Risk rating findings with CVSS",
+          "Writing a finding with evidence and impact",
+          "Practical remediation advice",
+          "Executive summary for non-technical readers",
+          "Retesting and responsible disclosure"
+        ],
+        "resources": [
+          { "title": "FIRST: Common Vulnerability Scoring System", "url": "https://www.first.org/cvss/", "type": "doc" },
+          { "title": "OWASP Web Security Testing Guide", "url": "https://owasp.org/www-project-web-security-testing-guide/", "type": "doc" }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Cryptography",
+    "category": "Cloud, DevOps & Security",
+    "summary": "Understand ciphers, hashes, key exchange and TLS well enough to use cryptographic libraries correctly in real systems.",
+    "stages": [
+      {
+        "title": "Cryptographic Primitives",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Symmetric versus asymmetric cryptography",
+          "Block ciphers and modes of operation",
+          "Hash functions and collision resistance",
+          "MACs and HMAC",
+          "Randomness, entropy and secure RNGs"
+        ],
+        "resources": [
+          { "title": "Crypto 101", "url": "https://www.crypto101.io/", "type": "doc" },
+          { "title": "Practical Cryptography for Developers", "url": "https://cryptobook.nakov.com/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Key Exchange and Public Key Cryptography",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Diffie-Hellman key agreement",
+          "RSA encryption and signatures",
+          "Elliptic curve cryptography",
+          "Digital signatures and verification",
+          "Certificates, CAs and PKI"
+        ],
+        "resources": [
+          { "title": "NIST Cryptographic Standards and Guidelines", "url": "https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines", "type": "doc" },
+          { "title": "Let's Encrypt Documentation", "url": "https://letsencrypt.org/docs/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Protocols in Practice",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "The TLS 1.3 handshake",
+          "Certificate validation and revocation",
+          "Forward secrecy and cipher suites",
+          "Password hashing with bcrypt and Argon2",
+          "Encrypting data at rest"
+        ],
+        "resources": [
+          { "title": "RFC 8446: TLS 1.3", "url": "https://datatracker.ietf.org/doc/html/rfc8446", "type": "doc" },
+          { "title": "OWASP Cryptographic Storage Cheat Sheet", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Applying Crypto Safely",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Choosing a vetted library over custom code",
+          "Authenticated encryption with AES-GCM",
+          "Nonce and IV reuse mistakes",
+          "Key generation, storage and rotation",
+          "Reviewing cryptographic code"
+        ],
+        "resources": [
+          { "title": "Python cryptography Library Documentation", "url": "https://cryptography.io/en/latest/", "type": "doc" },
+          { "title": "libsodium Documentation", "url": "https://libsodium.gitbook.io/doc/", "type": "doc" }
+        ],
+        "practiceTags": ["cryptography", "security"]
+      }
+    ]
+  },
+  {
+    "topic": "Android Development",
+    "category": "Mobile & Product",
+    "summary": "Build Android apps in Kotlin with Jetpack Compose, modern architecture and a tested release on the Play Store.",
+    "stages": [
+      {
+        "title": "Kotlin and Android Basics",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Kotlin syntax and null safety",
+          "Android Studio and project structure",
+          "Activities and the lifecycle",
+          "Resources, strings and layouts",
+          "Running on emulator and device"
+        ],
+        "resources": [
+          { "title": "Android Basics with Compose", "url": "https://developer.android.com/courses/android-basics-compose/course", "type": "doc" },
+          { "title": "Kotlin Documentation", "url": "https://kotlinlang.org/docs/home.html", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Building UI with Jetpack Compose",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Composable functions and modifiers",
+          "State hoisting and recomposition",
+          "Lists with LazyColumn",
+          "Material components and theming",
+          "Navigation between screens"
+        ],
+        "resources": [
+          { "title": "Jetpack Compose", "url": "https://developer.android.com/jetpack/compose", "type": "doc" },
+          { "title": "Android Developer Guides", "url": "https://developer.android.com/guide", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Data and Architecture",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "ViewModel and UI state holders",
+          "Local persistence with Room",
+          "Calling REST APIs from the app",
+          "Coroutines and Flow",
+          "Repository pattern and layering"
+        ],
+        "resources": [
+          { "title": "Guide to App Architecture", "url": "https://developer.android.com/topic/architecture", "type": "doc" },
+          { "title": "Kotlin Coroutines Overview", "url": "https://kotlinlang.org/docs/coroutines-overview.html", "type": "doc" }
+        ],
+        "practiceTags": ["android", "kotlin"]
+      },
+      {
+        "title": "Ship to the Play Store",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Dependency injection for testability",
+          "Unit and UI testing",
+          "Startup time and app size budgets",
+          "Runtime permissions and privacy",
+          "Signing, release tracks and rollout"
+        ],
+        "resources": [
+          { "title": "Publish Your App", "url": "https://developer.android.com/studio/publish", "type": "doc" },
+          { "title": "Android App Performance", "url": "https://developer.android.com/topic/performance", "type": "doc" }
+        ],
+        "practiceTags": ["android", "release"]
+      }
+    ]
+  },
+  {
+    "topic": "iOS Development",
+    "category": "Mobile & Product",
+    "summary": "Write Swift apps with SwiftUI, wire them to real data with async/await, and take one through to App Store submission.",
+    "stages": [
+      {
+        "title": "Swift Foundations",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Optionals and type safety",
+          "Structs, classes and enums",
+          "Protocols and extensions",
+          "Closures and higher-order functions",
+          "Error handling with throws"
+        ],
+        "resources": [
+          { "title": "The Swift Programming Language", "url": "https://docs.swift.org/swift-book/", "type": "doc" },
+          { "title": "Swift.org Documentation", "url": "https://www.swift.org/documentation/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Building Interfaces with SwiftUI",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Views and view modifiers",
+          "Stacks, grids and layout",
+          "State, Binding and observable models",
+          "Lists and navigation stacks",
+          "Previews and Xcode canvas"
+        ],
+        "resources": [
+          { "title": "SwiftUI Tutorials", "url": "https://developer.apple.com/tutorials/swiftui", "type": "doc" },
+          { "title": "SwiftUI Documentation", "url": "https://developer.apple.com/documentation/swiftui", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Data and App Architecture",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Networking with URLSession",
+          "Decoding JSON with Codable",
+          "Concurrency with async/await",
+          "Persistence with SwiftData or Core Data",
+          "Structuring an app with MVVM"
+        ],
+        "resources": [
+          { "title": "URLSession Documentation", "url": "https://developer.apple.com/documentation/foundation/urlsession", "type": "doc" },
+          { "title": "Swift Concurrency Documentation", "url": "https://developer.apple.com/documentation/swift/concurrency", "type": "doc" }
+        ],
+        "practiceTags": ["ios", "swift"]
+      },
+      {
+        "title": "Polish and Ship",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Human Interface Guidelines and accessibility",
+          "XCTest unit and UI tests",
+          "Profiling with Instruments",
+          "Capabilities and privacy declarations",
+          "TestFlight and App Store submission"
+        ],
+        "resources": [
+          { "title": "Apple Human Interface Guidelines", "url": "https://developer.apple.com/design/human-interface-guidelines", "type": "doc" },
+          { "title": "Xcode Documentation", "url": "https://developer.apple.com/documentation/xcode", "type": "doc" }
+        ],
+        "practiceTags": ["ios", "release"]
+      }
+    ]
+  },
+  {
+    "topic": "React Native",
+    "category": "Mobile & Product",
+    "summary": "Build cross-platform mobile apps with React Native: UI, navigation, state, native modules and a store release.",
+    "stages": [
+      {
+        "title": "React Native Basics",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Core components and StyleSheet",
+          "Flexbox layout on mobile",
+          "Props, state and hooks",
+          "Rendering lists with FlatList",
+          "Running on iOS and Android"
+        ],
+        "resources": [
+          { "title": "React Native: Getting Started", "url": "https://reactnative.dev/docs/getting-started", "type": "doc" },
+          { "title": "React: Learn", "url": "https://react.dev/learn", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Project Setup and Tooling",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Expo versus bare React Native",
+          "Metro bundler and fast refresh",
+          "Debugging tools and the dev menu",
+          "Device APIs through Expo modules",
+          "Environment and build configuration"
+        ],
+        "resources": [
+          { "title": "Expo Documentation", "url": "https://docs.expo.dev/", "type": "doc" },
+          { "title": "React Native: Debugging", "url": "https://reactnative.dev/docs/debugging", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Navigation and State",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Stack, tab and drawer navigators",
+          "Route params and deep linking",
+          "Global state with context or Redux",
+          "Data fetching and cache invalidation",
+          "Forms, inputs and keyboard handling"
+        ],
+        "resources": [
+          { "title": "React Navigation: Getting Started", "url": "https://reactnavigation.org/docs/getting-started", "type": "doc" },
+          { "title": "Redux Documentation", "url": "https://redux.js.org/", "type": "doc" }
+        ],
+        "practiceTags": ["react-native", "navigation"]
+      },
+      {
+        "title": "Native Modules and Release",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Bridging to native platform code",
+          "Reducing re-renders and list jank",
+          "Offline storage and sync",
+          "Over-the-air updates",
+          "Building and submitting binaries"
+        ],
+        "resources": [
+          { "title": "React Native: Performance", "url": "https://reactnative.dev/docs/performance", "type": "doc" },
+          { "title": "Expo Application Services Build", "url": "https://docs.expo.dev/build/introduction/", "type": "doc" }
+        ],
+        "practiceTags": ["react-native", "release"]
+      }
+    ]
+  },
+  {
+    "topic": "Flutter",
+    "category": "Mobile & Product",
+    "summary": "Build one Flutter codebase that runs on iOS and Android, with solid state management, tests and store releases.",
+    "stages": [
+      {
+        "title": "Dart and First Widgets",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Dart syntax and null safety",
+          "Stateless versus stateful widgets",
+          "The widget tree and build method",
+          "Hot reload workflow",
+          "Basic layout widgets"
+        ],
+        "resources": [
+          { "title": "Flutter: Write Your First App", "url": "https://docs.flutter.dev/get-started/codelab", "type": "doc" },
+          { "title": "Dart Language Documentation", "url": "https://dart.dev/language", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Layout and Navigation",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Row, Column and Flex layouts",
+          "The box constraints model",
+          "Material and Cupertino widgets",
+          "Routes and the Navigator",
+          "Themes and responsive layouts"
+        ],
+        "resources": [
+          { "title": "Flutter UI Documentation", "url": "https://docs.flutter.dev/ui", "type": "doc" },
+          { "title": "Flutter API Reference", "url": "https://api.flutter.dev/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "State Management and Data",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Limits of setState",
+          "Provider and Riverpod patterns",
+          "HTTP calls and JSON serialisation",
+          "Local storage and caching",
+          "Futures, Streams and async UI"
+        ],
+        "resources": [
+          { "title": "Flutter: State Management", "url": "https://docs.flutter.dev/data-and-backend/state-mgmt/intro", "type": "doc" },
+          { "title": "pub.dev Package Registry", "url": "https://pub.dev/", "type": "doc" }
+        ],
+        "practiceTags": ["flutter", "dart"]
+      },
+      {
+        "title": "Testing and Release",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 5,
+        "syllabus": [
+          "Widget and integration tests",
+          "Platform channels for native features",
+          "Profiling with Flutter DevTools",
+          "App icons, flavours and build configs",
+          "Building release artifacts for the stores"
+        ],
+        "resources": [
+          { "title": "Flutter Documentation", "url": "https://docs.flutter.dev/", "type": "doc" },
+          { "title": "Publish Your App", "url": "https://developer.android.com/studio/publish", "type": "doc" }
+        ],
+        "practiceTags": ["flutter", "release"]
+      }
+    ]
+  },
+  {
+    "topic": "UI/UX Design Fundamentals",
+    "category": "Mobile & Product",
+    "summary": "Research users, shape interfaces that are clear and accessible, and document the system that keeps them consistent.",
+    "stages": [
+      {
+        "title": "Design Principles",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Visual hierarchy and contrast",
+          "Typography and spacing scales",
+          "Colour systems and semantic colour",
+          "Gestalt grouping principles",
+          "Consistency and affordances"
+        ],
+        "resources": [
+          { "title": "Material Design 3", "url": "https://m3.material.io/", "type": "doc" },
+          { "title": "Laws of UX", "url": "https://lawsofux.com/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "User Research and Problem Framing",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Planning and running user interviews",
+          "Personas and jobs to be done",
+          "Journey maps and pain points",
+          "Task analysis and user flows",
+          "Defining success criteria"
+        ],
+        "resources": [
+          { "title": "Nielsen Norman Group Articles", "url": "https://www.nngroup.com/articles/", "type": "blog" },
+          { "title": "Interaction Design Foundation Literature", "url": "https://www.interaction-design.org/literature", "type": "blog" }
+        ]
+      },
+      {
+        "title": "Wireframes and Prototypes",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Information architecture and sitemaps",
+          "Low-fidelity wireframing",
+          "Common interaction patterns",
+          "Clickable prototypes for testing",
+          "Handing designs off to engineers"
+        ],
+        "resources": [
+          { "title": "Figma Help Center", "url": "https://help.figma.com/hc/en-us", "type": "doc" },
+          { "title": "Apple Human Interface Guidelines", "url": "https://developer.apple.com/design/human-interface-guidelines", "type": "doc" }
+        ],
+        "practiceTags": ["ux", "prototyping"]
+      },
+      {
+        "title": "Usability and Accessibility",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Nielsen's usability heuristics",
+          "Running a usability test session",
+          "WCAG perceivable and operable principles",
+          "Keyboard and screen reader support",
+          "Writing clear interface copy"
+        ],
+        "resources": [
+          { "title": "10 Usability Heuristics for User Interface Design", "url": "https://www.nngroup.com/articles/ten-usability-heuristics/", "type": "blog" },
+          { "title": "W3C: Introduction to Web Accessibility", "url": "https://www.w3.org/WAI/fundamentals/accessibility-intro/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Design Systems in Practice",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Design tokens for colour, type and space",
+          "Component libraries and variants",
+          "Documenting usage rules and do-nots",
+          "Versioning and contribution process",
+          "Measuring adoption across products"
+        ],
+        "resources": [
+          { "title": "Material Design 3", "url": "https://m3.material.io/", "type": "doc" },
+          { "title": "WCAG 2.2 Quick Reference", "url": "https://www.w3.org/WAI/WCAG22/quickref/", "type": "doc" }
+        ],
+        "practiceTags": ["design-systems", "ui"]
+      }
+    ]
+  },
+  {
+    "topic": "Product Management for Engineers",
+    "category": "Mobile & Product",
+    "summary": "Understand how product decisions get made so you can shape scope, prioritise well and argue trade-offs with evidence.",
+    "stages": [
+      {
+        "title": "What Product Management Is",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Discovery versus delivery work",
+          "Customer problems before solutions",
+          "Product/market fit and positioning",
+          "Mapping stakeholders and users",
+          "How PMs and engineers divide decisions"
+        ],
+        "resources": [
+          { "title": "SVPG Articles", "url": "https://www.svpg.com/articles/", "type": "blog" },
+          { "title": "Atlassian: Product Management", "url": "https://www.atlassian.com/agile/product-management", "type": "blog" }
+        ]
+      },
+      {
+        "title": "Requirements and User Stories",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Writing user stories and acceptance criteria",
+          "Slicing work into vertical increments",
+          "Definition of ready and definition of done",
+          "Relative estimation basics",
+          "Backlog refinement sessions"
+        ],
+        "resources": [
+          { "title": "Mountain Goat Software: User Stories", "url": "https://www.mountaingoatsoftware.com/agile/user-stories", "type": "blog" },
+          { "title": "Atlassian Agile Coach", "url": "https://www.atlassian.com/agile", "type": "blog" }
+        ]
+      },
+      {
+        "title": "Prioritisation and Roadmaps",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Impact versus effort frameworks",
+          "RICE and weighted scoring",
+          "Outcome-based roadmaps",
+          "Budgeting for technical debt",
+          "Saying no and managing expectations"
+        ],
+        "resources": [
+          { "title": "Shape Up", "url": "https://basecamp.com/shapeup", "type": "doc" },
+          { "title": "ProductPlan Learning Center", "url": "https://www.productplan.com/learn/", "type": "blog" }
+        ]
+      },
+      {
+        "title": "Working in Delivery Cycles",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Sprint planning and review",
+          "Scrum roles, events and artifacts",
+          "Kanban flow and WIP limits",
+          "Release planning and dependencies",
+          "Retrospectives that change behaviour"
+        ],
+        "resources": [
+          { "title": "The Scrum Guide", "url": "https://scrumguides.org/", "type": "doc" },
+          { "title": "Atlassian Agile Coach", "url": "https://www.atlassian.com/agile", "type": "blog" }
+        ],
+        "practiceTags": ["agile", "product"]
+      },
+      {
+        "title": "Metrics and Decisions",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Choosing a north star and supporting metrics",
+          "Event instrumentation and tracking plans",
+          "Running and reading an experiment",
+          "Writing a one-page product brief",
+          "Communicating trade-offs to leadership"
+        ],
+        "resources": [
+          { "title": "SVPG Articles", "url": "https://www.svpg.com/articles/", "type": "blog" },
+          { "title": "ProductPlan Learning Center", "url": "https://www.productplan.com/learn/", "type": "blog" }
+        ],
+        "practiceTags": ["product", "analytics"]
+      }
+    ]
+  }
+]
