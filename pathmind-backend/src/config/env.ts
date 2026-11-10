@@ -1,6 +1,19 @@
 import "dotenv/config";
 import { z } from "zod";
 
+// Hosting dashboards (Render, Vercel, ...) often store values with a stray trailing
+// newline or space. A "\n" in GOOGLE_CALENDAR_REDIRECT_URI makes Google reject sign-in
+// with "Error 400: invalid_request" (the redirect_uri no longer matches exactly), so
+// trim every value up front. This also covers code that reads process.env directly.
+for (const key of Object.keys(process.env)) {
+  const value = process.env[key];
+  if (typeof value === "string" && value !== value.trim()) process.env[key] = value.trim();
+}
+// CLIENT_ORIGIN is concatenated with a path ("/" + next), so drop any trailing slash.
+if (process.env.CLIENT_ORIGIN) {
+  process.env.CLIENT_ORIGIN = process.env.CLIENT_ORIGIN.replace(/\/+$/, "");
+}
+
 const envSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
   PORT: z.coerce.number().default(4000),
@@ -12,7 +25,9 @@ const envSchema = z.object({
 
   // "lax" (default, same-origin deployments) | "none" (cross-site frontend,
   // requires Secure) | "strict"
-  COOKIE_SAME_SITE: z.enum(["lax", "none", "strict"]).default("lax"),
+  // Optional: when unset, cookies.ts picks "none" for https/production (cross-site
+  // frontend + API) and "lax" for local development.
+  COOKIE_SAME_SITE: z.enum(["lax", "none", "strict"]).optional(),
 
   MOCK_MODE: z
     .string()
