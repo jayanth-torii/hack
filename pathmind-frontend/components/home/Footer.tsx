@@ -86,12 +86,12 @@ export function Footer() {
             </a>
           </p>
           <div className="flex gap-6">
-            <a href="#" className="-my-2.5 inline-flex min-h-touch-min items-center transition-colors duration-fast hover:text-accent">
+            <Link href="/terms" className="-my-2.5 inline-flex min-h-touch-min items-center transition-colors duration-fast hover:text-accent">
               Terms &amp; Conditions
-            </a>
-            <a href="#" className="-my-2.5 inline-flex min-h-touch-min items-center transition-colors duration-fast hover:text-accent">
+            </Link>
+            <Link href="/privacy" className="-my-2.5 inline-flex min-h-touch-min items-center transition-colors duration-fast hover:text-accent">
               Privacy Policy
-            </a>
+            </Link>
           </div>
         </div>
       </div>
