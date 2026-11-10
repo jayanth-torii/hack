@@ -74,7 +74,17 @@ export function Footer() {
 
       <div className="relative z-10 border-t border-line/10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-6 text-xs text-muted sm:flex-row sm:px-6">
-          <p>© 2026 Vidhyora. All rights reserved.</p>
+          <p>
+            © 2026 Vidhyora. All rights reserved. Built by{" "}
+            <a
+              href="https://jayanth45.vercel.app/"
+              target="_blank"
+              rel="noopener author"
+              className="font-medium text-paper transition-colors duration-fast hover:text-accent"
+            >
+              Jayanth
+            </a>
+          </p>
           <div className="flex gap-6">
             <a href="#" className="-my-2.5 inline-flex min-h-touch-min items-center transition-colors duration-fast hover:text-accent">
               Terms &amp; Conditions
