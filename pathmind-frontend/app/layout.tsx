@@ -95,7 +95,9 @@ export const viewport: Viewport = {
   // One colour, because the app ships dark-only (see LIGHT_MODE_ENABLED in
   // lib/useTheme.tsx). A light `themeColor` here would tint the browser chrome
   // light on a phone set to light mode while the page itself stayed dark.
-  themeColor: "#010103",
+  // The value tracks --md-surface (20 16 14), so the browser chrome matches
+  // the page it sits above.
+  themeColor: "#14100e",
 };
 
 // Structured data (JSON-LD) so search engines understand what Vidhyora is and who built it
