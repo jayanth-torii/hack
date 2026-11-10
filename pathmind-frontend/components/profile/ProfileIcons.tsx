@@ -295,6 +295,32 @@ export function CompassIcon({ className }: IconProps) {
   );
 }
 
+export function AlertIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+      <circle cx="12" cy="12" r="8.6" stroke={S} strokeWidth="1.8" />
+      <path d="M12 7.6v5" stroke={S} strokeWidth="1.8" strokeLinecap="round" />
+      <circle cx="12" cy="15.9" r="1.1" fill={S} />
+    </svg>
+  );
+}
+
+export function CheckIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+      <path d="M4.8 12.6l4.6 4.6 9.8-9.8" stroke={S} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+export function CloseIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+      <path d="M6.2 6.2l11.6 11.6M17.8 6.2L6.2 17.8" stroke={S} strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 /** Maps the backend's achievement icon keys onto the set above. */
 export const ACHIEVEMENT_ICONS = {
   rocket: RocketIcon,

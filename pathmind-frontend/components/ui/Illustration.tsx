@@ -18,15 +18,21 @@ interface IllustrationProps {
   className?: string;
   imgClassName?: string;
   alt?: string;
-  /** Soft lime spotlight behind the frame. */
+  /** Soft primary-tinted spotlight behind the frame. */
   glow?: boolean;
 }
 
 /**
- * Vidhyora-branded illustration: a recolored (lime/cyan) vector scene shown
- * inside a soft light "window" frame, so the art reads clearly on both the
- * dark and light site themes. Use in empty states, page heroes, and brand
- * panels — never as decoration on every card.
+ * Vidhyora-branded illustration: a vector scene shown inside a soft light
+ * "window" frame, so the art reads clearly against the dark canvas. Use in
+ * empty states, page heroes and brand panels — never as decoration on every
+ * card.
+ *
+ * The frame is deliberately *light*, and gets that from `inverse-surface`
+ * rather than from the three hand-picked off-whites it used to hardcode.
+ * That is exactly what the inverse role is for — a surface in the opposite
+ * tone to the scheme — so the illustrations keep the bright backing the art
+ * needs while still taking their colour from the palette.
  */
 export function Illustration({
   name,
@@ -40,10 +46,10 @@ export function Illustration({
       {glow && (
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 rounded-[2rem] bg-[radial-gradient(circle_at_50%_35%,rgb(var(--color-accent)/0.28),transparent_72%)] blur-2xl"
+          className="pointer-events-none absolute inset-0 -z-10 rounded-xl bg-[radial-gradient(circle_at_50%_35%,rgb(var(--md-primary)/0.28),transparent_72%)] blur-2xl"
         />
       )}
-      <div className="h-full w-full overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#f0f2f8] via-[#f8f9fc] to-[#e6e9f2] shadow-inner ring-1 ring-inset ring-black/[0.06]">
+      <div className="h-full w-full overflow-hidden rounded-xl bg-md-inverse-surface shadow-inner ring-1 ring-inset ring-md-scrim/10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={`/illustrations/${name}.svg`}

@@ -1,16 +1,17 @@
 "use client";
 
 import { create } from "zustand";
-import { useEffect, useRef, type ReactNode } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { type ReactNode } from "react";
 import { clsx } from "@/lib/clsx";
+import { Dialog } from "@/components/md/Dialog";
+import { MdButton } from "@/components/md/Button";
 
 export interface ConfirmOptions {
   title: string;
   message?: string;
   confirmLabel?: string;
   cancelLabel?: string;
-  /** danger → rose actions; accent → lime actions. */
+  /** `danger` uses the M3 error role; `accent` uses primary. */
   tone?: "danger" | "accent";
 }
 
@@ -68,13 +69,15 @@ function ConfirmIcon({ tone }: { tone: NonNullable<ConfirmOptions["tone"]> }) {
       </svg>
     );
 
+  // M3 puts a 24dp hero icon above the headline, tinted with the role the
+  // dialog is about — error for destructive, secondary for everything else.
   return (
     <span
       className={clsx(
-        "flex h-16 w-16 flex-none items-center justify-center rounded-3xl",
+        "flex h-14 w-14 flex-none items-center justify-center rounded-lg",
         tone === "danger"
-          ? "bg-rose-400/15 text-rose-300 ring-1 ring-inset ring-rose-400/30"
-          : "bg-accent/15 text-accent ring-1 ring-inset ring-accent/30"
+          ? "bg-md-error-container text-md-on-error-container"
+          : "bg-md-secondary-container text-md-on-secondary-container"
       )}
     >
       {icon}
@@ -82,103 +85,67 @@ function ConfirmIcon({ tone }: { tone: NonNullable<ConfirmOptions["tone"]> }) {
   );
 }
 
-/** Mount once in the root providers — renders the centered modal when opened. */
+/**
+ * Mount once in the root providers. Renders the confirmation as a Material 3
+ * dialog: a centred modal on desktop, a **full-screen page on phones** with a
+ * back arrow and hardware-Back support — see `components/md/Dialog.tsx`.
+ *
+ * `alertdialog` rather than `dialog`, because the content is the decision
+ * itself and screen readers should announce it immediately.
+ */
 export function ConfirmDialogHost() {
   const options = useConfirmStore((s) => s.options);
   const close = useConfirmStore((s) => s.close);
-  const reduce = useReducedMotion();
-  const confirmRef = useRef<HTMLButtonElement>(null);
-
   const tone = options?.tone ?? "accent";
 
-  // Escape closes (cancels). Autofocus the confirm action like SweetAlert2.
-  useEffect(() => {
-    if (!options) return;
-    confirmRef.current?.focus();
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close(false);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [options, close]);
-
   return (
-    <AnimatePresence>
-      {options && (
-        <motion.div
-          key="confirm-backdrop"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[110] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
-          onClick={() => close(false)}
-        >
-          <motion.div
-            key="confirm-card"
-            role="alertdialog"
-            aria-modal="true"
-            aria-labelledby="confirm-title"
-            aria-describedby="confirm-message"
-            initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.9, y: 16 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.94, y: 8 }}
-            transition={{ type: "spring", stiffness: 340, damping: 26 }}
-            onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-sm overflow-hidden rounded-3xl border border-line/10 bg-card/95 p-7 text-center shadow-2xl shadow-black/40 backdrop-blur-2xl"
+    <Dialog
+      open={!!options}
+      onClose={() => close(false)}
+      role="alertdialog"
+      title={options?.title ?? ""}
+      // The icon + headline + body below ARE M3's basic-dialog anatomy, so the
+      // surface must not also draw a headline above `md`. The phone app bar
+      // still shows the title.
+      headline={false}
+      labelledBy="confirm-title"
+      describedBy={options?.message ? "confirm-message" : undefined}
+      actions={
+        <>
+          {/* Cancel first in the DOM so it is the Tab-order default and the
+              destructive action is never one stray Enter away. M3 orders the
+              confirming action last visually on desktop; on phones both are
+              full-width and stacked, cancel underneath. */}
+          <MdButton variant="text" onClick={() => close(false)} className="md:order-1">
+            {options?.cancelLabel ?? "Cancel"}
+          </MdButton>
+          <MdButton
+            variant="filled"
+            onClick={() => close(true)}
+            className={clsx(
+              "md:order-2",
+              tone === "danger" && "bg-md-error text-md-on-error"
+            )}
           >
-            {/* top shine */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-line/25 to-transparent"
-            />
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -top-20 left-1/2 h-40 w-64 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgb(var(--color-accent)/0.12),transparent_65%)]"
-            />
-
-            <div className="relative">
-              <div className="flex justify-center">
-                <ConfirmIcon tone={tone} />
-              </div>
-              <h2
-                id="confirm-title"
-                className="mt-5 font-display text-xl font-semibold tracking-tight text-paper"
-              >
-                {options.title}
-              </h2>
-              {options.message && (
-                <p id="confirm-message" className="mt-2 text-sm leading-relaxed text-muted">
-                  {options.message}
-                </p>
-              )}
-
-              <div className="mt-7 flex flex-col-reverse gap-2.5 sm:flex-row sm:justify-center">
-                <button
-                  type="button"
-                  onClick={() => close(false)}
-                  className="rounded-full border border-line/15 px-6 py-2.5 text-sm font-medium text-subtle transition-colors hover:border-line/30 hover:text-paper"
-                >
-                  {options.cancelLabel ?? "Cancel"}
-                </button>
-                <button
-                  ref={confirmRef}
-                  type="button"
-                  onClick={() => close(true)}
-                  className={clsx(
-                    "rounded-full px-7 py-2.5 text-sm font-bold tracking-tight shadow-lg transition-all hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-card",
-                    tone === "danger"
-                      ? "bg-rose-500 text-white shadow-rose-500/25 hover:bg-rose-400"
-                      : "bg-accent text-on-accent shadow-accent/25 hover:bg-accent/90"
-                  )}
-                >
-                  {options.confirmLabel ?? "Confirm"}
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+            {options?.confirmLabel ?? "Confirm"}
+          </MdButton>
+        </>
+      }
+    >
+      <div className="flex flex-col items-center text-center md:items-start md:text-left">
+        <ConfirmIcon tone={tone} />
+        <h2
+          id="confirm-title"
+          className="mt-4 text-headline-sm font-normal text-md-on-surface md:mt-4"
+        >
+          {options?.title}
+        </h2>
+        {options?.message && (
+          <p id="confirm-message" className="mt-2 text-body-md text-md-on-surface-variant">
+            {options.message}
+          </p>
+        )}
+      </div>
+    </Dialog>
   );
 }

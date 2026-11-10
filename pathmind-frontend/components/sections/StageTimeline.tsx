@@ -1,6 +1,8 @@
 "use client";
 
 import { clsx } from "@/lib/clsx";
+import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
 import { VideoPreview, isVideoUrl } from "@/components/ui/VideoPreview";
 import type { Stage } from "@/types/roadmap";
 import {
@@ -20,6 +22,13 @@ const STATE_LABEL: Record<StageState, string> = {
   locked: "Not started",
 };
 
+/** Chip tone per state — always paired with an icon and a word, never colour alone. */
+const STATE_TONE: Record<StageState, "success" | "brand" | "neutral"> = {
+  completed: "success",
+  active: "brand",
+  locked: "neutral",
+};
+
 interface StageTimelineProps {
   stages: Stage[];
   stateOf: (stage: Stage) => StageState;
@@ -35,6 +44,12 @@ interface StageTimelineProps {
 /**
  * The stage timeline: an alternating two-column track either side of a centre
  * spine, with each stage's card on one side and a video preview on the other.
+ *
+ * Material 3: each stage is a card whose **tone** carries its state — the
+ * active one sits on the highest container step behind a primary outline, a
+ * finished one a step lower, a locked one flat on the page surface. That
+ * replaces the old accent glow: emphasis comes from the tonal ramp, and
+ * elevation stays reserved for surfaces that genuinely float.
  *
  * The alternation is desktop-only. Below `lg` the spine moves to the left edge
  * and everything stacks in one column — a zig-zag at phone width would be two
@@ -60,7 +75,7 @@ export function StageTimeline({
           stages rather than running off the list. */}
       <span
         aria-hidden
-        className="absolute bottom-10 left-[23px] top-10 w-px bg-accent/20 lg:left-1/2 lg:-translate-x-1/2"
+        className="absolute bottom-10 left-6 top-10 w-px -translate-x-1/2 bg-md-outline-variant lg:left-1/2"
       />
 
       {stages.map((stage, index) => {
@@ -91,18 +106,18 @@ export function StageTimeline({
           <li
             key={stage.id}
             id={`stage-${stage.id}`}
-            className="relative scroll-mt-24 pb-6 pl-14 last:pb-0 sm:pl-16 lg:px-0 lg:pb-10"
+            className="relative scroll-mt-4 pb-6 pl-14 last:pb-0 sm:pl-16 lg:px-0 lg:pb-10"
           >
             {/* Numbered node — on the spine at every breakpoint. */}
             <span
               aria-hidden
               className={clsx(
-                "absolute left-0 top-4 z-10 flex h-12 w-12 items-center justify-center rounded-full border-2 bg-ink font-display text-sm font-bold lg:left-1/2 lg:-translate-x-1/2",
+                "absolute left-0 top-4 z-10 flex h-12 w-12 items-center justify-center rounded-full border-2 text-label-lg font-bold lg:left-1/2 lg:-translate-x-1/2",
                 state === "completed"
-                  ? "border-success/60 text-success"
+                  ? "border-md-success bg-md-success-container text-md-on-success-container"
                   : state === "active"
-                    ? "border-accent text-accent shadow-[0_0_24px_rgb(var(--color-accent)/0.45)]"
-                    : "border-line/25 text-muted"
+                    ? "border-md-primary bg-md-primary text-md-on-primary"
+                    : "border-md-outline-variant bg-md-surface text-md-on-surface-variant"
               )}
             >
               {String(index + 1).padStart(2, "0")}
@@ -112,48 +127,46 @@ export function StageTimeline({
               {/* ── Stage card ─────────────────────────────────────── */}
               <article
                 className={clsx(
-                  "rounded-xl border bg-card/40 p-5 backdrop-blur-sm transition-colors duration-base",
+                  "rounded-lg border p-4 transition-colors duration-base ease-standard sm:p-5",
                   cardOnLeft ? "lg:col-start-1 lg:row-start-1" : "lg:col-start-2 lg:row-start-1",
-                  state === "locked"
-                    ? "border-line/12"
-                    : "border-accent/25 shadow-[0_0_50px_-26px_rgb(var(--color-accent)/0.6)]"
+                  state === "active"
+                    ? "border-md-primary bg-md-surface-container-highest"
+                    : state === "completed"
+                      ? "border-md-outline-variant bg-md-surface-container"
+                      : "border-md-outline-variant bg-md-surface"
                 )}
               >
                 <div className="flex flex-wrap items-start justify-between gap-2.5">
                   <div className="flex min-w-0 items-center gap-2.5">
-                    <span className="font-display text-sm font-bold text-accent-text">
+                    <span className="text-label-lg font-bold text-md-primary">
                       {String(index + 1).padStart(2, "0")}
                     </span>
-                    <h2 className="min-w-0 font-display text-base font-bold tracking-tight text-paper sm:text-lg">
+                    <h2 className="min-w-0 break-words text-title-md font-medium text-md-on-surface sm:text-title-lg">
                       {stage.title}
                     </h2>
                   </div>
 
-                  {/* Status is a labelled chip, never colour alone. */}
-                  <span
-                    className={clsx(
-                      "inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.6875rem] font-semibold",
-                      badgeLabel === "completed"
-                        ? "bg-success/12 text-success"
-                        : badgeLabel === "active"
-                          ? "bg-accent/12 text-accent-text"
-                          : "bg-line/10 text-muted"
-                    )}
+                  {/* Status is a labelled chip with an icon, never colour alone. */}
+                  <Badge
+                    tone={STATE_TONE[badgeLabel]}
+                    className="shrink-0"
+                    icon={
+                      badgeLabel === "completed" ? (
+                        <CheckCircleIcon className="h-3.5 w-3.5" />
+                      ) : badgeLabel === "active" ? (
+                        <PlayIcon className="h-3.5 w-3.5" />
+                      ) : state === "locked" ? (
+                        <LockIcon className="h-3.5 w-3.5" />
+                      ) : (
+                        <CircleIcon className="h-3.5 w-3.5" />
+                      )
+                    }
                   >
-                    {badgeLabel === "completed" ? (
-                      <CheckCircleIcon className="h-3.5 w-3.5" />
-                    ) : badgeLabel === "active" ? (
-                      <PlayIcon className="h-3.5 w-3.5" />
-                    ) : state === "locked" ? (
-                      <LockIcon className="h-3.5 w-3.5" />
-                    ) : (
-                      <CircleIcon className="h-3.5 w-3.5" />
-                    )}
                     {STATE_LABEL[badgeLabel]}
-                  </span>
+                  </Badge>
                 </div>
 
-                <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted">
+                <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-body-sm text-md-on-surface-variant">
                   <span className="capitalize">{stage.difficulty}</span>
                   {stage.estimatedDays > 0 && (
                     <>
@@ -173,9 +186,23 @@ export function StageTimeline({
                   )}
                 </p>
 
-                {/* ── Lessons ──────────────────────────────────────── */}
+                {/* M3 linear progress: primary fill on the highest container
+                    step. Decorative — the count above says the same in words. */}
                 {itemCount > 0 && (
-                  <ul className="mt-4 space-y-1">
+                  <div
+                    aria-hidden
+                    className="mt-3 h-1 overflow-hidden rounded-full bg-md-surface-container-highest"
+                  >
+                    <div
+                      className="h-full rounded-full bg-md-primary transition-[width] duration-base ease-standard"
+                      style={{ width: `${Math.round((tickedCount / itemCount) * 100)}%` }}
+                    />
+                  </div>
+                )}
+
+                {/* ── Lessons — M3 list items with a leading checkbox ── */}
+                {itemCount > 0 && (
+                  <ul className="mt-4">
                     {stage.syllabus.map((item, itemIndex) => {
                       const done = state === "completed" || ticked.has(itemIndex);
                       const locked = state === "locked";
@@ -188,22 +215,22 @@ export function StageTimeline({
                             disabled={locked || isSaving}
                             onClick={() => onToggleItem(stage, itemIndex, !done)}
                             className={clsx(
-                              "press flex min-h-touch-min w-full items-center gap-2.5 rounded-sm px-2 py-1.5 text-left text-sm transition-colors duration-fast",
+                              "state-layer flex min-h-touch-min w-full items-center gap-3 rounded-sm px-2 py-1.5 text-left",
+                              "transition-colors duration-fast ease-standard",
                               locked
-                                ? "cursor-not-allowed text-muted"
-                                : "hover:bg-accent/[0.07] disabled:opacity-60"
+                                ? "cursor-not-allowed text-md-on-surface-variant"
+                                : "text-md-on-surface disabled:opacity-60"
                             )}
                           >
                             {done ? (
-                              <CheckCircleIcon className="h-[1.125rem] w-[1.125rem] shrink-0 text-success" />
+                              <CheckCircleIcon className="h-[1.125rem] w-[1.125rem] shrink-0 text-md-primary" />
                             ) : (
-                              <CircleIcon className="h-[1.125rem] w-[1.125rem] shrink-0 text-muted" />
+                              <CircleIcon className="h-[1.125rem] w-[1.125rem] shrink-0 text-md-on-surface-variant" />
                             )}
                             <span
                               className={clsx(
-                                "min-w-0 flex-1",
-                                done ? "text-subtle line-through decoration-success/40" : "text-subtle",
-                                locked && "text-muted"
+                                "min-w-0 flex-1 break-words text-body-lg",
+                                done && "line-through decoration-md-outline"
                               )}
                             >
                               {item}
@@ -215,51 +242,47 @@ export function StageTimeline({
                   </ul>
                 )}
 
-                {/* ── Actions ──────────────────────────────────────── */}
+                {/* ── Actions — exactly one filled button per card ──── */}
                 <div className="mt-4 flex flex-wrap items-center gap-2.5">
                   {state !== "locked" && itemCount > 0 && nextUnticked >= 0 && (
-                    <button
-                      type="button"
+                    <Button
+                      variant="accent"
                       disabled={isSaving}
                       aria-busy={isSaving}
                       onClick={() => onToggleItem(stage, nextUnticked, true)}
-                      className="press inline-flex min-h-touch items-center gap-2 rounded-full bg-accent px-4 text-sm font-bold text-on-accent transition-colors duration-fast hover:bg-accent-hover disabled:bg-line/15 disabled:text-muted"
                     >
                       <PlayIcon className="h-4 w-4" />
                       {tickedCount === 0
                         ? "Start stage"
                         : `Continue (${tickedCount}/${itemCount})`}
-                    </button>
+                    </Button>
                   )}
 
                   {/* A stage with no syllabus has nothing to tick, so the only
                       way to finish it is the whole-stage action. */}
                   {state === "active" && itemCount === 0 && (
-                    <button
-                      type="button"
+                    <Button
+                      variant="accent"
                       disabled={isSaving}
                       aria-busy={isSaving}
                       onClick={() => onMarkComplete(stage)}
-                      className="press inline-flex min-h-touch items-center gap-2 rounded-full bg-accent px-4 text-sm font-bold text-on-accent transition-colors duration-fast hover:bg-accent-hover disabled:bg-line/15 disabled:text-muted"
                     >
                       <CheckCircleIcon className="h-4 w-4" />
                       Mark complete
-                    </button>
+                    </Button>
                   )}
 
                   {stage.resources.length > 0 && (
-                    <button
-                      type="button"
-                      onClick={onShowResources}
-                      className="press inline-flex min-h-touch items-center gap-2 rounded-full border border-line/20 px-4 text-sm font-semibold text-subtle transition-colors duration-fast hover:border-accent/50 hover:text-accent-text"
-                    >
+                    // Not a popup: this switches the screen's Resources tab,
+                    // an inline destination on the same page.
+                    <Button variant="outlined" onClick={onShowResources}>
                       <BookIcon className="h-4 w-4" />
                       {stage.resources.length} resources
-                    </button>
+                    </Button>
                   )}
 
                   {state === "locked" && (
-                    <span className="text-xs text-muted">
+                    <span className="text-body-sm text-md-on-surface-variant">
                       Finish the previous stage to unlock this one.
                     </span>
                   )}

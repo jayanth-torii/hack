@@ -24,12 +24,20 @@ interface StateViewProps {
   className?: string;
 }
 
+/**
+ * The recovery actions borrow M3's filled/outlined pair, but can't delegate to
+ * `md/Button`: an action with `href` has to render a real `<a>` (CLAUDE.md §6
+ * — `button` for actions, `a` for navigation), and `MdButton` is a `<button>`.
+ * The classes are therefore kept deliberately identical to it, `state-layer`
+ * and all, so the two render the same control.
+ */
 function ActionButton({ action, variant }: { action: Action; variant: "primary" | "secondary" }) {
   const cls = clsx(
-    "press inline-flex min-h-touch items-center justify-center rounded-sm px-6 text-sm transition-colors duration-fast",
+    "state-layer press inline-flex min-h-touch select-none items-center justify-center rounded-full px-6 text-label-lg font-medium",
+    "transition-[background-color,border-color] duration-fast ease-standard",
     variant === "primary"
-      ? "bg-accent font-bold tracking-tight text-on-accent shadow-e2 hover:bg-accent-hover"
-      : "border border-line/15 font-semibold text-subtle hover:border-accent/50 hover:text-accent"
+      ? "bg-md-primary text-md-on-primary"
+      : "border border-md-outline text-md-primary"
   );
 
   if (action.href) {
@@ -54,6 +62,11 @@ function ActionButton({ action, variant }: { action: Action; variant: "primary" 
  * and the recovery action are consistent instead of being re-improvised per
  * screen. Error copy is written for the user — raw backend messages and
  * status codes never reach this component.
+ *
+ * The fallback mark uses an `*-container` / `on-*-container` role pair rather
+ * than a tint of the base role, and carries a different glyph per tone, so the
+ * difference between "nothing here yet" and "this broke" survives being read
+ * in greyscale.
  */
 export function StateView({
   tone = "empty",
@@ -69,7 +82,7 @@ export function StateView({
     <div
       role={tone === "error" ? "alert" : undefined}
       className={clsx(
-        "mx-auto flex w-full max-w-md flex-col items-center px-6 py-16 text-center",
+        "mx-auto flex w-full max-w-md flex-col items-center px-4 py-16 text-center sm:px-6",
         className
       )}
     >
@@ -85,7 +98,9 @@ export function StateView({
           aria-hidden
           className={clsx(
             "flex h-14 w-14 items-center justify-center rounded-full",
-            tone === "error" ? "bg-danger/12 text-danger" : "bg-accent/12 text-accent-text"
+            tone === "error"
+              ? "bg-md-error-container text-md-on-error-container"
+              : "bg-md-primary-container text-md-on-primary-container"
           )}
         >
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -100,10 +115,8 @@ export function StateView({
         </span>
       )}
 
-      <h2 className="mt-6 font-display text-xl font-semibold tracking-tight text-paper">
-        {title}
-      </h2>
-      <p className="mt-2 text-sm leading-relaxed text-muted">{description}</p>
+      <h2 className="mt-6 text-headline-sm text-md-on-surface">{title}</h2>
+      <p className="mt-2 text-body-md text-md-on-surface-variant">{description}</p>
 
       {(primary || secondary) && (
         <div className="mt-7 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">

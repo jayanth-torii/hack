@@ -27,27 +27,53 @@ changes. Never animate the same property with two of them.
 
 ---
 
-## 2. Design tokens — the single source of truth
+## 2. Design tokens — Material 3, single source of truth
 
-Everything lives in `app/globals.css` (`:root` and `html.light`) and is
+The product is **Material 3**, dark scheme, on a tonal palette seeded from the
+brand orange `#F97316`. Everything lives in `app/globals.css` (`:root`) and is
 surfaced through `tailwind.config.ts`. **Never hardcode a colour, radius,
 shadow or duration at a call site.**
 
-| Group | Tokens | Tailwind |
+Two layers exist, deliberately:
+
+1. **`--md-*` — the M3 role set. New work uses these.**
+2. The original `--color-*` names, now **aliases onto M3 roles**. They exist so
+   the reskin didn't have to touch every call site at once. When you edit a
+   file, migrate its colours to `md-*`.
+
+| Group | Roles | Tailwind |
 |---|---|---|
-| Surface / text | `--color-ink · paper · card · muted · subtle · line` | `bg-ink`, `text-paper`, … |
-| Brand | `--color-accent · accent-hover · on-accent · accent-text · cyan-text` | `bg-accent`, `text-accent-text` |
-| Status | `--color-success · warning · danger · info` | `text-danger`, `border-success/30` |
-| Radius | `--radius-xs 8 · sm 12 · md 16 · lg 20 · xl 24` | `rounded-sm`, `rounded-md`, … |
-| Elevation | `--elev-1 · 2 · 3` | `shadow-e1`, `shadow-e2`, `shadow-e3` |
-| Motion | `--dur-fast 140 · base 220 · slow 380`, `--ease-standard`, `--ease-emphasized` | `duration-fast`, `ease-standard` |
-| Chrome | `--app-bar-h 56 · --bottom-nav-h 64 · --safe-*` | `h-app-bar`, `pt-safe`, `pb-nav` |
+| Surfaces | `surface · surface-dim · surface-bright · surface-container-{lowest,low,—,high,highest}` | `bg-md-surface-container-high` |
+| On-surface | `on-surface · on-surface-variant · outline · outline-variant` | `text-md-on-surface-variant` |
+| Primary | `primary · on-primary · primary-container · on-primary-container · inverse-primary` | `bg-md-primary`, `text-md-on-primary` |
+| Secondary / tertiary | same four-part shape | `bg-md-secondary-container` |
+| Status | `error · success · warning · info`, each with `on-`, `-container`, `on-…-container` | `bg-md-error-container` |
+| Inverse / scrim | `inverse-surface · inverse-on-surface · scrim` | snackbars, dialog scrims |
+| Type scale | display · headline · title · body · label, each lg/md/sm | `text-headline-sm`, `text-label-lg` |
+| Elevation | levels 1–5 | `shadow-e1` … `shadow-e5` |
+| Shape | xs 4 · sm 8 · md 12 · lg 16 · xl 28 · full | `rounded-md`, `rounded-full` |
+| Motion | `--dur-fast 200 · base 300 · slow 500` + 4 M3 curves | `duration-base`, `ease-decelerate` |
+| Chrome | `--app-bar-h 64 · --bottom-nav-h 80 · --safe-*` | `h-app-bar`, `pt-safe`, `pb-nav` |
 | Touch | 48px comfortable, 44px floor | `min-h-touch`, `min-h-touch-min` |
 
-**Both themes must work.** The dark palette is the default; `html.light` is a
-genuinely different palette, not an inversion. Never write `slate-*`,
-`rose-*` or a raw hex for anything semantic — that was the bug class that made
-`Input` and `Button` unreadable in light mode.
+**Three Material rules that are easy to get wrong:**
+
+- **The type scale carries its own line-height, tracking and weight.** Don't
+  stack `font-bold leading-tight tracking-tight` on `text-headline-md` — if it
+  needs to look different, you want a different step.
+- **State is a layer, not a colour.** Hover/focus/press are a translucent wash
+  of `currentColor` over the component. Use the `.state-layer` class; don't
+  write `hover:bg-…` swaps, which break the moment a variant changes.
+- **One filled button per view.** The variants are an emphasis ladder
+  (filled → tonal → elevated → outlined → text). If two things look primary,
+  neither is.
+
+**Light mode is hidden** — `LIGHT_MODE_ENABLED` in `lib/useTheme.tsx` is
+`false`, nothing sets `html.light`, and `ThemeToggle` renders nothing. The old
+light palette is kept dormant in `globals.css`. Never write `slate-*`,
+`rose-*`, `emerald-*` or a raw hex for anything semantic — that was the bug
+class that made `Input` and `Button` unreadable, and under a role system it
+also silently opts that element out of the whole theme.
 
 ---
 
@@ -109,6 +135,20 @@ Reuse these before writing anything new:
 | `ui/StateView` | empty and error states with recovery actions |
 | `ui/AppBar`, `ui/BottomNav` | app shell |
 | `home/MobileMenu` | marketing nav sheet |
+| `md/Button` | M3 common buttons: `filled · tonal · elevated · outlined · text` |
+| `md/Dialog` | **every** modal — see below |
+| `md/useBackClose` | hardware Back closes a full-screen surface |
+
+**No popups on phones.** `md/Dialog` is a centred modal from `md` up and a
+**full-screen page** below it: `100dvh`, no radius or border, a top app bar
+with a **back arrow** instead of an ✕, full-width stacked actions above the
+home indicator, and `useBackClose` wiring the hardware Back button to it. A
+full-screen dialog is a navigation destination, so Back has to work — otherwise
+the first gesture an Android user reaches for leaves the app. Route all modal
+content through it; don't hand-roll a second overlay.
+
+`100dvh`, not `100vh`: the dynamic viewport unit tracks the collapsing mobile
+URL bar, so the action row can't be pushed off-screen.
 
 **Every data screen implements four states**: loading (skeleton matching the
 real layout, not a spinner), empty (explain *why* and give the next action),
@@ -164,6 +204,6 @@ npx next lint         # lint
 npx next build        # production build
 ```
 
-Then check the real thing at **360px and 390px, in both themes**, with
-keyboard navigation, and confirm no new console errors. Report what actually
-ran — never the intention.
+Then check the real thing at **360px and 390px** (dark — light mode is
+hidden), with keyboard navigation, and confirm no new console errors. Report
+what actually ran — never the intention.

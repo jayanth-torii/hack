@@ -63,7 +63,7 @@ export function ProgressRing({
           r={radius}
           fill="none"
           strokeWidth={strokeWidth}
-          className="stroke-line/15"
+          className="stroke-md-surface-container-highest"
         />
         <circle
           cx={size / 2}
@@ -74,17 +74,17 @@ export function ProgressRing({
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
-          className="stroke-accent"
+          className="stroke-md-primary"
           style={{
             transition: reduce ? undefined : "stroke-dashoffset 900ms var(--ease-emphasized)",
           }}
         />
       </svg>
       <div aria-hidden className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="font-display text-lg font-bold tabular-nums text-paper">
+        <span className="text-title-md tabular-nums text-md-on-surface">
           {label ?? `${clamped}%`}
         </span>
-        {sublabel && <span className="mt-0.5 text-[0.625rem] text-muted">{sublabel}</span>}
+        {sublabel && <span className="mt-0.5 text-label-sm text-md-on-surface-variant">{sublabel}</span>}
       </div>
     </div>
   );

@@ -14,9 +14,9 @@ interface EyebrowProps extends Omit<ComponentPropsWithoutRef<"p">, "children"> {
 }
 
 const TONE: Record<Tone, string> = {
-  accent: "text-accent-text",
-  cyan: "text-cyan-text",
-  muted: "text-muted",
+  accent: "text-md-primary",
+  cyan: "text-md-tertiary",
+  muted: "text-md-on-surface-variant",
 };
 
 /**
@@ -43,7 +43,10 @@ export function Eyebrow({
   return (
     <p
       className={clsx(
-        "flex items-center gap-3 text-[0.6875rem] font-semibold uppercase tracking-[0.26em] sm:text-xs sm:tracking-[0.3em]",
+        // Label Small, then widened: the wide tracking is the whole point of
+        // an eyebrow, so this is one of the few places the type scale's own
+        // letter-spacing is deliberately overridden.
+        "flex items-center gap-3 text-label-sm uppercase tracking-[0.26em] sm:text-label-md sm:tracking-[0.3em]",
         align === "center" && "justify-center",
         TONE[tone],
         className

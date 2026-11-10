@@ -14,7 +14,7 @@ import {
   useSetGoal,
 } from "@/hooks/useProfileQuery";
 import { useSavedRoadmaps } from "@/hooks/useRoadmapQuery";
-import { CalendarIcon, ChartIcon, TargetIcon } from "./ProfileIcons";
+import { AlertIcon, CalendarIcon, ChartIcon, TargetIcon } from "./ProfileIcons";
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString(undefined, {
@@ -32,6 +32,10 @@ function daysUntil(iso: string): number {
   today.setHours(0, 0, 0, 0);
   return Math.round((target.getTime() - today.getTime()) / 86_400_000);
 }
+
+/** Shared field shape for the two target-date controls. */
+const FIELD =
+  "mt-1.5 min-h-touch w-full rounded-xs border border-md-outline bg-md-surface-container-low px-3 text-md-on-surface";
 
 /** Learning activity chart plus the learner's own target dates. */
 export function ProfileProgress() {
@@ -76,7 +80,11 @@ export function ProfileProgress() {
           title="Learning activity"
           icon={<ChartIcon className="h-4 w-4" />}
           action={
-            <div className="flex gap-1 rounded-full border border-line/15 p-0.5" role="group" aria-label="Chart range">
+            <div
+              className="flex shrink-0 gap-1 rounded-full border border-md-outline p-0.5"
+              role="group"
+              aria-label="Chart range"
+            >
               {(["week", "month"] as const).map((option) => (
                 <button
                   key={option}
@@ -84,10 +92,12 @@ export function ProfileProgress() {
                   onClick={() => setRange(option)}
                   aria-pressed={range === option}
                   className={clsx(
-                    "rounded-full px-3 py-1.5 text-xs font-semibold capitalize transition-colors duration-fast",
+                    // 28px tall was below the 44px floor on touch. Raised on
+                    // phones only so the desktop panel header keeps its height.
+                    "press state-layer inline-flex min-h-touch-min items-center rounded-full px-3 py-1.5 text-label-md capitalize transition-colors duration-fast ease-standard sm:min-h-0",
                     range === option
-                      ? "bg-accent text-on-accent"
-                      : "text-muted hover:text-paper"
+                      ? "bg-md-secondary-container text-md-on-secondary-container"
+                      : "text-md-on-surface-variant"
                   )}
                 >
                   {option}
@@ -99,7 +109,8 @@ export function ProfileProgress() {
           {activity.isPending ? (
             <Skeleton className="h-36 rounded-md" />
           ) : activity.isError ? (
-            <p role="alert" className="text-sm text-danger">
+            <p role="alert" className="flex items-center gap-2 text-body-md text-md-error">
+              <AlertIcon className="h-4 w-4 shrink-0" />
               Couldn&apos;t load your activity. Reload to try again.
             </p>
           ) : (
@@ -110,14 +121,14 @@ export function ProfileProgress() {
         <Panel title="Target dates" icon={<CalendarIcon className="h-4 w-4" />}>
           <form onSubmit={onSubmitGoal} className="flex flex-col gap-3 sm:flex-row sm:items-end">
             <div className="min-w-0 flex-1">
-              <label htmlFor="goal-roadmap" className="text-xs font-medium text-subtle">
+              <label htmlFor="goal-roadmap" className="text-label-lg text-md-on-surface-variant">
                 Roadmap
               </label>
               <select
                 id="goal-roadmap"
                 value={goalRoadmap}
                 onChange={(e) => setGoalRoadmap(e.target.value)}
-                className="mt-1.5 min-h-touch w-full rounded-sm border border-line/15 bg-ink/50 px-3 text-sm text-paper"
+                className={FIELD}
               >
                 <option value="">Choose a roadmap…</option>
                 {roadmaps.map((r) => (
@@ -128,7 +139,7 @@ export function ProfileProgress() {
               </select>
             </div>
             <div>
-              <label htmlFor="goal-date" className="text-xs font-medium text-subtle">
+              <label htmlFor="goal-date" className="text-label-lg text-md-on-surface-variant">
                 Finish by
               </label>
               <input
@@ -137,28 +148,37 @@ export function ProfileProgress() {
                 value={goalDate}
                 min={minDate}
                 onChange={(e) => setGoalDate(e.target.value)}
-                className="mt-1.5 min-h-touch w-full rounded-sm border border-line/15 bg-ink/50 px-3 text-sm text-paper"
+                className={FIELD}
               />
             </div>
             <button
               type="submit"
               disabled={!goalRoadmap || !goalDate || setGoal.isPending}
-              className="press min-h-touch rounded-full bg-accent px-5 text-sm font-bold text-on-accent transition-colors duration-fast hover:bg-accent-hover disabled:bg-line/15 disabled:text-muted"
+              className="press state-layer min-h-touch rounded-full bg-md-primary px-6 text-label-lg text-md-on-primary disabled:pointer-events-none disabled:bg-md-on-surface/[0.12] disabled:text-md-on-surface/[0.38]"
             >
               {setGoal.isPending ? "Saving…" : "Set"}
             </button>
           </form>
 
           {roadmaps.length === 0 && (
-            <p className="mt-3 text-xs text-muted">
+            <p className="mt-3 text-body-sm text-md-on-surface-variant">
               Save a roadmap first — a target date needs something to aim at.
             </p>
           )}
 
           <ul className="mt-5 space-y-2">
             {goals.isPending && <Skeleton className="h-14 rounded-md" />}
-            {!goals.isPending && (goals.data ?? []).length === 0 && (
-              <li className="text-sm text-muted">No target dates set.</li>
+            {goals.isError && (
+              <li
+                role="alert"
+                className="flex items-center gap-2 rounded-md bg-md-error-container px-4 py-3 text-body-md text-md-on-error-container"
+              >
+                <AlertIcon className="h-4 w-4 shrink-0" />
+                Couldn&apos;t load your target dates. Reload to try again.
+              </li>
+            )}
+            {!goals.isPending && !goals.isError && (goals.data ?? []).length === 0 && (
+              <li className="text-body-md text-md-on-surface-variant">No target dates set.</li>
             )}
             {(goals.data ?? []).map((goal) => {
               const left = daysUntil(goal.targetDate);
@@ -166,13 +186,20 @@ export function ProfileProgress() {
               return (
                 <li
                   key={goal.id}
-                  className="flex items-center justify-between gap-3 rounded-md border border-line/12 bg-ink/40 px-4 py-3"
+                  className="flex items-center justify-between gap-3 rounded-md bg-md-surface-container-high px-4 py-3"
                 >
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-semibold text-paper">
+                    <p className="truncate text-title-sm text-md-on-surface">
                       {topicById.get(goal.roadmapId) ?? "Roadmap"}
                     </p>
-                    <p className={clsx("mt-0.5 text-xs", overdue ? "text-warning" : "text-muted")}>
+                    <p
+                      className={clsx(
+                        "mt-0.5 flex items-center gap-1.5 text-body-sm",
+                        overdue ? "text-md-warning" : "text-md-on-surface-variant"
+                      )}
+                    >
+                      {/* Overdue is never signalled by colour alone. */}
+                      {overdue && <AlertIcon className="h-3.5 w-3.5 shrink-0" />}
                       {formatDate(goal.targetDate)} ·{" "}
                       {overdue
                         ? `${Math.abs(left)} ${Math.abs(left) === 1 ? "day" : "days"} past target`
@@ -184,7 +211,7 @@ export function ProfileProgress() {
                   <button
                     type="button"
                     onClick={() => deleteGoal.mutate(goal.roadmapId)}
-                    className="press min-h-touch-min shrink-0 rounded-full px-3 text-xs font-semibold text-muted transition-colors duration-fast hover:text-danger"
+                    className="press state-layer min-h-touch-min shrink-0 rounded-full px-3 text-label-lg text-md-on-surface-variant"
                   >
                     Remove
                   </button>
@@ -197,39 +224,51 @@ export function ProfileProgress() {
 
       <div className="space-y-5 lg:col-span-5">
         <Panel title="Overall progress" icon={<TargetIcon className="h-4 w-4" />}>
-          <div className="flex items-center gap-5">
-            <ProgressRing
-              percent={overview.data?.overallProgress ?? 0}
-              size={108}
-              sublabel="of all stages"
-            />
-            <dl className="min-w-0 flex-1 space-y-2.5 text-sm">
-              <div className="flex justify-between gap-3">
-                <dt className="text-muted">Completed</dt>
-                <dd className="font-semibold tabular-nums text-paper">
-                  {overview.data?.completedStages ?? 0} / {overview.data?.totalStages ?? 0}
-                </dd>
-              </div>
-              <div className="flex justify-between gap-3">
-                <dt className="text-muted">Roadmaps finished</dt>
-                <dd className="font-semibold tabular-nums text-paper">
-                  {overview.data?.completedRoadmaps ?? 0}
-                </dd>
-              </div>
-              <div className="flex justify-between gap-3">
-                <dt className="text-muted">Current streak</dt>
-                <dd className="font-semibold tabular-nums text-paper">
-                  {overview.data?.currentStreak ?? 0}
-                </dd>
-              </div>
-              <div className="flex justify-between gap-3">
-                <dt className="text-muted">Longest streak</dt>
-                <dd className="font-semibold tabular-nums text-paper">
-                  {overview.data?.longestStreak ?? 0}
-                </dd>
-              </div>
-            </dl>
-          </div>
+          {overview.isError ? (
+            <p
+              role="alert"
+              className="flex items-center gap-2 text-body-md text-md-on-surface-variant"
+            >
+              <AlertIcon className="h-4 w-4 shrink-0 text-md-error" />
+              Couldn&apos;t load your totals. Reload to try again.
+            </p>
+          ) : overview.isPending ? (
+            <Skeleton className="h-28 rounded-md" />
+          ) : (
+            <div className="flex items-center gap-5">
+              <ProgressRing
+                percent={overview.data?.overallProgress ?? 0}
+                size={108}
+                sublabel="of all stages"
+              />
+              <dl className="min-w-0 flex-1 space-y-2.5 text-body-md">
+                <div className="flex justify-between gap-3">
+                  <dt className="text-md-on-surface-variant">Completed</dt>
+                  <dd className="tabular-nums text-md-on-surface">
+                    {overview.data?.completedStages ?? 0} / {overview.data?.totalStages ?? 0}
+                  </dd>
+                </div>
+                <div className="flex justify-between gap-3">
+                  <dt className="text-md-on-surface-variant">Roadmaps finished</dt>
+                  <dd className="tabular-nums text-md-on-surface">
+                    {overview.data?.completedRoadmaps ?? 0}
+                  </dd>
+                </div>
+                <div className="flex justify-between gap-3">
+                  <dt className="text-md-on-surface-variant">Current streak</dt>
+                  <dd className="tabular-nums text-md-on-surface">
+                    {overview.data?.currentStreak ?? 0}
+                  </dd>
+                </div>
+                <div className="flex justify-between gap-3">
+                  <dt className="text-md-on-surface-variant">Longest streak</dt>
+                  <dd className="tabular-nums text-md-on-surface">
+                    {overview.data?.longestStreak ?? 0}
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          )}
         </Panel>
       </div>
     </div>

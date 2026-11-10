@@ -23,7 +23,7 @@ export default function RoadmapPage() {
     <>
       <AppBar title="Your journey" back="/saved" actions={actions} />
 
-      <main id="main" className="min-h-screen-safe bg-ink">
+      <main id="main" className="min-h-screen-safe bg-md-surface">
         {roadmapQuery.isLoading ? (
           // Skeleton mirrors the journey layout so nothing shifts on arrival
           <RoadmapSkeleton />

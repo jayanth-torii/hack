@@ -28,10 +28,13 @@ const DIFFICULTY_LABEL: Record<Stage["difficulty"], string> = {
   advanced: "Advanced",
 };
 
+// Difficulty is a scale, not a status, so it borrows three *distinct* M3
+// container pairs rather than three tints of one hue — and every chip still
+// spells the level out, so the colour is never the only cue.
 const DIFFICULTY_STYLE: Record<Stage["difficulty"], string> = {
-  beginner: "border-emerald-400/30 bg-emerald-400/10 text-emerald-300",
-  intermediate: "border-brand-400/30 bg-brand-400/10 text-brand-300",
-  advanced: "border-violet-400/30 bg-violet-400/10 text-violet-300",
+  beginner: "border-transparent bg-md-success-container text-md-on-success-container",
+  intermediate: "border-transparent bg-md-info-container text-md-on-info-container",
+  advanced: "border-transparent bg-md-tertiary-container text-md-on-tertiary-container",
 };
 
 const TYPE_ICON: Record<Stage["type"], ReactNode> = {
@@ -55,8 +58,9 @@ const TYPE_ICON: Record<Stage["type"], ReactNode> = {
  * overlay (Node.tsx) and by MobileTimeline/ProgressDashboard — one component,
  * two mount points, so content is always identical.
  *
- * Restyled for the Vidhyora dark/light theme: glass card, glowing node
- * header, video resources embed inline as lazy iframe previews.
+ * Material 3: an elevated card at level 1, state expressed through tonal
+ * container/on-container pairs rather than tinted hues, and every chip and
+ * row sitting on a real surface step instead of a translucent glass panel.
  */
 export function NodeCard({ stage, state, roadmapId, topic, compact }: NodeCardProps) {
   const updateProgress = useUpdateProgress();
@@ -67,12 +71,15 @@ export function NodeCard({ stage, state, roadmapId, topic, compact }: NodeCardPr
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       className={clsx(
-        "relative overflow-hidden rounded-lg border bg-card/70 shadow-e3 backdrop-blur-xl",
+        // M3 elevated card: a tonal step up from the page plus level 1. This
+        // one earns its elevation — it floats over the 3D scene as an <Html>
+        // overlay — but level 1, not the level 3 drop shadow it used to carry.
+        "relative overflow-hidden rounded-md border bg-md-surface-container-low shadow-e1",
         locked
-          ? "border-line/8 opacity-80"
+          ? "border-md-outline-variant opacity-80"
           : state === "completed"
-            ? "border-emerald-400/25 shadow-emerald-400/5"
-            : "border-line/12 hover:border-accent/35 hover:shadow-accent/5",
+            ? "border-md-success/40"
+            : "border-md-outline-variant",
         compact ? "w-80" : "w-full"
       )}
     >
@@ -82,10 +89,10 @@ export function NodeCard({ stage, state, roadmapId, topic, compact }: NodeCardPr
         className={clsx(
           "pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent to-transparent",
           state === "completed"
-            ? "via-emerald-400/60"
+            ? "via-md-success/60"
             : state === "active"
-              ? "via-accent/70"
-              : "via-line/20"
+              ? "via-md-primary/70"
+              : "via-md-outline-variant"
         )}
       />
 
@@ -95,12 +102,12 @@ export function NodeCard({ stage, state, roadmapId, topic, compact }: NodeCardPr
           <div className="flex items-center gap-2">
             <span
               className={clsx(
-                "flex h-8 w-8 flex-none items-center justify-center rounded-xl",
+                "flex h-8 w-8 flex-none items-center justify-center rounded-sm text-label-lg",
                 state === "completed"
-                  ? "bg-emerald-400/15 text-emerald-300"
+                  ? "bg-md-success-container text-md-on-success-container"
                   : state === "active"
-                    ? "bg-accent/15 text-accent"
-                    : "bg-line/5 text-muted"
+                    ? "bg-md-primary-container text-md-on-primary-container"
+                    : "bg-md-surface-container-highest text-md-on-surface-variant"
               )}
             >
               {state === "completed" ? (
@@ -108,13 +115,13 @@ export function NodeCard({ stage, state, roadmapId, topic, compact }: NodeCardPr
                   <path d="m5 12.5 4.5 4.5L19 7.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               ) : (
-                <span className="text-[11px] font-bold">{stage.order + 1}</span>
+                <span className="tabular-nums">{stage.order + 1}</span>
               )}
             </span>
             <ProgressBadge state={state} />
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="hidden items-center gap-1 text-[10px] font-medium uppercase tracking-[0.15em] text-muted sm:flex">
+            <span className="hidden items-center gap-1 text-label-sm uppercase tracking-[0.15em] text-md-on-surface-variant sm:flex">
               {TYPE_ICON[stage.type]}
               {stage.type}
             </span>
@@ -126,13 +133,13 @@ export function NodeCard({ stage, state, roadmapId, topic, compact }: NodeCardPr
 
         <h3
           className={clsx(
-            "font-display text-lg font-semibold tracking-tight",
-            locked ? "text-subtle" : "text-paper"
+            "text-title-lg",
+            locked ? "text-md-on-surface-variant" : "text-md-on-surface"
           )}
         >
           {stage.title}
         </h3>
-        <p className="mt-0.5 flex items-center gap-1.5 text-xs text-muted">
+        <p className="mt-0.5 flex items-center gap-1.5 text-body-sm text-md-on-surface-variant">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
             <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" />
             <path d="M12 7v5l3.5 2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
@@ -141,27 +148,27 @@ export function NodeCard({ stage, state, roadmapId, topic, compact }: NodeCardPr
         </p>
 
         {locked ? (
-          <div className="mt-5 flex items-center gap-3 rounded-md border border-line/10 bg-ink/40 px-4 py-3.5">
-            <span className="flex h-8 w-8 flex-none items-center justify-center rounded-full border border-line/15 text-muted">
+          <div className="mt-5 flex items-center gap-3 rounded-sm border border-md-outline-variant bg-md-surface-container px-4 py-3.5">
+            <span className="flex h-8 w-8 flex-none items-center justify-center rounded-full border border-md-outline text-md-on-surface-variant">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <rect x="4.5" y="10" width="15" height="10" rx="2.5" stroke="currentColor" strokeWidth="1.6" />
                 <path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
               </svg>
             </span>
-            <p className="text-sm text-muted">
+            <p className="text-body-md text-md-on-surface-variant">
               Complete the previous stage to unlock this checkpoint.
             </p>
           </div>
         ) : (
-          <div className="mt-5 space-y-5 text-sm">
+          <div className="mt-5 space-y-5 text-body-md">
             <Section title="Syllabus">
               <ul className="space-y-1.5">
                 {stage.syllabus.map((item, i) => (
-                  <li key={item} className="flex items-start gap-2.5 text-subtle">
+                  <li key={item} className="flex items-start gap-2.5 text-md-on-surface-variant">
                     <span
                       className={clsx(
                         "mt-[7px] h-1 w-1 flex-none rounded-full",
-                        state === "completed" ? "bg-emerald-400/70" : "bg-accent/60"
+                        state === "completed" ? "bg-md-success" : "bg-md-primary"
                       )}
                     />
                     <span>{item}</span>
@@ -175,12 +182,12 @@ export function NodeCard({ stage, state, roadmapId, topic, compact }: NodeCardPr
                 <ul className="space-y-3">
                   {stage.resources.map((r) => (
                     <li key={r.url}>
-                      <div className="flex min-h-touch items-center justify-between gap-2 rounded-sm border border-line/10 bg-ink/30 px-3.5 py-2.5 transition-colors duration-fast hover:border-accent/30">
+                      <div className="flex min-h-touch items-center justify-between gap-2 rounded-sm border border-md-outline-variant bg-md-surface-container px-3.5 py-2.5 transition-colors duration-fast hover:border-md-primary">
                         <a
                           href={r.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="min-w-0 flex-1 truncate font-medium text-accent-text transition-colors hover:text-accent"
+                          className="min-w-0 flex-1 truncate text-label-lg text-md-primary underline-offset-4 hover:underline"
                         >
                           {r.title}
                         </a>
@@ -201,17 +208,17 @@ export function NodeCard({ stage, state, roadmapId, topic, compact }: NodeCardPr
                     .map((c) => (
                       <li
                         key={c.url}
-                        className="flex min-h-touch items-center justify-between gap-2 rounded-sm border border-line/10 bg-ink/30 px-3.5 py-2.5 transition-colors duration-fast hover:border-accent/30"
+                        className="flex min-h-touch items-center justify-between gap-2 rounded-sm border border-md-outline-variant bg-md-surface-container px-3.5 py-2.5 transition-colors duration-fast hover:border-md-primary"
                       >
                         <a
                           href={c.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="min-w-0 truncate font-medium text-accent-text hover:text-accent"
+                          className="min-w-0 truncate text-label-lg text-md-primary underline-offset-4 hover:underline"
                         >
                           #{c.rank} {c.title}
                         </a>
-                        <span className="whitespace-nowrap rounded-full border border-line/15 px-2.5 py-0.5 text-[11px] font-medium text-subtle">
+                        <span className="whitespace-nowrap rounded-sm border border-md-outline-variant px-2.5 py-1 text-label-md text-md-on-surface-variant">
                           {c.price ? `$${c.price}` : "Free"}
                         </span>
                       </li>
@@ -226,13 +233,13 @@ export function NodeCard({ stage, state, roadmapId, topic, compact }: NodeCardPr
                   {stage.practiceLinks.map((p) => (
                     <li
                       key={p.url}
-                      className="flex min-h-touch items-center justify-between gap-2 rounded-sm border border-line/10 bg-ink/30 px-3.5 py-2.5 transition-colors duration-fast hover:border-accent/30"
+                      className="flex min-h-touch items-center justify-between gap-2 rounded-sm border border-md-outline-variant bg-md-surface-container px-3.5 py-2.5 transition-colors duration-fast hover:border-md-primary"
                     >
                       <a
                         href={p.url}
                         target="_blank"
                         rel="noreferrer"
-                        className="min-w-0 flex-1 truncate font-medium text-accent-text hover:text-accent"
+                        className="min-w-0 flex-1 truncate text-label-lg text-md-primary underline-offset-4 hover:underline"
                       >
                         {p.title}
                       </a>
@@ -274,7 +281,7 @@ export function NodeCard({ stage, state, roadmapId, topic, compact }: NodeCardPr
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div>
-      <h4 className="mb-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">
+      <h4 className="mb-2 text-label-md uppercase tracking-[0.2em] text-md-on-surface-variant">
         {title}
       </h4>
       {children}

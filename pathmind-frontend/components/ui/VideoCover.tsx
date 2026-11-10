@@ -5,18 +5,30 @@ import { clsx } from "@/lib/clsx";
 
 /**
  * Generated cover art for video preview panels. Deterministic per title/url
- * (no network, no external thumbnail service): an ink canvas with signature
- * orange/cyan glows, floating geometry and the resource title set in Poppins —
- * so every stage's preview looks like a designed video cover.
+ * (no network, no external thumbnail service): a dark canvas with two soft
+ * glows, floating geometry and the resource title — so every stage's preview
+ * looks like a designed video cover.
+ *
+ * The five palettes used to be raw Tailwind hues (#f97316, #38bdf8, #8b5cf6…),
+ * which is exactly the class of hardcoded colour the design system exists to
+ * remove: they ignored the theme and had no relationship to anything else on
+ * screen. Each palette is now a pair of **M3 accent roles**, read as raw RGB
+ * triplets straight from the custom properties, so the covers are recognisably
+ * part of the same product and follow the palette if it ever changes.
  */
 
 const PALETTES = [
-  { glow: "#f97316", glow2: "#38bdf8", accentText: "#fb923c" },
-  { glow: "#38bdf8", glow2: "#8b5cf6", accentText: "#7dd3fc" },
-  { glow: "#8b5cf6", glow2: "#f97316", accentText: "#c4b5fd" },
-  { glow: "#34d399", glow2: "#38bdf8", accentText: "#6ee7b7" },
-  { glow: "#f472b6", glow2: "#f97316", accentText: "#f9a8d4" },
+  { glow: "--md-primary", glow2: "--md-tertiary" },
+  { glow: "--md-tertiary", glow2: "--md-primary" },
+  { glow: "--md-info", glow2: "--md-primary" },
+  { glow: "--md-success", glow2: "--md-tertiary" },
+  { glow: "--md-secondary", glow2: "--md-info" },
 ];
+
+/** `rgb(…)` from a token name, so SVG paint attributes can take a role. */
+function role(token: string): string {
+  return `rgb(var(${token}))`;
+}
 
 function hashCode(str: string): number {
   let h = 0;
@@ -64,8 +76,8 @@ export function VideoCover({ title, seed = title, className }: VideoCoverProps) 
     };
   }, [seed, title]);
 
-  const glow = palette.glow;
-  const glow2 = palette.glow2;
+  const glow = role(palette.glow);
+  const glow2 = role(palette.glow2);
 
   return (
     <svg
@@ -76,9 +88,9 @@ export function VideoCover({ title, seed = title, className }: VideoCoverProps) 
     >
       <defs>
         <linearGradient id="vc-bg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#0b0e12" />
-          <stop offset="55%" stopColor="#06080a" />
-          <stop offset="100%" stopColor="#0b0e12" />
+          <stop offset="0%" stopColor="rgb(var(--md-surface-container-low))" />
+          <stop offset="55%" stopColor="rgb(var(--md-surface-container-lowest))" />
+          <stop offset="100%" stopColor="rgb(var(--md-surface-container-low))" />
         </linearGradient>
         <radialGradient id="vc-glow1" cx="0.2" cy="0.1" r="0.8">
           <stop offset="0%" stopColor={glow} stopOpacity="0.22" />
@@ -155,11 +167,11 @@ export function VideoCover({ title, seed = title, className }: VideoCoverProps) 
           key={i}
           x="64"
           y={620 + i * 58}
-          fill="#f5f7f5"
-          fontFamily="Poppins, system-ui, sans-serif"
+          fill="rgb(var(--md-on-surface))"
+          style={{ fontFamily: "var(--font-sans)" }}
           fontSize={i === 0 ? 54 : 42}
-          fontWeight="600"
-          letterSpacing="-0.5"
+          fontWeight="500"
+          letterSpacing="0"
         >
           {line}
         </text>

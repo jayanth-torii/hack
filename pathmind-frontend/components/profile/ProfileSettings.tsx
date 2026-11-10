@@ -11,9 +11,20 @@ import {
   useUpdateNotifications,
   useUpdateProfile,
 } from "@/hooks/useProfileQuery";
-import { BookIcon, GearIcon, LockIcon, PlusIcon } from "./ProfileIcons";
+import { AlertIcon, BookIcon, CheckIcon, CloseIcon, GearIcon, LockIcon, PlusIcon } from "./ProfileIcons";
 
-/** Accessible switch built on a real checkbox so it works without JS styling tricks. */
+/**
+ * Material 3 switch, built on a real `role="switch"` button.
+ *
+ * M3 geometry: a 52×32 track, a 24dp handle inset 4dp when on, a 16dp handle
+ * inset 8dp when off, and the handle growing to 28dp while pressed. The handle
+ * is one 24dp box that is *scaled* between those sizes rather than resized, so
+ * every state change animates transform only (CLAUDE.md §7).
+ *
+ * The 52×32 track already clears 44px horizontally but not vertically, so the
+ * `before:` pseudo-element extends the hit area to 48px without touching the
+ * track's own box — the row's `py-3` keeps adjacent switches from overlapping.
+ */
 function Toggle({
   id,
   checked,
@@ -30,10 +41,10 @@ function Toggle({
   return (
     <div className="flex items-start justify-between gap-4 py-3">
       <div className="min-w-0">
-        <label htmlFor={id} className="text-sm font-medium text-paper">
+        <label htmlFor={id} className="text-title-sm text-md-on-surface">
           {label}
         </label>
-        <p className="mt-0.5 text-xs text-muted">{description}</p>
+        <p className="mt-0.5 text-body-sm text-md-on-surface-variant">{description}</p>
       </div>
       <button
         type="button"
@@ -42,22 +53,30 @@ function Toggle({
         aria-checked={checked}
         onClick={() => onChange(!checked)}
         className={clsx(
-          "press relative h-6 w-11 shrink-0 rounded-full transition-colors duration-fast",
-          checked ? "bg-accent" : "bg-line/25"
+          "group relative h-8 w-[3.25rem] shrink-0 rounded-full ring-2 ring-inset transition-colors duration-fast ease-standard",
+          "before:absolute before:-bottom-2 before:-top-2 before:left-0 before:right-0 before:content-['']",
+          checked
+            ? "bg-md-primary ring-md-primary"
+            : "bg-md-surface-container-highest ring-md-outline"
         )}
       >
-        {/* `left-0` is load-bearing: without a horizontal offset an absolutely
+        {/* One 24dp box, translated and scaled: off sits 8px from the left at
+            16dp, on sits 4px from the right at 24dp, pressed grows to 28dp.
+            `left-0` is load-bearing — without a horizontal offset an absolutely
             positioned child falls back to its static position, and a button
-            centres its content — so the knob started mid-track and the "on"
-            state pushed it off the right edge. Anchored at 0, the translate
-            values are the real insets: 2px off, 22px on, inside a 44px track. */}
+            centres its content. */}
         <span
           aria-hidden
           className={clsx(
-            "absolute left-0 top-0.5 h-5 w-5 rounded-full bg-paper shadow-e1 transition-transform duration-base ease-standard",
-            checked ? "translate-x-[1.375rem]" : "translate-x-0.5"
+            "absolute left-0 top-1 flex h-6 w-6 items-center justify-center rounded-full",
+            "transition-transform duration-base ease-standard group-active:scale-[1.1667]",
+            checked
+              ? "translate-x-6 scale-100 bg-md-on-primary text-md-primary"
+              : "translate-x-1 scale-[0.6667] bg-md-outline text-transparent"
           )}
-        />
+        >
+          {checked && <CheckIcon className="h-4 w-4" />}
+        </span>
       </button>
     </div>
   );
@@ -108,8 +127,32 @@ export function ProfileSettings() {
     return (
       <div className="space-y-5">
         {Array.from({ length: 3 }).map((_, i) => (
-          <Skeleton key={i} className="h-56 rounded-xl" />
+          <Skeleton key={i} className="h-56 rounded-lg" />
         ))}
+      </div>
+    );
+  }
+
+  if (profile.isError) {
+    return (
+      <div
+        role="alert"
+        className="rounded-lg bg-md-error-container p-6 text-md-on-error-container"
+      >
+        <p className="flex items-center gap-2 text-title-md">
+          <AlertIcon className="h-5 w-5 shrink-0" />
+          Couldn&apos;t load your settings
+        </p>
+        <p className="mt-1 text-body-md">
+          Your account is fine — the request just didn&apos;t come back.
+        </p>
+        <button
+          type="button"
+          onClick={() => void profile.refetch()}
+          className="press state-layer mt-3 inline-flex min-h-touch items-center rounded-full border border-current px-5 text-label-lg"
+        >
+          Try again
+        </button>
       </div>
     );
   }
@@ -163,6 +206,9 @@ export function ProfileSettings() {
 
   const prefs = profile.data?.notificationPrefs;
 
+  const submitButton =
+    "press state-layer min-h-touch rounded-full bg-md-primary px-6 text-label-lg text-md-on-primary disabled:pointer-events-none disabled:bg-md-on-surface/[0.12] disabled:text-md-on-surface/[0.38]";
+
   return (
     <div className="space-y-5">
       <Panel title="Personal information" icon={<GearIcon className="h-4 w-4" />}>
@@ -184,8 +230,8 @@ export function ProfileSettings() {
             />
           </div>
 
-          <fieldset className="rounded-md border border-line/12 p-4">
-            <legend className="px-2 text-xs font-bold uppercase tracking-[0.2em] text-subtle">
+          <fieldset className="rounded-md border border-md-outline-variant p-4">
+            <legend className="px-2 text-label-md uppercase tracking-[0.18em] text-md-on-surface-variant">
               Education
             </legend>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -223,7 +269,7 @@ export function ProfileSettings() {
             type="submit"
             disabled={updateProfile.isPending}
             aria-busy={updateProfile.isPending}
-            className="press min-h-touch rounded-full bg-accent px-6 text-sm font-bold text-on-accent transition-colors duration-fast hover:bg-accent-hover disabled:bg-line/15 disabled:text-muted"
+            className={submitButton}
           >
             {updateProfile.isPending ? "Saving…" : "Save changes"}
           </button>
@@ -255,27 +301,28 @@ export function ProfileSettings() {
             ]
           ).map((group) => (
             <div key={group.key}>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-subtle">
+              <p className="text-label-md uppercase tracking-[0.18em] text-md-on-surface-variant">
                 {group.heading}
               </p>
               <ul className="mt-2.5 flex flex-wrap gap-2">
                 {group.list.map((tag) => (
                   <li key={tag}>
+                    {/* M3 input chip: 32dp, 8dp corners, trailing remove icon.
+                        The visible chip stays 32dp and `before:` lifts the hit
+                        area to the 44px floor. */}
                     <button
                       type="button"
                       onClick={() => group.setList(group.list.filter((t) => t !== tag))}
                       aria-label={`Remove ${tag}`}
-                      className="press inline-flex min-h-touch-min items-center gap-1.5 rounded-full border border-accent/30 bg-accent/[0.08] px-3 text-xs font-medium text-accent-text transition-colors duration-fast hover:border-danger/50 hover:text-danger"
+                      className="press state-layer relative inline-flex h-8 items-center gap-1.5 rounded-sm border border-md-outline pl-3 pr-2 text-label-lg text-md-on-surface-variant before:absolute before:-bottom-1.5 before:-top-1.5 before:left-0 before:right-0 before:content-['']"
                     >
                       {tag}
-                      <span aria-hidden className="text-sm leading-none">
-                        ×
-                      </span>
+                      <CloseIcon className="h-4 w-4 shrink-0" />
                     </button>
                   </li>
                 ))}
                 {group.list.length === 0 && (
-                  <li className="text-sm text-muted">None added.</li>
+                  <li className="text-body-md text-md-on-surface-variant">None added.</li>
                 )}
               </ul>
               <div className="mt-3 flex gap-2">
@@ -292,12 +339,12 @@ export function ProfileSettings() {
                   placeholder={group.placeholder}
                   maxLength={40}
                   aria-label={`Add a ${group.key === "skills" ? "skill" : "interest"}`}
-                  className="min-h-touch flex-1 rounded-sm border border-line/15 bg-ink/50 px-3 text-sm text-paper placeholder:text-muted"
+                  className="min-h-touch flex-1 rounded-xs border border-md-outline bg-md-surface-container-low px-3 text-md-on-surface placeholder:text-md-on-surface-variant"
                 />
                 <button
                   type="button"
                   onClick={() => addTag(group.draft, group.list, group.setList, group.setDraft)}
-                  className="press inline-flex min-h-touch items-center gap-1.5 rounded-full border border-accent/45 px-4 text-sm font-semibold text-accent-text transition-colors duration-fast hover:bg-accent/12"
+                  className="press state-layer inline-flex min-h-touch items-center gap-1.5 rounded-full border border-md-outline px-4 text-label-lg text-md-primary"
                 >
                   <PlusIcon className="h-4 w-4" />
                   Add
@@ -306,14 +353,15 @@ export function ProfileSettings() {
             </div>
           ))}
 
-          <p className="text-xs text-muted">
-            Tags are saved with the <span className="text-subtle">Save changes</span> button above.
+          <p className="text-body-sm text-md-on-surface-variant">
+            Tags are saved with the <span className="text-md-on-surface">Save changes</span> button
+            above.
           </p>
         </div>
       </Panel>
 
       <Panel title="Notifications" icon={<GearIcon className="h-4 w-4" />} bodyClassName="py-1">
-        <div className="divide-y divide-line/10">
+        <div className="divide-y divide-md-outline-variant">
           <Toggle
             id="pref-reminders"
             checked={prefs?.roadmapReminders ?? false}
@@ -336,7 +384,7 @@ export function ProfileSettings() {
             description="Occasional notes about new Vidhyora features."
           />
         </div>
-        <p className="border-t border-line/10 pt-3 text-xs text-muted">
+        <p className="border-t border-md-outline-variant pt-3 text-body-sm text-md-on-surface-variant">
           Preferences save as you toggle them. Delivery isn&apos;t wired up yet — these record
           your choice so nothing is sent without it.
         </p>
@@ -366,11 +414,9 @@ export function ProfileSettings() {
             </div>
             <button
               type="submit"
-              disabled={
-                changePassword.isPending || !currentPassword || newPassword.length < 8
-              }
+              disabled={changePassword.isPending || !currentPassword || newPassword.length < 8}
               aria-busy={changePassword.isPending}
-              className="press min-h-touch rounded-full bg-accent px-6 text-sm font-bold text-on-accent transition-colors duration-fast hover:bg-accent-hover disabled:bg-line/15 disabled:text-muted"
+              className={submitButton}
             >
               {changePassword.isPending ? "Changing…" : "Change password"}
             </button>
@@ -378,7 +424,7 @@ export function ProfileSettings() {
         </Panel>
       ) : (
         <Panel title="Password" icon={<LockIcon className="h-4 w-4" />}>
-          <p className="text-sm text-muted">
+          <p className="text-body-md text-md-on-surface-variant">
             This account signs in with Google, so there is no password to change. Manage it from
             your Google account instead.
           </p>

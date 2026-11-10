@@ -3,60 +3,156 @@
 @tailwind utilities;
 
 :root {
-  --font-sans: "Poppins", system-ui, sans-serif;
-  --font-display: "Poppins", system-ui, sans-serif;
+  /* ═══════════════════════════════════════════════════════════════════════
+     VIDHYORA — MATERIAL 3 DESIGN SYSTEM (dark scheme)
+     -----------------------------------------------------------------------
+     A real M3 tonal system seeded from the brand orange #F97316, so the
+     identity survives the move to Material. Two layers live here:
 
-  /* Dark theme (default) — Acjon-inspired ink + lime */
-  --color-ink: 1 1 3; /* near-black page background */
-  --color-paper: 245 247 245; /* primary text on dark */
-  --color-card: 14 17 22; /* raised surface (glass over ink) */
-  --color-muted: 148 163 184; /* secondary text (slate-400) */
-  --color-subtle: 203 213 225; /* strong secondary text (slate-300) */
-  --color-line: 255 255 255; /* borders — combined with /alpha utilities */
-  --color-accent: 249 115 22; /* signature orange */
-  --color-accent-hover: 234 88 12;
-  /* text/border color used ON accent surfaces — stays dark in both themes */
-  --color-on-accent: 1 1 3;
-  /* accent used as small *text* on surfaces — deeper in light mode for contrast */
-  --color-accent-text: 251 146 60;
-  --color-cyan-text: 34 211 238;
+       1. `--md-*`  the full Material 3 role set. New work uses these.
+       2. the original `--color-*` names, now ALIASES onto M3 roles. Every
+          component already reads them, so the whole product reskins without
+          a single call-site change, and migration can happen screen by
+          screen instead of in one unreviewable commit.
 
-  /* ── Status roles ─────────────────────────────────────────────────────
-     Semantic, theme-flippable. Always paired with an icon or text in the
-     UI — status is never communicated by colour alone. */
-  --color-success: 52 211 153;
-  --color-warning: 251 191 36;
-  --color-danger: 248 113 113;
-  --color-info: 56 189 248;
+     M3 dark assigns primary from tone 80 (light) rather than the source
+     tone — that is the spec, and it is why the orange reads peach on dark
+     surfaces. The vivid source colour is kept as `--md-source` for the
+     marketing gradients, where it sits on its own dark backdrop.
+     ═══════════════════════════════════════════════════════════════════════ */
 
-  /* ── Shape scale ──────────────────────────────────────────────────────
-     Small controls 8 · inputs/buttons 12 · cards 16 · sheets 24. */
-  --radius-xs: 0.5rem;
-  --radius-sm: 0.75rem;
-  --radius-md: 1rem;
-  --radius-lg: 1.25rem;
-  --radius-xl: 1.5rem;
+  --font-sans: "Roboto", system-ui, sans-serif;
+  --font-display: "Roboto", system-ui, sans-serif;
 
-  /* ── Elevation ────────────────────────────────────────────────────────
-     Hierarchy, not decoration: e1 for resting cards, e2 for raised/hover,
-     e3 for floating surfaces (sheets, dialogs, the bottom nav). */
-  --elev-1: 0 1px 2px rgb(0 0 0 / 0.18), 0 1px 3px rgb(0 0 0 / 0.12);
-  --elev-2: 0 4px 10px rgb(0 0 0 / 0.22), 0 2px 4px rgb(0 0 0 / 0.14);
-  --elev-3: 0 12px 32px rgb(0 0 0 / 0.34), 0 4px 10px rgb(0 0 0 / 0.2);
+  /* ── Tonal palettes (tone 0–100, seeded from #F97316) ──────────────── */
+  --md-source: 249 115 22;
 
-  /* ── Motion ───────────────────────────────────────────────────────────
-     Micro-interactions 120–250ms; larger transitions longer when earned. */
-  --dur-fast: 140ms;
-  --dur-base: 220ms;
-  --dur-slow: 380ms;
+  /* Primary — orange */
+  --md-primary: 255 176 140;
+  --md-on-primary: 85 33 0;
+  --md-primary-container: 121 49 0;
+  --md-on-primary-container: 255 219 200;
+  --md-inverse-primary: 158 67 0;
+
+  /* Secondary — muted orange neutral */
+  --md-secondary: 231 191 168;
+  --md-on-secondary: 68 43 28;
+  --md-secondary-container: 93 65 48;
+  --md-on-secondary-container: 255 219 200;
+
+  /* Tertiary — analogous olive, for the "cyan-text" accent slot */
+  --md-tertiary: 207 201 141;
+  --md-on-tertiary: 52 50 6;
+  --md-tertiary-container: 75 72 27;
+  --md-on-tertiary-container: 236 229 166;
+
+  /* Error */
+  --md-error: 255 180 171;
+  --md-on-error: 105 0 5;
+  --md-error-container: 147 0 10;
+  --md-on-error-container: 255 218 214;
+
+  /* Extended roles — not in the M3 spec, but the product needs them.
+     They follow the same base/on/container/on-container shape so they
+     behave identically at call sites. */
+  --md-success: 134 217 142;
+  --md-on-success: 0 57 14;
+  --md-success-container: 0 83 25;
+  --md-on-success-container: 162 246 169;
+
+  --md-warning: 255 185 92;
+  --md-on-warning: 70 40 0;
+  --md-warning-container: 100 59 0;
+  --md-on-warning-container: 255 221 182;
+
+  --md-info: 169 199 255;
+  --md-on-info: 0 48 103;
+  --md-info-container: 0 70 147;
+  --md-on-info-container: 212 226 255;
+
+  /* ── Surfaces — M3's five container steps, warm neutrals ───────────── */
+  --md-surface: 20 16 14;
+  --md-surface-dim: 20 16 14;
+  --md-surface-bright: 61 52 47;
+  --md-surface-container-lowest: 15 11 8;
+  --md-surface-container-low: 31 23 17;
+  --md-surface-container: 35 27 22;
+  --md-surface-container-high: 46 37 32;
+  --md-surface-container-highest: 57 48 43;
+  --md-on-surface: 240 223 215;
+  --md-surface-variant: 83 67 59;
+  --md-on-surface-variant: 216 194 183;
+  --md-inverse-surface: 240 223 215;
+  --md-inverse-on-surface: 57 48 43;
+
+  --md-outline: 160 141 131;
+  --md-outline-variant: 83 67 59;
+  --md-scrim: 0 0 0;
+
+  /* ── Legacy aliases — the existing component vocabulary, now M3 ────── */
+  --color-ink: var(--md-surface); /* page background */
+  --color-paper: var(--md-on-surface); /* primary text */
+  --color-card: var(--md-surface-container); /* raised surface */
+  --color-muted: var(--md-outline); /* tertiary text */
+  --color-subtle: var(--md-on-surface-variant); /* secondary text */
+  --color-line: var(--md-on-surface-variant); /* borders, used with /alpha */
+  --color-accent: var(--md-primary);
+  --color-accent-hover: var(--md-on-primary-container);
+  --color-on-accent: var(--md-on-primary);
+  --color-accent-text: var(--md-primary);
+  --color-cyan-text: var(--md-tertiary);
+
+  /* Status roles — always paired with an icon or text in the UI, so status
+     is never communicated by colour alone. */
+  --color-success: var(--md-success);
+  --color-warning: var(--md-warning);
+  --color-danger: var(--md-error);
+  --color-info: var(--md-info);
+
+  /* ── M3 shape scale ───────────────────────────────────────────────────
+     none 0 · xs 4 · sm 8 · md 12 · lg 16 · xl 28 · full. The old names map
+     onto the Material steps so existing `rounded-md` call sites land on a
+     real M3 value. */
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.75rem;
+
+  /* ── M3 elevation (levels 0–5) ────────────────────────────────────────
+     Material's two-shadow formula: a tight key shadow plus a diffuse ambient
+     one. e1–e3 keep their old names so nothing breaks; e4/e5 are new. */
+  --elev-1: 0 1px 2px rgb(0 0 0 / 0.3), 0 1px 3px 1px rgb(0 0 0 / 0.15);
+  --elev-2: 0 1px 2px rgb(0 0 0 / 0.3), 0 2px 6px 2px rgb(0 0 0 / 0.15);
+  --elev-3: 0 1px 3px rgb(0 0 0 / 0.3), 0 4px 8px 3px rgb(0 0 0 / 0.15);
+  --elev-4: 0 2px 3px rgb(0 0 0 / 0.3), 0 6px 10px 4px rgb(0 0 0 / 0.15);
+  --elev-5: 0 4px 4px rgb(0 0 0 / 0.3), 0 8px 12px 6px rgb(0 0 0 / 0.15);
+
+  /* ── M3 state-layer opacities ─────────────────────────────────────────
+     Material expresses hover/focus/press as a translucent layer of the
+     content colour over the component, not as a different colour. */
+  --md-state-hover: 0.08;
+  --md-state-focus: 0.1;
+  --md-state-press: 0.1;
+  --md-state-drag: 0.16;
+
+  /* ── M3 motion ────────────────────────────────────────────────────────
+     Material's durations and easing. Emphasized is the expressive curve for
+     entrances and large transitions; standard is for everyday state change. */
+  --dur-fast: 200ms; /* short4 */
+  --dur-base: 300ms; /* medium2 */
+  --dur-slow: 500ms; /* long2 */
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
-  --ease-emphasized: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --ease-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --ease-accelerate: cubic-bezier(0.3, 0, 0.8, 0.15);
 
-  /* ── Mobile chrome metrics ────────────────────────────────────────────
-     Shared by the app bar, the bottom nav and every screen's scroll
-     padding so nothing is ever hidden behind fixed chrome. */
-  --app-bar-h: 3.5rem;
-  --bottom-nav-h: 4rem;
+  /* ── Chrome metrics ───────────────────────────────────────────────────
+     Shared by the app bar, the navigation bar and every screen's scroll
+     padding so nothing is ever hidden behind fixed chrome. M3 sizes: a
+     small top app bar is 64dp, a navigation bar 80dp. */
+  --app-bar-h: 4rem;
+  --bottom-nav-h: 5rem;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-left: env(safe-area-inset-left, 0px);
@@ -66,7 +162,13 @@
 }
 
 /* Light theme — a completely different palette: warm off-white canvas,
-   near-black text, deeper orange accent for contrast, white cards. */
+   near-black text, deeper orange accent for contrast, white cards.
+
+   DORMANT: light mode is hidden (LIGHT_MODE_ENABLED in lib/useTheme.tsx is
+   false), so nothing sets `html.light` any more. These rules are kept, not
+   deleted — every component still reads its colours from the tokens below, so
+   flipping that one flag brings the whole palette back. Keep new tokens in
+   sync here when you add them to :root. */
 html.light {
   --color-ink: 246 248 246;
   --color-paper: 13 17 20;
@@ -238,38 +340,48 @@ html.lenis {
    Mobile layout utilities
    ───────────────────────────────────────────────────────────────────────── */
 
-/* Full-height sections. 100vh is wrong on phones — it ignores the browser
-   chrome and makes the hero jump as the URL bar collapses. 100svh is the
-   smallest (stable) viewport height, so the layout never shifts. */
-.min-h-screen-safe {
-  min-height: 100vh; /* fallback for browsers without svh */
-  min-height: 100svh;
-}
-
-/* Safe-area padding helpers. Apply ONE of these per element — a safe-area
-   padded bar inside a safe-area padded container double-pads. */
-.pt-safe {
-  padding-top: var(--safe-top);
-}
-.pb-safe {
-  padding-bottom: var(--safe-bottom);
-}
-
-/* Scroll room so fixed chrome never covers the end of a screen's content.
-   `pb-nav` is for scroll containers that sit under the bottom navigation. */
-.pb-nav {
-  padding-bottom: calc(var(--bottom-nav-h) + var(--safe-bottom) + 1.5rem);
-}
-@media (min-width: 768px) {
-  /* The bottom nav is mobile-only, so desktop reclaims the space. */
-  .pb-nav {
-    padding-bottom: 1.5rem;
+/* These five are wrapped in `@layer utilities` so Tailwind emits them in the
+   utilities layer and sorts them with everything else. Declared bare after
+   `@tailwind utilities` — as they were — they land LATER in the stylesheet
+   than every Tailwind utility including responsive variants, and since the
+   specificity is identical (one class), source order decides: `pb-nav md:pb-0`
+   would silently keep the nav padding at every width. Nothing in the app
+   relied on that, so wrapping them changes no current pixel; it just makes the
+   responsive override work the next time someone reaches for it. */
+@layer utilities {
+  /* Full-height sections. 100vh is wrong on phones — it ignores the browser
+     chrome and makes the hero jump as the URL bar collapses. 100svh is the
+     smallest (stable) viewport height, so the layout never shifts. */
+  .min-h-screen-safe {
+    min-height: 100vh; /* fallback for browsers without svh */
+    min-height: 100svh;
   }
-}
 
-/* Top offset for screens sitting under the fixed app bar. */
-.pt-app-bar {
-  padding-top: calc(var(--app-bar-h) + var(--safe-top));
+  /* Safe-area padding helpers. Apply ONE of these per element — a safe-area
+     padded bar inside a safe-area padded container double-pads. */
+  .pt-safe {
+    padding-top: var(--safe-top);
+  }
+  .pb-safe {
+    padding-bottom: var(--safe-bottom);
+  }
+
+  /* Scroll room so fixed chrome never covers the end of a screen's content.
+     `pb-nav` is for scroll containers that sit under the bottom navigation. */
+  .pb-nav {
+    padding-bottom: calc(var(--bottom-nav-h) + var(--safe-bottom) + 1.5rem);
+  }
+  @media (min-width: 768px) {
+    /* The bottom nav is mobile-only, so desktop reclaims the space. */
+    .pb-nav {
+      padding-bottom: 1.5rem;
+    }
+  }
+
+  /* Top offset for screens sitting under the fixed app bar. */
+  .pt-app-bar {
+    padding-top: calc(var(--app-bar-h) + var(--safe-top));
+  }
 }
 
 /* Hover affordances must not apply on touch — `:hover` sticks after a tap
@@ -283,6 +395,95 @@ html.lenis {
   .hover-lift:hover {
     transform: translateY(-2px);
     box-shadow: var(--elev-2);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   MATERIAL 3 — state layers and motion
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* M3 expresses hover/focus/press as a translucent layer of the CONTENT colour
+   over the component, not as a different background colour. One class works on
+   every variant — filled, tonal, outlined or text — because it tints with
+   `currentColor` rather than a hardcoded value. */
+.state-layer {
+  /* `isolate` alone creates the stacking context the ::after needs, without
+     setting `position`. An unconditional `position: relative` here outranked
+     Tailwind's own `.fixed`/`.absolute` utilities — same specificity, declared
+     later in the sheet — which silently un-fixed every positioned element that
+     also wanted a state layer (the library FAB computed to `relative` and
+     scrolled away with the page). `position: static` elements still paint the
+     layer correctly: the ::after is absolutely positioned against the nearest
+     positioned ancestor, and `inset: 0` + `border-radius: inherit` only needs
+     the element's own box when it IS positioned — so callers that need the
+     layer clipped to a static element add `relative` themselves. */
+  isolation: isolate;
+}
+/* Give the layer a containing block only when the element isn't already
+   positioned by a utility, so `.fixed`/`.absolute`/`.sticky` still win. */
+.state-layer:not(.fixed):not(.absolute):not(.sticky):not(.relative) {
+  position: relative;
+}
+.state-layer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: currentColor;
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-standard);
+  pointer-events: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .state-layer:hover::after {
+    opacity: var(--md-state-hover);
+  }
+}
+.state-layer:focus-visible::after {
+  opacity: var(--md-state-focus);
+}
+.state-layer:active::after {
+  opacity: var(--md-state-press);
+}
+.state-layer:disabled::after {
+  opacity: 0;
+}
+
+/* Dialog + full-screen page motion. The phone surface slides up like a pushed
+   page; the desktop dialog scales in from 90% as M3 specifies. */
+@keyframes md-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes md-page-in {
+  from {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+}
+@keyframes md-dialog-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+.animate-md-fade {
+  animation: md-fade var(--dur-fast) var(--ease-standard) both;
+}
+.animate-md-page {
+  animation: md-page-in var(--dur-base) var(--ease-decelerate) both;
+}
+.animate-md-dialog {
+  animation: md-dialog-in var(--dur-base) var(--ease-decelerate) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  /* Reduced motion means no movement — but the surface must still arrive in
+     its final, readable state, so only the transform is dropped. */
+  .animate-md-page,
+  .animate-md-dialog {
+    animation: md-fade var(--dur-fast) var(--ease-standard) both;
   }
 }
 

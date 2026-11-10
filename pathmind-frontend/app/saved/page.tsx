@@ -11,7 +11,7 @@ export default function SavedPage() {
           the bottom nav is the way between it and the other destinations. */}
       <AppBar actions={[{ href: "/profile", label: "Profile" }]} />
 
-      <main id="main" className="pt-app-bar pb-nav min-h-screen-safe bg-ink">
+      <main id="main" className="pt-app-bar pb-nav min-h-screen-safe bg-md-surface">
         <Suspense
           fallback={
             <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">

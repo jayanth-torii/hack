@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { clsx } from "@/lib/clsx";
+import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ProgressRing } from "@/components/ui/ProgressRing";
 import { StageTimeline, type StageState } from "@/components/sections/StageTimeline";
@@ -31,6 +32,12 @@ interface RoadmapJourneyProps {
 
 type Tab = "roadmap" | "resources" | "practice";
 
+/** M3 common-button classes for the two header links — `<a>` elements, so
+ *  they can't go through `ui/Button`, but they sit on the same shape, size
+ *  and state-layer rules as every real button on the screen. */
+const LINK_BUTTON =
+  "state-layer press inline-flex min-h-touch items-center gap-2 rounded-full px-6 text-label-lg font-medium transition-colors duration-fast ease-standard";
+
 /**
  * The learning journey.
  *
@@ -40,7 +47,8 @@ type Tab = "roadmap" | "resources" | "practice";
  * validates before advancing anything.
  *
  * Only the tabs with real data exist. There is no Notes, Projects or Discussion
- * tab because nothing in the data model backs them.
+ * tab because nothing in the data model backs them. The tabs are filter chips
+ * on an inline rail, not a popup — switching one never leaves the screen.
  */
 export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
   const [tab, setTab] = useState<Tab>("roadmap");
@@ -102,77 +110,85 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
   return (
     <div className="pt-app-bar pb-nav">
       <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
-        <nav aria-label="Breadcrumb" className="text-xs text-muted">
+        <nav aria-label="Breadcrumb" className="text-body-sm text-md-on-surface-variant">
           <ol className="flex items-center gap-2">
             <li>
-              <Link href="/saved" className="transition-colors hover:text-accent-text">
+              {/* -my-3/py-3 grows the tap target to the 44px floor without
+                  changing the crumb row's visual height. */}
+              <Link
+                href="/saved"
+                className="-my-3 inline-flex min-h-touch-min items-center rounded-xs py-3 transition-colors duration-fast ease-standard hover:text-md-primary"
+              >
                 Roadmaps
               </Link>
             </li>
             <li aria-hidden>›</li>
-            <li aria-current="page" className="truncate text-subtle">
+            <li aria-current="page" className="truncate text-md-on-surface">
               {roadmap.topic}
             </li>
           </ol>
         </nav>
 
-        {/* ── Header ───────────────────────────────────────────────── */}
-        <header className="relative mt-4 overflow-hidden rounded-xl border border-accent/25 bg-card/40 p-5 shadow-[0_0_60px_-26px_rgb(var(--color-accent)/0.65)] backdrop-blur-sm sm:p-7">
+        {/* ── Header — an M3 filled card ───────────────────────────── */}
+        <header className="relative mt-4 overflow-hidden rounded-xl border border-md-outline-variant bg-md-surface-container-low p-5 sm:p-7">
           <div className="relative grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
             <div className="min-w-0">
               <Eyebrow>Your learning path</Eyebrow>
-              <h1 className="mt-2 font-display text-2xl font-bold leading-tight tracking-tight text-paper sm:text-4xl">
+              <h1 className="mt-2 break-words text-headline-md text-md-on-surface sm:text-display-sm">
                 {roadmap.topic}
               </h1>
-              <p className="mt-2.5 max-w-xl text-sm leading-relaxed text-muted">
+              <p className="mt-2.5 max-w-xl text-body-md text-md-on-surface-variant">
                 A structured path of {stages.length}{" "}
                 {stages.length === 1 ? "stage" : "stages"}, sequenced by difficulty and unlocked
                 one at a time as you finish the one before it.
               </p>
 
+              {/* Assist chips — 8dp corners, outlined, label + icon. */}
               <ul className="mt-4 flex flex-wrap gap-2">
-                <li className="inline-flex items-center gap-1.5 rounded-full border border-line/15 bg-ink/40 px-3 py-1.5 text-xs text-subtle">
-                  <LayersIcon className="h-3.5 w-3.5 text-accent-text" />
+                <li className="inline-flex h-8 items-center gap-1.5 rounded-sm border border-md-outline-variant px-3 text-label-lg text-md-on-surface-variant">
+                  <LayersIcon className="h-[1.125rem] w-[1.125rem] text-md-primary" />
                   {stages.length} stages
                 </li>
                 {totalDays > 0 && (
-                  <li className="inline-flex items-center gap-1.5 rounded-full border border-line/15 bg-ink/40 px-3 py-1.5 text-xs text-subtle">
-                    <ClockIcon className="h-3.5 w-3.5 text-accent-text" />~{totalDays} days
+                  <li className="inline-flex h-8 items-center gap-1.5 rounded-sm border border-md-outline-variant px-3 text-label-lg text-md-on-surface-variant">
+                    <ClockIcon className="h-[1.125rem] w-[1.125rem] text-md-primary" />~{totalDays}{" "}
+                    days
                   </li>
                 )}
-                <li className="inline-flex items-center gap-1.5 rounded-full border border-line/15 bg-ink/40 px-3 py-1.5 text-xs capitalize text-subtle">
-                  <ChartIcon className="h-3.5 w-3.5 text-accent-text" />
+                <li className="inline-flex h-8 items-center gap-1.5 rounded-sm border border-md-outline-variant px-3 text-label-lg capitalize text-md-on-surface-variant">
+                  <ChartIcon className="h-[1.125rem] w-[1.125rem] text-md-primary" />
                   {headlineDifficulty}
                 </li>
               </ul>
 
               <div className="mt-5 flex flex-wrap gap-3">
                 {nextStage ? (
+                  // The one filled button in this card.
                   <a
                     href={`#stage-${nextStage.id}`}
-                    className="press inline-flex min-h-touch items-center gap-2 rounded-full bg-accent px-6 text-sm font-bold text-on-accent transition-colors duration-fast hover:bg-accent-hover"
+                    className={clsx(LINK_BUTTON, "bg-md-primary text-md-on-primary")}
                   >
                     Continue learning
-                    <ArrowRightIcon className="h-4 w-4" />
+                    <ArrowRightIcon className="h-5 w-5" />
                   </a>
                 ) : (
-                  <span className="inline-flex min-h-touch items-center gap-2 rounded-full border border-success/40 bg-success/10 px-5 text-sm font-bold text-success">
-                    <CheckCircleIcon className="h-4 w-4" />
+                  <span className="inline-flex min-h-touch items-center gap-2 rounded-full bg-md-success-container px-5 text-label-lg font-medium text-md-on-success-container">
+                    <CheckCircleIcon className="h-5 w-5" />
                     All stages complete
                   </span>
                 )}
                 <Link
                   href={`/roadmap/${roadmap.id}/dashboard`}
-                  className="press inline-flex min-h-touch items-center gap-2 rounded-full border border-line/20 px-5 text-sm font-semibold text-subtle transition-colors duration-fast hover:border-accent/50 hover:text-accent-text"
+                  className={clsx(LINK_BUTTON, "border border-md-outline text-md-on-surface")}
                 >
-                  <ChartIcon className="h-4 w-4" />
+                  <ChartIcon className="h-5 w-5" />
                   Dashboard
                 </Link>
                 <Link
                   href={`/roadmap/${roadmap.id}/calendar`}
-                  className="press inline-flex min-h-touch items-center gap-2 rounded-full border border-line/20 px-5 text-sm font-semibold text-subtle transition-colors duration-fast hover:border-accent/50 hover:text-accent-text"
+                  className={clsx(LINK_BUTTON, "border border-md-outline text-md-on-surface")}
                 >
-                  <ClockIcon className="h-4 w-4" />
+                  <ClockIcon className="h-5 w-5" />
                   Calendar
                 </Link>
               </div>
@@ -196,12 +212,8 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
           </div>
         </header>
 
-        {/* ── Tabs ─────────────────────────────────────────────────── */}
-        <div
-          role="tablist"
-          aria-label="Roadmap views"
-          className="rail mt-5 rounded-xl border border-line/12 bg-card/30 p-1.5 backdrop-blur-sm"
-        >
+        {/* ── Tabs — M3 filter chips on a scrolling rail ───────────── */}
+        <div role="tablist" aria-label="Roadmap views" className="rail mt-5 py-1">
           {(
             [
               { key: "roadmap", label: "Roadmap", icon: LayersIcon },
@@ -215,11 +227,13 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
               aria-selected={tab === key}
               onClick={() => setTab(key)}
               className={clsx(
-                "press inline-flex min-h-touch items-center gap-2 rounded-full px-4 text-sm font-semibold transition-colors duration-fast",
-                tab === key ? "bg-accent text-on-accent" : "text-muted hover:text-paper"
+                "state-layer press inline-flex min-h-touch items-center gap-2 rounded-sm border px-4 text-label-lg font-medium transition-colors duration-fast ease-standard",
+                tab === key
+                  ? "border-transparent bg-md-secondary-container text-md-on-secondary-container"
+                  : "border-md-outline text-md-on-surface-variant"
               )}
             >
-              <Icon className="h-4 w-4" />
+              <Icon className="h-[1.125rem] w-[1.125rem]" />
               {label}
             </button>
           ))}
@@ -246,7 +260,7 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
         {tab === "resources" && (
           <div className="mt-6">
             {allResources.length === 0 ? (
-              <p className="rounded-xl border border-line/12 bg-card/30 px-6 py-12 text-center text-sm text-muted">
+              <p className="rounded-lg border border-md-outline-variant px-6 py-12 text-center text-body-md text-md-on-surface-variant">
                 No resources attached to this roadmap yet.
               </p>
             ) : (
@@ -254,21 +268,23 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
                 {allResources.map((resource) => (
                   <li
                     key={`${resource.stageTitle}-${resource.url}`}
-                    className="rounded-md border border-line/12 bg-card/40 p-4 transition-colors duration-fast hover:border-accent/40"
+                    className="min-w-0 rounded-md border border-md-outline-variant bg-md-surface-container-low transition-colors duration-fast ease-standard hover:border-md-primary"
                   >
                     <a
                       href={resource.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block min-h-touch-min"
+                      className="state-layer block min-h-touch-min rounded-md p-4"
                     >
-                      <p className="text-[0.625rem] font-bold uppercase tracking-[0.2em] text-accent-text">
+                      <p className="text-label-sm uppercase tracking-[0.2em] text-md-primary">
                         {resource.type}
                       </p>
-                      <p className="mt-1.5 font-semibold leading-snug text-paper">
+                      <p className="mt-1.5 break-words text-body-lg font-medium text-md-on-surface">
                         {resource.title}
                       </p>
-                      <p className="mt-1 truncate text-xs text-muted">{resource.stageTitle}</p>
+                      <p className="mt-1 truncate text-body-sm text-md-on-surface-variant">
+                        {resource.stageTitle}
+                      </p>
                     </a>
                   </li>
                 ))}
@@ -281,7 +297,7 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
         {tab === "practice" && (
           <div className="mt-6">
             {allPractice.length === 0 ? (
-              <p className="rounded-xl border border-line/12 bg-card/30 px-6 py-12 text-center text-sm text-muted">
+              <p className="rounded-lg border border-md-outline-variant px-6 py-12 text-center text-body-md text-md-on-surface-variant">
                 No practice problems attached to this roadmap yet.
               </p>
             ) : (
@@ -289,21 +305,21 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
                 {allPractice.map((problem) => (
                   <li
                     key={`${problem.stageTitle}-${problem.url}`}
-                    className="rounded-md border border-line/12 bg-card/40 p-4 transition-colors duration-fast hover:border-accent/40"
+                    className="min-w-0 rounded-md border border-md-outline-variant bg-md-surface-container-low transition-colors duration-fast ease-standard hover:border-md-primary"
                   >
                     <a
                       href={problem.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block min-h-touch-min"
+                      className="state-layer block min-h-touch-min rounded-md p-4"
                     >
-                      <p className="text-[0.625rem] font-bold uppercase tracking-[0.2em] text-accent-text">
+                      <p className="text-label-sm uppercase tracking-[0.2em] text-md-primary">
                         {problem.platform}
                       </p>
-                      <p className="mt-1.5 font-semibold leading-snug text-paper">
+                      <p className="mt-1.5 break-words text-body-lg font-medium text-md-on-surface">
                         {problem.title}
                       </p>
-                      <p className="mt-1 truncate text-xs capitalize text-muted">
+                      <p className="mt-1 truncate text-body-sm capitalize text-md-on-surface-variant">
                         {problem.difficulty} · {problem.stageTitle}
                       </p>
                     </a>
@@ -315,17 +331,17 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
         )}
 
         {/* ── Completion / certificate ─────────────────────────────── */}
-        <section className="mt-6 overflow-hidden rounded-xl border border-accent/30 bg-gradient-to-r from-accent/[0.12] to-transparent p-5 sm:p-6">
+        <section className="mt-6 overflow-hidden rounded-xl border border-md-outline-variant bg-md-surface-container-low p-5 sm:p-6">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex min-w-0 items-center gap-4">
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-accent/40 bg-accent/[0.12] text-accent-text">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-md-primary-container text-md-on-primary-container">
                 <TrophyIcon className="h-6 w-6" />
               </span>
               <div className="min-w-0">
-                <h2 className="font-display text-lg font-bold tracking-tight text-paper">
+                <h2 className="text-title-lg font-medium text-md-on-surface">
                   Complete the roadmap
                 </h2>
-                <p className="mt-0.5 text-sm text-muted">
+                <p className="mt-0.5 text-body-md text-md-on-surface-variant">
                   {isFinished
                     ? "Every stage is done — claim your certificate."
                     : `Finish all ${stages.length} stages to earn a completion certificate (${completedCount} done).`}
@@ -336,24 +352,25 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
             {existingCertificate ? (
               <Link
                 href="/profile"
-                className="press inline-flex min-h-touch shrink-0 items-center gap-2 rounded-full bg-accent px-5 text-sm font-bold text-on-accent transition-colors duration-fast hover:bg-accent-hover"
+                className={clsx(LINK_BUTTON, "shrink-0 bg-md-primary text-md-on-primary")}
               >
-                <DownloadIcon className="h-4 w-4" />
+                <DownloadIcon className="h-5 w-5" />
                 Download certificate
               </Link>
             ) : (
-              <button
-                type="button"
+              <Button
+                variant="accent"
+                className="shrink-0"
                 onClick={() => issueCertificate.mutate(roadmap.id)}
-                disabled={!isFinished || issueCertificate.isPending}
-                aria-busy={issueCertificate.isPending}
                 // Disabled rather than hidden so the reward is visible from the
                 // start; the copy above says exactly what unlocks it.
-                className="press inline-flex min-h-touch shrink-0 items-center gap-2 rounded-full bg-accent px-5 text-sm font-bold text-on-accent transition-colors duration-fast hover:bg-accent-hover disabled:bg-line/15 disabled:text-muted"
+                disabled={!isFinished}
+                isLoading={issueCertificate.isPending}
+                loadingLabel="Issuing…"
               >
-                <MedalIcon className="h-4 w-4" />
-                {issueCertificate.isPending ? "Issuing…" : "Earn certificate"}
-              </button>
+                <MedalIcon className="h-5 w-5" />
+                Earn certificate
+              </Button>
             )}
           </div>
         </section>

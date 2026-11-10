@@ -151,7 +151,7 @@ export function VideoPreview({ url, title, className }: VideoPreviewProps) {
       target="_blank"
       rel="noreferrer"
       className={clsx(
-        "press group relative block aspect-video w-full overflow-hidden rounded-md border border-line/10 bg-ink",
+        "press group relative block aspect-video w-full overflow-hidden rounded-md border border-md-outline-variant bg-md-surface-container-lowest",
         className
       )}
       aria-label={`Watch on ${providerLabel}: ${title}`}
@@ -163,7 +163,7 @@ export function VideoPreview({ url, title, className }: VideoPreviewProps) {
       <ThumbnailLayer parsed={parsed} />
 
       {/* legibility scrim over the top strip */}
-      <div aria-hidden className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-black/50 to-transparent" />
+      <div aria-hidden className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-md-scrim/60 to-transparent" />
 
       {/* official provider icon */}
       <span className="absolute left-3.5 top-3 drop-shadow-md">
@@ -172,15 +172,15 @@ export function VideoPreview({ url, title, className }: VideoPreviewProps) {
 
       {/* play button */}
       <span className="absolute inset-0 flex items-center justify-center">
-        <span className="relative flex h-12 w-12 items-center justify-center rounded-full bg-white/95 text-[#0b0b0b] shadow-e3 transition-transform duration-base group-hover:scale-110 group-hover:bg-accent group-hover:text-on-accent sm:h-14 sm:w-14">
+        <span className="relative flex h-12 w-12 items-center justify-center rounded-full bg-md-primary text-md-on-primary shadow-e3 transition-transform duration-base ease-standard group-hover:scale-110 sm:h-14 sm:w-14">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
             <path d="M8 5.5v13l11-6.5-11-6.5Z" />
           </svg>
-          <span className="absolute inset-0 -z-10 animate-ping rounded-full bg-white/30" />
+          <span aria-hidden className="absolute inset-0 -z-10 animate-ping rounded-full bg-md-primary/30" />
         </span>
       </span>
 
-      <span className="absolute bottom-3 right-4 inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.2em] text-accent">
+      <span className="absolute bottom-3 right-4 inline-flex items-center gap-1 text-label-sm uppercase tracking-[0.2em] text-md-primary">
         Watch on {providerLabel}
         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden>
           <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

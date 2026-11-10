@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -20,7 +20,6 @@ import { ProfileProgress } from "@/components/profile/ProfileProgress";
 import { ProfileActivity } from "@/components/profile/ProfileActivity";
 import { ProfileSettings } from "@/components/profile/ProfileSettings";
 import {
-  ArrowRightIcon,
   CalendarIcon,
   ChartIcon,
   CheckCircleIcon,
@@ -72,13 +71,42 @@ export default function ProfilePage() {
     if (!isInitializing && !user) router.replace("/auth/login");
   }, [isInitializing, user, router]);
 
+  // Six tabs do not fit a 360px viewport, so the strip scrolls inside its own
+  // rail. Scrolling is done on the rail itself (never `scrollIntoView`, which
+  // would also move the page) so selecting a tab off-screen — by click or by
+  // arrow key — brings it into view without the page ever scrolling sideways.
+  const railRef = useRef<HTMLDivElement>(null);
+  const tabRefs = useRef<Partial<Record<TabKey, HTMLButtonElement | null>>>({});
+
+  useEffect(() => {
+    const rail = railRef.current;
+    const node = tabRefs.current[tab];
+    if (!rail || !node) return;
+
+    const pad = 12;
+    const left = node.offsetLeft;
+    const right = left + node.offsetWidth;
+    const viewLeft = rail.scrollLeft;
+    const viewRight = viewLeft + rail.clientWidth;
+
+    let next: number;
+    if (left < viewLeft + pad) next = left - pad;
+    else if (right > viewRight - pad) next = right - rail.clientWidth + pad;
+    else return;
+
+    const reduce =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    rail.scrollTo({ left: Math.max(0, next), behavior: reduce ? "auto" : "smooth" });
+  }, [tab]);
+
   if (isInitializing || !user) {
     return (
-      <div className="min-h-screen-safe flex items-center justify-center bg-ink">
+      <div className="min-h-screen-safe flex items-center justify-center bg-md-surface">
         <div
           role="status"
           aria-label="Loading your profile"
-          className="h-10 w-10 animate-spin rounded-full border-2 border-accent/30 border-t-accent"
+          className="h-10 w-10 animate-spin rounded-full border-2 border-md-primary/30 border-t-md-primary"
         />
       </div>
     );
@@ -97,6 +125,8 @@ export default function ProfilePage() {
   const initial = displayName.charAt(0).toUpperCase();
 
   const handleLogout = async () => {
+    // `confirm` renders through components/md/Dialog — a centred dialog on
+    // desktop, a full-screen page with a back arrow on phones. No popup.
     const ok = await confirm({
       title: "Sign out of Vidhyora?",
       message: "Your roadmaps and progress are saved — you can pick up right where you left off.",
@@ -113,14 +143,14 @@ export default function ProfilePage() {
   return (
     <>
       <AppBar title="Profile" back="/">
-        {/* Icon-only below md: a 56px bar at 360px cannot hold two labelled
+        {/* Icon-only below md: a 64px bar at 360px cannot hold two labelled
             buttons, a title and the theme toggle. The accessible name carries
             the meaning at every width. */}
         <button
           type="button"
           onClick={() => setTab("settings")}
           aria-label="Edit profile"
-          className="press flex min-h-touch items-center gap-2 rounded-full bg-accent px-3 text-sm font-bold text-on-accent transition-colors duration-fast hover:bg-accent-hover md:px-4"
+          className="press state-layer flex min-h-touch min-w-touch items-center justify-center gap-2 rounded-full bg-md-primary px-3 text-label-lg text-md-on-primary md:min-w-0 md:px-4"
         >
           <PencilIcon className="h-4 w-4" />
           <span className="hidden md:inline">Edit profile</span>
@@ -129,54 +159,58 @@ export default function ProfilePage() {
           type="button"
           onClick={() => void handleLogout()}
           aria-label="Sign out"
-          className="press flex min-h-touch items-center gap-2 rounded-full border border-line/20 px-3 text-sm font-semibold text-subtle transition-colors duration-fast hover:border-danger/50 hover:text-danger md:px-4"
+          className="press state-layer flex min-h-touch min-w-touch items-center justify-center gap-2 rounded-full border border-md-outline px-3 text-label-lg text-md-on-surface-variant md:min-w-0 md:px-4"
         >
           <SignOutIcon className="h-4 w-4" />
           <span className="hidden md:inline">Sign out</span>
         </button>
       </AppBar>
 
-      <main id="main" className="pt-app-bar pb-nav min-h-screen-safe bg-ink">
+      <main id="main" className="pt-app-bar pb-nav min-h-screen-safe bg-md-surface">
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
-          {/* ── Header card ──────────────────────────────────────────── */}
-          <header className="relative overflow-hidden rounded-xl border border-accent/25 bg-card/40 shadow-[0_0_60px_-24px_rgb(var(--color-accent)/0.65)] backdrop-blur-sm">
+          {/* ── Header card — M3 outlined card ───────────────────────── */}
+          <header className="relative overflow-hidden rounded-lg border border-md-outline-variant bg-md-surface-container-low">
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-0 bg-[radial-gradient(40rem_20rem_at_80%_20%,rgb(var(--color-accent)/0.18),transparent_65%)]"
+              className="pointer-events-none absolute inset-0 bg-[radial-gradient(40rem_20rem_at_80%_20%,rgb(var(--md-primary)/0.10),transparent_65%)]"
             />
             <div className="relative grid items-center gap-5 p-5 sm:p-7 lg:grid-cols-[minmax(0,1fr)_auto]">
-              <div className="flex min-w-0 items-start gap-5">
-              <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-accent to-accent-hover font-display text-3xl font-bold text-on-accent shadow-e2 sm:h-24 sm:w-24 sm:text-4xl">
-                {profile.data?.avatar ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={profile.data.avatar}
-                    alt=""
-                    className="h-full w-full rounded-xl object-cover"
-                  />
-                ) : (
-                  initial
-                )}
-              </span>
+              <div className="flex min-w-0 items-start gap-4 sm:gap-5">
+                {/* 80px of avatar plus a 20px gap left ~190px for the name at
+                    360px; 64/16 gives the identity block the room it needs.
+                    sm+ is unchanged. */}
+                <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-lg bg-md-primary-container text-headline-sm font-medium text-md-on-primary-container sm:h-24 sm:w-24 sm:text-display-sm">
+                  {profile.data?.avatar ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={profile.data.avatar}
+                      alt=""
+                      className="h-full w-full rounded-lg object-cover"
+                    />
+                  ) : (
+                    initial
+                  )}
+                </span>
 
-              <div className="min-w-0 flex-1">
-                <Eyebrow>Your profile</Eyebrow>
-                <h1 className="mt-1.5 font-display text-2xl font-bold tracking-tight text-paper sm:text-3xl">
-                  {displayName}
-                </h1>
-                <p className="mt-1 truncate text-sm text-muted">{user.email}</p>
-                <p className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-subtle">
-                  <span className="inline-flex items-center gap-1.5">
-                    <CalendarIcon className="h-3.5 w-3.5 text-accent-text" />
-                    Joined {formatJoined(profile.data?.joinedAt)}
-                  </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <CheckCircleIcon className="h-3.5 w-3.5 text-success" />
-                    Learner
-                  </span>
-                </p>
-              </div>
-
+                <div className="min-w-0 flex-1">
+                  <Eyebrow>Your profile</Eyebrow>
+                  <h1 className="mt-1.5 break-words text-headline-sm font-medium text-md-on-surface sm:text-headline-md">
+                    {displayName}
+                  </h1>
+                  <p className="mt-1 truncate text-body-md text-md-on-surface-variant">
+                    {user.email}
+                  </p>
+                  <p className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-body-sm text-md-on-surface-variant">
+                    <span className="inline-flex items-center gap-1.5">
+                      <CalendarIcon className="h-3.5 w-3.5 text-md-primary" />
+                      Joined {formatJoined(profile.data?.joinedAt)}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <CheckCircleIcon className="h-3.5 w-3.5 text-md-success" />
+                      Learner
+                    </span>
+                  </p>
+                </div>
               </div>
 
               {/* Decorative only — the scene repeats information already in the
@@ -194,25 +228,38 @@ export default function ProfilePage() {
             </div>
           </header>
 
-          {/* ── Tabs ─────────────────────────────────────────────────── */}
+          {/* ── Tabs — M3 primary tabs ───────────────────────────────── */}
+          {/* Fixed tabs when the six fit (`flex-[1_0_auto]` stretches them to
+              fill the row), scrollable when they don't — which is every phone.
+              The scrollbar is hidden but the rail still scrolls, and the effect
+              above keeps the selected tab in view. */}
           <div
+            ref={railRef}
             role="tablist"
             aria-label="Profile sections"
-            className="rail mt-5 rounded-xl border border-line/12 bg-card/30 p-1.5 backdrop-blur-sm"
+            className="relative mt-5 flex overflow-x-auto overscroll-x-contain border-b border-md-outline-variant [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             onKeyDown={(event) => {
               const i = TABS.findIndex((t) => t.key === tab);
-              if (event.key === "ArrowRight") {
-                event.preventDefault();
-                setTab(TABS[(i + 1) % TABS.length]!.key);
-              } else if (event.key === "ArrowLeft") {
-                event.preventDefault();
-                setTab(TABS[(i - 1 + TABS.length) % TABS.length]!.key);
-              }
+              let nextKey: TabKey | null = null;
+              if (event.key === "ArrowRight") nextKey = TABS[(i + 1) % TABS.length]!.key;
+              else if (event.key === "ArrowLeft")
+                nextKey = TABS[(i - 1 + TABS.length) % TABS.length]!.key;
+              else if (event.key === "Home") nextKey = TABS[0]!.key;
+              else if (event.key === "End") nextKey = TABS[TABS.length - 1]!.key;
+              if (!nextKey) return;
+              event.preventDefault();
+              setTab(nextKey);
+              // Roving tabindex: the old tab becomes tabIndex -1, so focus has
+              // to follow the selection or the keyboard user is stranded.
+              tabRefs.current[nextKey]?.focus({ preventScroll: true });
             }}
           >
             {TABS.map(({ key, label, icon: Icon }) => (
               <button
                 key={key}
+                ref={(node) => {
+                  tabRefs.current[key] = node;
+                }}
                 role="tab"
                 id={`tab-${key}`}
                 aria-selected={tab === key}
@@ -220,14 +267,22 @@ export default function ProfilePage() {
                 tabIndex={tab === key ? 0 : -1}
                 onClick={() => setTab(key)}
                 className={clsx(
-                  "press inline-flex min-h-touch items-center gap-2 rounded-full px-4 text-sm font-semibold transition-colors duration-fast",
-                  tab === key
-                    ? "bg-accent text-on-accent"
-                    : "text-muted hover:text-paper"
+                  "state-layer relative flex flex-[1_0_auto] flex-col items-center justify-center gap-1",
+                  "min-h-[4rem] whitespace-nowrap px-4 py-2 text-title-sm",
+                  "transition-colors duration-fast ease-standard",
+                  tab === key ? "text-md-primary" : "text-md-on-surface-variant"
                 )}
               >
-                <Icon className="h-4 w-4" />
+                <Icon className="h-6 w-6 shrink-0" />
                 {label}
+                {tab === key && (
+                  // M3's 3dp active indicator, the width of the label, with the
+                  // two top corners rounded.
+                  <span
+                    aria-hidden
+                    className="absolute inset-x-3 bottom-0 h-[3px] rounded-t-full bg-md-primary"
+                  />
+                )}
               </button>
             ))}
           </div>
@@ -244,9 +299,9 @@ export default function ProfilePage() {
 
             {tab === "roadmaps" && (
               <div className="space-y-4">
-                <p className="text-sm text-muted">
+                <p className="text-body-md text-md-on-surface-variant">
                   Your full library — with filters, sorting and favourites — lives on the{" "}
-                  <Link href="/saved" className="font-semibold text-accent-text hover:underline">
+                  <Link href="/saved" className="font-medium text-md-primary hover:underline">
                     saved roadmaps
                   </Link>{" "}
                   page.
@@ -255,6 +310,8 @@ export default function ProfilePage() {
                   roadmaps={saved.data ?? []}
                   summary={summary.data ?? []}
                   isPending={saved.isPending}
+                  isError={saved.isError}
+                  onRetry={() => void saved.refetch()}
                 />
               </div>
             )}

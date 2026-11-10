@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
 import { Reveal } from "./Reveal";
+import { ActionLink, ArrowForwardIcon } from "./ActionLink";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 
 // "Why Vidhyora": a left rail (eyebrow, headline, value line, 3D desk scene)
@@ -70,19 +70,20 @@ export function FeaturesSection() {
   const reduce = useReducedMotion();
 
   return (
-    <section id="features" className="relative overflow-hidden bg-ink py-24 sm:py-28">
-      {/* Corner swooshes — warm light bleeding in from the edges */}
+    <section id="features" className="relative overflow-hidden bg-md-surface py-24 sm:py-28">
+      {/* Corner swooshes — warm light bleeding in from the edges, carried by
+          the vivid brand source rather than the M3 primary role. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -left-40 -top-32 h-[28rem] w-[34rem] rounded-full bg-[radial-gradient(circle,rgb(var(--color-accent)/0.30),transparent_68%)] blur-3xl"
+        className="pointer-events-none absolute -left-40 -top-32 h-[28rem] w-[34rem] rounded-full bg-[radial-gradient(circle,rgb(var(--md-source)/0.28),transparent_68%)] blur-3xl"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-40 -left-32 h-[26rem] w-[30rem] rounded-full bg-[radial-gradient(circle,rgb(var(--color-accent)/0.22),transparent_70%)] blur-3xl"
+        className="pointer-events-none absolute -bottom-40 -left-32 h-[26rem] w-[30rem] rounded-full bg-[radial-gradient(circle,rgb(var(--md-source)/0.20),transparent_70%)] blur-3xl"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-48 -right-40 h-[26rem] w-[34rem] rounded-full bg-[radial-gradient(circle,rgb(var(--color-accent)/0.18),transparent_70%)] blur-3xl"
+        className="pointer-events-none absolute -bottom-48 -right-40 h-[26rem] w-[34rem] rounded-full bg-[radial-gradient(circle,rgb(var(--md-source)/0.16),transparent_70%)] blur-3xl"
       />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6">
@@ -91,18 +92,18 @@ export function FeaturesSection() {
           <Reveal className="lg:col-span-4">
             <Eyebrow>Why Vidhyora</Eyebrow>
 
-            <h2 className="mt-5 font-display text-[1.875rem] font-bold leading-[1.12] tracking-tight text-paper sm:text-[2.125rem] lg:text-[2.25rem] xl:text-[2.5rem]">
+            <h2 className="mt-5 text-headline-md leading-[1.2] text-md-on-surface sm:text-headline-lg sm:leading-[1.18] xl:text-display-sm xl:leading-[1.16]">
               Everything you need
               <br />
-              to actually <span className="text-accent-text">finish</span>
+              to actually <span className="text-md-primary">finish</span>
               <br />
               <span className="relative inline-block">
-                a <span className="text-accent-text">roadmap</span>
+                a <span className="text-md-primary">roadmap</span>
                 <svg
                   aria-hidden
                   viewBox="0 0 200 10"
                   preserveAspectRatio="none"
-                  className="absolute -bottom-1.5 left-0 h-2 w-full text-accent"
+                  className="absolute -bottom-1.5 left-0 h-2 w-full text-md-primary"
                 >
                   <path
                     d="M3 7.2Q 52 1.8 104 5.2T 197 4"
@@ -115,7 +116,7 @@ export function FeaturesSection() {
               </span>
             </h2>
 
-            <p className="mt-8 max-w-sm text-sm leading-relaxed text-muted sm:text-base">
+            <p className="mt-8 max-w-sm text-body-lg text-md-on-surface-variant">
               Static resource lists die the moment they&apos;re published. Vidhyora keeps every
               link alive, sequences everything by difficulty, and makes progress stick.
             </p>
@@ -142,7 +143,7 @@ export function FeaturesSection() {
                 key={feature.title}
                 whileHover={reduce ? undefined : { y: -6 }}
                 transition={{ type: "spring", stiffness: 300, damping: 22 }}
-                className="group relative overflow-hidden rounded-xl border border-accent/25 bg-card/40 p-6 shadow-[0_0_60px_-18px_rgb(var(--color-accent)/0.55)] backdrop-blur-sm transition-colors duration-base hover:border-accent/55 sm:p-7"
+                className="group relative overflow-hidden rounded-lg border border-md-outline-variant bg-md-surface-container p-6 shadow-e1 transition-colors duration-base ease-standard hover:bg-md-surface-container-high sm:p-7"
               >
                 {/* 3D glyph bleeding out of the corner. Alpha is baked into the
                     asset: a blend mode would be scoped to the card's own
@@ -157,27 +158,30 @@ export function FeaturesSection() {
                   className={`pointer-events-none absolute -bottom-5 -right-4 select-none ${feature.artClass}`}
                 />
 
-                <span className="relative flex h-12 w-12 items-center justify-center rounded-md bg-gradient-to-br from-accent to-accent-hover text-on-accent shadow-e2">
+                <span className="relative flex h-12 w-12 items-center justify-center rounded-md bg-md-primary-container text-md-on-primary-container">
                   {feature.icon}
                 </span>
 
-                <h3 className="relative mt-5 font-display text-lg font-bold tracking-tight text-paper sm:text-xl">
+                <h3 className="relative mt-5 text-title-lg text-md-on-surface">
                   {feature.title}
                 </h3>
 
-                <p className="relative mt-2.5 max-w-[23rem] text-sm leading-relaxed text-muted">
+                <p className="relative mt-2.5 max-w-[23rem] text-body-md text-md-on-surface-variant">
                   {feature.copy}
                 </p>
 
-                <Link
-                  href="#start"
-                  className="press relative mt-6 inline-flex min-h-touch-min items-center gap-2 rounded-full border border-accent/50 px-4 text-sm font-semibold text-accent-text transition-colors duration-fast hover:bg-accent/12"
-                >
-                  Try it
-                  <span className="transition-transform duration-base group-hover:translate-x-1">
-                    {ARROW_ICON}
-                  </span>
-                </Link>
+                {/* Lowest emphasis — one of four repeated affordances, so an
+                    M3 text button rather than four outlined ones. */}
+                <div className="relative mt-5 -ml-4">
+                  <ActionLink
+                    href="#start"
+                    variant="text"
+                    size="sm"
+                    trailingIcon={ARROW_ICON}
+                  >
+                    Try it
+                  </ActionLink>
+                </div>
               </motion.article>
             ))}
           </Reveal>
@@ -190,7 +194,7 @@ export function FeaturesSection() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true, margin: "-60px" }}
         transition={{ duration: 1 }}
-        className="relative mt-24 h-[72vh] w-full overflow-hidden border-y border-white/10"
+        className="relative mt-24 h-[72vh] w-full overflow-hidden border-y border-md-outline-variant"
       >
         <video
           className="absolute inset-0 h-full w-full object-cover"
@@ -204,7 +208,10 @@ export function FeaturesSection() {
         />
 
         {/* readability overlays */}
-        <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-[#010103] via-[#010103]/45 to-[#010103]/25" />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-t from-md-surface via-md-surface/45 to-md-surface/25"
+        />
         <div aria-hidden className="pointer-events-none absolute inset-0 bg-noise opacity-[0.04]" />
 
         {/* overlay content */}
@@ -213,32 +220,36 @@ export function FeaturesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center"
+          className="absolute inset-0 flex flex-col items-center justify-center px-4 text-center sm:px-6"
         >
           <Eyebrow align="center">See it in action</Eyebrow>
-          <h3 className="mt-5 max-w-3xl font-display text-3xl font-semibold leading-tight text-paper md:text-5xl">
-            From topic to <span className="text-accent-text">full roadmap</span> in seconds
+          <h3 className="mt-5 max-w-3xl text-headline-md leading-[1.2] text-md-on-surface md:text-display-md md:leading-[1.14]">
+            From topic to <span className="text-md-primary">full roadmap</span> in seconds
           </h3>
-          <p className="mt-4 max-w-md text-sm leading-relaxed text-subtle md:text-base">
+          <p className="mt-4 max-w-md text-body-lg text-md-on-surface-variant">
             Type a topic. Vidhyora sequences it into stages, resources and a daily plan —
             then walks with you, stage by stage.
           </p>
-          <a
+          {/* M3's elevated button is the variant for a button that has to
+              separate itself from a patterned background — here, moving video. */}
+          <ActionLink
             href="#start"
-            className="press group mt-9 inline-flex min-h-touch items-center gap-2 rounded-full bg-accent px-8 text-sm font-bold tracking-tight text-on-accent shadow-e2 transition-colors duration-fast hover:bg-accent-hover"
+            variant="elevated"
+            size="lg"
+            className="mt-9"
+            trailingIcon={<ArrowForwardIcon />}
           >
             Build your path
-            <span className="transition-transform duration-base group-hover:translate-x-1">→</span>
-          </a>
+          </ActionLink>
         </motion.div>
 
         {/* bottom-left badge */}
-        <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full border border-white/10 bg-[#010103]/70 px-3.5 py-1.5 backdrop-blur-md">
+        <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-md-scrim/70 px-3.5 py-1.5 backdrop-blur-md">
           <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-md-primary opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-md-primary" />
           </span>
-          <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-white">
+          <span className="text-label-sm uppercase tracking-[0.2em] text-md-on-surface">
             Vidhyora in action
           </span>
         </div>

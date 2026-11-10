@@ -9,7 +9,13 @@ interface StatCardProps {
 }
 
 /**
- * One headline number with its icon and caption.
+ * One headline number with its icon and caption, as a Material 3 **filled
+ * card** — `surface-container-highest`, 12dp corners, no shadow.
+ *
+ * Filled rather than outlined because these sit in a row of four on the page
+ * surface: the tonal step is what separates them, so four hairlines aren't
+ * needed, and nothing here floats. The accent glow and tinted border this
+ * card used to carry were decoration; the tonal step is the hierarchy.
  *
  * The value renders as a `<dd>`/`<dt>` pair so a row of these is a real
  * description list, not four visually-similar divs — a screen reader reads
@@ -18,18 +24,15 @@ interface StatCardProps {
 export function StatCard({ icon, value, label, className }: StatCardProps) {
   return (
     <div
-      className={clsx(
-        "rounded-xl border border-accent/20 bg-card/40 p-4 shadow-[0_0_40px_-22px_rgb(var(--color-accent)/0.6)] backdrop-blur-sm sm:p-5",
-        className
-      )}
+      className={clsx("rounded-md bg-md-surface-container-highest p-4 sm:p-5", className)}
     >
-      <span className="flex h-10 w-10 items-center justify-center rounded-md border border-accent/30 bg-accent/[0.10] text-accent-text">
+      <span className="flex h-10 w-10 items-center justify-center rounded-sm bg-md-primary-container text-md-on-primary-container">
         {icon}
       </span>
-      <dd className="mt-3 font-display text-2xl font-bold leading-none tabular-nums text-paper sm:text-3xl">
+      <dd className="mt-3 text-headline-sm tabular-nums text-md-on-surface sm:text-headline-md">
         {value}
       </dd>
-      <dt className="mt-1.5 text-xs leading-snug text-muted sm:text-sm">{label}</dt>
+      <dt className="mt-1.5 text-body-sm text-md-on-surface-variant sm:text-body-md">{label}</dt>
     </div>
   );
 }

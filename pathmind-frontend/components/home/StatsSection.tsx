@@ -18,16 +18,24 @@ const STATS = [
 
 export function StatsSection() {
   return (
-    <section id="stats" className="border-y border-line/10 bg-ink py-24">
+    <section
+      id="stats"
+      className="border-y border-md-outline-variant/60 bg-md-surface py-20 sm:py-24"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <Eyebrow align="center">Vidhyora in numbers</Eyebrow>
-        <Reveal stagger={0.1} className="mt-14 grid grid-cols-2 gap-10 lg:grid-cols-4">
+        {/* Each figure gets its own container step so the row reads as four
+            cards on a surface rather than four numbers floating in black. */}
+        <Reveal stagger={0.1} className="mt-12 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4">
           {STATS.map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className="font-display text-5xl font-semibold text-paper md:text-6xl">
+            <div
+              key={stat.label}
+              className="rounded-lg bg-md-surface-container px-4 py-7 text-center shadow-e1"
+            >
+              <div className="text-display-md text-md-on-surface md:text-display-lg">
                 <Counter to={stat.to} suffix={stat.suffix} />
               </div>
-              <p className="mx-auto mt-3 max-w-[13rem] text-xs leading-relaxed text-muted">
+              <p className="mx-auto mt-3 max-w-[13rem] text-body-sm text-md-on-surface-variant">
                 {stat.label}
               </p>
             </div>

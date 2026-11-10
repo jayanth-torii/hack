@@ -40,10 +40,10 @@ export function Preloader() {
   return (
     <div
       ref={rootRef}
-      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#010103]"
+      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-md-surface-container-lowest"
       aria-hidden
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(40rem_28rem_at_50%_20%,rgb(var(--color-accent)/0.1),transparent_60%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(40rem_28rem_at_50%_20%,rgb(var(--md-source)/0.12),transparent_60%)]" />
 
       {/* Full Vidhyora lockup (icon + wordmark + tagline); blend removes the black box */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -58,8 +58,8 @@ export function Preloader() {
         className="w-56 mix-blend-screen sm:w-72"
       />
 
-      <div className="mt-8 h-1 w-56 overflow-hidden rounded-full bg-white/10">
-        <div ref={barRef} className="h-full rounded-full bg-accent" style={{ width: "0%" }} />
+      <div className="mt-8 h-1 w-56 overflow-hidden rounded-full bg-md-surface-container-highest">
+        <div ref={barRef} className="h-full rounded-full bg-md-primary" style={{ width: "0%" }} />
       </div>
     </div>
   );

@@ -18,8 +18,10 @@ const EXAMPLE_TOPICS = ["Dynamic Programming", "React", "System Design", "Machin
  * a glowing focus ring + example-topic chips, wired to RHF+Zod validation
  * and the generate-roadmap mutation. On success, routes to the 3D journey.
  *
- * Restyled to the Acjon template's pill CTA language: a bordered pill input
- * paired with the signature lime `accent` button (tp-btn-green).
+ * Material 3: the field and its action sit together in a `surface-container`
+ * search bar with a full `rounded-xl` shape, and the example topics below are
+ * M3 **suggestion chips** — a state layer rather than a hover colour swap, so
+ * they respond the same way every other control in the app does.
  */
 export function SearchBar() {
   const router = useRouter();
@@ -38,7 +40,7 @@ export function SearchBar() {
   const onSubmit = handleSubmit(async ({ topic }) => {
     try {
       const roadmap = await generate.mutateAsync(topic);
-      toast.success("Roadmap generated 🎉", `${roadmap.stages.length} stages ready — start your journey.`);
+      toast.success("Roadmap generated", `${roadmap.stages.length} stages ready — start your journey.`);
       router.push(`/roadmap/${roadmap.id}`);
     } catch (err) {
       toast.error(
@@ -52,25 +54,31 @@ export function SearchBar() {
     <div className="w-full max-w-xl">
       <form
         onSubmit={onSubmit}
-        className="flex flex-col gap-3 rounded-full border border-line/10 bg-card/50 p-2 backdrop-blur-sm transition-colors focus-within:border-accent/60 sm:flex-row sm:items-center"
+        className="flex flex-col gap-3 rounded-lg border border-md-outline-variant bg-md-surface-container-high p-2 transition-colors duration-fast ease-standard focus-within:border-md-primary sm:flex-row sm:items-center sm:rounded-xl"
       >
         <Input
           placeholder="Type any topic — e.g. Dynamic Programming, React"
-          className="min-h-touch border-0 bg-transparent px-4 text-paper placeholder:text-muted focus-visible:ring-0"
+          className="min-h-touch rounded-sm border-0 bg-transparent px-4 text-md-on-surface placeholder:text-md-on-surface-variant"
           {...register("topic")}
         />
         <Button
           type="submit"
           variant="accent"
           isLoading={generate.isPending}
-          className="w-full shrink-0 rounded-full px-7 sm:w-auto"
+          className="w-full shrink-0 px-7 sm:w-auto"
         >
           {generate.isPending ? "Generating…" : "Build my path"}
         </Button>
       </form>
-      {errors.topic && <p role="alert" className="mt-2 text-xs text-danger">{errors.topic.message}</p>}
+      {errors.topic && (
+        <p role="alert" className="mt-2 px-4 text-body-sm text-md-error">
+          {errors.topic.message}
+        </p>
+      )}
       {generate.isError && (
-        <p role="alert" className="mt-2 text-xs text-danger">Couldn&apos;t generate a roadmap. Please try again.</p>
+        <p role="alert" className="mt-2 px-4 text-body-sm text-md-error">
+          Couldn&apos;t generate a roadmap. Please try again.
+        </p>
       )}
 
       <div className="mt-4 flex flex-wrap gap-2">
@@ -81,7 +89,7 @@ export function SearchBar() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
             onClick={() => setValue("topic", topic)}
-            className="rounded-full border border-line/10 bg-card/50 px-3.5 py-1.5 text-xs text-subtle transition-colors hover:border-accent/50 hover:text-accent"
+            className="state-layer inline-flex min-h-touch-min items-center justify-center rounded-sm border border-md-outline-variant bg-md-surface-container-low h-8 px-4 text-label-lg text-md-on-surface-variant transition-colors duration-fast ease-standard sm:min-h-0"
           >
             {topic}
           </motion.button>

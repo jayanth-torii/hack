@@ -7,6 +7,7 @@ import { SearchBar } from "@/components/ui/SearchBar";
 import { useAuthStore } from "@/store/authStore";
 import { gsap } from "@/lib/gsap-config";
 import { useIsomorphicLayoutEffect } from "@/lib/useIsomorphicLayoutEffect";
+import { ActionLink, ArrowForwardIcon } from "./ActionLink";
 
 /* ── Icons ──────────────────────────────────────────────────────────────
    Inline SVG on the project's 24px grid with round caps. No icon library —
@@ -172,28 +173,22 @@ export function CTASection() {
         };
 
   const seeHowItWorks = (
-    <a
-      href="#how"
-      className="press group inline-flex min-h-touch items-center justify-center gap-3 rounded-full text-sm font-semibold text-subtle transition-colors duration-fast hover:text-accent-text sm:justify-start"
-    >
-      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-accent/50 text-accent-text transition-colors duration-fast group-hover:bg-accent/12">
-        <PlayIcon className="h-5 w-5 translate-x-px" />
-      </span>
+    <ActionLink href="#how" variant="text" size="lg" icon={<PlayIcon />}>
       See how it works
-    </a>
+    </ActionLink>
   );
 
   return (
     <section
       ref={sectionRef}
       id="start"
-      className="relative overflow-hidden bg-ink py-20 sm:py-24 lg:py-28"
+      className="relative overflow-hidden bg-md-surface-container-low py-20 sm:py-24 lg:py-28"
     >
       {/* Warm ambient glow + film grain */}
       <div
         data-cta-glow
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(48rem_34rem_at_8%_-8%,rgb(var(--color-accent)/0.14),transparent_62%),radial-gradient(52rem_40rem_at_88%_30%,rgb(var(--color-accent)/0.16),transparent_64%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(48rem_34rem_at_8%_-8%,rgb(var(--md-source)/0.14),transparent_62%),radial-gradient(52rem_40rem_at_88%_30%,rgb(var(--md-source)/0.16),transparent_64%)]"
       />
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-noise opacity-[0.05]" />
 
@@ -202,28 +197,26 @@ export function CTASection() {
         <div className="lg:col-span-6">
           <div
             data-cta-badge
-            className="inline-flex items-center gap-2.5 rounded-full border border-accent/40 bg-accent/[0.07] py-2 pl-3.5 pr-4 text-accent-text"
+            className="inline-flex min-h-[2rem] items-center gap-2 rounded-sm bg-md-primary-container py-1.5 pl-3 pr-3.5 text-md-on-primary-container"
           >
-            <SparkleIcon className="h-4 w-4 shrink-0" />
-            <span className="text-[0.8125rem] font-semibold tracking-tight sm:text-sm">
-              AI-Powered Learning Roadmap
-            </span>
+            <SparkleIcon className="h-[1.125rem] w-[1.125rem] shrink-0" />
+            <span className="text-label-lg">AI-Powered Learning Roadmap</span>
           </div>
 
-          <h2 className="mt-6 font-display text-[2.5rem] font-bold leading-[1.02] tracking-tight text-paper sm:text-6xl xl:text-7xl">
+          <h2 className="mt-6 text-display-sm leading-[1.1] tracking-[-0.01em] text-md-on-surface sm:text-display-md sm:leading-[1.06] xl:text-display-lg xl:leading-[1.04]">
             <span data-cta-line className="block overflow-hidden pb-1.5">
               <span className="block will-change-transform">Ready to learn</span>
             </span>
             <span data-cta-line className="block overflow-hidden pb-2 pt-1">
               <span className="block will-change-transform">
-                <span className="inline-block rounded-lg bg-accent px-3 pb-1.5 pt-0.5 text-on-accent shadow-e2 sm:px-4 sm:pb-2">
+                <span className="inline-block rounded-md bg-md-primary px-3 pb-1.5 pt-0.5 text-md-on-primary sm:px-4 sm:pb-2">
                   in sequence?
                 </span>
               </span>
             </span>
           </h2>
 
-          <p data-cta-sub className="mt-6 max-w-lg text-base leading-relaxed text-muted sm:text-lg">
+          <p data-cta-sub className="mt-6 max-w-lg text-body-lg text-md-on-surface-variant">
             {user
               ? "Outline a personalized curriculum with verified courses, official docs and practice sets — then track every stage."
               : "Sign in to generate tailored roadmaps, save and track your stages, and sync assignments to your calendar."}
@@ -235,12 +228,12 @@ export function CTASection() {
               <li
                 key={line1}
                 data-cta-feature
-                className={i > 0 ? "border-line/10 pl-7 sm:border-l sm:pl-10" : undefined}
+                className={i > 0 ? "border-md-outline-variant sm:border-l sm:pl-10" : undefined}
               >
-                <span className="flex h-11 w-11 items-center justify-center rounded-md bg-accent/12 text-accent-text">
+                <span className="flex h-11 w-11 items-center justify-center rounded-md bg-md-primary-container text-md-on-primary-container">
                   <Icon className="h-5 w-5" />
                 </span>
-                <p className="mt-3 text-sm font-semibold leading-snug text-paper">
+                <p className="mt-3 text-title-sm text-md-on-surface">
                   {line1}
                   <br />
                   {line2}
@@ -257,16 +250,19 @@ export function CTASection() {
                 <div className="w-fit">{seeHowItWorks}</div>
               </div>
             ) : (
-              <div className="flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:gap-6">
-                <a
+              <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-4">
+                {/* Tonal, not filled: this repeats the hero's action, and the
+                    landing page carries exactly one filled button. */}
+                <ActionLink
                   href="/auth/login"
-                  className="press group inline-flex min-h-[3.25rem] items-center justify-center gap-3 rounded-full bg-accent px-8 text-base font-bold tracking-tight text-on-accent shadow-e2 transition-colors duration-fast hover:bg-accent-hover"
+                  variant="tonal"
+                  size="lg"
+                  fullWidth
+                  className="sm:w-auto"
+                  trailingIcon={<ArrowForwardIcon />}
                 >
                   Login to build your path
-                  <span aria-hidden className="transition-transform duration-base group-hover:translate-x-1">
-                    →
-                  </span>
-                </a>
+                </ActionLink>
                 {seeHowItWorks}
               </div>
             )}
@@ -277,14 +273,14 @@ export function CTASection() {
         <div aria-hidden className="relative mx-auto w-full max-w-xl lg:col-span-6 lg:max-w-none">
           {/* Warm disc behind the learner — a soft core plus a crisper rim, so
               it reads as a lit backdrop rather than an even wash. */}
-          <div className="pointer-events-none absolute left-1/2 top-[6%] aspect-square w-[62%] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgb(var(--color-accent)/0.95)_0%,rgb(var(--color-accent)/0.80)_54%,rgb(var(--color-accent)/0)_68%)] blur-md" />
-          <div className="pointer-events-none absolute left-1/2 top-[2%] aspect-square w-[74%] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgb(var(--color-accent)/0.30),rgb(var(--color-accent)/0.06)_58%,transparent_74%)] blur-3xl" />
+          <div className="pointer-events-none absolute left-1/2 top-[6%] aspect-square w-[62%] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgb(var(--md-source)/0.95)_0%,rgb(var(--md-source)/0.80)_54%,rgb(var(--md-source)/0)_68%)] blur-md" />
+          <div className="pointer-events-none absolute left-1/2 top-[2%] aspect-square w-[74%] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgb(var(--md-source)/0.30),rgb(var(--md-source)/0.06)_58%,transparent_74%)] blur-3xl" />
 
           {/* Decorative accent arcs, echoing the reference composition */}
           <svg
             viewBox="0 0 100 100"
             preserveAspectRatio="none"
-            className="pointer-events-none absolute inset-0 h-full w-full text-accent"
+            className="pointer-events-none absolute inset-0 h-full w-full text-md-primary"
           >
             <path
               d="M8 62 Q 4 50 10 40"
@@ -324,29 +320,29 @@ export function CTASection() {
           <motion.div
             data-cta-card
             {...float(5.4, 0)}
-            className="absolute left-0 top-[6%] z-20 w-[11.5rem] rounded-xl border border-accent/25 bg-card/50 p-3.5 shadow-e3 backdrop-blur-xl sm:w-[14rem] sm:p-4 lg:left-[-2%]"
+            className="absolute left-0 top-[6%] z-20 w-[10.5rem] rounded-lg bg-md-surface-container-high/90 p-3.5 shadow-e3 backdrop-blur-xl sm:w-[14rem] sm:p-4 lg:left-[-2%]"
           >
-            <p className="text-[0.6875rem] font-semibold tracking-tight text-paper sm:text-sm">
+            <p className="text-label-md text-md-on-surface sm:text-title-sm">
               Your Learning Sequence
             </p>
             <ul className="mt-3 space-y-2.5">
               {SEQUENCE.map((step, i) => (
                 <li key={step.label} className="relative flex items-center gap-2.5">
                   {i < SEQUENCE.length - 1 && (
-                    <span className="absolute left-[8px] top-[18px] h-[14px] w-px bg-accent/40 sm:left-[10px] sm:top-[21px]" />
+                    <span className="absolute left-[8px] top-[18px] h-[14px] w-px bg-md-outline sm:left-[10px] sm:top-[21px]" />
                   )}
                   <span
                     className={
                       step.state === "done"
-                        ? "flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-accent text-on-accent sm:h-[22px] sm:w-[22px]"
+                        ? "flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-md-primary text-md-on-primary sm:h-[22px] sm:w-[22px]"
                         : step.state === "current"
-                          ? "h-[18px] w-[18px] shrink-0 rounded-full bg-accent sm:h-[22px] sm:w-[22px]"
-                          : "h-[18px] w-[18px] shrink-0 rounded-full border-2 border-accent/70 sm:h-[22px] sm:w-[22px]"
+                          ? "h-[18px] w-[18px] shrink-0 rounded-full bg-md-primary sm:h-[22px] sm:w-[22px]"
+                          : "h-[18px] w-[18px] shrink-0 rounded-full border-2 border-md-outline sm:h-[22px] sm:w-[22px]"
                     }
                   >
                     {step.state === "done" && <CheckIcon className="h-3 w-3" />}
                   </span>
-                  <span className="text-[0.6875rem] leading-tight text-subtle sm:text-xs">
+                  <span className="text-label-sm text-md-on-surface-variant sm:text-label-md">
                     {step.label}
                   </span>
                 </li>
@@ -358,20 +354,20 @@ export function CTASection() {
           <motion.div
             data-cta-card
             {...float(6.2, 0.6)}
-            className="absolute right-0 top-0 z-20 w-[9.5rem] rounded-xl border border-accent/25 bg-card/50 p-3.5 shadow-e3 backdrop-blur-xl sm:w-[12rem] sm:p-4 lg:right-[-1%]"
+            className="absolute right-0 top-0 z-20 w-[9.5rem] rounded-lg bg-md-surface-container-high/90 p-3.5 shadow-e3 backdrop-blur-xl sm:w-[12rem] sm:p-4 lg:right-[-1%]"
           >
             <div className="flex items-start justify-between gap-2">
-              <ChartIcon className="h-5 w-5 shrink-0 text-accent-text sm:h-6 sm:w-6" />
+              <ChartIcon className="h-5 w-5 shrink-0 text-md-primary sm:h-6 sm:w-6" />
               <div className="text-right">
-                <p className="text-[0.625rem] leading-none text-muted sm:text-xs">Progress</p>
-                <p className="font-display text-xl font-bold leading-tight tabular-nums text-paper sm:text-2xl">
+                <p className="text-label-sm text-md-on-surface-variant">Progress</p>
+                <p className="text-title-lg tabular-nums text-md-on-surface sm:text-headline-sm">
                   72%
                 </p>
               </div>
             </div>
-            <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-line/12">
+            <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-md-surface-container-highest">
               <motion.div
-                className="h-full rounded-full bg-accent"
+                className="h-full rounded-full bg-md-primary"
                 initial={reduce ? false : { width: "0%" }}
                 whileInView={{ width: "72%" }}
                 viewport={{ once: true, margin: "-60px" }}
@@ -384,15 +380,15 @@ export function CTASection() {
           <motion.div
             data-cta-card
             {...float(5.8, 1.1)}
-            className="absolute right-0 top-[34%] z-20 hidden w-[11rem] items-center gap-3 rounded-xl border border-accent/25 bg-card/50 p-3.5 shadow-e3 backdrop-blur-xl sm:flex sm:w-[13rem] sm:p-4 lg:right-[-4%]"
+            className="absolute right-0 top-[34%] z-20 hidden w-[11rem] items-center gap-3 rounded-lg bg-md-surface-container-high/90 p-3.5 shadow-e3 backdrop-blur-xl sm:flex sm:w-[13rem] sm:p-4 lg:right-[-4%]"
           >
-            <CalendarIcon className="h-7 w-7 shrink-0 text-accent-text" />
-            <p className="text-xs font-semibold leading-snug text-paper sm:text-sm">
+            <CalendarIcon className="h-7 w-7 shrink-0 text-md-primary" />
+            <p className="text-label-md text-md-on-surface sm:text-title-sm">
               Assignments
               <br />
               <span className="inline-flex items-center gap-1.5">
                 Synced
-                <CheckIcon className="h-3.5 w-3.5 text-success" />
+                <CheckIcon className="h-3.5 w-3.5 text-md-success" />
               </span>
             </p>
           </motion.div>

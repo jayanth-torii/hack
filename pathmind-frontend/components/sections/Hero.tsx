@@ -6,6 +6,7 @@ import { gsap } from "@/lib/gsap-config";
 import { useIsomorphicLayoutEffect } from "@/lib/useIsomorphicLayoutEffect";
 import { clsx } from "@/lib/clsx";
 import { SearchBar } from "@/components/ui/SearchBar";
+import { ActionLink, ArrowForwardIcon } from "@/components/home/ActionLink";
 import { useAuthStore } from "@/store/authStore";
 
 /* ── Icons ──────────────────────────────────────────────────────────────
@@ -127,7 +128,7 @@ function PauseIcon({ className }: { className?: string }) {
 /** An accent word with the self-drawing underline used across all three slides. */
 function Underlined({ children }: { children: ReactNode }) {
   return (
-    <span className="relative inline-block text-accent">
+    <span className="relative inline-block text-md-primary">
       {children}
       {/* preserveAspectRatio="none" stretches the stroke, so a wide phrase
           needs a thinner nominal width to land at the same visual weight. */}
@@ -187,7 +188,7 @@ const SLIDES: Slide[] = [
       <>
         sequenced <Underlined>learning</Underlined>
       </>,
-      <span className="text-accent" key="roadmap">
+      <span className="text-md-primary" key="roadmap">
         roadmap
         <SparkIcon className="ml-1 inline-block h-5 w-5 align-super sm:h-6 sm:w-6" />
       </span>,
@@ -358,16 +359,12 @@ export function Hero() {
   const slide = SLIDES[active] ?? SLIDES[0];
   if (!slide) return null;
 
+  // Lowest emphasis of the pair — M3 text button, so the filled primary beside
+  // it is unmistakably the one action of this view.
   const secondaryAction = (
-    <a
-      href={slide.secondary.href}
-      className="press group inline-flex min-h-touch items-center justify-center gap-3 rounded-full text-sm font-semibold text-paper transition-colors duration-fast hover:text-accent-text sm:justify-start"
-    >
-      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line/25 transition-colors duration-fast group-hover:border-accent/60">
-        <PlayIcon className="h-4 w-4 translate-x-px" />
-      </span>
+    <ActionLink href={slide.secondary.href} variant="text" size="lg" icon={<PlayIcon />}>
       {slide.secondary.label}
-    </a>
+    </ActionLink>
   );
 
   return (
@@ -382,13 +379,15 @@ export function Hero() {
       onBlurCapture={() => setInteracting(false)}
       // min-h-screen-safe uses 100svh: 100vh ignores the mobile browser
       // chrome, so the hero used to jump as the URL bar collapsed.
-      className="min-h-screen-safe relative flex items-center overflow-hidden bg-ink pt-20 sm:pt-24"
+      className="min-h-screen-safe relative flex items-center overflow-hidden bg-md-surface pt-[calc(var(--app-bar-h)+var(--safe-top)+1.5rem)] sm:pt-24"
     >
-      {/* Ambient warmth + film grain */}
+      {/* Ambient warmth + film grain. The gradients carry the vivid brand
+          source colour rather than the M3 primary role: they sit on their own
+          dark field, which is exactly the case `--md-source` is kept for. */}
       <div
         data-hero-glow
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(46rem_32rem_at_6%_-10%,rgb(var(--color-accent)/0.10),transparent_62%),radial-gradient(54rem_40rem_at_92%_34%,rgb(var(--color-accent)/0.14),transparent_64%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(46rem_32rem_at_6%_-10%,rgb(var(--md-source)/0.12),transparent_62%),radial-gradient(54rem_40rem_at_92%_34%,rgb(var(--md-source)/0.16),transparent_64%)]"
       />
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-noise opacity-[0.05]" />
 
@@ -404,19 +403,27 @@ export function Hero() {
           {slide.badge && (
             <div
               data-hero-badge
-              className="inline-flex items-center gap-2.5 rounded-full border border-accent/40 bg-accent/[0.07] py-2 pl-3.5 pr-4 text-accent-text"
+              // M3 suggestion chip: a tonal container, not an outlined accent
+              // pill, so the badge sits one step above the surface instead of
+              // competing with the primary CTA.
+              className="inline-flex min-h-[2rem] items-center gap-2 rounded-sm bg-md-primary-container py-1.5 pl-3 pr-3.5 text-md-on-primary-container"
             >
-              <SparkIcon className="h-4 w-4 shrink-0" />
-              <span className="text-[0.8125rem] font-semibold tracking-tight sm:text-sm">
-                {slide.badge}
-              </span>
+              <SparkIcon className="h-[1.125rem] w-[1.125rem] shrink-0" />
+              <span className="text-label-lg">{slide.badge}</span>
             </div>
           )}
 
           <h1
             className={clsx(
-              "font-display font-bold leading-[1.06] tracking-tight text-paper",
-              "text-[2.25rem] sm:text-5xl xl:text-[3.75rem]",
+              // M3 display scale. The 1.875rem floor is the phone minimum the
+              // mobile pass landed on and must not creep back up; above `sm`
+              // the real Display Medium/Large steps take over.
+              "text-md-on-surface",
+              "text-[1.875rem] sm:text-display-md xl:text-display-lg",
+              // The scale's own line-heights are set for a single line; these
+              // headlines run to three masked lines, so they are tightened
+              // deliberately — and tracked in, as M3 does at display sizes.
+              "leading-[1.18] tracking-[-0.01em] sm:leading-[1.1] xl:leading-[1.06]",
               slide.badge ? "mt-6" : "mt-0"
             )}
           >
@@ -431,7 +438,7 @@ export function Hero() {
             ))}
           </h1>
 
-          <p data-hero-sub className="mt-7 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
+          <p data-hero-sub className="mt-7 max-w-xl text-body-lg text-md-on-surface-variant">
             {slide.body}
           </p>
 
@@ -442,16 +449,18 @@ export function Hero() {
                 <div className="w-fit">{secondaryAction}</div>
               </div>
             ) : (
-              <div className="flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:gap-6">
-                <a
+              <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-4">
+                {/* The one filled button on the landing page. */}
+                <ActionLink
                   href={slide.primary.href}
-                  className="press group inline-flex min-h-[3.25rem] items-center justify-center gap-3 rounded-full bg-accent px-8 text-base font-bold tracking-tight text-on-accent shadow-[0_8px_35px_rgb(var(--color-accent)/0.28)] transition-colors duration-fast hover:bg-accent-hover"
+                  variant="filled"
+                  size="lg"
+                  fullWidth
+                  className="sm:w-auto"
+                  trailingIcon={<ArrowForwardIcon />}
                 >
                   {slide.primary.label}
-                  <span aria-hidden className="transition-transform duration-base group-hover:translate-x-1">
-                    →
-                  </span>
-                </a>
+                </ActionLink>
                 {secondaryAction}
               </div>
             )}
@@ -463,9 +472,10 @@ export function Hero() {
                 <li
                   key={label}
                   data-hero-chip
-                  className="flex items-center gap-2.5 rounded-full border border-line/15 bg-paper/[0.03] px-4 py-2.5 text-xs font-semibold text-subtle sm:text-sm"
+                  // M3 assist chip — 8dp corner, outlined, label-large.
+                  className="flex min-h-[2rem] items-center gap-2 rounded-sm border border-md-outline-variant bg-md-surface-container px-3.5 py-1.5 text-label-lg text-md-on-surface-variant"
                 >
-                  <Icon className="h-4 w-4 shrink-0 text-accent" />
+                  <Icon className="h-[1.125rem] w-[1.125rem] shrink-0 text-md-primary" />
                   {label}
                 </li>
               ))}
@@ -477,14 +487,14 @@ export function Hero() {
               {STEPS.map(({ icon: Icon, label }, i) => (
                 <li key={label} data-hero-chip className="flex items-center gap-2 sm:gap-3">
                   <span className="flex flex-col items-center gap-2">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-full border border-accent/40 bg-accent/[0.07] text-accent">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-full bg-md-primary-container text-md-on-primary-container">
                       <Icon className="h-5 w-5" />
                     </span>
-                    <span className="text-xs font-semibold text-paper sm:text-sm">{label}</span>
+                    <span className="text-label-lg text-md-on-surface">{label}</span>
                   </span>
                   {i < STEPS.length - 1 && (
-                    <span aria-hidden className="mb-6 text-accent/50">
-                      →
+                    <span aria-hidden className="mb-6 text-md-outline">
+                      <ArrowForwardIcon className="h-5 w-5" />
                     </span>
                   )}
                 </li>
@@ -501,7 +511,7 @@ export function Hero() {
         >
           <div
             data-hero-ambient
-            className="pointer-events-none absolute left-1/2 top-[22%] aspect-square w-[72%] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgb(var(--color-accent)/0.34),rgb(var(--color-accent)/0.06)_58%,transparent_74%)] opacity-60 blur-3xl"
+            className="pointer-events-none absolute left-1/2 top-[22%] aspect-square w-[72%] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgb(var(--md-source)/0.34),rgb(var(--md-source)/0.06)_58%,transparent_74%)] opacity-60 blur-3xl"
           />
           <div data-hero-float data-scene-stage className="relative">
             <Image
@@ -536,16 +546,18 @@ export function Hero() {
               aria-label={`Slide ${i + 1}: ${s.label}`}
               tabIndex={i === active ? 0 : -1}
               onClick={() => go(i)}
-              // The visible bar is small, so the button keeps a 44px hit area
-              // around it via padding rather than growing the indicator.
-              className="group -m-3 p-3"
+              // The visible bar is small, so the button grows its hit area
+              // with padding and pulls it back with an equal negative margin:
+              // 44px tall, and as wide as the gap allows without the three
+              // targets overlapping each other.
+              className="group -mx-2 -my-[1.1875rem] px-2 py-[1.1875rem]"
             >
               <span
                 className={clsx(
-                  "block h-1.5 rounded-full transition-all duration-base ease-standard",
+                  "block h-1.5 rounded-full transition-all duration-base ease-emphasized",
                   i === active
-                    ? "w-7 bg-accent"
-                    : "w-1.5 bg-line/35 group-hover:bg-line/60"
+                    ? "w-7 bg-md-primary"
+                    : "w-1.5 bg-md-outline-variant group-hover:bg-md-outline"
                 )}
               />
             </button>
@@ -558,7 +570,7 @@ export function Hero() {
             onClick={() => setUserPaused((p) => !p)}
             aria-pressed={userPaused}
             aria-label={userPaused ? "Resume slideshow" : "Pause slideshow"}
-            className="press flex h-11 w-11 items-center justify-center rounded-full border border-line/20 text-subtle transition-colors duration-fast hover:border-accent/50 hover:text-accent-text"
+            className="press state-layer flex h-11 w-11 items-center justify-center rounded-full border border-md-outline-variant text-md-on-surface-variant transition-colors duration-fast"
           >
             {userPaused ? <PlayIcon className="h-4 w-4 translate-x-px" /> : <PauseIcon className="h-4 w-4" />}
           </button>

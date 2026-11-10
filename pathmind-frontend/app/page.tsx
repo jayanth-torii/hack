@@ -21,9 +21,11 @@ export default function HomePage() {
       <CustomCursor />
       <Preloader />
       <Header />
-      {/* pb-nav clears the mobile bottom navigation so the footer's last
-          row is never trapped behind it. */}
-      <main id="main" className="pb-nav">
+      {/* Clearance for the mobile bottom navigation lives on <Footer>, which
+          is the last thing on the page — putting it here only opened an empty
+          band between the CTA and the footer while the footer stayed behind
+          the nav. */}
+      <main id="main">
         <Hero />
         <IntroVideo />
         <Marquee />

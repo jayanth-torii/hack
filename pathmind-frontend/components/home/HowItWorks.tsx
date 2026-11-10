@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { gsap } from "@/lib/gsap-config";
 import { useIsomorphicLayoutEffect } from "@/lib/useIsomorphicLayoutEffect";
 import { Eyebrow } from "@/components/ui/Eyebrow";
+import { ActionLink, ArrowForwardIcon } from "./ActionLink";
 
 /**
  * "From curiosity to competence" — the four-step journey.
@@ -136,16 +137,18 @@ export function HowItWorks() {
     <section
       id="how"
       ref={sectionRef}
-      className="relative overflow-hidden bg-ink py-20 text-paper sm:py-24"
+      // A recessed band between two `surface` sections — the ladder is what
+      // gives the page depth, not more shadow.
+      className="relative overflow-hidden bg-md-surface-container-lowest py-20 text-md-on-surface sm:py-24"
     >
       {/* Corner swooshes — warm light bleeding in from the edges */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-32 -top-40 h-[26rem] w-[34rem] rounded-full bg-[radial-gradient(circle,rgb(var(--color-accent)/0.26),transparent_68%)] blur-3xl"
+        className="pointer-events-none absolute -right-32 -top-40 h-[26rem] w-[34rem] rounded-full bg-[radial-gradient(circle,rgb(var(--md-source)/0.24),transparent_68%)] blur-3xl"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-44 -left-36 h-[26rem] w-[32rem] rounded-full bg-[radial-gradient(circle,rgb(var(--color-accent)/0.20),transparent_70%)] blur-3xl"
+        className="pointer-events-none absolute -bottom-44 -left-36 h-[26rem] w-[32rem] rounded-full bg-[radial-gradient(circle,rgb(var(--md-source)/0.18),transparent_70%)] blur-3xl"
       />
 
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
@@ -154,26 +157,25 @@ export function HowItWorks() {
           <div className="lg:col-span-7">
             <Eyebrow>How it works</Eyebrow>
 
-            <h2 className="mt-5 font-display text-[2rem] font-bold leading-[1.1] tracking-tight sm:text-4xl lg:text-[2.75rem]">
+            <h2 className="mt-5 text-headline-lg leading-[1.2] sm:text-display-sm sm:leading-[1.18] lg:text-display-md lg:leading-[1.14]">
               From curiosity to
               <br />
-              <span className="text-accent">competence in four steps</span>
+              <span className="text-md-primary">competence in four steps</span>
             </h2>
 
-            <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted sm:text-base">
+            <p className="mt-5 max-w-xl text-body-lg text-md-on-surface-variant">
               One stage at a time — each step unlocks the next, so your momentum compounds
               and you never feel lost.
             </p>
 
-            <a
+            <ActionLink
               href="#start"
-              className="press group mt-8 inline-flex min-h-touch items-center gap-2.5 rounded-full bg-accent px-7 text-sm font-bold tracking-tight text-on-accent shadow-[0_8px_30px_rgb(var(--color-accent)/0.25)] transition-colors duration-fast hover:bg-accent-hover"
+              variant="tonal"
+              className="mt-8"
+              trailingIcon={<ArrowForwardIcon />}
             >
               Start now
-              <span aria-hidden className="transition-transform duration-base group-hover:translate-x-1">
-                →
-              </span>
-            </a>
+            </ActionLink>
           </div>
 
           <div aria-hidden data-scene-stage className="relative lg:col-span-5">
@@ -193,14 +195,11 @@ export function HowItWorks() {
           {/* Timeline rail — desktop only. On phones the step label carries the
               sequence, so the rail would be redundant decoration. */}
           <div aria-hidden className="absolute bottom-10 left-[27px] top-10 hidden w-px lg:block">
-            <div data-rail-track className="relative h-full w-px bg-accent/20">
-              <div
-                data-rail-fill
-                className="absolute inset-0 w-px bg-gradient-to-b from-accent to-accent-hover"
-              />
+            <div data-rail-track className="relative h-full w-px bg-md-outline-variant">
+              <div data-rail-fill className="absolute inset-0 w-px bg-md-primary" />
               <span
                 data-rail-dot
-                className="absolute -left-[3px] top-0 h-[7px] w-[7px] rounded-full bg-accent shadow-[0_0_12px_3px_rgb(var(--color-accent)/0.55)]"
+                className="absolute -left-[3px] top-0 h-[7px] w-[7px] rounded-full bg-md-primary shadow-[0_0_12px_3px_rgb(var(--md-source)/0.55)]"
               />
             </div>
           </div>
@@ -211,19 +210,19 @@ export function HowItWorks() {
                 {/* Rail node */}
                 <span
                   aria-hidden
-                  className="absolute left-0 top-9 hidden h-14 w-14 items-center justify-center rounded-full border border-accent/50 bg-ink font-display text-sm font-bold text-accent shadow-[0_0_22px_rgb(var(--color-accent)/0.28)] lg:flex"
+                  className="absolute left-0 top-9 hidden h-14 w-14 items-center justify-center rounded-full bg-md-primary-container text-title-md text-md-on-primary-container shadow-e1 lg:flex"
                 >
                   {step.n}
                 </span>
 
                 <article
                   data-step-card
-                  className="relative overflow-hidden rounded-xl border border-accent/20 bg-card/40 p-5 shadow-[0_0_60px_-20px_rgb(var(--color-accent)/0.5)] backdrop-blur-sm transition-colors duration-base hover:border-accent/45 sm:p-7"
+                  className="relative overflow-hidden rounded-lg border border-md-outline-variant bg-md-surface-container p-5 shadow-e1 transition-colors duration-base ease-standard hover:bg-md-surface-container-high sm:p-7"
                 >
                   {/* Ghost numeral */}
                   <span
                     aria-hidden
-                    className="pointer-events-none absolute -top-3 right-4 select-none font-display text-6xl font-bold leading-none text-paper/[0.05] sm:text-7xl lg:text-8xl"
+                    className="pointer-events-none absolute -top-3 right-4 select-none text-6xl font-bold leading-none text-md-on-surface/[0.05] sm:text-7xl lg:text-8xl"
                   >
                     {step.n}
                   </span>
@@ -231,18 +230,18 @@ export function HowItWorks() {
                   <div className="grid items-center gap-5 sm:grid-cols-[1fr_auto] sm:gap-6">
                     <div className="min-w-0">
                       <div className="flex items-center gap-2.5">
-                        <span className="text-[0.6875rem] font-bold uppercase tracking-[0.22em] text-subtle">
+                        <span className="text-label-sm uppercase tracking-[0.18em] text-md-on-surface-variant">
                           Step {step.n}
                         </span>
-                        <span aria-hidden className="h-px w-5 bg-line/20" />
-                        <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
+                        <span aria-hidden className="h-px w-5 bg-md-outline-variant" />
+                        <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-md-primary" />
                       </div>
 
-                      <h3 className="mt-2.5 font-display text-xl font-bold tracking-tight sm:text-2xl">
-                        {step.title} <span className="text-accent">{step.accent}</span>
+                      <h3 className="mt-2.5 text-title-lg text-md-on-surface sm:text-headline-sm">
+                        {step.title} <span className="text-md-primary">{step.accent}</span>
                       </h3>
 
-                      <p className="mt-2 max-w-md text-sm leading-relaxed text-muted">
+                      <p className="mt-2 max-w-md text-body-md text-md-on-surface-variant">
                         {step.copy}
                       </p>
 
@@ -250,14 +249,14 @@ export function HowItWorks() {
                           stage sits, not a live reading of the user's own
                           progress. The label says "journey" for that reason. */}
                       <div className="mt-5 max-w-md">
-                        <div className="flex items-center justify-between text-[0.625rem] font-bold uppercase tracking-[0.2em]">
-                          <span className="text-subtle">Journey progress</span>
-                          <span className="text-accent">{step.percent}%</span>
+                        <div className="flex items-center justify-between text-label-sm uppercase tracking-[0.18em]">
+                          <span className="text-md-on-surface-variant">Journey progress</span>
+                          <span className="text-md-primary">{step.percent}%</span>
                         </div>
-                        <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-line/12">
+                        <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-md-surface-container-highest">
                           <div
                             data-meter
-                            className="h-full rounded-full bg-gradient-to-r from-accent-hover to-accent"
+                            className="h-full rounded-full bg-md-primary"
                             style={{ width: `${step.percent}%` }}
                           />
                         </div>

@@ -49,12 +49,16 @@ function DownloadIcon({ className }: { className?: string }) {
 }
 
 /**
- * Premium one-click "send to calendar": converts the stored suggestedTimeline
- * into a day-by-day plan and either downloads an .ics (always works, no login)
- * or batch-inserts into the user's Google Calendar. The Google action uses the
- * official white/Google-calendar-branded treatment so it reads instantly;
- * .ics stays in the glassy outline language. When Google isn't connected, the
- * warning links straight into the OAuth connect flow.
+ * One-click "send to calendar": converts the stored suggestedTimeline into a
+ * day-by-day plan and either downloads an .ics (always works, no login) or
+ * batch-inserts into the user's Google Calendar.
+ *
+ * Material 3 pairs the two actions as filled + outlined — the Google route is
+ * the one most people want, the .ics is the neutral alternative — rather than
+ * as a white brand slab beside a glass pill. The Google Calendar mark keeps
+ * its own brand colours (it is a logo, not a themed surface); everything
+ * around it is a role. When Google isn't connected, the warning links straight
+ * into the OAuth connect flow.
  */
 export function CalendarExportButton({ roadmapId, topic }: CalendarExportButtonProps) {
   const exportCalendar = useExportCalendar();
@@ -87,35 +91,30 @@ export function CalendarExportButton({ roadmapId, topic }: CalendarExportButtonP
   return (
     <div className="space-y-3">
       <div className="flex flex-col gap-2.5 sm:flex-row">
-        {/* Send to Google Calendar — official white + Google-brand mark */}
+        {/* Send to Google Calendar — M3 filled button, Google brand mark */}
         <button
           type="button"
           onClick={() => handleExport("google")}
           disabled={busy}
-          className="group relative inline-flex flex-1 items-center justify-center gap-2.5 overflow-hidden rounded-2xl bg-white px-5 py-3 text-sm font-bold tracking-tight text-[#1d1d1f] shadow-lg shadow-black/15 ring-1 ring-inset ring-black/10 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-black/20 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60"
+          className="state-layer press inline-flex min-h-touch flex-1 select-none items-center justify-center gap-2.5 rounded-full bg-md-primary px-6 text-label-lg font-medium text-md-on-primary transition-[background-color,box-shadow] duration-fast ease-standard disabled:pointer-events-none disabled:bg-md-on-surface/[0.12] disabled:text-md-on-surface/[0.38]"
         >
-          {/* shine sweep on hover */}
-          <span
-            aria-hidden
-            className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-black/[0.05] to-transparent transition-transform duration-700 group-hover:translate-x-full"
-          />
           {busy ? (
-            <span className="h-4 w-4 animate-spin rounded-full border-2 border-[#1d1d1f]/25 border-t-[#1d1d1f]" />
+            <span aria-hidden className="h-4 w-4 animate-spin rounded-full border-2 border-md-on-primary/30 border-t-md-on-primary" />
           ) : (
             <GoogleCalendarIcon className="h-4 w-4" />
           )}
           {busy ? "Sending…" : "Send to Google Calendar"}
         </button>
 
-        {/* Download .ics — glassy outline */}
+        {/* Download .ics — M3 outlined button, the neutral alternative */}
         <button
           type="button"
           onClick={() => handleExport("ics")}
           disabled={busy}
-          className="group inline-flex flex-1 items-center justify-center gap-2.5 rounded-2xl border border-line/15 bg-card/60 px-5 py-3 text-sm font-semibold text-subtle backdrop-blur-xl transition-all hover:-translate-y-0.5 hover:border-accent/50 hover:text-accent hover:shadow-lg hover:shadow-accent/10 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60"
+          className="state-layer press inline-flex min-h-touch flex-1 select-none items-center justify-center gap-2.5 rounded-full border border-md-outline px-6 text-label-lg font-medium text-md-on-surface transition-[background-color,border-color] duration-fast ease-standard disabled:pointer-events-none disabled:border-md-on-surface/[0.12] disabled:text-md-on-surface/[0.38]"
         >
           {busy ? (
-            <span className="h-4 w-4 animate-spin rounded-full border-2 border-line/40 border-t-accent" />
+            <span aria-hidden className="h-4 w-4 animate-spin rounded-full border-2 border-md-outline-variant border-t-md-primary" />
           ) : (
             <DownloadIcon className="h-4 w-4" />
           )}
@@ -126,19 +125,19 @@ export function CalendarExportButton({ roadmapId, topic }: CalendarExportButtonP
       {result && (
         <p
           className={clsx(
-            "flex flex-wrap items-center gap-x-2 text-xs",
+            "flex flex-wrap items-center gap-x-2 text-body-sm",
             result.kind === "ok"
-              ? "text-emerald-300"
+              ? "text-md-success"
               : result.kind === "warn"
-                ? "text-amber-300"
-                : "text-rose-300"
+                ? "text-md-warning"
+                : "text-md-error"
           )}
         >
           {result.text}
           {result.kind === "warn" && (
             <a
               href={googleConnectUrl(typeof window !== "undefined" ? window.location.pathname : "/saved")}
-              className="font-semibold text-accent underline-offset-2 hover:underline"
+              className="text-label-lg text-md-primary underline-offset-4 hover:underline"
             >
               Connect Google Calendar →
             </a>

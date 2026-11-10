@@ -1,7 +1,7 @@
 "use client";
 
 import { create } from "zustand";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, type ReactNode, useRef } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { clsx } from "@/lib/clsx";
 
@@ -21,20 +21,26 @@ const DURATION: Record<ToastTone, number> = {
   info: 4200,
 };
 
-const TONE_STYLES: Record<
-  ToastTone,
-  { chip: string; bar: string; ring: string; icon: ReactNode }
-> = {
+/**
+ * Tone styling for an M3 snackbar.
+ *
+ * The snackbar container is `inverse-surface` — a *light* surface in the dark
+ * scheme — so the tone colours are the dark `on-*` roles, which are the ones
+ * Material designs to sit on a light container. Using `md-success` (a pale
+ * green meant for dark surfaces) here would be unreadable.
+ *
+ * Every tone also carries an icon: status is never colour alone.
+ */
+const TONE_STYLES: Record<ToastTone, { fg: string; bar: string; icon: ReactNode }> = {
   success: {
-    chip: "bg-emerald-400/15 text-emerald-300",
-    bar: "bg-emerald-400",
-    ring: "shadow-emerald-400/10",
+    fg: "text-md-on-success",
+    bar: "bg-md-on-success",
     icon: (
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
         <path
           d="m5 12.5 4.5 4.5L19 7.5"
           stroke="currentColor"
-          strokeWidth="2.4"
+          strokeWidth="1.8"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
@@ -42,40 +48,37 @@ const TONE_STYLES: Record<
     ),
   },
   error: {
-    chip: "bg-rose-400/15 text-rose-300",
-    bar: "bg-rose-400",
-    ring: "shadow-rose-400/10",
+    fg: "text-md-on-error",
+    bar: "bg-md-on-error",
     icon: (
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden>
-        <path d="M12 8v5m0 3.5v.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-        <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.7" />
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <path d="M12 8v5m0 3.5v.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.8" />
       </svg>
     ),
   },
   warning: {
-    chip: "bg-amber-400/15 text-amber-300",
-    bar: "bg-amber-400",
-    ring: "shadow-amber-400/10",
+    fg: "text-md-on-warning",
+    bar: "bg-md-on-warning",
     icon: (
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
         <path
           d="M10.3 4.9 2.9 17.4A1.8 1.8 0 0 0 4.5 20h15a1.8 1.8 0 0 0 1.6-2.6L13.7 4.9a1.9 1.9 0 0 0-3.4 0Z"
           stroke="currentColor"
-          strokeWidth="1.7"
+          strokeWidth="1.8"
           strokeLinejoin="round"
         />
-        <path d="M12 9.5v4m0 3v.5" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+        <path d="M12 9.5v4m0 3v.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
       </svg>
     ),
   },
   info: {
-    chip: "bg-brand-400/15 text-brand-300",
-    bar: "bg-brand-400",
-    ring: "shadow-brand-400/10",
+    fg: "text-md-on-info",
+    bar: "bg-md-on-info",
     icon: (
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden>
-        <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.7" />
-        <path d="M12 11v5m0-8.5v.5" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.8" />
+        <path d="M12 11v5m0-8.5v.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
       </svg>
     ),
   },
@@ -114,6 +117,12 @@ export const toast = {
   dismiss: (id: string) => useToastStore.getState().dismiss(id),
 };
 
+/**
+ * One Material 3 **snackbar**: `inverse-surface` container, `inverse-on-surface`
+ * text, the 4dp extra-small shape, elevation 3, and a single line of
+ * `body-md`. The trailing control is M3's snackbar action slot, tinted
+ * `inverse-primary`.
+ */
 function ToastView({ item, onDone }: { item: ToastItem; onDone: (id: string) => void }) {
   const reduce = useReducedMotion();
   const style = TONE_STYLES[item.tone];
@@ -134,44 +143,41 @@ function ToastView({ item, onDone }: { item: ToastItem; onDone: (id: string) => 
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={reduce ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.97 }}
       transition={{ type: "spring", stiffness: 380, damping: 30 }}
-      className={clsx(
-        "relative w-full overflow-hidden rounded-2xl border border-line/10 bg-card/85 shadow-2xl backdrop-blur-2xl backdrop-saturate-150",
-        style.ring
-      )}
+      // The stack is pointer-events-none so it never blocks the page; each
+      // card has to opt back in or its dismiss button can't be tapped.
+      className="pointer-events-auto relative w-full overflow-hidden rounded-xs bg-md-inverse-surface shadow-e3"
     >
-      {/* top shine */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-line/25 to-transparent"
-      />
-      <div className="flex items-start gap-3 px-4 pb-3.5 pt-4">
-        <span
-          className={clsx(
-            "flex h-8 w-8 flex-none items-center justify-center rounded-xl",
-            style.chip
-          )}
-        >
-          {style.icon}
-        </span>
-        <div className="min-w-0 flex-1 pt-0.5">
-          <p className="text-sm font-semibold leading-snug text-paper">{item.title}</p>
+      <div className="flex min-h-12 items-center gap-3 py-2 pl-4 pr-2">
+        <span className={clsx("flex-none", style.fg)}>{style.icon}</span>
+
+        <div className="min-w-0 flex-1 py-1">
+          <p className="text-body-md text-md-inverse-on-surface">{item.title}</p>
           {item.description && (
-            <p className="mt-0.5 text-xs leading-relaxed text-muted">{item.description}</p>
+            <p className="mt-0.5 text-body-sm text-md-inverse-on-surface/80">{item.description}</p>
           )}
         </div>
+
+        {/* Snackbar action slot. 44px square clears the touch floor without a
+            pseudo-element trick, and sits in the M3 action colour. */}
         <button
           type="button"
           onClick={() => onDone(item.id)}
           aria-label="Dismiss notification"
-          className="flex h-6 w-6 flex-none items-center justify-center rounded-lg text-muted transition-colors hover:bg-line/10 hover:text-paper"
+          className="press state-layer grid h-11 w-11 flex-none place-items-center rounded-full text-md-inverse-primary"
         >
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path
+              d="M6 6l12 12M18 6 6 18"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+            />
           </svg>
         </button>
       </div>
-      {/* lifetime progress bar */}
-      <div aria-hidden className="absolute inset-x-0 bottom-0 h-0.5 bg-line/5">
+
+      {/* Lifetime progress bar — the only cue that the snackbar is timed. */}
+      <div aria-hidden className="absolute inset-x-0 bottom-0 h-0.5 bg-md-inverse-on-surface/15">
         <motion.div
           initial={{ width: "100%" }}
           animate={{ width: "0%" }}
@@ -183,15 +189,55 @@ function ToastView({ item, onDone }: { item: ToastItem; onDone: (id: string) => 
   );
 }
 
-/** Mount once in the root providers — renders the toast stack bottom-right. */
+/**
+ * Mount once in the root providers — renders the snackbar stack.
+ *
+ * The stack also publishes its own height as `--snackbar-lift` on the document
+ * element. Material specifies that a FAB **moves up** to make room for a
+ * snackbar rather than being covered by one, and both sit bottom-right at every
+ * breakpoint here, so they would otherwise overlap on phone and desktop alike.
+ * Publishing a variable keeps that contract one-way: the snackbar knows
+ * nothing about who lifts, and any future floating control can opt in with a
+ * `translateY` — no shared z-index negotiation, no import cycle.
+ */
 export function Toaster() {
   const toasts = useToastStore((s) => s.toasts);
   const dismiss = useToastStore((s) => s.dismiss);
+  const stackRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const node = stackRef.current;
+
+    const publish = () => {
+      // Measured rather than computed: toast height depends on whether a
+      // description wrapped, which no constant can know up front.
+      const h = toasts.length === 0 ? 0 : (node?.offsetHeight ?? 0);
+      root.style.setProperty("--snackbar-lift", h === 0 ? "0px" : `${h + 12}px`);
+    };
+
+    publish();
+    if (!node || toasts.length === 0) return;
+
+    // The stack grows and shrinks as toasts enter and leave, and the exit
+    // animation changes its height over time — observe rather than sample once.
+    const ro = new ResizeObserver(publish);
+    ro.observe(node);
+    return () => {
+      ro.disconnect();
+      root.style.setProperty("--snackbar-lift", "0px");
+    };
+  }, [toasts]);
 
   return (
     <div
+      ref={stackRef}
       aria-live="polite"
-      className="pointer-events-none fixed inset-x-4 bottom-4 z-[100] flex flex-col items-stretch gap-3 sm:inset-x-auto sm:bottom-6 sm:right-6 sm:w-96"
+      // The M3 navigation bar is fixed and 80px tall (+ safe inset) below
+      // `md`, so a snackbar pinned to `bottom-4` lands behind it on every
+      // phone. Sit above the nav until the breakpoint where the nav
+      // disappears — `--bottom-nav-h` keeps the two in step automatically.
+      className="pointer-events-none fixed inset-x-4 bottom-[calc(var(--bottom-nav-h)_+_var(--safe-bottom)_+_0.75rem)] z-[100] flex flex-col items-stretch gap-3 sm:inset-x-auto sm:right-6 sm:w-96 md:bottom-6"
     >
       <AnimatePresence>
         {toasts.map((t) => (

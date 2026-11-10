@@ -38,7 +38,12 @@ function Row({
     <div
       className={clsx(
         "overflow-hidden whitespace-nowrap py-5",
-        variant === "ink" ? "border-y border-line/10 bg-ink" : "bg-accent"
+        // M3 keeps large fields on a *container* role rather than the vivid
+        // primary, so the strip stays brand-coloured without shouting over the
+        // one filled button on the page.
+        variant === "ink"
+          ? "border-y border-md-outline-variant/60 bg-md-surface"
+          : "bg-md-primary-container"
       )}
     >
       <div
@@ -51,16 +56,16 @@ function Row({
           <span
             key={`${item}-${i}`}
             className={clsx(
-              "inline-flex items-center gap-6 px-6 font-display uppercase",
-              variant === "ink" ? "text-paper" : "text-on-accent",
-              reverse ? "text-sm md:text-base" : "text-lg md:text-2xl"
+              "inline-flex items-center gap-6 px-6 uppercase",
+              variant === "ink" ? "text-md-on-surface" : "text-md-on-primary-container",
+              reverse ? "text-label-lg md:text-title-md" : "text-title-lg md:text-headline-sm"
             )}
           >
             {item}
             <Star
               className={clsx(
                 "h-5 w-5 md:h-6 md:w-6",
-                variant === "ink" ? "text-accent" : "text-on-accent/70"
+                variant === "ink" ? "text-md-primary" : "text-md-on-primary-container/70"
               )}
             />
           </span>

@@ -1,15 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { Poppins } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 
-// Poppins is the site-wide font family (per the Acjon template's body type —
-// see templates/acjon/assets/scss/utils/_typography.scss). Display headings
-// use heavier Poppins weights with tight tracking instead of a second font.
-const poppins = Poppins({
+// Roboto is Material 3's reference typeface, and the type scale in
+// tailwind.config.ts is specified against its metrics — the weights below are
+// the ones M3 actually uses (400 body/display, 500 title/label, 700 for the
+// few places the product wants extra emphasis). One family, no second webfont.
+const roboto = Roboto({
   subsets: ["latin"],
   variable: "--font-sans",
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500", "700"],
 });
 
 const SITE_URL = "https://vidhyora.vercel.app";
@@ -91,10 +92,10 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#010103" },
-    { media: "(prefers-color-scheme: light)", color: "#f6f8f6" },
-  ],
+  // One colour, because the app ships dark-only (see LIGHT_MODE_ENABLED in
+  // lib/useTheme.tsx). A light `themeColor` here would tint the browser chrome
+  // light on a phone set to light mode while the page itself stayed dark.
+  themeColor: "#010103",
 };
 
 // Structured data (JSON-LD) so search engines understand what Vidhyora is and who built it
@@ -111,14 +112,8 @@ const JSON_LD = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={poppins.variable}>
+    <html lang="en" className={roboto.variable}>
       <body className="min-h-screen bg-ink font-sans text-subtle antialiased">
-        {/* Apply the saved/system theme before hydration to avoid a flash */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `try{var t=localStorage.getItem("vidhyora-theme");if(t==="light"||(!t&&matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")}catch(e){}`,
-          }}
-        />
         {/* Keyboard users get past the fixed header without tabbing the nav */}
         <a
           href="#main"

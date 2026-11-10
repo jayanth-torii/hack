@@ -33,19 +33,23 @@ export function ActivityChart({ buckets, range }: ActivityChartProps) {
   if (total === 0) {
     return (
       <div className="py-5 text-center">
-        <p className="text-sm text-subtle">
+        <p className="text-body-md text-md-on-surface-variant">
           No stages completed in the last {range === "week" ? "7" : "30"} days.
         </p>
-        <p className="mt-1 text-xs text-muted">
+        <p className="mt-1 text-body-sm text-md-on-surface-variant">
           Finish a stage and it shows up here the same day.
         </p>
       </div>
     );
   }
 
+  // 30 bars at a 4px gap leave ~6px per bar inside a 360px panel. The month
+  // view therefore drops to a hairline gap on phones; sm+ is unchanged.
+  const gap = range === "month" ? "gap-px sm:gap-1.5" : "gap-1 sm:gap-1.5";
+
   return (
     <div>
-      <div className="flex h-28 items-end gap-1 sm:gap-1.5" aria-hidden>
+      <div className={`flex h-28 items-end ${gap}`} aria-hidden>
         {buckets.map((bucket, i) => {
           const height = bucket.count === 0 ? 3 : Math.max(8, (bucket.count / max) * 100);
           return (
@@ -54,8 +58,8 @@ export function ActivityChart({ buckets, range }: ActivityChartProps) {
                 title={`${bucket.date}: ${bucket.count} ${bucket.count === 1 ? "stage" : "stages"}`}
                 className={
                   bucket.count === 0
-                    ? "w-full rounded-sm bg-line/15"
-                    : "w-full rounded-sm bg-gradient-to-t from-accent-hover to-accent"
+                    ? "w-full rounded-xs bg-md-surface-container-highest"
+                    : "w-full rounded-xs bg-md-primary"
                 }
                 style={{
                   height: `${height}%`,
@@ -68,11 +72,11 @@ export function ActivityChart({ buckets, range }: ActivityChartProps) {
         })}
       </div>
 
-      <div aria-hidden className="mt-2 flex gap-1 sm:gap-1.5">
+      <div aria-hidden className={`mt-2 flex ${gap}`}>
         {buckets.map((bucket, i) => (
           <span
             key={bucket.date}
-            className="flex-1 text-center text-[0.5625rem] leading-none text-muted"
+            className="min-w-0 flex-1 whitespace-nowrap text-center text-label-sm leading-none text-md-on-surface-variant"
           >
             {/* A 30-day axis cannot fit 30 labels, so show every fifth. */}
             {range === "week" || i % 5 === 0 ? dayLabel(bucket.date, range) : ""}
@@ -95,8 +99,8 @@ export function ActivityChart({ buckets, range }: ActivityChartProps) {
         </tbody>
       </table>
 
-      <p className="mt-3 text-xs text-muted">
-        <span className="font-semibold text-paper tabular-nums">{total}</span>{" "}
+      <p className="mt-3 text-body-sm text-md-on-surface-variant">
+        <span className="text-label-lg text-md-on-surface tabular-nums">{total}</span>{" "}
         {total === 1 ? "stage" : "stages"} in the last {range === "week" ? "7" : "30"} days
       </p>
     </div>

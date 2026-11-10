@@ -12,10 +12,12 @@ export function Spotlight({ className }: { className?: string }) {
       aria-hidden
     >
       <defs>
+        {/* Role colours, not hues: the glow is the primary and tertiary
+            tones of the current scheme, so it follows the palette. */}
         <radialGradient id="spotlight-gradient" cx="50%" cy="30%" r="60%">
-          <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.6" />
-          <stop offset="60%" stopColor="#0ea5e9" stopOpacity="0.15" />
-          <stop offset="100%" stopColor="#0ea5e9" stopOpacity="0" />
+          <stop offset="0%" stopColor="rgb(var(--md-primary))" stopOpacity="0.5" />
+          <stop offset="60%" stopColor="rgb(var(--md-tertiary))" stopOpacity="0.15" />
+          <stop offset="100%" stopColor="rgb(var(--md-tertiary))" stopOpacity="0" />
         </radialGradient>
       </defs>
       <rect width="200" height="200" fill="url(#spotlight-gradient)" />

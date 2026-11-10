@@ -55,10 +55,10 @@ export function RoadmapSkeleton() {
 
         <div className="mt-14 space-y-6">
           {[0, 1, 2].map((i) => (
-            <div key={i} className="rounded-md border border-line/10 p-4 sm:p-5">
+            <div key={i} className="rounded-md border border-md-outline-variant p-4 sm:p-5">
               <div className="flex items-center gap-3">
                 <Skeleton className="h-8 w-8 rounded-full" />
-                <Skeleton className="h-4 w-20 rounded-full" />
+                <Skeleton className="h-8 w-28 rounded-sm" />
               </div>
               <Skeleton className="mt-4 h-5 w-2/3" />
               <Skeleton className="mt-2 h-4 w-full" />
@@ -78,10 +78,10 @@ export function CardGridSkeleton({ count = 6 }: { count?: number }) {
     <Shell label="Loading your saved roadmaps">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {Array.from({ length: count }, (_, i) => (
-          <div key={i} className="rounded-md border border-line/10 p-5">
+          <div key={i} className="rounded-md border border-md-outline-variant p-5">
             <Skeleton className="h-5 w-3/4" />
             <Skeleton className="mt-3 h-3 w-1/2" />
-            <Skeleton className="mt-4 h-6 w-24 rounded-full" />
+            <Skeleton className="mt-4 h-8 w-24 rounded-sm" />
           </div>
         ))}
       </div>
@@ -100,7 +100,7 @@ export function DashboardSkeleton() {
         </div>
         <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
           {[0, 1, 2, 3].map((i) => (
-            <div key={i} className="rounded-md border border-line/10 p-4">
+            <div key={i} className="rounded-md border border-md-outline-variant p-4">
               <Skeleton className="h-3 w-16" />
               <Skeleton className="mt-3 h-8 w-20" />
             </div>

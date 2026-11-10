@@ -12,7 +12,7 @@ import { googleLoginUrl } from "@/hooks/useGoogleCalendar";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { GeometryShapes } from "@/components/home/GeometryShapes";
-import { clsx } from "@/lib/clsx";
+import { ActionLink } from "@/components/home/ActionLink";
 import { toast } from "@/components/ui/toast";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 
@@ -21,14 +21,14 @@ const FEATURE_POINTS = [
     title: "AI-crafted syllabus",
     copy: "Every topic becomes a difficulty-sequenced learning path.",
     icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
         <path
           d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3Z"
           stroke="currentColor"
-          strokeWidth="1.6"
+          strokeWidth="1.8"
           strokeLinejoin="round"
         />
-        <circle cx="19" cy="19" r="1.6" stroke="currentColor" strokeWidth="1.6" />
+        <circle cx="19" cy="19" r="1.6" stroke="currentColor" strokeWidth="1.8" />
       </svg>
     ),
   },
@@ -36,14 +36,20 @@ const FEATURE_POINTS = [
     title: "Freshness-verified",
     copy: "Resources are checked so you never learn from stale links.",
     icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
         <path
           d="M12 3l7 2.6v5.2c0 4.5-3 8.6-7 10.2-4-1.6-7-5.7-7-10.2V5.6L12 3Z"
           stroke="currentColor"
-          strokeWidth="1.6"
+          strokeWidth="1.8"
           strokeLinejoin="round"
         />
-        <path d="m9 12 2 2 4-4.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+        <path
+          d="m9 12 2 2 4-4.5"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
     ),
   },
@@ -51,18 +57,79 @@ const FEATURE_POINTS = [
     title: "One stage at a time",
     copy: "Unlock stages as you go, with your progress synced everywhere.",
     icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z" stroke="currentColor" strokeWidth="1.8" />
         <path
-          d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"
+          d="M12 12V8M15.5 13.5 12 12"
           stroke="currentColor"
-          strokeWidth="1.6"
+          strokeWidth="1.8"
+          strokeLinecap="round"
         />
-        <path d="M12 12V8M15.5 13.5 12 12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
       </svg>
     ),
   },
 ];
 
+function MailIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <rect x="3" y="5.5" width="18" height="13" rx="3" stroke="currentColor" strokeWidth="1.8" />
+      <path
+        d="m4.5 7.5 7.5 6 7.5-6"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function LockIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <rect x="4.5" y="10" width="15" height="10" rx="2.5" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function GoogleMark() {
+  // Google's brand mark is the one place a literal colour is correct: the
+  // "Sign in with Google" guidelines forbid recolouring it, so these four
+  // hexes are the asset, not theming.
+  return (
+    <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden>
+      <path
+        fill="#FFC107"
+        d="M43.6 20.1H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3l5.7-5.7C34.5 6.1 29.5 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"
+      />
+      <path
+        fill="#FF3D00"
+        d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.9 1.2 8 3l5.7-5.7C34.5 6.1 29.5 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+      />
+      <path
+        fill="#4CAF50"
+        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"
+      />
+      <path
+        fill="#1976D2"
+        d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C36.9 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"
+      />
+    </svg>
+  );
+}
+
+/**
+ * Sign-in / sign-up — a Material 3 screen.
+ *
+ * Anatomy: a brand panel on a `surface-container-low` step beside the form on
+ * a `surface-container` card, so the two columns read as layers of one surface
+ * rather than two glass slabs on black. Fields are M3 **filled text fields**
+ * (`ui/Input`, with floating labels, leading icons and its own error row), and
+ * the emphasis ladder runs filled submit → outlined Google → text links, which
+ * is the one filled button this view is allowed.
+ */
 export function AuthForm({ mode }: { mode: "login" | "register" }) {
   const router = useRouter();
   const reduce = useReducedMotion();
@@ -97,10 +164,15 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
       if (isLogin) {
         toast.success(
           "Welcome back",
-          values.email.split("@")[0] ? `Good to see you, ${values.email.split("@")[0]}!` : "Good to see you!"
+          values.email.split("@")[0]
+            ? `Good to see you, ${values.email.split("@")[0]}!`
+            : "Good to see you!"
         );
       } else {
-        toast.success("Account created 🎉", "Welcome to Vidhyora — let's build your first roadmap.");
+        toast.success(
+          "Account created",
+          "Welcome to Vidhyora — let's build your first roadmap."
+        );
       }
       // Wait for auth state to init before navigating
       const { useAuthStore } = await import("@/store/authStore");
@@ -116,27 +188,33 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
   const stagger = (delay: number) =>
     reduce
       ? undefined
-      : { initial: { opacity: 0, y: 18 }, animate: { opacity: 1, y: 0 }, transition: { delay, duration: 0.55, ease: "easeOut" as const } };
+      : {
+          initial: { opacity: 0, y: 18 },
+          animate: { opacity: 1, y: 0 },
+          transition: { delay, duration: 0.55, ease: "easeOut" as const },
+        };
 
   return (
-    <section className="relative z-10 flex min-h-screen items-center justify-center overflow-hidden bg-ink py-20">
-      {/* Ambient glows + noise */}
+    // `.min-h-screen-safe` (100svh), never `min-h-screen` — 100vh ignores the
+    // mobile browser chrome and makes the panel jump as the URL bar collapses.
+    <section className="min-h-screen-safe relative z-10 flex items-center justify-center overflow-hidden bg-md-surface py-16 sm:py-20">
+      {/* Ambient glows + noise. The vivid brand source carries them; every
+          opaque surface below takes an M3 role. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(52rem_36rem_at_12%_-10%,rgb(var(--color-accent)/0.14),transparent_60%),radial-gradient(44rem_32rem_at_100%_20%,rgb(var(--color-accent)/0.12),transparent_60%)]"
-      />
-      {/* Corner swooshes — warm light bleeding in from opposite corners */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -left-40 -top-36 h-[28rem] w-[34rem] rounded-full bg-[radial-gradient(circle,rgb(var(--color-accent)/0.30),transparent_68%)] blur-3xl"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(52rem_36rem_at_12%_-10%,rgb(var(--md-source)/0.14),transparent_60%),radial-gradient(44rem_32rem_at_100%_20%,rgb(var(--md-source)/0.12),transparent_60%)]"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-44 -left-28 h-[26rem] w-[30rem] rounded-full bg-[radial-gradient(circle,rgb(var(--color-accent)/0.22),transparent_70%)] blur-3xl"
+        className="pointer-events-none absolute -left-40 -top-36 h-[28rem] w-[34rem] rounded-full bg-[radial-gradient(circle,rgb(var(--md-source)/0.28),transparent_68%)] blur-3xl"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-40 -right-36 h-[24rem] w-[32rem] rounded-full bg-[radial-gradient(circle,rgb(var(--color-accent)/0.18),transparent_70%)] blur-3xl"
+        className="pointer-events-none absolute -bottom-44 -left-28 h-[26rem] w-[30rem] rounded-full bg-[radial-gradient(circle,rgb(var(--md-source)/0.20),transparent_70%)] blur-3xl"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-40 -right-36 h-[24rem] w-[32rem] rounded-full bg-[radial-gradient(circle,rgb(var(--md-source)/0.16),transparent_70%)] blur-3xl"
       />
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-noise opacity-[0.05]" />
       <GeometryShapes variant="hero" />
@@ -145,12 +223,11 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
         {/* ── Brand panel (left) ── */}
         <motion.div
           {...stagger(0.05)}
-          className="relative hidden flex-col justify-between overflow-hidden rounded-xl border border-accent/25 bg-card/40 p-10 shadow-[0_0_70px_-24px_rgb(var(--color-accent)/0.6)] backdrop-blur-xl lg:flex"
+          className="relative hidden flex-col justify-between overflow-hidden rounded-xl border border-md-outline-variant bg-md-surface-container-low p-10 shadow-e1 lg:flex"
         >
-          {/* corner glow */}
           <div
             aria-hidden
-            className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgb(var(--color-accent)/0.16),transparent_65%)]"
+            className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgb(var(--md-source)/0.16),transparent_65%)]"
           />
 
           <div className="relative">
@@ -159,24 +236,21 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/vidhyora-logo.png" alt="" width={44} height={44} className="h-11 w-11" />
               </span>
-              <span className="font-display text-2xl font-bold tracking-tight text-paper">
-                Vidhyora
-              </span>
+              <span className="text-headline-sm text-md-on-surface">Vidhyora</span>
             </div>
 
-            <div className="mt-8 inline-flex items-center rounded-full border border-accent/40 bg-accent/[0.07] px-4 py-2">
+            <div className="mt-8">
               <Eyebrow className="!tracking-[0.22em]">
                 {isLogin ? "Welcome to Vidhyora" : "Start for free"}
               </Eyebrow>
             </div>
 
-            <h2 className="mt-5 font-display text-4xl font-bold leading-[1.1] tracking-tight text-paper">
-              Turn any topic into a{" "}
-              <span className="text-accent">learning roadmap.</span>
+            <h2 className="mt-5 text-display-sm leading-[1.14] text-md-on-surface">
+              Turn any topic into a <span className="text-md-primary">learning roadmap.</span>
             </h2>
-            <p className="mt-4 max-w-sm text-muted">
-              Your AI digital twin for learning — syllabus, resources,
-              certifications, practice and a day-by-day timeline, all in one place.
+            <p className="mt-4 max-w-sm text-body-lg text-md-on-surface-variant">
+              Your AI digital twin for learning — syllabus, resources, certifications,
+              practice and a day-by-day timeline, all in one place.
             </p>
           </div>
 
@@ -197,19 +271,21 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
           <ul className="relative mt-8 space-y-5">
             {FEATURE_POINTS.map((point) => (
               <li key={point.title} className="flex items-start gap-4">
-                <span className="mt-0.5 flex h-10 w-10 flex-none items-center justify-center rounded-md border border-accent/35 bg-accent/[0.10] text-accent shadow-[0_0_18px_rgb(var(--color-accent)/0.22)]">
+                <span className="mt-0.5 flex h-10 w-10 flex-none items-center justify-center rounded-md bg-md-primary-container text-md-on-primary-container">
                   {point.icon}
                 </span>
                 <div>
-                  <p className="text-sm font-semibold text-paper">{point.title}</p>
-                  <p className="mt-0.5 text-sm text-muted">{point.copy}</p>
+                  <p className="text-title-sm text-md-on-surface">{point.title}</p>
+                  <p className="mt-0.5 text-body-md text-md-on-surface-variant">{point.copy}</p>
                 </div>
               </li>
             ))}
           </ul>
 
-          <p className="relative mt-8 border-t border-line/10 pt-5 text-xs text-muted">
-            {isLogin ? "Welcome back — pick up exactly where you left off." : "Free to start. Your progress syncs across devices."}
+          <p className="relative mt-8 border-t border-md-outline-variant/60 pt-5 text-body-sm text-md-on-surface-variant">
+            {isLogin
+              ? "Welcome back — pick up exactly where you left off."
+              : "Free to start. Your progress syncs across devices."}
           </p>
         </motion.div>
 
@@ -220,30 +296,38 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
           // line up. Centring the content vertically keeps the leftover height
           // balanced above and below instead of dumping it all under the
           // submit button.
-          className="relative flex flex-col justify-center overflow-hidden rounded-xl border border-accent/30 bg-card/50 p-6 shadow-[0_0_70px_-20px_rgb(var(--color-accent)/0.65)] backdrop-blur-xl sm:p-10"
+          className="relative flex flex-col justify-center overflow-hidden rounded-xl border border-md-outline-variant bg-md-surface-container p-6 shadow-e2 sm:p-10"
         >
           <div
             aria-hidden
-            className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgb(var(--color-accent)/0.12),transparent_65%)]"
+            className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgb(var(--md-source)/0.12),transparent_65%)]"
           />
 
           <div className="relative">
             <Eyebrow>{isLogin ? "Welcome back" : "Join Vidhyora"}</Eyebrow>
-            <h3 className="mt-3 font-display text-3xl font-semibold tracking-tight text-paper sm:text-4xl">
+            {/* Stays an h3 under the brand panel's h2 — the heading order on
+                this screen is not mine to renumber. */}
+            <h3 className="mt-3 text-headline-md text-md-on-surface sm:text-headline-lg">
               {isLogin ? "Log in to your account." : "Create your account."}
             </h3>
-            <p className="mt-3 text-muted">
+            <p className="mt-3 text-body-lg text-md-on-surface-variant">
               {isLogin ? (
                 <>
                   Don’t have an account?{" "}
-                  <a href="/auth/register" className="font-medium text-accent-text transition-colors hover:text-accent">
+                  <a
+                    href="/auth/register"
+                    className="font-medium text-md-primary underline-offset-4 hover:underline"
+                  >
                     Create a free one
                   </a>
                 </>
               ) : (
                 <>
                   Already have an account?{" "}
-                  <a href="/auth/login" className="font-medium text-accent-text transition-colors hover:text-accent">
+                  <a
+                    href="/auth/login"
+                    className="font-medium text-md-primary underline-offset-4 hover:underline"
+                  >
                     Log in
                   </a>
                 </>
@@ -256,155 +340,162 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              className="relative mt-9 flex flex-col items-center rounded-2xl border border-accent/25 bg-accent/10 px-6 py-12 text-center"
+              className="relative mt-9 flex flex-col items-center rounded-lg bg-md-primary-container px-4 py-12 text-center text-md-on-primary-container sm:px-6"
             >
-              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-accent/20 text-accent">
+              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-md-primary text-md-on-primary">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden>
-                  <path d="m5 12.5 4.5 4.5L19 7.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                  <path
+                    d="m5 12.5 4.5 4.5L19 7.5"
+                    stroke="currentColor"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               </span>
-              <p className="mt-5 font-display text-xl font-semibold text-paper">
-                Signed in with Google
-              </p>
-              <p className="mt-2 text-sm text-muted">Setting up your workspace…</p>
+              <p className="mt-5 text-title-lg">Signed in with Google</p>
+              <p className="mt-2 text-body-md">Setting up your workspace…</p>
             </motion.div>
           ) : (
             <>
               {/* ── Continue with Google ── */}
               <div className="relative mt-9">
-                <a
+                <ActionLink
                   href={googleLoginUrl("/")}
-                  className="group flex w-full items-center justify-center gap-3 rounded-full border border-line/15 bg-card/60 py-3.5 text-sm font-semibold text-paper backdrop-blur-xl transition-all hover:-translate-y-0.5 hover:border-accent/40 hover:bg-card hover:shadow-lg hover:shadow-accent/10 active:translate-y-0"
+                  variant="outlined"
+                  size="lg"
+                  fullWidth
+                  icon={<GoogleMark />}
                 >
-                  <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden>
-                    <path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3l5.7-5.7C34.5 6.1 29.5 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z" />
-                    <path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.9 1.2 8 3l5.7-5.7C34.5 6.1 29.5 4 24 4 16.3 4 9.7 8.3 6.3 14.7z" />
-                    <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z" />
-                    <path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C36.9 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z" />
-                  </svg>
                   Continue with Google
-                </a>
+                </ActionLink>
 
                 <div className="my-6 flex items-center gap-3" aria-hidden>
-                  <span className="h-px flex-1 bg-line/15" />
-                  <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted">
+                  <span className="h-px flex-1 bg-md-outline-variant" />
+                  <span className="text-label-sm uppercase tracking-[0.22em] text-md-on-surface-variant">
                     or continue with email
                   </span>
-                  <span className="h-px flex-1 bg-line/15" />
+                  <span className="h-px flex-1 bg-md-outline-variant" />
                 </div>
               </div>
 
-              <form onSubmit={onSubmit} className="relative space-y-6" noValidate>
-            <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium text-subtle">
-                Email
-              </label>
-              <div className="relative">
-                <span aria-hidden className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                    <rect x="3" y="5.5" width="18" height="13" rx="3" stroke="currentColor" strokeWidth="1.6" />
-                    <path d="m4.5 7.5 7.5 6 7.5-6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </span>
+              <form onSubmit={onSubmit} className="relative space-y-5" noValidate>
                 <Input
                   id="email"
+                  label="Email"
                   placeholder="you@example.com"
                   type="email"
                   autoComplete="email"
-                  className="w-full border-line/10 bg-ink/50 py-3.5 pl-11 text-paper placeholder:text-muted focus-visible:border-accent/60 focus-visible:ring-accent/30"
+                  startAdornment={<MailIcon />}
+                  error={errors.email?.message}
                   {...register("email")}
                 />
-              </div>
-              {errors.email && (
-                <p role="alert" className="text-xs text-danger">{errors.email.message}</p>
-              )}
-            </div>
 
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <label htmlFor="password" className="text-sm font-medium text-subtle">
-                  Password
-                </label>
-                {isLogin && (
-                  <a href="#" className="-my-2 flex min-h-touch-min items-center px-1 text-xs text-muted transition-colors duration-fast hover:text-accent-text">
-                    Forgot password?
-                  </a>
-                )}
-              </div>
-              <div className="relative">
-                <span aria-hidden className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                    <rect x="4.5" y="10" width="15" height="10" rx="2.5" stroke="currentColor" strokeWidth="1.6" />
-                    <path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-                  </svg>
-                </span>
-                <Input
-                  id="password"
-                  placeholder="Min. 8 characters"
-                  type={showPassword ? "text" : "password"}
-                  autoComplete={isLogin ? "current-password" : "new-password"}
-                  className="w-full border-line/10 bg-ink/50 py-3.5 pl-11 pr-14 text-paper placeholder:text-muted focus-visible:border-accent/60 focus-visible:ring-accent/30"
-                  {...register("password")}
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword((v) => !v)}
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                  className="press absolute right-1.5 top-1/2 flex h-touch w-touch -translate-y-1/2 items-center justify-center rounded-full text-muted transition-colors duration-fast hover:text-accent-text"
-                >
-                  {showPassword ? (
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-                      <path d="M3 3l18 18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-                      <path d="M10.6 5.1A9.7 9.7 0 0 1 12 5c5 0 8.5 4.4 9 7-.2 1.1-1.1 2.9-2.5 4.4M6.3 6.8C4.2 8.3 3 10.4 2.9 12c.5 2.6 4 7 9.1 7 1.3 0 2.5-.2 3.5-.6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-                      <path d="M9.9 9.9a3 3 0 1 0 4.2 4.2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-                    </svg>
-                  ) : (
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-                      <path d="M2.9 12c.5-2.6 4-7 9.1-7s8.6 4.4 9.1 7c-.5 2.6-4 7-9.1 7s-8.6-4.4-9.1-7Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-                      <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.6" />
-                    </svg>
+                <div>
+                  <Input
+                    id="password"
+                    label="Password"
+                    placeholder="Min. 8 characters"
+                    type={showPassword ? "text" : "password"}
+                    autoComplete={isLogin ? "current-password" : "new-password"}
+                    startAdornment={<LockIcon />}
+                    error={errors.password?.message}
+                    endAdornment={
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword((v) => !v)}
+                        aria-label={showPassword ? "Hide password" : "Show password"}
+                        aria-pressed={showPassword}
+                        className="press state-layer flex h-touch w-touch items-center justify-center rounded-full text-md-on-surface-variant"
+                      >
+                        {showPassword ? (
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+                            <path d="M3 3l18 18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                            <path
+                              d="M10.6 5.1A9.7 9.7 0 0 1 12 5c5 0 8.5 4.4 9 7-.2 1.1-1.1 2.9-2.5 4.4M6.3 6.8C4.2 8.3 3 10.4 2.9 12c.5 2.6 4 7 9.1 7 1.3 0 2.5-.2 3.5-.6"
+                              stroke="currentColor"
+                              strokeWidth="1.8"
+                              strokeLinecap="round"
+                            />
+                            <path
+                              d="M9.9 9.9a3 3 0 1 0 4.2 4.2"
+                              stroke="currentColor"
+                              strokeWidth="1.8"
+                              strokeLinecap="round"
+                            />
+                          </svg>
+                        ) : (
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+                            <path
+                              d="M2.9 12c.5-2.6 4-7 9.1-7s8.6 4.4 9.1 7c-.5 2.6-4 7-9.1 7s-8.6-4.4-9.1-7Z"
+                              stroke="currentColor"
+                              strokeWidth="1.8"
+                              strokeLinejoin="round"
+                            />
+                            <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.8" />
+                          </svg>
+                        )}
+                      </button>
+                    }
+                    {...register("password")}
+                  />
+
+                  {isLogin && (
+                    <div className="mt-1 flex justify-end">
+                      <a
+                        href="#"
+                        className="-my-2 inline-flex min-h-touch-min items-center px-1 text-body-sm text-md-on-surface-variant transition-colors duration-fast hover:text-md-primary"
+                      >
+                        Forgot password?
+                      </a>
+                    </div>
                   )}
-                </button>
-              </div>
-              {errors.password && (
-                <p role="alert" className="text-xs text-danger">{errors.password.message}</p>
-              )}
-            </div>
+                </div>
 
-            {serverError && (
-              <motion.p
-                initial={{ opacity: 0, y: -6 }}
-                animate={{ opacity: 1, y: 0 }}
-                role="alert"
-                className="rounded-sm border border-danger/30 bg-danger/10 px-4 py-3 text-sm text-danger"
-              >
-                {serverError}
-              </motion.p>
-            )}
+                {serverError && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    role="alert"
+                    className="flex items-start gap-2 rounded-sm bg-md-error-container px-4 py-3 text-body-md text-md-on-error-container"
+                  >
+                    {/* Icon as well as colour — status is never colour alone. */}
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      className="mt-px flex-none"
+                      aria-hidden
+                    >
+                      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.8" />
+                      <path
+                        d="M12 7.5v5M12 16h.01"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                    {serverError}
+                  </motion.p>
+                )}
 
-            <Button
-              type="submit"
-              isLoading={isSubmitting}
-              className={clsx(
-                "min-h-[3.25rem] w-full rounded-full text-base",
-                "bg-gradient-to-r from-accent-hover via-accent to-accent-hover",
-                "shadow-[0_8px_30px_rgb(var(--color-accent)/0.35)]"
-              )}
-            >
-              {isLogin ? "Log in" : "Create my account"}
-            </Button>
+                {/* The one filled button on this screen. */}
+                <Button type="submit" size="lg" fullWidth isLoading={isSubmitting}>
+                  {isLogin ? "Log in" : "Create my account"}
+                </Button>
 
-            <p className="text-center text-xs text-muted">
-              By continuing you agree to Vidhyora&apos;s{" "}
-              <a href="#" className="underline-offset-2 hover:text-accent-text hover:underline">
-                Terms
-              </a>{" "}
-              and{" "}
-              <a href="#" className="underline-offset-2 hover:text-accent-text hover:underline">
-                Privacy Policy
-              </a>
-              .
-            </p>
+                <p className="text-center text-body-sm text-md-on-surface-variant">
+                  By continuing you agree to Vidhyora&apos;s{" "}
+                  <a href="#" className="underline-offset-4 hover:text-md-primary hover:underline">
+                    Terms
+                  </a>{" "}
+                  and{" "}
+                  <a href="#" className="underline-offset-4 hover:text-md-primary hover:underline">
+                    Privacy Policy
+                  </a>
+                  .
+                </p>
               </form>
             </>
           )}
