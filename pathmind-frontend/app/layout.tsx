@@ -12,10 +12,49 @@ const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
 });
 
+const SITE_URL = "https://vidhyora.vercel.app";
+const SITE_TITLE = "Vidhyora — AI Learning Roadmap Generator & Personalized Study Planner";
+const SITE_DESCRIPTION =
+  "Turn any topic into a complete, difficulty-sequenced learning roadmap — AI syllabus, free verified resources, certifications, practice problems and a daily study timeline, unlocked one stage at a time.";
+
 export const metadata: Metadata = {
-  title: "Vidhyora — Your AI Digital Twin for Learning",
-  description:
-    "Turn any topic into a complete, difficulty-sequenced learning roadmap — syllabus, free resources, certifications, practice problems and a daily timeline, unlocked one stage at a time.",
+  metadataBase: new URL(SITE_URL),
+  title: { default: SITE_TITLE, template: "%s | Vidhyora" },
+  description: SITE_DESCRIPTION,
+  applicationName: "Vidhyora",
+  keywords: [
+    "AI learning roadmap",
+    "learning roadmap generator",
+    "personalized study plan",
+    "AI study planner",
+    "AI syllabus generator",
+    "free online learning resources",
+    "skill learning roadmap",
+    "coding practice problems",
+    "DSA roadmap",
+    "React learning roadmap",
+    "machine learning roadmap",
+    "system design roadmap",
+    "certification roadmap",
+    "daily study timeline",
+    "Vidhyora",
+  ],
+  openGraph: {
+    type: "website",
+    siteName: "Vidhyora",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [{ url: "/vidhyora-logo.png", alt: "Vidhyora" }],
+  },
+  twitter: {
+    card: "summary",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: ["/vidhyora-logo.png"],
+  },
+  robots: { index: true, follow: true },
+  // Google Search Console ownership verification (renders <meta name="google-site-verification">)
+  verification: { google: "kB1sqTo6dF_UJ8eLCM2yUEazy0zuP_0B8LpzPLxixw0" },
   appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "Vidhyora" },
   formatDetection: { telephone: false },
 };
