@@ -22,6 +22,9 @@ export const metadata: Metadata = {
   title: { default: SITE_TITLE, template: "%s | Vidhyora" },
   description: SITE_DESCRIPTION,
   applicationName: "Vidhyora",
+  authors: [{ name: "Jayanth", url: "https://jayanth45.vercel.app/" }],
+  creator: "Jayanth",
+  publisher: "Vidhyora",
   keywords: [
     "AI learning roadmap",
     "learning roadmap generator",
@@ -38,6 +41,25 @@ export const metadata: Metadata = {
     "certification roadmap",
     "daily study timeline",
     "Vidhyora",
+    "Vidhyora AI",
+    "AI roadmap generator",
+    "learn anything roadmap",
+    "AI learning path generator",
+    "AI tutor learning path",
+    "study plan generator",
+    "personalized learning platform",
+    "self-paced online learning",
+    "learning path for beginners",
+    "programming roadmap",
+    "web development roadmap",
+    "full stack developer roadmap",
+    "python learning roadmap",
+    "data structures and algorithms practice",
+    "interview preparation roadmap",
+    "free certifications online",
+    "skill development platform",
+    "learn coding step by step",
+    "AI learning assistant",
   ],
   openGraph: {
     type: "website",
@@ -75,6 +97,18 @@ export const viewport: Viewport = {
   ],
 };
 
+// Structured data (JSON-LD) so search engines understand what Vidhyora is and who built it
+const JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Vidhyora",
+  url: SITE_URL,
+  description: SITE_DESCRIPTION,
+  applicationCategory: "EducationalApplication",
+  operatingSystem: "Web",
+  creator: { "@type": "Person", name: "Jayanth", url: "https://jayanth45.vercel.app/" },
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={poppins.variable}>
@@ -92,6 +126,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+        />
         <Providers>{children}</Providers>
       </body>
     </html>
