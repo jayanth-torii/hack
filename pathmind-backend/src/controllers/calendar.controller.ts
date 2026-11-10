@@ -1,4 +1,4 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { env } from "../config/env";
 import { asyncHandler } from "../utils/asyncHandler";
 import { ApiError } from "../utils/apiError";
@@ -100,7 +100,7 @@ export const googleConnect = asyncHandler(async (req: Request, res: Response) =>
   res.redirect(getGoogleAuthUrl(state));
 });
 
-export const googleCallback = asyncHandler(async (req: Request, res: Response) => {
+const googleCallbackHandler = asyncHandler(async (req: Request, res: Response) => {
   const { code, state } = req.query as { code?: string; state?: string };
   if (!code || !state) throw ApiError.badRequest("Missing code/state from Google callback");
 
@@ -184,3 +184,39 @@ export const googleStatus = asyncHandler(async (req: Request, res: Response) => 
   req.log?.debug({ userId: req.auth.userId, connected }, "Google Calendar status checked");
   res.status(200).json({ connected });
 });
+
+/**
+ * "Continue with Google" is a browser navigation, so an unhandled error here used to
+ * strand the user on a raw {"error":"Internal server error"} JSON page. For login-mode
+ * callbacks, log the real cause and send the user back to the login page with a short
+ * reason instead. Calendar-connect (non-login) errors keep the normal error handler.
+ */
+export const googleCallback = (req: Request, res: Response, next: NextFunction) =>
+  googleCallbackHandler(req, res, (err?: unknown) => {
+    if (!err) {
+      next();
+      return;
+    }
+    let isLogin = false;
+    try {
+      isLogin = (JSON.parse(String(req.query.state)) as { mode?: string }).mode === "login";
+    } catch {
+      // state was not structured JSON — treat as a calendar-connect callback
+    }
+    if (!isLogin) {
+      next(err);
+      return;
+    }
+
+    const e = err as {
+      message?: string;
+      response?: { data?: { error?: string; error_description?: string } };
+    };
+    const reason = String(
+      e.response?.data?.error_description ?? e.response?.data?.error ?? e.message ?? "unknown"
+    ).slice(0, 160);
+    req.log?.error({ err, reason }, "Google login callback failed");
+    res.redirect(
+      `${env.CLIENT_ORIGIN}/auth/login?error=google_failed&reason=${encodeURIComponent(reason)}`
+    );
+  });
