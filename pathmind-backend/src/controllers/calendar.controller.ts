@@ -144,10 +144,21 @@ const googleCallbackHandler = asyncHandler(async (req: Request, res: Response) =
       { upsert: true, new: true }
     );
 
-    const payload = { userId: user._id.toString(), email: user.email };
+    // Google sign-in is still a sign-in: a suspended account must not get a
+    // session through the side door.
+    if (user.suspended) {
+      req.log?.warn({ userId: user._id.toString(), reason: "suspended" }, "Google login refused");
+      res.redirect(
+        `${process.env.CLIENT_ORIGIN ?? "http://localhost:3000"}/auth/login?error=suspended`
+      );
+      return;
+    }
+
+    const payload = { userId: user._id.toString(), email: user.email, role: user.role };
     const accessToken = signAccessToken(payload);
     const refreshToken = signRefreshToken(payload);
     user.refreshTokenHash = await hashToken(refreshToken);
+    user.lastLoginAt = new Date();
     await user.save();
     setAuthCookies(res, accessToken, refreshToken);
 

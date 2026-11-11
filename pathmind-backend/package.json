@@ -13,7 +13,8 @@
     "test:watch": "jest --watch",
     "seed:users": "tsx src/utils/seedUsers.ts",
     "seed:courses": "tsx src/utils/seedCourses.ts",
-    "seed:attach-roadmaps": "tsx src/utils/saveRoadmapsToUsers.ts"
+    "seed:attach-roadmaps": "tsx src/utils/saveRoadmapsToUsers.ts",
+    "admin:grant": "tsx src/utils/grantAdmin.ts"
   },
   "engines": {
     "node": ">=20.0.0"

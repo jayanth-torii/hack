@@ -9,7 +9,9 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "*",
         allow: "/",
         // Private / account pages should not be indexed
-        disallow: ["/auth/", "/profile", "/saved", "/api/"],
+        // `/courses` itself stays indexable — only the account-bound pages
+        // and the admin area are excluded.
+        disallow: ["/auth/", "/profile", "/saved", "/admin", "/courses/build", "/api/"],
       },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,

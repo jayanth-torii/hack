@@ -5,6 +5,7 @@ import { progressRouter } from "./progress.routes";
 import { calendarRouter, googleAuthRouter } from "./calendar.routes";
 import { meRouter } from "./me.routes";
 import { catalogRouter } from "./catalog.routes";
+import { adminRouter } from "./admin.routes";
 
 export const apiRouter = Router();
 
@@ -15,3 +16,4 @@ apiRouter.use("/roadmaps", progressRouter);
 apiRouter.use("/roadmaps", calendarRouter);
 apiRouter.use("/me", meRouter);
 apiRouter.use("/courses", catalogRouter);
+apiRouter.use("/admin", adminRouter);

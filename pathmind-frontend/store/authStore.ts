@@ -6,6 +6,13 @@ interface User {
   email: string;
   name?: string;
   avatar?: string;
+  /**
+   * Drives whether the admin entry point is rendered at all. It is a **UI
+   * hint, nothing more** — every `/admin` endpoint re-reads the role from the
+   * database, so hiding or showing a link here changes what a person sees,
+   * never what they can do.
+   */
+  role?: "user" | "admin";
 }
 
 interface AuthState {

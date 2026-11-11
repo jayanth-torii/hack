@@ -23,9 +23,26 @@ export interface GoogleCalendarToken {
   expiresAt: Date;
 }
 
+/**
+ * Platform role. `admin` is the only elevated role and is granted out of band
+ * (`npm run admin:grant -- <email>`) or by another admin — never by anything
+ * a user can reach, and never by self-service registration.
+ */
+export type UserRole = "user" | "admin";
+
 export interface UserDocument extends Document {
   _id: Types.ObjectId;
   email: string;
+  role: UserRole;
+  /**
+   * Suspended accounts keep all their data but cannot refresh a session.
+   * Authorization is re-checked from the database on every admin request, so a
+   * suspension bites immediately there; elsewhere it takes effect when the
+   * 15-minute access token next needs refreshing.
+   */
+  suspended: boolean;
+  suspendedReason?: string;
+  lastLoginAt?: Date;
   passwordHash?: string;
   name?: string;
   avatar?: string;
@@ -65,6 +82,10 @@ const userSchema = new Schema<UserDocument>(
     // Google sign-in users have no password — the field is optional and
     // `login` rejects it, so password auth simply isn't available to them.
     passwordHash: { type: String, select: false },
+    role: { type: String, enum: ["user", "admin"], default: "user", index: true },
+    suspended: { type: Boolean, default: false, index: true },
+    suspendedReason: { type: String, trim: true, maxlength: 200 },
+    lastLoginAt: { type: Date },
     name: { type: String, trim: true },
     avatar: { type: String },
     refreshTokenHash: { type: String, select: false },

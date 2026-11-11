@@ -35,6 +35,34 @@ To go live:
 - `npm run build` — compile to `dist/` (tsc + alias rewrite + seed-JSON copy)
 - `npm test` — Jest + Supertest (mongodb-memory-server + ioredis-mock; no real network calls, since `MOCK_MODE=true` in tests)
 - `npm run typecheck` / `npm run lint`
+- `npm run seed:courses` — load `src/data/courses/*.json` into the catalog.
+  Idempotent: an existing course has only its `category`/`summary` refreshed.
+  `--dry-run` validates without a database; `--force` replaces whole documents
+  and **discards learner progress** (stage ids are regenerated).
+- `npm run admin:grant -- <email>` — grant the admin role. `--revoke` removes
+  it, `--list` shows who has it.
+
+## Administration
+
+The admin role is granted **out of band only**, with `npm run admin:grant`.
+Nothing reachable over HTTP can mint the first admin: registration always
+writes `role: "user"`, and `PATCH /admin/users/:id` already requires an admin
+to call it. A self-service path to elevation would be the weakest link in the
+system, so there isn't one.
+
+Authorization is re-read from the database on **every** admin request
+(`middleware/admin.middleware.ts`). The JWT carries a `role` claim for logging
+and UI hints, but authorizing on it would leave a demoted admin holding full
+powers for the token's 15-minute life.
+
+Two lockouts are refused by the API, not just hidden in the UI: an admin
+cannot change their own role or suspend themselves, and the **last active
+admin** cannot be demoted, suspended or deleted by anyone.
+
+Every state-changing admin action is appended to `AuditLog` with the actor's
+current email and a label for the target frozen at write time — so the entry
+stays readable after the account or course it refers to is gone. Nothing in the
+product can delete an entry.
 
 ## What's real vs. mocked by default
 

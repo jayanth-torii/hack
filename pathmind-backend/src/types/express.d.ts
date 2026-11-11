@@ -3,6 +3,13 @@
 export interface AuthPayload {
   userId: string;
   email: string;
+  /**
+   * Carried for convenience (logging, cheap UI hints) only. **Never authorize
+   * on it** — a token minted before a demotion still says "admin" for up to
+   * its 15-minute lifetime. `requireAdmin` re-reads the role from the
+   * database on every request, which is the authoritative check.
+   */
+  role?: "user" | "admin";
 }
 
 declare global {
@@ -10,6 +17,8 @@ declare global {
   namespace Express {
     interface Request {
       auth?: AuthPayload;
+      /** Set by `requireAdmin` only, after a live database role check. */
+      admin?: { userId: string; email: string };
     }
   }
 }

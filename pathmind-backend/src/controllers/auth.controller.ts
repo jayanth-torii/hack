@@ -17,15 +17,16 @@ export const register = asyncHandler(async (req: Request, res: Response) => {
   const passwordHash = await hashPassword(password);
   const user = await User.create({ email, passwordHash, savedRoadmaps: [] });
 
-  const payload = { userId: user._id.toString(), email: user.email };
+  const payload = { userId: user._id.toString(), email: user.email, role: user.role };
   const accessToken = signAccessToken(payload);
   const refreshToken = signRefreshToken(payload);
   user.refreshTokenHash = await hashToken(refreshToken);
+  user.lastLoginAt = new Date();
   await user.save();
 
   setAuthCookies(res, accessToken, refreshToken);
   req.log?.info({ userId: user._id.toString(), email }, "User registered");
-  res.status(201).json({ user: { id: user._id.toString(), email: user.email } });
+  res.status(201).json({ user: { id: user._id.toString(), email: user.email, role: user.role } });
 });
 
 export const login = asyncHandler(async (req: Request, res: Response) => {
@@ -47,15 +48,23 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
     throw ApiError.unauthorized("Invalid email or password");
   }
 
-  const payload = { userId: user._id.toString(), email: user.email };
+  if (user.suspended) {
+    req.log?.warn({ email, reason: "suspended" }, "Login failed");
+    throw ApiError.forbidden(
+      "This account has been suspended. Contact support if you think this is a mistake."
+    );
+  }
+
+  const payload = { userId: user._id.toString(), email: user.email, role: user.role };
   const accessToken = signAccessToken(payload);
   const refreshToken = signRefreshToken(payload);
   user.refreshTokenHash = await hashToken(refreshToken);
+  user.lastLoginAt = new Date();
   await user.save();
 
   setAuthCookies(res, accessToken, refreshToken);
   req.log?.info({ userId: user._id.toString(), email }, "User logged in");
-  res.status(200).json({ user: { id: user._id.toString(), email: user.email } });
+  res.status(200).json({ user: { id: user._id.toString(), email: user.email, role: user.role } });
 });
 
 export const refresh = asyncHandler(async (req: Request, res: Response) => {
@@ -74,6 +83,23 @@ export const refresh = asyncHandler(async (req: Request, res: Response) => {
   }
 
   const user = await User.findById(decoded.userId).select("+refreshTokenHash");
+
+  // Suspension is checked before the stored-hash check, not after. Suspending
+  // an account already clears its refresh hash, so the generic "session
+  // revoked" branch would otherwise swallow every suspension and tell the
+  // person their session expired — leaving them to retry forever instead of
+  // contacting support. The refresh token itself was cryptographically
+  // verified above, so `decoded.userId` is trustworthy at this point.
+  if (user?.suspended) {
+    if (user.refreshTokenHash) {
+      user.refreshTokenHash = undefined;
+      await user.save();
+    }
+    clearAuthCookies(res);
+    req.log?.warn({ userId: user._id.toString(), reason: "suspended" }, "Token refresh failed");
+    throw ApiError.forbidden("This account has been suspended.");
+  }
+
   if (!user?.refreshTokenHash) {
     req.log?.warn({ userId: decoded.userId, reason: "session_revoked" }, "Token refresh failed");
     throw ApiError.unauthorized("Session revoked");
@@ -85,7 +111,7 @@ export const refresh = asyncHandler(async (req: Request, res: Response) => {
     throw ApiError.unauthorized("Session revoked");
   }
 
-  const payload = { userId: user._id.toString(), email: user.email };
+  const payload = { userId: user._id.toString(), email: user.email, role: user.role };
   const accessToken = signAccessToken(payload);
   const newRefreshToken = signRefreshToken(payload);
   user.refreshTokenHash = await hashToken(newRefreshToken);
@@ -93,7 +119,7 @@ export const refresh = asyncHandler(async (req: Request, res: Response) => {
 
   setAuthCookies(res, accessToken, newRefreshToken);
   req.log?.info({ userId: user._id.toString() }, "Tokens refreshed");
-  res.status(200).json({ user: { id: user._id.toString(), email: user.email } });
+  res.status(200).json({ user: { id: user._id.toString(), email: user.email, role: user.role } });
 });
 
 export const logout = asyncHandler(async (req: Request, res: Response) => {
@@ -156,6 +182,7 @@ export const me = asyncHandler(async (req: Request, res: Response) => {
       email: user.email,
       name: user.name,
       avatar: user.avatar,
+      role: user.role,
       // Exposed so the profile header can show "joined" without a second call.
       // It was already stored via `timestamps: true`, just never returned.
       joinedAt: user.createdAt,

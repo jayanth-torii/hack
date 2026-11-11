@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { ThemeToggle } from "@/components/home/ThemeToggle";
+import { useAuthStore } from "@/store/authStore";
 import { clsx } from "@/lib/clsx";
 
 interface AppBarAction {
@@ -39,6 +40,53 @@ function ArrowBackIcon() {
         strokeLinejoin="round"
       />
     </svg>
+  );
+}
+
+/** M3's shield glyph for the admin entry point, on the same 24px/1.8 grid. */
+function ShieldIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M12 3.2 5 6v5.6c0 4 2.9 7.6 7 8.8 4.1-1.2 7-4.8 7-8.8V6l-7-2.8Z"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinejoin="round"
+      />
+      <path
+        d="m9.2 12 2 2 3.6-3.6"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+/**
+ * The admin area's one entry point, rendered for admins on every signed-in
+ * screen rather than buried on one of them.
+ *
+ * `user.role` is a **UI hint only** — it decides whether a link is drawn, not
+ * whether anything can be done. Every `/admin` endpoint re-reads the role from
+ * the database, and `/admin` itself confirms authorization with its first
+ * request, so a tampered client store yields an explanation screen rather than
+ * access.
+ */
+function AdminLink() {
+  const user = useAuthStore((s) => s.user);
+  if (user?.role !== "admin") return null;
+
+  return (
+    <Link
+      href="/admin"
+      aria-label="Admin dashboard"
+      title="Admin dashboard"
+      className="press state-layer grid h-12 w-12 flex-none place-items-center rounded-full text-md-on-surface-variant"
+    >
+      <ShieldIcon />
+    </Link>
   );
 }
 
@@ -199,6 +247,7 @@ export function AppBar({ title, back, actions = [], children, className }: AppBa
             the row keeps them on the 48dp grid. */}
         <div className="flex flex-none items-center gap-1">
           {children}
+          <AdminLink />
           <ThemeToggle />
         </div>
       </div>

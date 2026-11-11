@@ -116,8 +116,12 @@ bar instead of the viewport. **Portal overlays to `document.body`** — see
   Do not hand-roll another header; four near-identical ones were consolidated
   into it.
 - `components/ui/BottomNav.tsx` derives destinations from the pathname
-  (inside `/roadmap/<id>` it shows that roadmap's views, elsewhere the
-  top-level set).
+  (inside `/roadmap/<id>` it shows that roadmap's views, elsewhere Home ·
+  Courses · Library · Profile).
+- The **admin entry point lives in `AppBar`**, rendered only when
+  `user.role === "admin"`. That is a UI hint, not a gate: every `/admin`
+  endpoint re-reads the role from the database, so a tampered client store
+  buys an explanation screen, not access.
 - Any scroll container under the bottom nav needs `pb-nav`; any screen under
   the app bar needs `pt-app-bar`.
 
@@ -138,6 +142,8 @@ Reuse these before writing anything new:
 | `md/Button` | M3 common buttons: `filled · tonal · elevated · outlined · text` |
 | `md/Dialog` | **every** modal — see below |
 | `md/useBackClose` | hardware Back closes a full-screen surface |
+| `courses/*` | catalog card, full-screen preview, stage builder |
+| `admin/AdminPrimitives` | `Section · Metric · Sparkline · RecordCard · Field · Pager · TimeAgo` |
 
 **No popups on phones.** `md/Dialog` is a centred modal from `md` up and a
 **full-screen page** below it: `100dvh`, no radius or border, a top app bar
@@ -153,6 +159,36 @@ URL bar, so the action row can't be pushed off-screen.
 **Every data screen implements four states**: loading (skeleton matching the
 real layout, not a spinner), empty (explain *why* and give the next action),
 error (human copy + recovery — never a raw backend message), success.
+
+**No tables in the admin area.** A six-column `<table>` cannot fit 360px
+without sideways scrolling, which §3 forbids. Admin records are
+`admin/RecordCard`s instead: the row reflows, and the column headings a table
+would carry become per-field labels. One markup for both sizes — there is no
+second mobile layout to keep in step.
+
+---
+
+## 5a. Course catalog
+
+| Route | What it is |
+|---|---|
+| `/courses` | browse and pick — search, subject chips, sort, paging |
+| `/courses/build` | assemble a personal course from catalog stages (no AI) |
+| `/admin` | five tabs: overview · users · courses · resources · logs |
+
+**A roadmap is a catalog course when it is published *and* categorised.**
+Every AI-generated roadmap is also `isPublicTemplate: true` — that is how the
+generation cache is shared — so a catalog defined as "public templates" fills
+with whatever anyone ever typed into the topic box. The category is the
+editorial act; `CATALOG_FILTER` in the backend is the single definition, used
+by the list, the detail endpoint and the builder alike.
+
+**There is deliberately no difficulty filter.** All 80 curated courses run
+beginner → intermediate → advanced, so the control would return everything or
+nothing whichever way it was defined. Cards show the **span**
+("Beginner → Advanced"); only per-stage badges name a single level. If a
+single-level course is ever seeded, reinstate the filter — the API still
+supports `?level=`.
 
 ---
 
