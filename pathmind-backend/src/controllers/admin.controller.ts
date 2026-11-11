@@ -329,7 +329,7 @@ export const listRoadmaps = asyncHandler(async (req: Request, res: Response) => 
       sourceModel: r.sourceModel,
       stageCount: stages.length,
       totalDays: stages.reduce((n, s) => n + (s.estimatedDays ?? 0), 0),
-      brokenResources: stages.reduce(
+      unverifiedResources: stages.reduce(
         (n, s) => n + (s.freeResources ?? []).filter((res) => res.verified === false).length,
         0
       ),

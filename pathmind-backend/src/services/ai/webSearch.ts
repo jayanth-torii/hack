@@ -54,51 +54,47 @@ export async function webSearch(query: string, limit = 5): Promise<SearchResult[
   }
 }
 
-// Deterministic 11-char YouTube-style id (base64url alphabet) derived from the
-// query — so even the mock path emits a deep-linkable watch?v= URL and the
-// frontend thumbnail-or-cover preview flow is exercised end to end.
-function mockVideoId(query: string): string {
-  let h = 2166136261;
-  for (let i = 0; i < query.length; i++) {
-    h ^= query.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-";
-  let id = "";
-  let x = h >>> 0;
-  for (let i = 0; i < 11; i++) {
-    id += chars[x % 64];
-    x = Math.floor(x / 64);
-  }
-  return id;
-}
-
+/**
+ * Every mock URL is a **search URL on a real site**, never a synthesised deep
+ * link.
+ *
+ * The previous version minted an 11-character YouTube id and a freeCodeCamp
+ * article slug from a hash of the query. Those are syntactically perfect and
+ * semantically fictional: `watch?v=CypiQCAAAAA` returns HTTP 200 with an
+ * "unavailable" page, so nothing downstream could tell it was fake, and the
+ * admin Resources list presented 126 of them as live links. A search URL for
+ * the same query resolves for any query, forever, and promises only what it
+ * can deliver — a search.
+ *
+ * These are flagged as fallbacks downstream (`verified: false`) rather than
+ * passed off as curated resources; see `normalizeResources`.
+ */
 function mockSearch(query: string, limit: number): SearchResult[] {
-  const topic = query.trim().toLowerCase().replace(/\s+/g, "-");
+  const q = encodeURIComponent(query);
   const templates: SearchResult[] = [
     {
-      title: `${query} — freeCodeCamp Handbook`,
-      url: `https://www.freecodecamp.org/news/${topic}-handbook/`,
-      snippet: `A comprehensive, beginner-friendly guide to ${query}.`,
+      title: `${query} — freeCodeCamp articles`,
+      url: `https://www.freecodecamp.org/news/search?query=${q}`,
+      snippet: `Beginner-friendly written guides on ${query}.`,
     },
     {
       title: `${query} full course — YouTube`,
-      url: `https://www.youtube.com/watch?v=${mockVideoId(query)}`,
-      snippet: `Top community-recommended video course covering ${query} end to end.`,
+      url: `https://www.youtube.com/results?search_query=${q}`,
+      snippet: `Community-recommended video courses covering ${query} end to end.`,
     },
     {
       title: `${query} — MDN / Official Docs`,
-      url: `https://developer.mozilla.org/en-US/search?q=${encodeURIComponent(query)}`,
+      url: `https://developer.mozilla.org/en-US/search?q=${q}`,
       snippet: `Official reference documentation relevant to ${query}.`,
     },
     {
       title: `${query} — GeeksforGeeks`,
-      url: `https://www.geeksforgeeks.org/${topic}/`,
-      snippet: `Structured tutorial and practice problems on ${query}.`,
+      url: `https://www.geeksforgeeks.org/search/?gq=${q}`,
+      snippet: `Structured tutorials and practice problems on ${query}.`,
     },
     {
       title: `Best ${query} certifications ranked (2026)`,
-      url: `https://www.coursera.org/search?query=${encodeURIComponent(query)}`,
+      url: `https://www.coursera.org/search?query=${q}`,
       snippet: `A ranked comparison of paid certifications for ${query}.`,
     },
   ];

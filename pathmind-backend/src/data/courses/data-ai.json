@@ -933,7 +933,7 @@
         ],
         "resources": [
           { "title": "scikit-learn: Feature Extraction", "url": "https://scikit-learn.org/stable/modules/feature_extraction.html", "type": "doc" },
-          { "title": "scikit-learn: Working With Text Data", "url": "https://scikit-learn.org/stable/tutorial/text_analytics/working_with_text_data.html", "type": "doc" }
+          { "title": "scikit-learn: Text Feature Extraction", "url": "https://scikit-learn.org/stable/modules/feature_extraction.html", "type": "doc" }
         ]
       },
       {

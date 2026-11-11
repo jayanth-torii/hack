@@ -109,4 +109,37 @@ describe("normalizeResources", () => {
     );
     expect(many).toHaveLength(4);
   });
+
+  // freeCodeCamp's search lives at /news/search, two segments deep, so the old
+  // `path === "/search"` check let it through as if it were an article.
+  it.each([
+    "https://www.freecodecamp.org/news/search?query=rust",
+    "https://www.geeksforgeeks.org/search/?gq=rust",
+    "https://developer.mozilla.org/en-US/search?q=rust",
+    "https://www.youtube.com/results?search_query=rust",
+  ])("drops the search page %s by default", (url) => {
+    expect(normalizeResources([draft({ url })])).toHaveLength(0);
+  });
+
+  describe("allowSearchFallback", () => {
+    it("keeps search pages and flags them as fallbacks", () => {
+      const out = normalizeResources(
+        [draft({ url: "https://www.youtube.com/results?search_query=rust", type: "video" })],
+        { allowSearchFallback: true }
+      );
+      expect(out).toHaveLength(1);
+      expect(out[0]!.fallback).toBe(true);
+      // A search page is not a watchable video, whatever the draft claimed.
+      expect(out[0]!.type).toBe("doc");
+    });
+
+    it("leaves a real deep link unflagged even when fallbacks are allowed", () => {
+      const out = normalizeResources(
+        [draft({ url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", type: "video" })],
+        { allowSearchFallback: true }
+      );
+      expect(out[0]!.fallback).toBeUndefined();
+      expect(out[0]!.type).toBe("video");
+    });
+  });
 });

@@ -183,6 +183,22 @@ with whatever anyone ever typed into the topic box. The category is the
 editorial act; `CATALOG_FILTER` in the backend is the single definition, used
 by the list, the detail endpoint and the builder alike.
 
+**`verified: false` on a resource means "search fallback", not "broken".** It
+marks a URL that points at a search on a real site instead of at the thing
+itself — it resolves fine. The admin Resources tab once badged it "Not
+resolving" and called itself a broken-link queue, while persistence hardcoded
+`verified: true`; the queue was therefore permanently empty *and* 126
+fabricated links sat in the list badged healthy. Label it "Search fallback",
+and if you ever want a real liveness signal, add a separate field — don't
+overload this one.
+
+**Never mint a URL from a hash.** The mock search provider used to build an
+11-character YouTube id and an article slug out of the query. Both are
+syntactically valid and point nowhere, and `youtube.com/watch?v=<dead id>`
+answers 200, so nothing downstream could catch it. Mock links are search URLs
+on real sites. `npm run resources:repair` rewrites any fabricated link still
+in the database and is idempotent.
+
 **There is deliberately no difficulty filter.** All 80 curated courses run
 beginner → intermediate → advanced, so the control would return everything or
 nothing whichever way it was defined. Cards show the **span**

@@ -16,6 +16,12 @@ export interface FreeResourceDraft {
   title: string;
   url: string;
   type: ResourceType;
+  /**
+   * True when the URL is a search page kept as a last resort rather than a
+   * curated deep link. Persisted as `verified: false`, which is exactly what
+   * that field has always meant on `Roadmap.freeResources`.
+   */
+  fallback?: boolean;
 }
 
 export interface CertificationDraft {

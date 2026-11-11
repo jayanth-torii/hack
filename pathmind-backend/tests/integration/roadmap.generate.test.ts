@@ -39,29 +39,29 @@ describe("POST /roadmaps/generate", () => {
     expect(roadmap.suggestedTimeline.length).toBeGreaterThan(0);
   });
 
-  it("ships deep-linkable resources — real watch?v= URLs, never YouTube search pages", async () => {
+  it("ships resolvable resources in MOCK_MODE, flagged as search fallbacks", async () => {
     const res = await request(app).post("/roadmaps/generate").send({ topic: "Rust" });
     expect(res.status).toBe(200);
     const { roadmap } = res.body;
 
-    // NOTE: this assertion relies on the mock search's YouTube template being
-    // the 2nd result (index 1) and mockProvider taking searchContext.slice(0, 3)
-    // — keep them in sync if the mock fixtures are ever reordered.
-    const resources = roadmap.stages.flatMap((s: { freeResources: Array<{ url: string }> }) =>
-      s.freeResources ?? []
+    const resources = roadmap.stages.flatMap(
+      (s: { freeResources: Array<{ url: string; verified: boolean }> }) => s.freeResources ?? []
     );
     expect(resources.length).toBeGreaterThan(0);
 
-    // At least one stage resource is a deep YouTube video link.
-    expect(
-      resources.some((r: { url: string }) => /youtube\.com\/watch\?v=[A-Za-z0-9_-]{11}/.test(r.url))
-    ).toBe(true);
-
-    // No search pages, channel pages, or bare homepages anywhere.
+    // This used to assert a real `watch?v=<11 chars>` deep link. The mock
+    // search minted that id from a hash of the query, so it matched the regex
+    // and pointed at no video on earth — the assertion proved the shape and
+    // missed the fabrication. A search URL is the honest mock: it resolves.
     for (const r of resources) {
-      expect(r.url).not.toMatch(/youtube\.com\/results\?/);
+      expect(r.url).not.toMatch(/youtube\.com\/watch\?v=/);
       expect(r.url).not.toMatch(/youtube\.com\/@/);
       expect(r.url).not.toBe("https://www.youtube.com/");
+      // Every mock URL is a search on a real site, and says so.
+      expect(r.url).toMatch(
+        /(youtube\.com\/results\?|\/search\?|\/search\/\?|\/news\/search\?)/
+      );
+      expect(r.verified).toBe(false);
     }
   });
 

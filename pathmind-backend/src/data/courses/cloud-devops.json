@@ -1050,7 +1050,7 @@
         "resources": [
           { "title": "TryHackMe", "url": "https://tryhackme.com/", "type": "doc" },
           { "title": "Hack The Box", "url": "https://www.hackthebox.com/", "type": "doc" },
-          { "title": "Metasploit Unleashed", "url": "https://www.offsec.com/metasploit-unleashed/", "type": "doc" }
+          { "title": "Metasploit Documentation", "url": "https://docs.metasploit.com/", "type": "doc" }
         ],
         "practiceTags": ["pentesting", "labs"]
       },

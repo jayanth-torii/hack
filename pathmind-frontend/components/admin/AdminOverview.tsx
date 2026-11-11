@@ -94,7 +94,7 @@ export function AdminOverview() {
           <Metric label="Courses completed" value={s.learning.roadmapsCompleted} />
           <Metric label="Certificates issued" value={s.learning.certificatesIssued} />
           <Metric
-            label="Failing links"
+            label="Search fallbacks"
             value={s.resources.unverified}
             tone={s.resources.unverified > 0 ? "warning" : "success"}
             hint={`${unverifiedShare}% of ${s.resources.total} resources`}

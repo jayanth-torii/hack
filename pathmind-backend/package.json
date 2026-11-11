@@ -14,7 +14,8 @@
     "seed:users": "tsx src/utils/seedUsers.ts",
     "seed:courses": "tsx src/utils/seedCourses.ts",
     "seed:attach-roadmaps": "tsx src/utils/saveRoadmapsToUsers.ts",
-    "admin:grant": "tsx src/utils/grantAdmin.ts"
+    "admin:grant": "tsx src/utils/grantAdmin.ts",
+    "resources:repair": "tsx src/utils/repairResourceLinks.ts"
   },
   "engines": {
     "node": ">=20.0.0"

@@ -96,7 +96,12 @@ async function generateRoadmapFromScratch(
       // generated roadmap ships deep-linkable resources the frontend can
       // preview. Then liveness-check each surviving URL (drops definitive
       // 404/410 links) so students never land on a dead page.
-      const normalized = normalizeResources(resourceDrafts);
+      // In MOCK_MODE there is no search API, so the only topic-relevant URL
+      // that genuinely resolves is a search URL. Keep those as flagged
+      // fallbacks rather than dropping them and shipping an empty stage.
+      const normalized = normalizeResources(resourceDrafts, {
+        allowSearchFallback: env.MOCK_MODE,
+      });
       // Skip liveness checks in MOCK_MODE — mock links are fake anyway, and
       // the mock checker would deterministically drop ~10% of them.
       const resources = env.VERIFY_LINKS && !env.MOCK_MODE
@@ -124,7 +129,11 @@ async function generateRoadmapFromScratch(
           url: r.url,
           type: r.type,
           lastVerifiedAt: now,
-          verified: true,
+          // `verified` has always meant "a live-verified match, not a
+          // search-page fallback" (see the Roadmap model). Hardcoding it true
+          // made that field a constant, which is how 126 fabricated links came
+          // to be listed as healthy in the admin Resources tab.
+          verified: r.fallback !== true,
         })),
         certifications: certDrafts.map((c) => ({
           title: c.title,

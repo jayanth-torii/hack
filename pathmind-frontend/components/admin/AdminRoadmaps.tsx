@@ -260,10 +260,10 @@ export function AdminRoadmaps() {
                       </Badge>
                       <Badge>{SOURCE_LABEL[roadmap.sourceModel] ?? "AI-generated"}</Badge>
                       {roadmap.category && <Badge>{roadmap.category}</Badge>}
-                      {roadmap.brokenResources > 0 && (
+                      {roadmap.unverifiedResources > 0 && (
                         <Badge tone="warning">
-                          {roadmap.brokenResources} failing link
-                          {roadmap.brokenResources === 1 ? "" : "s"}
+                          {roadmap.unverifiedResources} search fallback
+                          {roadmap.unverifiedResources === 1 ? "" : "s"}
                         </Badge>
                       )}
                     </>

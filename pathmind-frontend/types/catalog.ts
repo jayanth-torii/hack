@@ -158,7 +158,7 @@ export interface AdminRoadmap {
   sourceModel: string;
   stageCount: number;
   totalDays: number;
-  brokenResources: number;
+  unverifiedResources: number;
   learners: number;
   createdAt: string;
   updatedAt: string;

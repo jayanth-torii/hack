@@ -18,13 +18,19 @@ function useDebounced<T>(value: T, delay = 300): T {
 }
 
 /**
- * The broken-link queue.
+ * The unverified-resource queue.
  *
- * `verified: false` is what the freshness worker writes when a resource stops
- * resolving to live content, so this list is the worker's output rather than a
- * separate reporting system.
+ * `verified: false` means **"a search-page fallback rather than a curated deep
+ * link"** — that is what the field has meant on `Roadmap.freeResources` since
+ * it was added. It is not a liveness signal: a fallback URL resolves fine, it
+ * just points at a search instead of at the thing itself.
  *
- * It is deliberately **read-only**. The fix for a dead link is an edit to the
+ * This screen previously called the same flag "Not resolving" and titled the
+ * list a broken-link queue. That was wrong twice over, because persistence
+ * also hardcoded `verified: true`, so the queue was permanently empty while
+ * 126 fabricated links sat in the list badged as healthy.
+ *
+ * It is deliberately **read-only**. The fix for a bad link is an edit to the
  * course catalog in `src/data/courses/*.json` followed by a re-seed, which is
  * reviewable and reproducible; a field an admin edits in production would
  * silently diverge from the catalog and be overwritten by the next seed.
@@ -50,7 +56,7 @@ export function AdminResources() {
   return (
     <Section
       title="Resources"
-      description="Every free resource linked from a course stage, with the ones that stopped resolving first."
+      description="Every free resource linked from a course stage, with unverified search fallbacks first."
     >
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
         <div className="min-w-0 flex-1">
@@ -69,14 +75,14 @@ export function AdminResources() {
             onChange={(e) => setStatus(e.target.value as "unverified" | "all")}
             className="min-h-touch min-w-0 rounded-sm border border-md-outline bg-md-surface-container px-3 text-body-md text-md-on-surface"
           >
-            <option value="unverified">Failing links only</option>
+            <option value="unverified">Unverified fallbacks only</option>
             <option value="all">All resources</option>
           </select>
         </label>
       </div>
 
       <p className="mt-4 rounded-md border border-md-outline-variant p-3 text-body-sm text-md-on-surface-variant">
-        This list is read-only. A dead link is fixed in the course catalog
+        This list is read-only. A bad link is fixed in the course catalog
         (<code className="text-md-on-surface">src/data/courses/*.json</code>) and re-seeded, so the
         change is reviewable and survives the next seed.
       </p>
@@ -93,11 +99,11 @@ export function AdminResources() {
           />
         ) : items.length === 0 ? (
           <StateView
-            title={status === "unverified" ? "No failing links" : "No resources match"}
+            title={status === "unverified" ? "No search fallbacks" : "No resources match"}
             description={
               status === "unverified"
-                ? "Every linked resource resolved the last time the freshness worker checked. Nothing needs attention."
-                : "Try a different search term, or switch back to failing links only."
+                ? "Every linked resource points at a specific page rather than a search. Nothing needs attention."
+                : "Try a different search term, or switch back to unverified fallbacks only."
             }
             primary={
               status === "unverified"
@@ -118,7 +124,11 @@ export function AdminResources() {
                     href={resource.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="-my-2 inline-block break-all py-2 transition-colors duration-fast hover:text-md-primary"
+                    // On a phone the URL wraps to two lines and clears 44px on
+                    // its own; on desktop it sits on one 32px line, so the
+                    // padding (cancelled by the negative margin) is what keeps
+                    // the tap target legal at every width.
+                    className="-my-3.5 inline-block break-all py-3.5 transition-colors duration-fast hover:text-md-primary"
                   >
                     {resource.url}
                   </a>
@@ -127,7 +137,7 @@ export function AdminResources() {
                 badges={
                   <>
                     <Badge tone={resource.verified ? "success" : "warning"}>
-                      {resource.verified ? "Resolving" : "Not resolving"}
+                      {resource.verified ? "Verified link" : "Search fallback"}
                     </Badge>
                     <Badge>{resource.type}</Badge>
                     {!resource.published && <Badge tone="neutral">Course hidden</Badge>}

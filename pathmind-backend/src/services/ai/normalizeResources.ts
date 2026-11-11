@@ -11,7 +11,9 @@ import type { FreeResourceDraft } from "./AIProvider.interface";
  *   plain watch URL) and typed "video".
  * - YouTube search pages (/results?search_query=), channel pages, and
  *   homepages are dropped entirely — they are not watchable resources and the
- *   frontend preview panels rely on real video ids for thumbnails.
+ *   frontend preview panels rely on real video ids for thumbnails. With
+ *   `allowSearchFallback` they are instead kept and flagged `fallback: true`;
+ *   see the option's note below.
  * - "playlist" only ever means a real YouTube playlist URL.
  * - Type mislabels (e.g. a YouTube video typed "doc", or an article typed
  *   "playlist"/"video") are corrected.
@@ -50,17 +52,35 @@ function isVimeoUrl(url: string): boolean {
   return host === "vimeo.com" || host === "player.vimeo.com";
 }
 
+/** YouTube's own search page, which `isSearchPageUrl` misses — the path is
+ * `/results`, not `/search`. */
+function isYouTubeSearchUrl(raw: string): boolean {
+  try {
+    return isYouTubeUrl(raw) && new URL(raw).pathname === "/results";
+  } catch {
+    return false;
+  }
+}
+
+/** Query keys that mean "this is a search" on the sites we link to. */
+const SEARCH_PARAMS = ["q", "query", "search_query", "gq", "search"];
+
 /**
- * Search-results pages (MDN /search, generic /search paths) are navigation,
- * not learning resources — dropping them prevents the AI from padding a stage
- * with a search page when it couldn't find a real doc/video URL.
+ * Search-results pages are navigation, not learning resources — dropping them
+ * prevents a provider from padding a stage with a search page when it couldn't
+ * find a real doc/video URL.
+ *
+ * Matching on a `search` path segment alone missed freeCodeCamp's
+ * `/news/search?query=`, which is a search page two segments deep. A search
+ * path segment anywhere, or a known search query key, catches every site in
+ * the mock set without reaching for a per-host list.
  */
 function isSearchPageUrl(raw: string): boolean {
   try {
-    const path = new URL(raw).pathname;
-    if (path === "/search" || path.startsWith("/search/")) return true;
-    if (path.startsWith("/en-US/search")) return true; // MDN
-    return false;
+    const u = new URL(raw);
+    const segments = u.pathname.split("/").filter(Boolean);
+    if (segments.includes("search")) return true;
+    return SEARCH_PARAMS.some((key) => u.searchParams.has(key));
   } catch {
     return false;
   }
@@ -112,15 +132,46 @@ export function canonicalizeYouTubeUrl(raw: string): CanonicalYoutube | null {
   return null;
 }
 
+export interface NormalizeOptions {
+  /**
+   * Keep search-results URLs as flagged fallbacks instead of dropping them.
+   *
+   * Off in production: a real provider that answers with a search page has
+   * failed to find a resource, and padding the stage with one hides that.
+   * On in MOCK_MODE, where a search URL is the only kind of link that can be
+   * both topic-relevant and genuinely resolvable without a search API — the
+   * alternative is the fabricated deep links this replaced.
+   */
+  allowSearchFallback?: boolean;
+}
+
 /**
  * Normalizes a batch of free-resource drafts. Order is preserved; non-video
  * URLs that are already docs/blogs pass through untouched.
  */
-export function normalizeResources(drafts: FreeResourceDraft[]): FreeResourceDraft[] {
+export function normalizeResources(
+  drafts: FreeResourceDraft[],
+  options: NormalizeOptions = {}
+): FreeResourceDraft[] {
+  const { allowSearchFallback = false } = options;
   const seen = new Set<string>();
   const out: FreeResourceDraft[] = [];
 
   for (const draft of drafts) {
+    const isSearch = isYouTubeSearchUrl(draft.url) || isSearchPageUrl(draft.url);
+    if (isSearch && allowSearchFallback) {
+      if (seen.has(draft.url)) continue;
+      seen.add(draft.url);
+      out.push({
+        title: draft.title,
+        url: draft.url,
+        // A search page is never a watchable video, whatever the draft claimed.
+        type: "doc",
+        fallback: true,
+      });
+      continue;
+    }
+
     const yt = canonicalizeYouTubeUrl(draft.url);
     let url = draft.url;
     let type = draft.type;

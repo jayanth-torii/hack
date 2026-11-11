@@ -1414,7 +1414,7 @@
           },
           {
             "title": "Gunicorn Documentation",
-            "url": "https://docs.gunicorn.org/en/stable/",
+            "url": "https://docs.gunicorn.org/",
             "type": "doc"
           }
         ]
@@ -1548,7 +1548,7 @@
         "resources": [
           {
             "title": "Gunicorn Documentation",
-            "url": "https://docs.gunicorn.org/en/stable/",
+            "url": "https://docs.gunicorn.org/",
             "type": "doc"
           },
           {
