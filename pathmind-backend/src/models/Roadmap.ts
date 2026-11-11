@@ -57,6 +57,14 @@ export interface RoadmapDocument extends Document {
   topic: string;
   normalizedTopic: string;
   slug: string;
+  /**
+   * Catalog grouping, e.g. "Web Development". Only curated courses carry one;
+   * AI-generated roadmaps have no category, which is exactly what keeps them
+   * out of the browsable catalog.
+   */
+  category?: string;
+  /** One-sentence blurb shown on the catalog card. Curated courses only. */
+  summary?: string;
   isPublicTemplate: boolean;
   sourceModel: string;
   stages: Stage[];
@@ -138,6 +146,8 @@ const roadmapSchema = new Schema<RoadmapDocument>(
     topic: { type: String, required: true, index: true },
     normalizedTopic: { type: String, required: true, index: true },
     slug: { type: String, required: true, unique: true, index: true },
+    category: { type: String, trim: true, index: true },
+    summary: { type: String, trim: true, maxlength: 400 },
     isPublicTemplate: { type: Boolean, default: true },
     sourceModel: { type: String, default: "mock" },
     stages: [stageSchema],
@@ -147,5 +157,7 @@ const roadmapSchema = new Schema<RoadmapDocument>(
 );
 
 roadmapSchema.index({ normalizedTopic: 1, isPublicTemplate: 1 });
+// The catalog's default read: published curated courses in one category.
+roadmapSchema.index({ isPublicTemplate: 1, category: 1, topic: 1 });
 
 export const Roadmap = model<RoadmapDocument>("Roadmap", roadmapSchema);

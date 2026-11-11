@@ -102,6 +102,22 @@ const ProfileIcon = ({ filled }: IconProps) =>
     </svg>
   );
 
+const ExploreIcon = ({ filled }: IconProps) =>
+  filled ? (
+    <svg {...svgProps} fill="currentColor">
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M12 2.6a9.4 9.4 0 1 0 0 18.8 9.4 9.4 0 0 0 0-18.8Zm3.9 4.3-2.2 5a1.8 1.8 0 0 1-.9.9l-5 2.2a.6.6 0 0 1-.8-.8l2.2-5c.2-.4.5-.7.9-.9l5-2.2a.6.6 0 0 1 .8.8Z"
+      />
+    </svg>
+  ) : (
+    <svg {...svgProps} {...strokeProps}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="m15.5 8.5-2.1 4.8a1.2 1.2 0 0 1-.6.6L8 16l2.1-4.8c.1-.3.3-.5.6-.6L15.5 8.5Z" />
+    </svg>
+  );
+
 const HomeIcon = ({ filled }: IconProps) =>
   filled ? (
     <svg {...svgProps} fill="currentColor">
@@ -185,6 +201,9 @@ export function BottomNav() {
       ]
     : [
         { href: "/", label: "Home", Icon: HomeIcon, match: (p) => p === "/" },
+        // The catalog is how a learner finds anything to do, so it earns a
+        // permanent slot rather than living behind a link on the home page.
+        { href: "/courses", label: "Courses", Icon: ExploreIcon },
         { href: "/saved", label: "Library", Icon: SavedIcon },
         user
           ? { href: "/profile", label: "Profile", Icon: ProfileIcon }

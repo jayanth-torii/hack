@@ -14,8 +14,8 @@ ignored.
 [
   {
     "topic": "Python Programming",          // required, unique across ALL files (case/space-insensitive)
-    "category": "Languages & CS",           // required, free text — NOT stored on the Roadmap model
-    "summary": "One sentence.",             // required — NOT stored on the Roadmap model
+    "category": "Languages & CS",           // required — stored on the Roadmap; see "Category" below
+    "summary": "One sentence.",             // required — stored on the Roadmap; shown on the catalog card
     "stages": [                             // 4-5 stages, ordered beginner -> advanced
       {
         "title": "Syntax and Core Types",
@@ -69,3 +69,32 @@ ignored.
 ```bash
 npm run seed:courses -- --dry-run      # validates + maps everything, writes nothing, needs no DB
 ```
+
+
+## Category is what puts a course in the catalog
+
+`category` and `summary` are written onto the `Roadmap` document, and
+`GET /courses` matches on **published AND categorised** (`CATALOG_FILTER` in
+`src/services/catalog.service.ts`).
+
+That matters because every AI-generated roadmap is *also*
+`isPublicTemplate: true` — that is how the generation cache is shared between
+learners. A catalog defined as "public templates" would therefore fill with
+whatever anyone had ever typed into the topic box, uncategorised, burying these
+curated courses. Setting a category is the editorial act that publishes a
+course; an admin can also set one on a generated roadmap to promote it.
+
+Use one of the existing categories unless you are genuinely adding a subject —
+they are the catalog's filter chips, and a one-off spelling creates a chip with
+a single course behind it.
+
+## Re-seeding a course that is already live
+
+`npm run seed:courses` is safe to re-run. For a course that already exists it
+updates **only** `category` and `summary` and reports `metadata`; it does not
+touch the stages, so nobody's progress moves.
+
+`--force` replaces the whole document. That regenerates every stage `_id`, and
+stage ids are the keys `UserProgress` stores completions against — so forcing a
+course that learners are partway through **discards their progress on it**. Use
+it for a course nobody has started, or accept that cost deliberately.

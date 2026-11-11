@@ -34,6 +34,9 @@ export interface CourseRoadmapInput {
   topic: string;
   normalizedTopic: string;
   slug: string;
+  /** Carried onto the model so the catalog can group and filter by it. */
+  category: string;
+  summary: string;
   isPublicTemplate: true;
   sourceModel: "curated";
   stages: Stage[];
@@ -121,6 +124,8 @@ export function courseToRoadmapInput(
     topic: course.topic,
     normalizedTopic: normalizeTopic(course.topic),
     slug,
+    category: course.category,
+    summary: course.summary,
     isPublicTemplate: true,
     sourceModel: "curated",
     stages,
@@ -272,6 +277,7 @@ async function main(): Promise<void> {
   let created = 0;
   let skipped = 0;
   let replaced = 0;
+  let updatedMeta = 0;
   const takenSlugs = new Set<string>();
 
   try {
@@ -280,6 +286,17 @@ async function main(): Promise<void> {
       const existing = await Roadmap.findOne({ normalizedTopic, isPublicTemplate: true });
 
       if (existing && !opts.force) {
+        // Category and summary are pure metadata — no stage ids, no progress
+        // keys — so an existing course can be brought up to date without the
+        // full `--force` replace that would orphan every learner's progress.
+        if (existing.category !== course.category || existing.summary !== course.summary) {
+          existing.category = course.category;
+          existing.summary = course.summary;
+          await existing.save();
+          console.log(`  metadata  ${course.topic} (category/summary updated)`);
+          updatedMeta++;
+          continue;
+        }
         console.log(`  skipped   ${course.topic} (already a public template)`);
         skipped++;
         continue;
@@ -306,7 +323,9 @@ async function main(): Promise<void> {
     await mongoose.disconnect();
   }
 
-  console.log(`created ${created}, skipped ${skipped}, replaced ${replaced}`);
+  console.log(
+    `created ${created}, metadata-updated ${updatedMeta}, skipped ${skipped}, replaced ${replaced}`
+  );
 }
 
 if (require.main === module) {
