@@ -73,6 +73,18 @@ export function ProgressDashboard({ roadmap }: { roadmap: Roadmap }) {
     // so the screen pays both back here — matching DashboardSkeleton, which
     // already did, so nothing shifts when the data lands.
     <div className="pt-app-bar pb-nav relative overflow-hidden">
+      {/* Ambient corner light — the landing page's treatment, so progress and
+          marketing read as one product. `overflow-hidden` above keeps these
+          oversized glows from adding horizontal page scroll. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-40 -top-20 h-[30rem] w-[34rem] rounded-full bg-[radial-gradient(circle,rgb(var(--md-source)/0.24),transparent_68%)] blur-3xl"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-40 top-[34rem] h-[26rem] w-[30rem] rounded-full bg-[radial-gradient(circle,rgb(var(--md-source)/0.16),transparent_70%)] blur-3xl"
+      />
+
       <div className="relative z-10 mx-auto max-w-5xl px-4 pt-6 sm:px-6 sm:pt-10">
         {/* ── Hero band ── */}
         <motion.section
@@ -82,15 +94,10 @@ export function ProgressDashboard({ roadmap }: { roadmap: Roadmap }) {
           className="flex flex-col items-start justify-between gap-10 md:flex-row md:items-center"
         >
           <div className="relative w-full min-w-0 max-w-2xl">
-            <div className="flex items-center gap-3">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/illustrations/progress_2.png"
-                alt=""
-                className="h-10 w-10 rounded-md object-cover"
-              />
-              <Eyebrow>Progress dashboard</Eyebrow>
-            </div>
+            {/* The eyebrow stands alone, as it does in every landing section.
+                It used to be preceded by a 40px crop of a raster illustration,
+                which read as a stray favicon rather than brand art. */}
+            <Eyebrow>Progress dashboard</Eyebrow>
             <h1 className="mt-3 break-words text-headline-md text-md-on-surface sm:text-display-sm">
               {roadmap.topic}
             </h1>
@@ -177,7 +184,7 @@ export function ProgressDashboard({ roadmap }: { roadmap: Roadmap }) {
               initial={reduce ? undefined : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.12 + i * 0.08, duration: 0.5 }}
-              className="rounded-md border border-md-outline-variant bg-md-surface-container-low p-3.5 sm:p-5"
+              className="rounded-lg border border-md-outline-variant/70 bg-md-surface-container-low/70 p-3.5 shadow-e1 backdrop-blur-sm sm:p-5"
             >
               <dd className={clsx("text-headline-sm tabular-nums sm:text-headline-md", stat.tone)}>
                 {stat.value}

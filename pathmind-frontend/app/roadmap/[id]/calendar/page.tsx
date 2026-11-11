@@ -110,7 +110,22 @@ export default function CalendarExportPage() {
   };
 
   return (
-    <div className="min-h-screen-safe relative bg-md-surface">
+    // `overflow-hidden` is load-bearing, not decoration: the ambient glows
+    // below are deliberately wider than the viewport, and without it they
+    // would add horizontal page scroll (CLAUDE.md §3).
+    <div className="min-h-screen-safe relative overflow-hidden bg-md-surface">
+      {/* Ambient corner light, carried by the vivid brand source — the same
+          treatment every landing section uses, so the plan reads as part of
+          the same product rather than a plain utility screen. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-40 -top-24 h-[30rem] w-[34rem] rounded-full bg-[radial-gradient(circle,rgb(var(--md-source)/0.24),transparent_68%)] blur-3xl"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-40 top-[38rem] h-[26rem] w-[30rem] rounded-full bg-[radial-gradient(circle,rgb(var(--md-source)/0.16),transparent_70%)] blur-3xl"
+      />
+
       <AppBar
         title="Study plan"
         back={`/roadmap/${id}`}
@@ -147,10 +162,10 @@ export default function CalendarExportPage() {
               ].map((stat) => (
                 <div
                   key={stat.label}
-                  className="rounded-md border border-md-outline-variant bg-md-surface-container-low px-4 py-3"
+                  className="rounded-lg border border-md-outline-variant/70 bg-md-surface-container-low/70 px-5 py-4 shadow-e1 backdrop-blur-sm"
                 >
-                  <dd className="text-title-lg font-medium text-md-primary">{stat.value}</dd>
-                  <dt className="mt-0.5 text-body-sm text-md-on-surface-variant">{stat.label}</dt>
+                  <dd className="text-headline-sm font-medium text-md-primary">{stat.value}</dd>
+                  <dt className="mt-1 text-body-sm text-md-on-surface-variant">{stat.label}</dt>
                 </div>
               ))}
             </dl>
@@ -236,10 +251,15 @@ export default function CalendarExportPage() {
               </motion.p>
             )}
 
+            {/* Brand art, not a boxed stock vector. The render carries its own
+                transparency and sits straight on the surface — the light frame
+                this used to need was the reason a white card appeared in the
+                middle of a dark screen. */}
             <Illustration
               name="events-calendar"
-              className="mt-4 hidden h-40 w-64 lg:block"
-              imgClassName="object-contain"
+              glow
+              alt=""
+              className="mt-6 hidden h-56 w-full max-w-sm self-center lg:block"
             />
           </motion.div>
         </motion.section>

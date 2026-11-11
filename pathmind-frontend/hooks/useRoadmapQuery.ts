@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiClient, downloadBlob } from "@/lib/api-client";
 import { mapRoadmap } from "@/lib/mappers";
 import { useRoadmapStore } from "@/store/roadmapStore";
+import { useAuthStore } from "@/store/authStore";
 import type { Roadmap } from "@/types/roadmap";
 import type { UserProgress } from "@/types/progress";
 import { downloadBlobAsFile } from "@/lib/ics";
@@ -39,12 +40,19 @@ export function useRoadmap(id: string | undefined) {
 }
 
 export function useSavedRoadmaps() {
+  // The endpoint requires a session, so asking for it while signed out can
+  // only produce a 401. That was harmless while this ran on /saved alone;
+  // once the header started resolving a roadmap from it, an unguarded query
+  // would have put a failed request on every public landing page view.
+  const user = useAuthStore((s) => s.user);
+
   return useQuery({
     queryKey: ["roadmaps", "saved"],
     queryFn: async () => {
       const res = await apiClient.get<{ roadmaps: unknown[] }>("/roadmaps/saved");
       return res.roadmaps.map(mapRoadmap);
     },
+    enabled: Boolean(user),
   });
 }
 

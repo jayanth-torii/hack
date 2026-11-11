@@ -21,6 +21,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      // The build page is the product's front door for a visitor who arrives
+      // already knowing what they want to learn.
+      url: `${SITE_URL}/build`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
       url: `${SITE_URL}/terms`,
       lastModified: new Date(),
       changeFrequency: "yearly",

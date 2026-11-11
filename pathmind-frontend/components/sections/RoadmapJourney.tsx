@@ -1,12 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { clsx } from "@/lib/clsx";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ProgressRing } from "@/components/ui/ProgressRing";
+import { Illustration } from "@/components/ui/Illustration";
 import { StageTimeline, type StageState } from "@/components/sections/StageTimeline";
 import { useToggleStageItem, useUpdateProgress } from "@/hooks/useRoadmapQuery";
 import { useIssueCertificate, useCertificates } from "@/hooks/useProfileQuery";
@@ -37,6 +38,112 @@ type Tab = "roadmap" | "resources" | "practice";
  *  and state-layer rules as every real button on the screen. */
 const LINK_BUTTON =
   "state-layer press inline-flex min-h-touch items-center gap-2 rounded-full px-6 text-label-lg font-medium transition-colors duration-fast ease-standard";
+
+/**
+ * Section opener for a tab panel — eyebrow, headline, one supporting line.
+ *
+ * The Resources and Practice panels used to drop straight into a bare grid
+ * with no heading at all, so switching tabs felt like switching to a different,
+ * plainer app. This is the same opener every landing section uses.
+ */
+function TabIntro({
+  eyebrow,
+  title,
+  copy,
+}: {
+  eyebrow: string;
+  title: ReactNode;
+  copy: string;
+}) {
+  return (
+    <div className="mt-8 max-w-2xl">
+      <Eyebrow>{eyebrow}</Eyebrow>
+      <h2 className="mt-4 text-headline-sm leading-[1.2] text-md-on-surface sm:text-headline-md">
+        {title}
+      </h2>
+      <p className="mt-3 text-body-md text-md-on-surface-variant sm:text-body-lg">{copy}</p>
+    </div>
+  );
+}
+
+/**
+ * One external link in a tab panel: an accent icon tile, a kicker, the title,
+ * its stage, and an arrow that slides on hover.
+ *
+ * The arrow only moves under `hover:` — it is a desktop affordance, and the
+ * whole tile is the touch target either way.
+ */
+function LinkCard({
+  icon,
+  kicker,
+  title,
+  meta,
+  href,
+}: {
+  icon: ReactNode;
+  kicker: string;
+  title: string;
+  meta: string;
+  href: string;
+}) {
+  return (
+    <li className="group min-w-0">
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="state-layer flex min-h-touch gap-4 rounded-lg border border-md-outline-variant/70 bg-md-surface-container-low/70 p-4 shadow-e1 backdrop-blur-sm transition-colors duration-fast ease-standard hover:border-md-primary/60"
+      >
+        <span className="mt-0.5 grid h-10 w-10 flex-none place-items-center rounded-md bg-md-primary-container text-md-on-primary-container">
+          {icon}
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-label-sm uppercase tracking-[0.2em] text-md-primary">
+            {kicker}
+          </span>
+          <span className="mt-1.5 block break-words text-body-lg font-medium text-md-on-surface">
+            {title}
+          </span>
+          <span className="mt-1 block truncate text-body-sm text-md-on-surface-variant">
+            {meta}
+          </span>
+        </span>
+        <span
+          aria-hidden
+          className="mt-0.5 flex-none self-start text-md-on-surface-variant transition-transform duration-fast ease-standard group-hover:translate-x-1 group-hover:text-md-primary"
+        >
+          <ArrowRightIcon className="h-5 w-5" />
+        </span>
+      </a>
+    </li>
+  );
+}
+
+/** The API returns difficulty lowercase ("easy"). The old practice markup
+ *  leaned on a `capitalize` class; the shared card doesn't carry one, so the
+ *  value is cased here instead. */
+function titleCase(value: string): string {
+  return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
+/** Empty state for a tab panel — brand art rather than a bordered sentence. */
+function EmptyTab({
+  art,
+  title,
+  copy,
+}: {
+  art: "resources" | "practice";
+  title: string;
+  copy: string;
+}) {
+  return (
+    <div className="mt-6 flex flex-col items-center rounded-xl border border-md-outline-variant/60 bg-md-surface-container-low/50 px-6 py-12 text-center backdrop-blur-sm">
+      <Illustration name={art} glow alt="" className="h-32 w-32" />
+      <p className="mt-6 text-title-md text-md-on-surface">{title}</p>
+      <p className="mt-2 max-w-sm text-body-md text-md-on-surface-variant">{copy}</p>
+    </div>
+  );
+}
 
 /**
  * The learning journey.
@@ -258,35 +365,35 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
 
         {/* ── Resources ────────────────────────────────────────────── */}
         {tab === "resources" && (
-          <div className="mt-6">
+          <div>
+            <TabIntro
+              eyebrow="Every resource"
+              title={
+                <>
+                  Everything worth reading,{" "}
+                  <span className="text-md-primary">in one list</span>
+                </>
+              }
+              copy="Docs, articles and videos pulled from every stage of this roadmap. Each one opens in a new tab so you don't lose your place."
+            />
+
             {allResources.length === 0 ? (
-              <p className="rounded-lg border border-md-outline-variant px-6 py-12 text-center text-body-md text-md-on-surface-variant">
-                No resources attached to this roadmap yet.
-              </p>
+              <EmptyTab
+                art="resources"
+                title="No resources yet"
+                copy="Nothing has been attached to the stages of this roadmap. Resources appear here as soon as a stage carries one."
+              />
             ) : (
-              <ul className="grid gap-3 sm:grid-cols-2">
+              <ul className="mt-7 grid gap-3 sm:grid-cols-2">
                 {allResources.map((resource) => (
-                  <li
+                  <LinkCard
                     key={`${resource.stageTitle}-${resource.url}`}
-                    className="min-w-0 rounded-md border border-md-outline-variant bg-md-surface-container-low transition-colors duration-fast ease-standard hover:border-md-primary"
-                  >
-                    <a
-                      href={resource.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="state-layer block min-h-touch-min rounded-md p-4"
-                    >
-                      <p className="text-label-sm uppercase tracking-[0.2em] text-md-primary">
-                        {resource.type}
-                      </p>
-                      <p className="mt-1.5 break-words text-body-lg font-medium text-md-on-surface">
-                        {resource.title}
-                      </p>
-                      <p className="mt-1 truncate text-body-sm text-md-on-surface-variant">
-                        {resource.stageTitle}
-                      </p>
-                    </a>
-                  </li>
+                    icon={<BookIcon className="h-5 w-5" />}
+                    kicker={resource.type}
+                    title={resource.title}
+                    meta={resource.stageTitle}
+                    href={resource.url}
+                  />
                 ))}
               </ul>
             )}
@@ -295,35 +402,34 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
 
         {/* ── Practice ─────────────────────────────────────────────── */}
         {tab === "practice" && (
-          <div className="mt-6">
+          <div>
+            <TabIntro
+              eyebrow="Practice arena"
+              title={
+                <>
+                  Problems that make it <span className="text-md-primary">stick</span>
+                </>
+              }
+              copy="Curated LeetCode, CodeChef and HackerRank problems resolved from a maintained seed map — never invented, always real."
+            />
+
             {allPractice.length === 0 ? (
-              <p className="rounded-lg border border-md-outline-variant px-6 py-12 text-center text-body-md text-md-on-surface-variant">
-                No practice problems attached to this roadmap yet.
-              </p>
+              <EmptyTab
+                art="practice"
+                title="No practice problems yet"
+                copy="This roadmap's stages don't carry practice links. They show up here the moment a stage does."
+              />
             ) : (
-              <ul className="grid gap-3 sm:grid-cols-2">
+              <ul className="mt-7 grid gap-3 sm:grid-cols-2">
                 {allPractice.map((problem) => (
-                  <li
+                  <LinkCard
                     key={`${problem.stageTitle}-${problem.url}`}
-                    className="min-w-0 rounded-md border border-md-outline-variant bg-md-surface-container-low transition-colors duration-fast ease-standard hover:border-md-primary"
-                  >
-                    <a
-                      href={problem.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="state-layer block min-h-touch-min rounded-md p-4"
-                    >
-                      <p className="text-label-sm uppercase tracking-[0.2em] text-md-primary">
-                        {problem.platform}
-                      </p>
-                      <p className="mt-1.5 break-words text-body-lg font-medium text-md-on-surface">
-                        {problem.title}
-                      </p>
-                      <p className="mt-1 truncate text-body-sm capitalize text-md-on-surface-variant">
-                        {problem.difficulty} · {problem.stageTitle}
-                      </p>
-                    </a>
-                  </li>
+                    icon={<TargetIcon className="h-5 w-5" />}
+                    kicker={problem.platform}
+                    title={problem.title}
+                    meta={`${titleCase(problem.difficulty)} · ${problem.stageTitle}`}
+                    href={problem.url}
+                  />
                 ))}
               </ul>
             )}

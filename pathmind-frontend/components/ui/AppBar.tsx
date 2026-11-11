@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { ThemeToggle } from "@/components/home/ThemeToggle";
 import { useAuthStore } from "@/store/authStore";
+import { confirm } from "@/components/ui/ConfirmDialog";
+import { toast } from "@/components/ui/toast";
 import { clsx } from "@/lib/clsx";
 
 interface AppBarAction {
@@ -91,6 +93,77 @@ function AdminLink() {
 }
 
 /**
+ * Account control, matching the landing page header: an avatar chip linking to
+ * /profile plus a Log out action for signed-in users, Log in + Get started
+ * otherwise.
+ *
+ * Desktop-only. On a phone the account lives in the bottom nav's Profile
+ * destination, and a 64px bar has no room for an email address.
+ */
+function AccountControls() {
+  const user = useAuthStore((s) => s.user);
+  const logout = useAuthStore((s) => s.logout);
+  const initial = user?.email?.charAt(0).toUpperCase() ?? "V";
+
+  const handleLogout = async () => {
+    const ok = await confirm({
+      title: "Sign out of Vidhyora?",
+      message:
+        "Your roadmaps and progress are saved — you can pick up right where you left off.",
+      confirmLabel: "Sign out",
+      cancelLabel: "Stay signed in",
+      tone: "danger",
+    });
+    if (!ok) return;
+    await logout();
+    toast.success("Signed out", "See you soon.");
+  };
+
+  if (!user) {
+    return (
+      <div className="hidden items-center gap-1 lg:flex">
+        <Link
+          href="/auth/login"
+          className="press state-layer flex min-h-touch items-center rounded-full px-4 text-label-lg text-md-on-surface-variant"
+        >
+          Log in
+        </Link>
+        <Link
+          href="/auth/register"
+          className="press state-layer flex min-h-touch items-center rounded-full bg-md-primary px-6 text-label-lg text-md-on-primary shadow-e1"
+        >
+          Get started
+        </Link>
+      </div>
+    );
+  }
+
+  return (
+    <div className="hidden items-center gap-1 lg:flex">
+      <Link
+        href="/profile"
+        className="state-layer flex min-h-touch items-center gap-2.5 rounded-full border border-md-outline-variant py-1.5 pl-1.5 pr-4"
+        aria-label="Open your profile"
+      >
+        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-md-primary text-label-lg text-md-on-primary">
+          {initial}
+        </span>
+        <span className="max-w-[9rem] truncate text-label-lg text-md-on-surface-variant">
+          {user.email}
+        </span>
+      </Link>
+      <button
+        type="button"
+        onClick={() => void handleLogout()}
+        className="press state-layer flex min-h-touch items-center rounded-full px-4 text-label-lg text-md-on-surface-variant"
+      >
+        Log out
+      </button>
+    </div>
+  );
+}
+
+/**
  * Tracks whether the page has left the top, for M3's **on-scroll** app bar
  * colour. Material raises the bar from `surface` to `surface-container` the
  * moment content slides under it, which is what separates the bar from the
@@ -127,35 +200,37 @@ function useScrolled(threshold = 4) {
 }
 
 /**
- * **Material 3 small top app bar** — the single app bar for every signed-in
- * screen (journey, dashboard, calendar, saved, profile). It replaces four
- * near-identical hand-rolled headers that each crammed three or four 14px text
- * links into one row, with targets well under the 48px minimum.
+ * **The** app bar for every signed-in screen (journey, dashboard, calendar,
+ * courses, saved, profile, admin). It replaced four near-identical hand-rolled
+ * headers; don't add a fifth.
  *
- * Anatomy: a leading navigation icon (the back affordance) in a 48dp target, a
- * `title-lg` headline, then trailing icon buttons. 64dp tall — M3's small app
- * bar height, which `--app-bar-h` now carries, so the row fills the box that
- * `pt-app-bar` reserves for it on every screen.
+ * It now wears the landing page's frosted treatment — translucent `surface`,
+ * blur and a saturation boost — so crossing from the marketing site into the
+ * product doesn't feel like crossing into a different product. Previously this
+ * bar was flat and opaque while the landing header was glass, which made the
+ * app look like an unfinished second system.
  *
- * Colour follows M3's on-scroll rule: `surface` at rest, `surface-container`
- * plus elevation 2 once the page scrolls under it.
+ * Anatomy: leading navigation icon (back) in a 48dp target, `title-lg`
+ * headline, destination links carrying a real **active state**, then the
+ * account chip, admin entry and theme toggle. 64dp tall — M3's small app bar
+ * height, which `--app-bar-h` carries, so the row fills the box `pt-app-bar`
+ * reserves on every screen.
  *
- * Mobile: back affordance (or logo) + screen title + trailing actions. Primary
- * destinations move to <BottomNav>, which has room for real touch targets.
- * Desktop (md+): wordmark + inline destination links, as before.
+ * Mobile keeps back + title + trailing icons; primary destinations live in
+ * <BottomNav>, which has room for real touch targets.
  *
- * The bar is opaque — no `backdrop-filter`. That is both the Material
- * behaviour and a deliberate safety fix: a backdrop filter makes an element a
- * containing block for `position: fixed` descendants, so anything fixed
- * rendered through `children` would have sized itself to the bar. Overlays
- * should still be portalled to `document.body` regardless (see
- * `components/md/Dialog.tsx`), but the trap no longer exists here.
+ * **`backdrop-filter` makes this a containing block for `position: fixed`
+ * descendants.** Anything fixed passed through `children` would size itself to
+ * this bar rather than the viewport, so overlays must portal to
+ * `document.body` — which `md/Dialog` and `ConfirmDialog` already do. Today
+ * every caller passes plain buttons; keep it that way.
  *
  * Fixed, so it pays back `viewport-fit=cover` with `pt-safe` — the only place
  * the top inset is applied on these screens.
  */
 export function AppBar({ title, back, actions = [], children, className }: AppBarProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const showBack = Boolean(back);
   const scrolled = useScrolled();
 
@@ -165,14 +240,15 @@ export function AppBar({ title, back, actions = [], children, className }: AppBa
   return (
     <header
       className={clsx(
-        "pt-safe fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow] duration-base ease-standard",
+        "pt-safe fixed inset-x-0 top-0 z-50 border-b transition-[background-color,box-shadow,border-color] duration-base ease-standard",
+        "backdrop-blur-2xl backdrop-saturate-150",
         scrolled
-          ? "bg-md-surface-container shadow-e2"
-          : "bg-md-surface shadow-none",
+          ? "border-md-outline-variant/60 bg-md-surface/80 shadow-e2"
+          : "border-md-outline-variant/40 bg-md-surface/70 shadow-none",
         className
       )}
     >
-      <div className="mx-auto flex h-app-bar max-w-6xl items-center gap-1 px-2 sm:px-4">
+      <div className="mx-auto flex h-app-bar max-w-7xl items-center gap-1 px-2 sm:px-4 md:px-6">
         {/* Leading: navigation icon on mobile when there's a parent screen,
             else the wordmark. */}
         {showBack ? (
@@ -228,25 +304,41 @@ export function AppBar({ title, back, actions = [], children, className }: AppBa
             only grows from md up in that case. */}
         <div className={clsx("flex-1", title && showBack && "hidden md:block")} />
 
-        {/* Desktop destinations — mobile uses the bottom nav instead */}
+        {/* Desktop destinations — mobile uses the bottom nav instead. The
+            active destination is named by `aria-current` and shown by a 2dp
+            indicator, so "where am I" doesn't rest on colour alone. */}
         {actions.length > 0 && (
           <nav className="hidden items-center gap-1 md:flex" aria-label="Sections">
-            {actions.map((a) => (
-              <Link
-                key={a.href}
-                href={a.href}
-                className="press state-layer flex min-h-touch items-center rounded-full px-4 text-label-lg text-md-on-surface-variant"
-              >
-                {a.label}
-              </Link>
-            ))}
+            {actions.map((a) => {
+              const active = pathname === a.href;
+              return (
+                <Link
+                  key={a.href}
+                  href={a.href}
+                  aria-current={active ? "page" : undefined}
+                  className={clsx(
+                    "press state-layer relative flex min-h-touch items-center rounded-full px-4 text-label-lg transition-colors duration-fast ease-standard",
+                    active ? "text-md-on-surface" : "text-md-on-surface-variant"
+                  )}
+                >
+                  {a.label}
+                  {active && (
+                    <span
+                      aria-hidden
+                      className="absolute inset-x-4 bottom-1.5 h-0.5 rounded-full bg-md-primary"
+                    />
+                  )}
+                </Link>
+              );
+            })}
           </nav>
         )}
 
-        {/* Trailing icon buttons. Callers pass icon-only controls below `md`;
-            the row keeps them on the 48dp grid. */}
+        {/* Trailing. Callers pass icon-only controls below `md`; the row keeps
+            them on the 48dp grid. */}
         <div className="flex flex-none items-center gap-1">
           {children}
+          <AccountControls />
           <AdminLink />
           <ThemeToggle />
         </div>

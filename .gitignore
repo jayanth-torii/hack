@@ -14,6 +14,14 @@ build/
 **/build/
 *.tsbuildinfo
 
+# ...but `/build` is also a real route, so its source is not build output.
+# `**/build/` silently swallowed app/build/page.tsx and components/build/ —
+# the page worked locally and would simply not have existed on the remote.
+# Git cannot re-include a file whose parent directory is excluded, so these
+# negate the directories themselves, not the files inside them.
+!pathmind-frontend/app/build/
+!pathmind-frontend/components/build/
+
 # Next.js / frontend
 .next/
 out/

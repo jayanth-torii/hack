@@ -13,7 +13,7 @@ const PRODUCT = [
   { href: "/courses/build", label: "Build a course" },
   { href: "/auth/register", label: "Create account" },
   { href: "/auth/login", label: "Log in" },
-  { href: "#start", label: "Generate a roadmap" },
+  { href: "/build", label: "Build your path" },
 ];
 
 const MARQUEE_WORDS = [
