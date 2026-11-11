@@ -1897,5 +1897,102 @@
         ]
       }
     ]
+  },
+  {
+    "topic": "C# and .NET",
+    "category": "Languages & CS",
+    "summary": "Write modern C# on .NET — types, LINQ, async and tests — and ship a real web API with ASP.NET Core.",
+    "stages": [
+      {
+        "title": "Syntax, Types and Control Flow",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Program structure and top-level statements",
+          "Value types, reference types and nullability",
+          "Strings, interpolation and spans",
+          "Selection and iteration statements",
+          "Methods, parameters and local functions"
+        ],
+        "resources": [
+          { "title": "A Tour of C#", "url": "https://learn.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/", "type": "doc" },
+          { "title": "C# Types", "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/", "type": "doc" },
+          { "title": "Selection Statements", "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/selection-statements", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Objects, Classes and Records",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Classes, structs and records",
+          "Properties, indexers and init-only setters",
+          "Inheritance, interfaces and polymorphism",
+          "Pattern matching and switch expressions",
+          "Exceptions and resource cleanup with using"
+        ],
+        "resources": [
+          { "title": "Object-Oriented Programming in C#", "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/", "type": "doc" },
+          { "title": "Classes and Structs", "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/", "type": "doc" },
+          { "title": "Pattern Matching", "url": "https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/functional/pattern-matching", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Collections, Generics and LINQ",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "List, Dictionary, HashSet and when each fits",
+          "Generic types, methods and constraints",
+          "IEnumerable, deferred execution and iterators",
+          "LINQ query and method syntax",
+          "Projections, grouping and joins"
+        ],
+        "resources": [
+          { "title": "Language Integrated Query (LINQ)", "url": "https://learn.microsoft.com/en-us/dotnet/csharp/linq/", "type": "doc" },
+          { "title": "Collections in .NET", "url": "https://learn.microsoft.com/en-us/dotnet/standard/collections/", "type": "doc" },
+          { "title": "Generics in .NET", "url": "https://learn.microsoft.com/en-us/dotnet/standard/generics/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Async, Tasks and Reflection",
+        "type": "learn",
+        "difficulty": "advanced",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Task, async and await semantics",
+          "Cancellation tokens and timeouts",
+          "Parallelism versus concurrency",
+          "Async streams with IAsyncEnumerable",
+          "Attributes and reflection"
+        ],
+        "resources": [
+          { "title": "Asynchronous Programming in C#", "url": "https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/", "type": "doc" },
+          { "title": "Reflection and Attributes", "url": "https://learn.microsoft.com/en-us/dotnet/csharp/advanced-topics/reflection-and-attributes/", "type": "doc" },
+          { "title": "C# Language Reference", "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/", "type": "doc" }
+        ]
+      },
+      {
+        "title": "Testing and Shipping a Web API",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Unit testing with dotnet test",
+          "Dependency injection in ASP.NET Core",
+          "Minimal APIs and controller-based APIs",
+          "Entity Framework Core and migrations",
+          "Configuration, logging and deployment"
+        ],
+        "resources": [
+          { "title": "Unit Testing with dotnet test", "url": "https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test", "type": "doc" },
+          { "title": "ASP.NET Core Documentation", "url": "https://learn.microsoft.com/en-us/aspnet/core/", "type": "doc" },
+          { "title": "Entity Framework Core", "url": "https://learn.microsoft.com/en-us/ef/core/", "type": "doc" }
+        ]
+      }
+    ]
   }
 ]

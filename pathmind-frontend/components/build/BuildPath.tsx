@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import { topicSearchSchema, type TopicSearchInput } from "@/lib/zod-schemas";
 import { useGenerateRoadmap } from "@/hooks/useRoadmapQuery";
+import { useCatalog, useCatalogCategories } from "@/hooks/useCatalogQuery";
+import { Chip, ChipRow } from "@/components/ui/FilterChips";
 import { ApiClientError } from "@/lib/api-client";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
@@ -16,7 +18,14 @@ import { Reveal } from "@/components/home/Reveal";
 import { toast } from "@/components/ui/toast";
 import { clsx } from "@/lib/clsx";
 
-const EXAMPLE_TOPICS = [
+/**
+ * Shown while the catalog is still loading, and if it can't be reached.
+ *
+ * Suggestions are drawn from the real catalog so a chosen subject offers
+ * topics that actually exist, but the field must never sit there with nothing
+ * to click because a request is in flight or failed — these are the floor.
+ */
+const FALLBACK_TOPICS = [
   "Dynamic Programming",
   "React",
   "System Design",
@@ -24,6 +33,9 @@ const EXAMPLE_TOPICS = [
   "Rust",
   "Kubernetes",
 ];
+
+/** How many topic suggestions to show under the subject chips. */
+const SUGGESTION_LIMIT = 12;
 
 /**
  * The steps the backend actually walks on a generate call, in order.
@@ -152,6 +164,21 @@ export function BuildPath() {
   const params = useSearchParams();
   const generate = useGenerateRoadmap();
   const [step, setStep] = useState(0);
+  const [category, setCategory] = useState<string | null>(null);
+
+  const categories = useCatalogCategories();
+  const suggestions = useCatalog({
+    category: category ?? undefined,
+    sort: "popular",
+    limit: SUGGESTION_LIMIT,
+  });
+
+  // Catalog topics for the chosen subject, with the static list as the floor
+  // so the row is never empty mid-request or after a failure.
+  const topics = useMemo(() => {
+    const fromCatalog = (suggestions.data?.courses ?? []).map((c) => c.topic);
+    return fromCatalog.length > 0 ? fromCatalog : FALLBACK_TOPICS;
+  }, [suggestions.data]);
   // Guards the prefill-autosubmit so a re-render can never fire a second
   // generate for the same handoff.
   const started = useRef(false);
@@ -276,13 +303,42 @@ export function BuildPath() {
                 <p className="text-label-lg text-md-on-surface-variant">
                   Or start from one of these
                 </p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {EXAMPLE_TOPICS.map((t) => (
+
+                {/* Subject chips, straight from the catalog — the same control
+                    the catalog screen uses, so "Data & AI" means the same
+                    thing and reads the same way in both places. */}
+                <div className="mt-3">
+                  <ChipRow label="Subject" wrap>
+                    <Chip selected={category === null} onClick={() => setCategory(null)}>
+                      All
+                    </Chip>
+                    {(categories.data ?? []).map((c) => (
+                      <Chip
+                        key={c.category}
+                        selected={category === c.category}
+                        onClick={() =>
+                          setCategory(category === c.category ? null : c.category)
+                        }
+                      >
+                        {c.category}
+                      </Chip>
+                    ))}
+                  </ChipRow>
+                </div>
+
+                <div
+                  aria-live="polite"
+                  className={clsx(
+                    "mt-4 flex flex-wrap gap-2 transition-opacity duration-fast",
+                    suggestions.isFetching && "opacity-60"
+                  )}
+                >
+                  {topics.map((t) => (
                     <button
                       key={t}
                       type="button"
                       onClick={() => setValue("topic", t, { shouldValidate: true })}
-                      className="press state-layer inline-flex min-h-touch-min items-center justify-center rounded-sm border border-md-outline-variant bg-md-surface-container-low px-4 text-label-lg text-md-on-surface-variant transition-colors duration-fast ease-standard"
+                      className="press state-layer inline-flex min-h-touch-min items-center justify-center rounded-sm border border-md-outline-variant bg-md-surface-container-low px-4 text-left text-label-lg text-md-on-surface-variant transition-colors duration-fast ease-standard"
                     >
                       {t}
                     </button>

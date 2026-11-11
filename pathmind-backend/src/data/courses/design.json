@@ -1,0 +1,246 @@
+[
+  {
+    "topic": "Figma",
+    "category": "Mobile & Product",
+    "summary": "Design, prototype and hand off interfaces in Figma, from first frame to a component library other people can build on.",
+    "stages": [
+      {
+        "title": "Frames, Shapes and the Canvas",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 2,
+        "syllabus": [
+          "Files, pages and the editor layout",
+          "Frames versus groups, and why frames win",
+          "Shapes, the pen tool and boolean operations",
+          "Fills, strokes, corner radius and effects",
+          "Layer order, grouping and naming discipline"
+        ],
+        "resources": [
+          {
+            "title": "Getting Started with Figma",
+            "url": "https://help.figma.com/hc/en-us/categories/360002051613-Getting-started",
+            "type": "doc"
+          },
+          {
+            "title": "Figma Help Center: Design",
+            "url": "https://help.figma.com/hc/en-us/categories/360002042553-Design",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Auto Layout and Responsive Frames",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Auto layout direction, spacing and padding",
+          "Hug, fill and fixed sizing",
+          "Constraints and resizing behaviour",
+          "Nesting auto layout for real components",
+          "Absolute position as the deliberate exception"
+        ],
+        "resources": [
+          {
+            "title": "Guide to Auto Layout in Figma",
+            "url": "https://help.figma.com/hc/en-us/articles/360040451373-Guide-to-auto-layout-in-Figma",
+            "type": "doc"
+          },
+          {
+            "title": "Figma Best Practices",
+            "url": "https://www.figma.com/best-practices/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Components, Variants and Libraries",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Main components and instances",
+          "Variants and component properties",
+          "Overrides, swapping and instance resets",
+          "Publishing a team library",
+          "Updating and versioning shared components"
+        ],
+        "resources": [
+          {
+            "title": "Guide to Components in Figma",
+            "url": "https://help.figma.com/hc/en-us/articles/360038662654-Guide-to-components-in-Figma",
+            "type": "doc"
+          },
+          {
+            "title": "Guide to Libraries in Figma",
+            "url": "https://help.figma.com/hc/en-us/articles/360041051154-Guide-to-libraries-in-Figma",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Styles, Variables and Design Tokens",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Colour, text and effect styles",
+          "Variables, collections and modes",
+          "Light and dark theming without duplicate screens",
+          "Naming schemes that survive a redesign",
+          "Mapping Figma variables to code tokens"
+        ],
+        "resources": [
+          {
+            "title": "Guide to Variables in Figma",
+            "url": "https://help.figma.com/hc/en-us/articles/15339657135383-Guide-to-variables-in-Figma",
+            "type": "doc"
+          },
+          {
+            "title": "Manage and Share Styles",
+            "url": "https://help.figma.com/hc/en-us/articles/360039820134-Manage-and-share-styles",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Prototyping and Developer Handoff",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Flows, connections and triggers",
+          "Smart animate and interactive components",
+          "Overlays, scrolling and fixed elements",
+          "Presenting and sharing a prototype for review",
+          "Handing off specs, assets and measurements"
+        ],
+        "resources": [
+          {
+            "title": "Guide to Prototyping in Figma",
+            "url": "https://help.figma.com/hc/en-us/articles/360040314193-Guide-to-prototyping-in-Figma",
+            "type": "doc"
+          },
+          {
+            "title": "Figma Resource Library",
+            "url": "https://www.figma.com/resource-library/",
+            "type": "doc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "topic": "Canva",
+    "category": "Mobile & Product",
+    "summary": "Produce on-brand graphics, decks and social assets in Canva without a design background, and keep a team consistent with a brand kit.",
+    "stages": [
+      {
+        "title": "Finding Your Way Around Canva",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 2,
+        "syllabus": [
+          "Designs, projects and folders",
+          "Templates and choosing the right size",
+          "The editor: elements, text, uploads and draw",
+          "Pages, layers and position controls",
+          "Exporting to PNG, PDF and MP4"
+        ],
+        "resources": [
+          {
+            "title": "Canva Help Center",
+            "url": "https://www.canva.com/help/",
+            "type": "doc"
+          },
+          {
+            "title": "Canva Design School",
+            "url": "https://www.canva.com/en/design-school/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Design Fundamentals That Carry",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Hierarchy, alignment, contrast and proximity",
+          "Choosing and pairing typefaces",
+          "Colour relationships and the colour wheel",
+          "White space and visual balance",
+          "Reading a template as a set of decisions"
+        ],
+        "resources": [
+          {
+            "title": "Design Elements and Principles",
+            "url": "https://www.canva.com/learn/design-elements-principles/",
+            "type": "blog"
+          },
+          {
+            "title": "The Ultimate Guide to Font Pairing",
+            "url": "https://www.canva.com/learn/typography-guide/",
+            "type": "blog"
+          },
+          {
+            "title": "Colour Wheel and Colour Theory",
+            "url": "https://www.canva.com/colors/color-wheel/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Brand Kits, Templates and Teams",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Building a brand kit: logos, palette, fonts",
+          "Applying a brand to an existing design",
+          "Creating reusable templates for a team",
+          "Sharing, permissions and comments",
+          "Keeping assets consistent across people"
+        ],
+        "resources": [
+          {
+            "title": "Brand Kit",
+            "url": "https://www.canva.com/help/brand-kit/",
+            "type": "doc"
+          },
+          {
+            "title": "Canva Design School Courses",
+            "url": "https://www.canva.com/en/design-school/courses/",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Presentations and Publishing",
+        "type": "practice",
+        "difficulty": "intermediate",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Structuring a deck that holds attention",
+          "Slide transitions, timing and presenter view",
+          "Charts and data on a slide",
+          "Resizing one design for several channels",
+          "Publishing, scheduling and sharing a link"
+        ],
+        "resources": [
+          {
+            "title": "How to Design a Presentation",
+            "url": "https://www.canva.com/learn/presentation-design/",
+            "type": "blog"
+          },
+          {
+            "title": "Canva Design School: Explore",
+            "url": "https://www.canva.com/en/design-school/explore/",
+            "type": "doc"
+          }
+        ]
+      }
+    ]
+  }
+]

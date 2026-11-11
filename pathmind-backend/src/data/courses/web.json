@@ -2826,5 +2826,162 @@
         ]
       }
     ]
+  },
+  {
+    "topic": "NestJS",
+    "category": "Web Development",
+    "summary": "Build modular, testable Node.js server applications with NestJS — dependency injection, validation, auth and OpenAPI out of the box.",
+    "stages": [
+      {
+        "title": "First Steps, Controllers and Providers",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Project layout and the Nest CLI",
+          "Controllers, routes and request objects",
+          "Providers and the dependency-injection container",
+          "Returning responses and status codes",
+          "Decorators and what they actually do"
+        ],
+        "resources": [
+          {
+            "title": "NestJS First Steps",
+            "url": "https://docs.nestjs.com/first-steps",
+            "type": "doc"
+          },
+          {
+            "title": "NestJS Controllers",
+            "url": "https://docs.nestjs.com/controllers",
+            "type": "doc"
+          },
+          {
+            "title": "NestJS Providers",
+            "url": "https://docs.nestjs.com/providers",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Modules, Pipes and Validation",
+        "type": "learn",
+        "difficulty": "beginner",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Feature modules and shared modules",
+          "Module scope, exports and circular dependencies",
+          "Built-in pipes and ValidationPipe",
+          "DTOs with class-validator and class-transformer",
+          "Exception filters and consistent error shapes"
+        ],
+        "resources": [
+          {
+            "title": "NestJS Modules",
+            "url": "https://docs.nestjs.com/modules",
+            "type": "doc"
+          },
+          {
+            "title": "NestJS Validation",
+            "url": "https://docs.nestjs.com/techniques/validation",
+            "type": "doc"
+          },
+          {
+            "title": "NestJS Exception Filters",
+            "url": "https://docs.nestjs.com/exception-filters",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Persistence and Configuration",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 3,
+        "syllabus": [
+          "Connecting a database with TypeORM or Mongoose",
+          "Repositories, entities and migrations",
+          "Typed configuration and environment validation",
+          "Custom providers and async providers",
+          "Prisma as an alternative data layer"
+        ],
+        "resources": [
+          {
+            "title": "NestJS Database",
+            "url": "https://docs.nestjs.com/techniques/database",
+            "type": "doc"
+          },
+          {
+            "title": "NestJS Configuration",
+            "url": "https://docs.nestjs.com/techniques/configuration",
+            "type": "doc"
+          },
+          {
+            "title": "NestJS Custom Providers",
+            "url": "https://docs.nestjs.com/fundamentals/custom-providers",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Guards, Auth and Interceptors",
+        "type": "learn",
+        "difficulty": "intermediate",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Guards and the execution context",
+          "Passport strategies and JWT authentication",
+          "Role-based and claims-based authorization",
+          "Interceptors for logging, shaping and caching",
+          "Middleware versus guards versus interceptors"
+        ],
+        "resources": [
+          {
+            "title": "NestJS Authentication",
+            "url": "https://docs.nestjs.com/security/authentication",
+            "type": "doc"
+          },
+          {
+            "title": "NestJS Authorization",
+            "url": "https://docs.nestjs.com/security/authorization",
+            "type": "doc"
+          },
+          {
+            "title": "NestJS Interceptors",
+            "url": "https://docs.nestjs.com/interceptors",
+            "type": "doc"
+          }
+        ]
+      },
+      {
+        "title": "Testing, OpenAPI and Beyond REST",
+        "type": "practice",
+        "difficulty": "advanced",
+        "estimatedDays": 4,
+        "syllabus": [
+          "Unit tests with the Nest testing module",
+          "End-to-end tests against a real app instance",
+          "Generating OpenAPI docs from decorators",
+          "GraphQL with the code-first approach",
+          "Microservices and message-based transports"
+        ],
+        "resources": [
+          {
+            "title": "NestJS Testing",
+            "url": "https://docs.nestjs.com/fundamentals/testing",
+            "type": "doc"
+          },
+          {
+            "title": "NestJS OpenAPI",
+            "url": "https://docs.nestjs.com/openapi/introduction",
+            "type": "doc"
+          },
+          {
+            "title": "NestJS Microservices",
+            "url": "https://docs.nestjs.com/microservices/basics",
+            "type": "doc"
+          }
+        ]
+      }
+    ]
   }
 ]

@@ -11,6 +11,7 @@ import { MdButton } from "@/components/md/Button";
 import { Input } from "@/components/ui/Input";
 import { CardGridSkeleton } from "@/components/ui/Skeleton";
 import { StateView } from "@/components/ui/StateView";
+import { Chip, ChipRow } from "@/components/ui/FilterChips";
 import { toast } from "@/components/ui/toast";
 import { clsx } from "@/lib/clsx";
 import type { CatalogCourse, CatalogSort, CourseLevel } from "@/types/catalog";
@@ -66,75 +67,6 @@ function BuildIcon() {
         strokeLinecap="round"
       />
     </svg>
-  );
-}
-
-/**
- * Material **filter chip** row. One row per dimension, horizontally
- * scrollable on a phone rather than wrapped into four lines — `px-4` gutters
- * are preserved by padding the scroller, and `snap-x` keeps a chip from
- * resting half-visible at the edge.
- */
-function ChipRow({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="min-w-0">
-      <h2 className="sr-only">{label}</h2>
-      {/* -mx-4/px-4 lets the row bleed to the screen edge while its first and
-          last chips still sit on the page gutter. */}
-      <div
-        className="-mx-4 flex snap-x gap-2 overflow-x-auto px-4 pb-1 sm:-mx-6 sm:px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        role="group"
-        aria-label={label}
-      >
-        {children}
-      </div>
-    </div>
-  );
-}
-
-function Chip({
-  selected,
-  onClick,
-  children,
-}: {
-  selected: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={selected}
-      className={clsx(
-        "state-layer press inline-flex min-h-touch-min flex-none snap-start items-center gap-1.5 rounded-sm border px-4 text-label-lg",
-        "transition-[background-color,border-color] duration-fast ease-standard",
-        selected
-          ? "border-transparent bg-md-secondary-container text-md-on-secondary-container"
-          : "border-md-outline text-md-on-surface-variant"
-      )}
-    >
-      {/* M3 puts a check in the leading slot of a *selected* filter chip —
-          the second, non-colour cue that this chip is on. */}
-      {selected && (
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-          <path
-            d="m5 12.5 4.5 4.5L19 7.5"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      )}
-      {children}
-    </button>
   );
 }
 
