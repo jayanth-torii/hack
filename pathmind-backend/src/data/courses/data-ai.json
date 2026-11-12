@@ -3,6 +3,11 @@
     "topic": "SQL and Relational Databases",
     "category": "Data & AI",
     "summary": "Query, model and tune relational data so you can answer real business questions and design schemas that hold up.",
+    "certifications": [
+      { "title": "freeCodeCamp: Relational Database", "provider": "other", "url": "https://www.freecodecamp.org/learn/relational-database/", "price": 0 },
+      { "title": "Meta Database Engineer Professional Certificate", "provider": "coursera", "url": "https://www.coursera.org/professional-certificates/meta-database-engineer", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=SQL+and+Relational+Databases", "price": null }
+    ],
     "stages": [
       {
         "title": "Querying with SELECT",
@@ -99,6 +104,10 @@
     "topic": "PostgreSQL",
     "category": "Data & AI",
     "summary": "Run PostgreSQL with confidence: model data, write advanced SQL, tune queries and operate backups and replication.",
+    "certifications": [
+      { "title": "freeCodeCamp: Relational Database", "provider": "other", "url": "https://www.freecodecamp.org/learn/relational-database/", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=PostgreSQL", "price": null }
+    ],
     "stages": [
       {
         "title": "Getting Started with Postgres",
@@ -195,6 +204,11 @@
     "topic": "MongoDB",
     "category": "Data & AI",
     "summary": "Model, query and scale document data in MongoDB, from first CRUD calls to sharded, replicated deployments.",
+    "certifications": [
+      { "title": "MongoDB Associate Developer", "provider": "other", "url": "https://learn.mongodb.com/pages/mongodb-associate-developer-exam", "price": 150 },
+      { "title": "MongoDB University (free courses)", "provider": "other", "url": "https://learn.mongodb.com/", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=MongoDB", "price": null }
+    ],
     "stages": [
       {
         "title": "Documents and Collections",
@@ -291,6 +305,10 @@
     "topic": "Redis",
     "category": "Data & AI",
     "summary": "Use Redis as a cache and data structure server, then run it durably with persistence, replication and clustering.",
+    "certifications": [
+      { "title": "MongoDB University (free courses)", "provider": "other", "url": "https://learn.mongodb.com/", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Redis", "price": null }
+    ],
     "stages": [
       {
         "title": "Key-Value Basics",
@@ -368,6 +386,11 @@
     "topic": "Data Analysis with Pandas",
     "category": "Data & AI",
     "summary": "Load, clean, reshape and summarise real datasets with pandas, and keep the analysis fast and reproducible.",
+    "certifications": [
+      { "title": "freeCodeCamp: Data Analysis with Python", "provider": "other", "url": "https://www.freecodecamp.org/learn/data-analysis-with-python/", "price": 0 },
+      { "title": "Google Data Analytics Professional Certificate", "provider": "coursera", "url": "https://www.coursera.org/professional-certificates/google-data-analytics", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Data+Analysis+with+Pandas", "price": null }
+    ],
     "stages": [
       {
         "title": "Series and DataFrames",
@@ -463,6 +486,11 @@
     "topic": "Data Visualization",
     "category": "Data & AI",
     "summary": "Choose the right chart and build clear, accessible static and interactive visuals that support real decisions.",
+    "certifications": [
+      { "title": "Google Data Analytics Professional Certificate", "provider": "coursera", "url": "https://www.coursera.org/professional-certificates/google-data-analytics", "price": null },
+      { "title": "DataCamp certification", "provider": "other", "url": "https://www.datacamp.com/certification", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Data+Visualization", "price": null }
+    ],
     "stages": [
       {
         "title": "Grammar of Charts",
@@ -558,6 +586,11 @@
     "topic": "Statistics for Data Science",
     "category": "Data & AI",
     "summary": "Reason about uncertainty: summarise data, run valid hypothesis tests, fit regressions and design trustworthy experiments.",
+    "certifications": [
+      { "title": "freeCodeCamp: College Algebra with Python", "provider": "other", "url": "https://www.freecodecamp.org/learn/college-algebra-with-python/", "price": 0 },
+      { "title": "DataCamp certification", "provider": "other", "url": "https://www.datacamp.com/certification", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Statistics+for+Data+Science", "price": null }
+    ],
     "stages": [
       {
         "title": "Descriptive Statistics",
@@ -652,6 +685,10 @@
     "topic": "Linear Algebra for Machine Learning",
     "category": "Data & AI",
     "summary": "Build the vector and matrix intuition behind ML models, and compute it efficiently with NumPy and SciPy.",
+    "certifications": [
+      { "title": "Machine Learning Specialization", "provider": "coursera", "url": "https://www.coursera.org/specializations/machine-learning-introduction", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Linear+Algebra+for+Machine+Learning", "price": null }
+    ],
     "stages": [
       {
         "title": "Vectors and Matrices",
@@ -729,6 +766,11 @@
     "topic": "Deep Learning",
     "category": "Data & AI",
     "summary": "Train and evaluate modern neural networks, from first gradients to convolutional, attention-based and production models.",
+    "certifications": [
+      { "title": "Deep Learning Specialization", "provider": "coursera", "url": "https://www.coursera.org/specializations/deep-learning", "price": null },
+      { "title": "DeepLearning.AI TensorFlow Developer Professional Certificate", "provider": "coursera", "url": "https://www.coursera.org/professional-certificates/tensorflow-in-practice", "price": null},
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Deep+Learning", "price": null }
+    ],
     "stages": [
       {
         "title": "Neural Network Foundations",
@@ -824,6 +866,10 @@
     "topic": "Neural Networks from Scratch",
     "category": "Data & AI",
     "summary": "Implement neurons, backpropagation and a full training loop in plain NumPy, then rebuild a miniature autograd engine.",
+    "certifications": [
+      { "title": "Deep Learning Specialization", "provider": "coursera", "url": "https://www.coursera.org/specializations/deep-learning", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Neural+Networks+from+Scratch", "price": null }
+    ],
     "stages": [
       {
         "title": "The Single Neuron",
@@ -901,6 +947,10 @@
     "topic": "Natural Language Processing",
     "category": "Data & AI",
     "summary": "Process text end to end: preprocessing, classical models, embeddings, transformers and a fine-tuned model you ship.",
+    "certifications": [
+      { "title": "Natural Language Processing Specialization", "provider": "coursera", "url": "https://www.coursera.org/specializations/natural-language-processing", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Natural+Language+Processing", "price": null }
+    ],
     "stages": [
       {
         "title": "Text Preprocessing",
@@ -995,6 +1045,10 @@
     "topic": "Computer Vision",
     "category": "Data & AI",
     "summary": "Work with images from pixels to deployed models: filtering, features, CNN classifiers, detection and segmentation.",
+    "certifications": [
+      { "title": "Deep Learning Specialization", "provider": "coursera", "url": "https://www.coursera.org/specializations/deep-learning", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Computer+Vision", "price": null }
+    ],
     "stages": [
       {
         "title": "Images as Arrays",
@@ -1090,6 +1144,11 @@
     "topic": "PyTorch",
     "category": "Data & AI",
     "summary": "Go from tensors and autograd to training loops, distributed performance tricks and exported production models.",
+    "certifications": [
+      { "title": "Deep Learning Specialization", "provider": "coursera", "url": "https://www.coursera.org/specializations/deep-learning", "price": null },
+      { "title": "freeCodeCamp: Machine Learning with Python", "provider": "other", "url": "https://www.freecodecamp.org/learn/machine-learning-with-python/", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=PyTorch", "price": null }
+    ],
     "stages": [
       {
         "title": "Tensors and Autograd",
@@ -1184,6 +1243,11 @@
     "topic": "TensorFlow",
     "category": "Data & AI",
     "summary": "Build models with Keras, feed them efficiently with tf.data, then deploy to servers, mobile and the browser.",
+    "certifications": [
+      { "title": "DeepLearning.AI TensorFlow Developer Professional Certificate", "provider": "coursera", "url": "https://www.coursera.org/professional-certificates/tensorflow-in-practice", "price": null},
+      { "title": "freeCodeCamp: Machine Learning with Python", "provider": "other", "url": "https://www.freecodecamp.org/learn/machine-learning-with-python/", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=TensorFlow", "price": null }
+    ],
     "stages": [
       {
         "title": "Tensors and Keras Basics",
@@ -1262,6 +1326,10 @@
     "topic": "Reinforcement Learning",
     "category": "Data & AI",
     "summary": "Train agents that learn from reward, from tabular Q-learning to deep policy-gradient methods and a full capstone agent.",
+    "certifications": [
+      { "title": "Machine Learning Specialization", "provider": "coursera", "url": "https://www.coursera.org/specializations/machine-learning-introduction", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Reinforcement+Learning", "price": null }
+    ],
     "stages": [
       {
         "title": "Markov Decision Processes",
@@ -1356,6 +1424,11 @@
     "topic": "Large Language Models",
     "category": "Data & AI",
     "summary": "Understand how LLMs work and build with them: APIs, tool calling, retrieval augmentation, fine-tuning and serving.",
+    "certifications": [
+      { "title": "Generative AI for Everyone", "provider": "coursera", "url": "https://www.coursera.org/specializations/generative-ai-for-everyone", "price": null },
+      { "title": "Microsoft Certified: Azure AI Engineer Associate", "provider": "microsoft", "url": "https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-engineer/", "price": 165 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Large+Language+Models", "price": null }
+    ],
     "stages": [
       {
         "title": "How LLMs Work",
@@ -1450,6 +1523,10 @@
     "topic": "Prompt Engineering",
     "category": "Data & AI",
     "summary": "Write prompts that behave predictably in production, with structured output, guardrails and a real evaluation loop.",
+    "certifications": [
+      { "title": "Generative AI for Everyone", "provider": "coursera", "url": "https://www.coursera.org/specializations/generative-ai-for-everyone", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Prompt+Engineering", "price": null }
+    ],
     "stages": [
       {
         "title": "Prompt Anatomy",
@@ -1527,6 +1604,11 @@
     "topic": "MLOps",
     "category": "Data & AI",
     "summary": "Take models from notebook to production: tracking, packaging, pipelines, automated retraining and drift monitoring.",
+    "certifications": [
+      { "title": "Microsoft Certified: Azure AI Engineer Associate", "provider": "microsoft", "url": "https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-engineer/", "price": 165 },
+      { "title": "Google Cloud Professional ML Engineer", "provider": "google", "url": "https://cloud.google.com/learn/certification/machine-learning-engineer", "price": 200 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=MLOps", "price": null }
+    ],
     "stages": [
       {
         "title": "The ML Lifecycle",
@@ -1621,6 +1703,11 @@
     "topic": "Big Data with Apache Spark",
     "category": "Data & AI",
     "summary": "Process datasets far larger than memory with Spark SQL, streaming and lakehouse tables, and tune the jobs that run them.",
+    "certifications": [
+      { "title": "IBM Data Engineering Professional Certificate", "provider": "coursera", "url": "https://www.coursera.org/professional-certificates/ibm-data-engineer", "price": null },
+      { "title": "Microsoft Certified: Azure Data Engineer Associate", "provider": "microsoft", "url": "https://learn.microsoft.com/en-us/credentials/certifications/azure-data-engineer/", "price": 165 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Big+Data+with+Apache+Spark", "price": null }
+    ],
     "stages": [
       {
         "title": "Spark Fundamentals",
@@ -1715,6 +1802,11 @@
     "topic": "Data Engineering Pipelines",
     "category": "Data & AI",
     "summary": "Design, orchestrate and operate reliable data pipelines from source systems to modelled, tested analytics tables.",
+    "certifications": [
+      { "title": "IBM Data Engineering Professional Certificate", "provider": "coursera", "url": "https://www.coursera.org/professional-certificates/ibm-data-engineer", "price": null },
+      { "title": "Microsoft Certified: Azure Data Engineer Associate", "provider": "microsoft", "url": "https://learn.microsoft.com/en-us/credentials/certifications/azure-data-engineer/", "price": 165 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Data+Engineering+Pipelines", "price": null }
+    ],
     "stages": [
       {
         "title": "Pipeline Building Blocks",

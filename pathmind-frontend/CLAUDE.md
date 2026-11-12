@@ -174,6 +174,8 @@ second mobile layout to keep in step.
 |---|---|
 | `/courses` | browse and pick — search, subject chips, sort, paging |
 | `/courses/build` | assemble a personal course from catalog stages (no AI) |
+| `/build` | name a topic, watch it generate, land on the roadmap |
+| `/roadmap/[id]` | four tabs: roadmap · resources · practice · certificates |
 | `/admin` | five tabs: overview · users · courses · resources · logs |
 
 **A roadmap is a catalog course when it is published *and* categorised.**
@@ -182,6 +184,26 @@ generation cache is shared — so a catalog defined as "public templates" fills
 with whatever anyone ever typed into the topic box. The category is the
 editorial act; `CATALOG_FILTER` in the backend is the single definition, used
 by the list, the detail endpoint and the builder alike.
+
+**A certificate needs a passed quiz, and the gate lives in the service.**
+Finishing every stage is necessary but not sufficient: `issueCertificate`
+refuses unless `UserProgress.quizPassedAt` is set, so no future caller can
+route around it by hitting a different endpoint. The quiz is 10 questions,
+8 to pass. Questions are **generated from the roadmap's own stages and
+syllabus** rather than authored, which is the only way an AI-generated
+roadmap can be gated at all — nothing hand-written exists for it. Two rules
+are not negotiable: **answers never leave the server** (`publicQuestions`
+strips them, and scoring regenerates the paper from its seed), and
+generation is **deterministic in the seed**, so nothing has to be stored
+between handing out a quiz and scoring it. A roadmap too small to produce
+10 distinct questions is exempt — see `canQuiz`.
+
+**Certificate prices are estimates and must read as estimates.** On a
+`Certification`, `price: 0` means the certificate itself is free, a number is
+an approximate USD exam fee, and `null` means it genuinely varies — a
+subscription, or free to audit with a paid certificate. Only the URL is a
+hard fact. Never render `null` as a number, and never present an
+approximate fee as a quoted price.
 
 **`verified: false` on a resource means "search fallback", not "broken".** It
 marks a URL that points at a search on a real site instead of at the thing

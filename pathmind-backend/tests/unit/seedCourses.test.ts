@@ -14,6 +14,8 @@ import type { Course } from "@/schemas/course.schema";
 
 /** Tiny fixture — the real catalog lives in src/data/courses/*.json. */
 const fixture: Course = {
+  // Required since certifications became part of the course contract.
+  certifications: [],
   topic: "Test Topic",
   category: "Testing",
   summary: "A fixture course.",

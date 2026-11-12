@@ -1,6 +1,8 @@
 import request from "supertest";
 import { createApp } from "@/app";
 import { clearCollections, startInMemoryMongo, stopInMemoryMongo } from "../mocks/mongoMemory";
+import { Roadmap } from "@/models/Roadmap";
+import { buildQuiz } from "@/services/quiz/quiz.service";
 
 const app = createApp();
 
@@ -47,6 +49,33 @@ async function completeWholeRoadmap(cookies: string[], topic: string) {
   }
 
   return { roadmap, stageIds };
+}
+
+/**
+ * Passes the certificate quiz for a finished roadmap.
+ *
+ * A certificate now requires a passing quiz as well as every stage, so the
+ * two tests below that claim one have to earn it. Correct answers are derived
+ * by rebuilding the paper from the seed the server just handed out — the same
+ * deterministic generation the scorer uses — rather than by reaching into the
+ * response, which deliberately carries no answers.
+ */
+async function passQuiz(cookies: string[], roadmapId: string) {
+  const paper = await request(app).get(`/roadmaps/${roadmapId}/quiz`).set("Cookie", cookies);
+  expect(paper.status).toBe(200);
+
+  const doc = await Roadmap.findById(roadmapId);
+  const answers = buildQuiz(doc!.stages, paper.body.seed).map((q) => ({
+    id: q.id,
+    answerIndex: q.answerIndex,
+  }));
+
+  const res = await request(app)
+    .post(`/roadmaps/${roadmapId}/quiz`)
+    .set("Cookie", cookies)
+    .send({ seed: paper.body.seed, answers });
+  expect(res.status).toBe(200);
+  expect(res.body.passed).toBe(true);
 }
 
 describe("profile endpoints", () => {
@@ -257,6 +286,7 @@ describe("certificates", () => {
   it("issues once, is idempotent, and downloads as a real PDF", async () => {
     const cookies = await registerAndLogin();
     const { roadmap } = await completeWholeRoadmap(cookies, "Computer Networks");
+    await passQuiz(cookies, roadmap._id);
 
     const issued = await request(app)
       .post(`/roadmaps/${roadmap._id}/certificate`)
@@ -298,6 +328,7 @@ describe("certificates", () => {
   it("will not hand a certificate to a different learner", async () => {
     const owner = await registerAndLogin();
     const { roadmap } = await completeWholeRoadmap(owner, "Databases");
+    await passQuiz(owner, roadmap._id);
     const issued = await request(app)
       .post(`/roadmaps/${roadmap._id}/certificate`)
       .set("Cookie", owner);

@@ -3,6 +3,12 @@
     "topic": "Python Programming",
     "category": "Languages & CS",
     "summary": "Write idiomatic, typed and tested Python programs, from first scripts to packaged projects with async I/O.",
+    "certifications": [
+      { "title": "PCEP – Certified Entry-Level Python Programmer", "provider": "other", "url": "https://pythoninstitute.org/pcep", "price": 59 },
+      { "title": "freeCodeCamp: Scientific Computing with Python", "provider": "other", "url": "https://www.freecodecamp.org/learn/scientific-computing-with-python/", "price": 0 },
+      { "title": "Python for Everybody Specialization", "provider": "coursera", "url": "https://www.coursera.org/specializations/python", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Python+Programming", "price": null }
+    ],
     "stages": [
       {
         "title": "Syntax, Types and Control Flow",
@@ -102,6 +108,11 @@
     "topic": "JavaScript Fundamentals",
     "category": "Languages & CS",
     "summary": "Build confident, modern JavaScript skills: types, functions, async control flow, modules and debugging.",
+    "certifications": [
+      { "title": "freeCodeCamp: JavaScript Algorithms and Data Structures", "provider": "other", "url": "https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/", "price": 0 },
+      { "title": "JavaScript Certification", "provider": "other", "url": "https://certificates.dev/javascript", "price": 169 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=JavaScript+Fundamentals", "price": null }
+    ],
     "stages": [
       {
         "title": "Values, Types and Control Flow",
@@ -197,6 +208,10 @@
     "topic": "TypeScript",
     "category": "Languages & CS",
     "summary": "Add a precise type layer to JavaScript and model real application state with generics and type-level tools.",
+    "certifications": [
+      { "title": "freeCodeCamp: JavaScript Algorithms and Data Structures", "provider": "other", "url": "https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=TypeScript", "price": null }
+    ],
     "stages": [
       {
         "title": "From JavaScript to Typed Code",
@@ -293,6 +308,10 @@
     "topic": "Java Programming",
     "category": "Languages & CS",
     "summary": "Go from Java syntax to collections, streams and concurrency, finishing with built and tested applications.",
+    "certifications": [
+      { "title": "Oracle Certification (Java SE exams)", "provider": "other", "url": "https://www.oracle.com/education/certification/", "price": 245 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Java+Programming", "price": null }
+    ],
     "stages": [
       {
         "title": "Java Basics and the JVM",
@@ -389,6 +408,10 @@
     "topic": "C Programming",
     "category": "Languages & CS",
     "summary": "Understand memory, pointers and the machine model well enough to write and debug real systems-level C.",
+    "certifications": [
+      { "title": "freeCodeCamp: Foundational C# with Microsoft", "provider": "other", "url": "https://www.freecodecamp.org/learn/foundational-c-sharp-with-microsoft/", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=C+Programming", "price": null }
+    ],
     "stages": [
       {
         "title": "C Syntax and Types",
@@ -484,6 +507,10 @@
     "topic": "C++ and STL",
     "category": "Languages & CS",
     "summary": "Write modern C++ with RAII, the standard containers and algorithms, templates and safe concurrency.",
+    "certifications": [
+      { "title": "HackerRank Skills Verification", "provider": "other", "url": "https://www.hackerrank.com/skills-verification", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=C%2B%2B+and+STL", "price": null }
+    ],
     "stages": [
       {
         "title": "Modern C++ Foundations",
@@ -579,6 +606,10 @@
     "topic": "Go (Golang)",
     "category": "Languages & CS",
     "summary": "Learn Go's small syntax, interface-driven design and concurrency model, then ship a tested HTTP service.",
+    "certifications": [
+      { "title": "HackerRank Skills Verification", "provider": "other", "url": "https://www.hackerrank.com/skills-verification", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Go+%28Golang%29", "price": null }
+    ],
     "stages": [
       {
         "title": "Go Syntax and Tooling",
@@ -675,6 +706,10 @@
     "topic": "Rust Programming",
     "category": "Languages & CS",
     "summary": "Master ownership, traits and error handling so you can write fast Rust that the borrow checker accepts.",
+    "certifications": [
+      { "title": "HackerRank Skills Verification", "provider": "other", "url": "https://www.hackerrank.com/skills-verification", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Rust+Programming", "price": null }
+    ],
     "stages": [
       {
         "title": "Rust Basics and Cargo",
@@ -770,6 +805,10 @@
     "topic": "Kotlin",
     "category": "Languages & CS",
     "summary": "Write concise, null-safe Kotlin with coroutines and apply it to Android and multiplatform projects.",
+    "certifications": [
+      { "title": "Meta Android Developer Professional Certificate", "provider": "coursera", "url": "https://www.coursera.org/professional-certificates/meta-android-developer", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Kotlin", "price": null }
+    ],
     "stages": [
       {
         "title": "Kotlin Syntax Essentials",
@@ -865,6 +904,10 @@
     "topic": "Swift",
     "category": "Languages & CS",
     "summary": "Learn Swift's type system, protocols and concurrency, ending with a SwiftUI app that talks to a network API.",
+    "certifications": [
+      { "title": "Meta iOS Developer Professional Certificate", "provider": "coursera", "url": "https://www.coursera.org/professional-certificates/meta-ios-developer", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Swift", "price": null }
+    ],
     "stages": [
       {
         "title": "Swift Language Basics",
@@ -960,6 +1003,10 @@
     "topic": "PHP",
     "category": "Languages & CS",
     "summary": "Build modern, object-oriented PHP applications with Composer, PDO and a tested, secure request pipeline.",
+    "certifications": [
+      { "title": "HackerRank Skills Verification", "provider": "other", "url": "https://www.hackerrank.com/skills-verification", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=PHP", "price": null }
+    ],
     "stages": [
       {
         "title": "PHP Syntax and Web Basics",
@@ -1056,6 +1103,10 @@
     "topic": "Ruby",
     "category": "Languages & CS",
     "summary": "Learn Ruby's object model, blocks and Enumerable, then build and test a Rails web application.",
+    "certifications": [
+      { "title": "HackerRank Skills Verification", "provider": "other", "url": "https://www.hackerrank.com/skills-verification", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Ruby", "price": null }
+    ],
     "stages": [
       {
         "title": "Ruby Syntax and Objects",
@@ -1151,6 +1202,11 @@
     "topic": "Data Structures",
     "category": "Languages & CS",
     "summary": "Pick and implement the right data structure for a problem, and justify the choice with complexity reasoning.",
+    "certifications": [
+      { "title": "Algorithms Specialization", "provider": "coursera", "url": "https://www.coursera.org/specializations/algorithms", "price": null },
+      { "title": "HackerRank Skills Verification", "provider": "other", "url": "https://www.hackerrank.com/skills-verification", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Data+Structures", "price": null }
+    ],
     "stages": [
       {
         "title": "Arrays, Strings and Complexity Basics",
@@ -1244,6 +1300,10 @@
     "topic": "Algorithms and Complexity",
     "category": "Languages & CS",
     "summary": "Analyse running time rigorously and apply sorting, recursion, greedy and dynamic programming techniques.",
+    "certifications": [
+      { "title": "Algorithms Specialization", "provider": "coursera", "url": "https://www.coursera.org/specializations/algorithms", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Algorithms+and+Complexity", "price": null }
+    ],
     "stages": [
       {
         "title": "Analysis and Searching",
@@ -1338,6 +1398,10 @@
     "topic": "Graph Algorithms",
     "category": "Languages & CS",
     "summary": "Model problems as graphs and apply traversal, shortest-path, spanning-tree and flow algorithms with confidence.",
+    "certifications": [
+      { "title": "Algorithms Specialization", "provider": "coursera", "url": "https://www.coursera.org/specializations/algorithms", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Graph+Algorithms", "price": null }
+    ],
     "stages": [
       {
         "title": "Graph Models and Traversal",
@@ -1432,6 +1496,10 @@
     "topic": "Object-Oriented Design",
     "category": "Languages & CS",
     "summary": "Design class structures that stay changeable: principled responsibilities, patterns used sparingly, clean domains.",
+    "certifications": [
+      { "title": "freeCodeCamp: Foundational C# with Microsoft", "provider": "other", "url": "https://www.freecodecamp.org/learn/foundational-c-sharp-with-microsoft/", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Object-Oriented+Design", "price": null }
+    ],
     "stages": [
       {
         "title": "Objects, Classes and Encapsulation",
@@ -1526,6 +1594,10 @@
     "topic": "Operating Systems",
     "category": "Languages & CS",
     "summary": "Explain and reason about processes, scheduling, virtual memory, concurrency and file systems on real machines.",
+    "certifications": [
+      { "title": "Linux Foundation Certified SysAdmin (LFCS)", "provider": "other", "url": "https://training.linuxfoundation.org/certification/linux-foundation-certified-sysadmin-lfcs/", "price": 395 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Operating+Systems", "price": null }
+    ],
     "stages": [
       {
         "title": "What an Operating System Does",
@@ -1620,6 +1692,10 @@
     "topic": "Computer Networks",
     "category": "Languages & CS",
     "summary": "Trace a request from socket to server: addressing, TCP behaviour, DNS, TLS, HTTP and real packet inspection.",
+    "certifications": [
+      { "title": "Google Cloud Digital Leader", "provider": "google", "url": "https://cloud.google.com/learn/certification/cloud-digital-leader", "price": 99 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Computer+Networks", "price": null }
+    ],
     "stages": [
       {
         "title": "Layers and Addressing",
@@ -1714,6 +1790,10 @@
     "topic": "Compilers and Language Design",
     "category": "Languages & CS",
     "summary": "Build a working language: scanner, parser, resolver, bytecode VM, and an understanding of real optimisation.",
+    "certifications": [
+      { "title": "Algorithms Specialization", "provider": "coursera", "url": "https://www.coursera.org/specializations/algorithms", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Compilers+and+Language+Design", "price": null }
+    ],
     "stages": [
       {
         "title": "The Compilation Pipeline",
@@ -1808,6 +1888,10 @@
     "topic": "Discrete Mathematics for CS",
     "category": "Languages & CS",
     "summary": "Build the proof, counting and number-theory toolkit that algorithm analysis and cryptography actually require.",
+    "certifications": [
+      { "title": "freeCodeCamp: College Algebra with Python", "provider": "other", "url": "https://www.freecodecamp.org/learn/college-algebra-with-python/", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Discrete+Mathematics+for+CS", "price": null }
+    ],
     "stages": [
       {
         "title": "Logic and Proof",
@@ -1902,6 +1986,11 @@
     "topic": "C# and .NET",
     "category": "Languages & CS",
     "summary": "Write modern C# on .NET — types, LINQ, async and tests — and ship a real web API with ASP.NET Core.",
+    "certifications": [
+      { "title": "freeCodeCamp: Foundational C# with Microsoft", "provider": "other", "url": "https://www.freecodecamp.org/learn/foundational-c-sharp-with-microsoft/", "price": 0 },
+      { "title": "Microsoft certification catalog", "provider": "microsoft", "url": "https://learn.microsoft.com/en-us/credentials/certifications/", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=C%23+and+.NET", "price": null }
+    ],
     "stages": [
       {
         "title": "Syntax, Types and Control Flow",

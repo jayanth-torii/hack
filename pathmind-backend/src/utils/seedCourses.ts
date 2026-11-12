@@ -6,18 +6,28 @@
  * public-template Roadmap and writes it to Mongo.
  *
  *   npm run seed:courses -- --dry-run         validate + map, write nothing (no DB needed)
- *   npm run seed:courses                      create anything missing, skip what exists
+ *   npm run seed:courses                      create what's missing, sync fields on what exists
  *   npm run seed:courses -- --force           replace existing curated templates in place
  *   npm run seed:courses -- --dir <path>      read a different catalog directory
  *
  * Idempotent: a course whose `normalizedTopic` already exists as a public
- * template is skipped unless `--force` is passed.
+ * template is never re-created. Without `--force` it gets an in-place,
+ * field-level update of the authored fields that carry no identity — category,
+ * summary and certifications — and is otherwise left alone. That path exists
+ * because `--force` uses `replaceOne`, which mints fresh stage `_id`s and so
+ * orphans every learner's per-stage progress; shipping a new authored field
+ * must never cost that.
  */
 import fs from "fs";
 import path from "path";
 import * as dotenv from "dotenv";
 import mongoose, { Types } from "mongoose";
-import { Roadmap, type Stage, type TimelineDay } from "../models/Roadmap";
+import {
+  Roadmap,
+  type Certification,
+  type Stage,
+  type TimelineDay,
+} from "../models/Roadmap";
 import { resolvePracticeLinks } from "../services/practiceLinks/practiceLinks.service";
 import { normalizeTopic, slugify } from "./slugify";
 import {
@@ -83,6 +93,94 @@ export function buildTimeline(stages: CourseStage[]): TimelineDay[] {
 }
 
 /**
+ * The certifications the FINAL stage of `course` should carry. Shared by the
+ * create path (`courseToRoadmapInput`) and the in-place update path so the two
+ * cannot drift: whatever a fresh seed would write is exactly what an existing
+ * course is synced to. `rank` is the authored order, so the list stays in the
+ * order a human put it in.
+ */
+export function buildStageCertifications(course: Course, now: Date = new Date()): Certification[] {
+  return course.certifications.map((cert, rank) => ({
+    title: cert.title,
+    provider: cert.provider,
+    url: cert.url,
+    price: cert.price,
+    rank,
+    lastVerifiedAt: now,
+  }));
+}
+
+/**
+ * Compares two certification lists by the fields the catalog actually authors,
+ * deliberately ignoring `lastVerifiedAt`.
+ *
+ * That timestamp is minted fresh on every run, so comparing it would make the
+ * seeder report a change on every pass and rewrite rows that are identical.
+ * Ignoring it is what makes the sync idempotent; the stored timestamp is only
+ * refreshed when some authored field really moved.
+ */
+export function certificationsMatch(
+  current: readonly Certification[],
+  next: readonly Certification[]
+): boolean {
+  if (current.length !== next.length) return false;
+  return current.every((cert, i) => {
+    const other = next[i]!;
+    return (
+      cert.title === other.title &&
+      cert.provider === other.provider &&
+      cert.url === other.url &&
+      // Mongoose defaults a missing price to null; treat undefined the same.
+      (cert.price ?? null) === (other.price ?? null) &&
+      cert.rank === other.rank
+    );
+  });
+}
+
+/** A stage as far as certification syncing is concerned — see `syncStageCertifications`. */
+export type CertifiableStage = Pick<Stage, "order" | "certifications">;
+
+/**
+ * Syncs `course`'s certifications onto an EXISTING roadmap's stages in place,
+ * returning whether anything actually changed.
+ *
+ * Only the `certifications` array of a stage is ever touched: stage `_id`s,
+ * `freeResources`, `practiceLinks`, syllabus and the timeline are left exactly
+ * as stored, which is what keeps every learner's per-stage progress resolving.
+ * (A `--force` `replaceOne` would rebuild the stages from scratch and break
+ * those links — far too high a price for syncing one authored field.)
+ *
+ * Stages are addressed by their stored `order` rather than their array
+ * position, because `order` is the field the rest of the app reasons about;
+ * the array index is only a fallback for a document that somehow lacks a
+ * matching `order`. Every non-target stage is cleared, so moving the
+ * certifications — e.g. after a stage is appended to the course — does not
+ * leave a stale copy behind on the stage that used to hold them.
+ */
+export function syncStageCertifications(
+  stages: CertifiableStage[],
+  course: Course,
+  now: Date = new Date()
+): boolean {
+  if (stages.length === 0) return false;
+
+  const targetOrder = course.stages.length - 1;
+  const byOrder = stages.findIndex((stage) => stage.order === targetOrder);
+  const targetIndex = byOrder === -1 ? stages.length - 1 : byOrder;
+
+  const desired = buildStageCertifications(course, now);
+
+  let changed = false;
+  stages.forEach((stage, index) => {
+    const next = index === targetIndex ? desired : [];
+    if (certificationsMatch(stage.certifications ?? [], next)) return;
+    stage.certifications = next;
+    changed = true;
+  });
+  return changed;
+}
+
+/**
  * Pure mapping from a validated catalog course to a Roadmap-shaped document.
  * No DB access — the caller supplies a DB-unique `slug` (see `uniqueSlug`).
  */
@@ -113,19 +211,9 @@ export function courseToRoadmapInput(
     })),
     // Course-level in the catalog file, attached to the final stage here —
     // that is the point a learner would actually sit the exam, and the
-    // frontend aggregates across stages anyway. `rank` is the authored order,
-    // so the list stays in the order a human put it in.
+    // frontend aggregates across stages anyway.
     certifications:
-      index === course.stages.length - 1
-        ? course.certifications.map((cert, rank) => ({
-            title: cert.title,
-            provider: cert.provider,
-            url: cert.url,
-            price: cert.price,
-            rank,
-            lastVerifiedAt: now,
-          }))
-        : [],
+      index === course.stages.length - 1 ? buildStageCertifications(course, now) : [],
     practiceLinks:
       stage.type === "practice" && stage.practiceTags && stage.practiceTags.length > 0
         ? resolvePracticeLinks(
@@ -273,14 +361,18 @@ async function main(): Promise<void> {
     for (const { course, file } of loaded) {
       const mapped = courseToRoadmapInput(course);
       const practiceLinks = mapped.stages.reduce((n, s) => n + s.practiceLinks.length, 0);
+      const certifications = mapped.stages.reduce((n, s) => n + s.certifications.length, 0);
       console.log(
         `  [dry-run] ${course.topic}  (${file})  slug=${mapped.slug}  ` +
           `stages=${mapped.stages.length}  days=${mapped.suggestedTimeline.length}  ` +
-          `practiceLinks=${practiceLinks}`
+          `practiceLinks=${practiceLinks}  certs=${certifications}`
       );
     }
     console.log(`Dry run — no database connection made, nothing written.`);
-    console.log(`created 0, skipped 0, replaced 0 (dry run: ${loaded.length} validated)`);
+    console.log(
+      `created 0, metadata-updated 0, certifications-updated 0, skipped 0, replaced 0 ` +
+        `(dry run: ${loaded.length} validated)`
+    );
     return;
   }
 
@@ -292,6 +384,7 @@ async function main(): Promise<void> {
   let skipped = 0;
   let replaced = 0;
   let updatedMeta = 0;
+  let updatedCerts = 0;
   const takenSlugs = new Set<string>();
 
   try {
@@ -300,17 +393,41 @@ async function main(): Promise<void> {
       const existing = await Roadmap.findOne({ normalizedTopic, isPublicTemplate: true });
 
       if (existing && !opts.force) {
-        // Category and summary are pure metadata — no stage ids, no progress
-        // keys — so an existing course can be brought up to date without the
-        // full `--force` replace that would orphan every learner's progress.
+        // In-place update path: every write below is field-level on the stored
+        // document. Category and summary are pure metadata, and certifications
+        // live inside a stage but carry no identity of their own — no _id,
+        // nothing UserProgress keys off. So an existing course can be brought
+        // up to date without the `--force` replace, which would mint new stage
+        // _ids and orphan every learner's progress.
+        let dirty = false;
+
         if (existing.category !== course.category || existing.summary !== course.summary) {
           existing.category = course.category;
           existing.summary = course.summary;
-          await existing.save();
           console.log(`  metadata  ${course.topic} (category/summary updated)`);
           updatedMeta++;
+          dirty = true;
+        }
+
+        if (syncStageCertifications(existing.stages, course)) {
+          // Reassigning an array nested inside a subdocument is not always
+          // picked up by mongoose's change tracking, so say so explicitly.
+          existing.markModified("stages");
+          console.log(
+            `  certs     ${course.topic} ` +
+              `(${course.certifications.length} certification(s) on the final stage)`
+          );
+          updatedCerts++;
+          dirty = true;
+        }
+
+        // One save for both, and none at all when nothing moved — that is what
+        // makes a second run report everything as skipped.
+        if (dirty) {
+          await existing.save();
           continue;
         }
+
         console.log(`  skipped   ${course.topic} (already a public template)`);
         skipped++;
         continue;
@@ -338,7 +455,8 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    `created ${created}, metadata-updated ${updatedMeta}, skipped ${skipped}, replaced ${replaced}`
+    `created ${created}, metadata-updated ${updatedMeta}, ` +
+      `certifications-updated ${updatedCerts}, skipped ${skipped}, replaced ${replaced}`
   );
 }
 

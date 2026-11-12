@@ -48,6 +48,15 @@ export interface UserProgressDocument extends Document {
    */
   completedItems: StageItemsEntry[];
   unlockedStageIds: Types.ObjectId[];
+  /**
+   * When the learner passed the certificate quiz, and with what score.
+   * A certificate cannot be issued without a pass, so this is the record that
+   * makes the gate enforceable across requests rather than only inside the
+   * one that scored the attempt.
+   */
+  quizPassedAt?: Date | null;
+  quizScore?: number | null;
+  quizAttempts?: number;
   updatedAt: Date;
   createdAt: Date;
 }
@@ -78,6 +87,9 @@ const userProgressSchema = new Schema<UserProgressDocument>(
     completedStages: { type: [completedStageSchema], default: [] },
     completedItems: { type: [stageItemsSchema], default: [] },
     unlockedStageIds: [{ type: Schema.Types.ObjectId }],
+    quizPassedAt: { type: Date, default: null },
+    quizScore: { type: Number, default: null },
+    quizAttempts: { type: Number, default: 0 },
   },
   { timestamps: true }
 );

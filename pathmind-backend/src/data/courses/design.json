@@ -3,6 +3,11 @@
     "topic": "Figma",
     "category": "Mobile & Product",
     "summary": "Design, prototype and hand off interfaces in Figma, from first frame to a component library other people can build on.",
+    "certifications": [
+      { "title": "Google UX Design Professional Certificate", "provider": "coursera", "url": "https://www.coursera.org/professional-certificates/google-ux-design", "price": null },
+      { "title": "Figma Resource Library", "provider": "other", "url": "https://www.figma.com/resource-library/", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Figma", "price": null }
+    ],
     "stages": [
       {
         "title": "Frames, Shapes and the Canvas",
@@ -135,6 +140,11 @@
     "topic": "Canva",
     "category": "Mobile & Product",
     "summary": "Produce on-brand graphics, decks and social assets in Canva without a design background, and keep a team consistent with a brand kit.",
+    "certifications": [
+      { "title": "Canva Design School courses", "provider": "other", "url": "https://www.canva.com/en/design-school/courses/", "price": 0 },
+      { "title": "Google UX Design Professional Certificate", "provider": "coursera", "url": "https://www.coursera.org/professional-certificates/google-ux-design", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Canva", "price": null }
+    ],
     "stages": [
       {
         "title": "Finding Your Way Around Canva",

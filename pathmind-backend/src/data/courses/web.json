@@ -3,6 +3,11 @@
     "topic": "HTML and CSS",
     "category": "Web Development",
     "summary": "Build semantic, responsive web pages with modern CSS layout, custom properties and a maintainable stylesheet architecture.",
+    "certifications": [
+      { "title": "freeCodeCamp: Responsive Web Design", "provider": "other", "url": "https://www.freecodecamp.org/learn/responsive-web-design-v9/", "price": 0 },
+      { "title": "Meta Front-End Developer Professional Certificate", "provider": "coursera", "url": "https://www.coursera.org/professional-certificates/meta-front-end-developer", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=HTML+and+CSS", "price": null }
+    ],
     "stages": [
       {
         "title": "Semantic HTML Documents",
@@ -154,6 +159,10 @@
     "topic": "Tailwind CSS",
     "category": "Web Development",
     "summary": "Style production interfaces with utility-first CSS, responsive variants, theme tokens and a reusable component library.",
+    "certifications": [
+      { "title": "freeCodeCamp: Responsive Web Design", "provider": "other", "url": "https://www.freecodecamp.org/learn/responsive-web-design-v9/", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Tailwind+CSS", "price": null }
+    ],
     "stages": [
       {
         "title": "Utility-First Styling",
@@ -291,6 +300,10 @@
     "topic": "Next.js",
     "category": "Web Development",
     "summary": "Ship full-stack React applications with the App Router, server components, server actions and production-grade caching.",
+    "certifications": [
+      { "title": "freeCodeCamp: Front End Development Libraries", "provider": "other", "url": "https://www.freecodecamp.org/learn/front-end-development-libraries/", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Next.js", "price": null }
+    ],
     "stages": [
       {
         "title": "App Router Fundamentals",
@@ -430,6 +443,10 @@
     "topic": "Vue.js",
     "category": "Web Development",
     "summary": "Build reactive Vue applications with the Composition API, routing, shared state and server-side rendering.",
+    "certifications": [
+      { "title": "Vue.js Certification", "provider": "other", "url": "https://certificates.dev/vuejs", "price": 249 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Vue.js", "price": null }
+    ],
     "stages": [
       {
         "title": "Template Syntax and Reactivity",
@@ -580,6 +597,10 @@
     "topic": "Angular",
     "category": "Web Development",
     "summary": "Develop typed, testable Angular applications using signals, dependency injection, reactive forms and RxJS-driven state.",
+    "certifications": [
+      { "title": "Angular Certification", "provider": "other", "url": "https://certificates.dev/angular", "price": 249 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Angular", "price": null }
+    ],
     "stages": [
       {
         "title": "Components, Templates and the CLI",
@@ -718,6 +739,10 @@
     "topic": "Svelte and SvelteKit",
     "category": "Web Development",
     "summary": "Build compiled, reactive UIs in Svelte and ship full-stack SvelteKit apps with routing, form actions and SSR.",
+    "certifications": [
+      { "title": "freeCodeCamp: Front End Development Libraries", "provider": "other", "url": "https://www.freecodecamp.org/learn/front-end-development-libraries/", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Svelte+and+SvelteKit", "price": null }
+    ],
     "stages": [
       {
         "title": "Svelte Components and Reactivity",
@@ -862,6 +887,11 @@
     "topic": "Node.js and Express",
     "category": "Web Development",
     "summary": "Write server-side JavaScript and build, test and harden HTTP APIs with Express, middleware and a real datastore.",
+    "certifications": [
+      { "title": "freeCodeCamp: Back End Development and APIs", "provider": "other", "url": "https://www.freecodecamp.org/learn/back-end-development-and-apis/", "price": 0 },
+      { "title": "Meta Back-End Developer Professional Certificate", "provider": "coursera", "url": "https://www.coursera.org/professional-certificates/meta-back-end-developer", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Node.js+and+Express", "price": null }
+    ],
     "stages": [
       {
         "title": "The Node Runtime and Modules",
@@ -1007,6 +1037,10 @@
     "topic": "REST API Design",
     "category": "Web Development",
     "summary": "Design HTTP APIs that are predictable to consume: clean resources, consistent errors, versioning, caching and security.",
+    "certifications": [
+      { "title": "freeCodeCamp: Back End Development and APIs", "provider": "other", "url": "https://www.freecodecamp.org/learn/back-end-development-and-apis/", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=REST+API+Design", "price": null }
+    ],
     "stages": [
       {
         "title": "HTTP Foundations",
@@ -1146,6 +1180,10 @@
     "topic": "GraphQL",
     "category": "Web Development",
     "summary": "Design GraphQL schemas, write resolvers and clients, and run a performant, secure graph API in production.",
+    "certifications": [
+      { "title": "Meta Back-End Developer Professional Certificate", "provider": "coursera", "url": "https://www.coursera.org/professional-certificates/meta-back-end-developer", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=GraphQL", "price": null }
+    ],
     "stages": [
       {
         "title": "Queries, Types and the Schema",
@@ -1285,6 +1323,10 @@
     "topic": "Django",
     "category": "Web Development",
     "summary": "Build database-backed Django sites and REST APIs, from models and the admin to background tasks and deployment.",
+    "certifications": [
+      { "title": "Python for Everybody Specialization", "provider": "coursera", "url": "https://www.coursera.org/specializations/python", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Django", "price": null }
+    ],
     "stages": [
       {
         "title": "Project Anatomy, URLs and Views",
@@ -1425,6 +1467,10 @@
     "topic": "Flask",
     "category": "Web Development",
     "summary": "Build small, explicit Python web services with Flask: routing, blueprints, SQLAlchemy models, auth and deployment.",
+    "certifications": [
+      { "title": "Python for Everybody Specialization", "provider": "coursera", "url": "https://www.coursera.org/specializations/python", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Flask", "price": null }
+    ],
     "stages": [
       {
         "title": "Routing, Requests and Templates",
@@ -1564,6 +1610,10 @@
     "topic": "Spring Boot",
     "category": "Web Development",
     "summary": "Build and operate Java web services with Spring Boot: REST controllers, JPA persistence, testing, security and deployment.",
+    "certifications": [
+      { "title": "Oracle Certification (Java SE exams)", "provider": "other", "url": "https://www.oracle.com/education/certification/", "price": 245 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Spring+Boot", "price": null }
+    ],
     "stages": [
       {
         "title": "Spring Boot Essentials",
@@ -1703,6 +1753,10 @@
     "topic": "Laravel",
     "category": "Web Development",
     "summary": "Build PHP web applications with Laravel: routing, Blade views, Eloquent models, authentication, queues and deployment.",
+    "certifications": [
+      { "title": "HackerRank Skills Verification", "provider": "other", "url": "https://www.hackerrank.com/skills-verification", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Laravel", "price": null }
+    ],
     "stages": [
       {
         "title": "Routing, Controllers and Blade",
@@ -1842,6 +1896,10 @@
     "topic": "Web Performance Optimization",
     "category": "Web Development",
     "summary": "Measure and improve real-user web performance: Core Web Vitals, loading strategy, asset delivery and runtime profiling.",
+    "certifications": [
+      { "title": "freeCodeCamp: Responsive Web Design", "provider": "other", "url": "https://www.freecodecamp.org/learn/responsive-web-design-v9/", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Web+Performance+Optimization", "price": null }
+    ],
     "stages": [
       {
         "title": "Measuring with Core Web Vitals",
@@ -1981,6 +2039,10 @@
     "topic": "Web Accessibility",
     "category": "Web Development",
     "summary": "Build interfaces people can actually use: semantics, keyboard support, ARIA patterns and WCAG-conformant auditing.",
+    "certifications": [
+      { "title": "edX: Web Accessibility courses", "provider": "other", "url": "https://www.edx.org/learn/web-accessibility", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Web+Accessibility", "price": null }
+    ],
     "stages": [
       {
         "title": "Accessibility Principles and Semantics",
@@ -2120,6 +2182,10 @@
     "topic": "Browser Rendering and the DOM",
     "category": "Web Development",
     "summary": "Understand how browsers parse, render and update a page, and script the DOM efficiently without a framework.",
+    "certifications": [
+      { "title": "freeCodeCamp: JavaScript Algorithms and Data Structures", "provider": "other", "url": "https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Browser+Rendering+and+the+DOM", "price": null }
+    ],
     "stages": [
       {
         "title": "The DOM Tree and Selection",
@@ -2259,6 +2325,11 @@
     "topic": "Authentication and Authorization",
     "category": "Web Development",
     "summary": "Implement safe sign-in and access control for web apps: sessions, password handling, OAuth 2.0, OIDC, MFA and RBAC.",
+    "certifications": [
+      { "title": "ISC2 Certified in Cybersecurity (CC)", "provider": "other", "url": "https://www.isc2.org/certifications/cc", "price": 0 },
+      { "title": "Microsoft Security, Compliance and Identity Fundamentals", "provider": "microsoft", "url": "https://learn.microsoft.com/en-us/credentials/certifications/security-compliance-and-identity-fundamentals/", "price": 99 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Authentication+and+Authorization", "price": null }
+    ],
     "stages": [
       {
         "title": "HTTP Authentication and Sessions",
@@ -2409,6 +2480,10 @@
     "topic": "WebSockets and Realtime Apps",
     "category": "Web Development",
     "summary": "Build live features over WebSockets and server-sent events, then scale them with pub/sub, presence and backpressure control.",
+    "certifications": [
+      { "title": "freeCodeCamp: Back End Development and APIs", "provider": "other", "url": "https://www.freecodecamp.org/learn/back-end-development-and-apis/", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=WebSockets+and+Realtime+Apps", "price": null }
+    ],
     "stages": [
       {
         "title": "Realtime Transports and the WebSocket Protocol",
@@ -2547,6 +2622,10 @@
     "topic": "Microservices Architecture",
     "category": "Web Development",
     "summary": "Split systems into independently deployable services and run them with sound communication, data and observability patterns.",
+    "certifications": [
+      { "title": "AWS Certified Solutions Architect – Associate", "provider": "aws", "url": "https://aws.amazon.com/certification/certified-solutions-architect-associate/", "price": 150 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Microservices+Architecture", "price": null }
+    ],
     "stages": [
       {
         "title": "Service Boundaries and Trade-offs",
@@ -2687,6 +2766,10 @@
     "topic": "Testing JavaScript Applications",
     "category": "Web Development",
     "summary": "Build a trustworthy test suite for JavaScript apps: unit tests, component tests, network mocking and end-to-end coverage in CI.",
+    "certifications": [
+      { "title": "freeCodeCamp: Quality Assurance", "provider": "other", "url": "https://www.freecodecamp.org/learn/quality-assurance/", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Testing+JavaScript+Applications", "price": null }
+    ],
     "stages": [
       {
         "title": "Unit Testing Fundamentals",
@@ -2831,6 +2914,11 @@
     "topic": "NestJS",
     "category": "Web Development",
     "summary": "Build modular, testable Node.js server applications with NestJS — dependency injection, validation, auth and OpenAPI out of the box.",
+    "certifications": [
+      { "title": "freeCodeCamp: Back End Development and APIs", "provider": "other", "url": "https://www.freecodecamp.org/learn/back-end-development-and-apis/", "price": 0 },
+      { "title": "Meta Back-End Developer Professional Certificate", "provider": "coursera", "url": "https://www.coursera.org/professional-certificates/meta-back-end-developer", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=NestJS", "price": null }
+    ],
     "stages": [
       {
         "title": "First Steps, Controllers and Providers",

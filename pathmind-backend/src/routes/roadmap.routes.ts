@@ -7,6 +7,8 @@ import {
   unsaveRoadmap,
   toggleFavorite,
   createCertificate,
+  getQuiz,
+  submitQuiz,
 } from "../controllers/roadmap.controller";
 import { generateLimiter } from "../config/rateLimits";
 import { requireAuth } from "../middleware/auth.middleware";
@@ -15,6 +17,7 @@ import {
   generateRoadmapSchema,
   getRoadmapParamsSchema,
   saveRoadmapParamsSchema,
+  submitQuizSchema,
 } from "../schemas/roadmap.schema";
 
 export const roadmapRouter = Router();
@@ -142,3 +145,21 @@ roadmapRouter.put("/:id/favorite", requireAuth, validate(saveRoadmapParamsSchema
  *       400: { description: Roadmap not finished }
  */
 roadmapRouter.post("/:id/certificate", requireAuth, validate(saveRoadmapParamsSchema), createCertificate);
+
+/**
+ * @openapi
+ * /roadmaps/{id}/quiz:
+ *   get:
+ *     summary: Start a certificate quiz — 10 generated questions, answers withheld
+ *     tags: [Roadmaps]
+ *     responses:
+ *       200: { description: Seed and questions }
+ *       400: { description: Course unfinished, or too short to quiz }
+ *   post:
+ *     summary: Score an attempt; a pass unlocks the certificate
+ *     tags: [Roadmaps]
+ *     responses:
+ *       200: { description: Score and per-question review }
+ */
+roadmapRouter.get("/:id/quiz", requireAuth, validate(saveRoadmapParamsSchema), getQuiz);
+roadmapRouter.post("/:id/quiz", requireAuth, validate(submitQuizSchema), submitQuiz);

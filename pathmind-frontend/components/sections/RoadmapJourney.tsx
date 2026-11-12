@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ProgressRing } from "@/components/ui/ProgressRing";
 import { Illustration } from "@/components/ui/Illustration";
+import { CertificatesPanel } from "@/components/roadmap/CertificatesPanel";
+import { CertificateQuiz } from "@/components/roadmap/CertificateQuiz";
 import { StageTimeline, type StageState } from "@/components/sections/StageTimeline";
 import { useToggleStageItem, useUpdateProgress } from "@/hooks/useRoadmapQuery";
 import { useIssueCertificate, useCertificates } from "@/hooks/useProfileQuery";
@@ -31,7 +33,7 @@ interface RoadmapJourneyProps {
   progress?: UserProgress;
 }
 
-type Tab = "roadmap" | "resources" | "practice";
+type Tab = "roadmap" | "resources" | "practice" | "certificates";
 
 /** M3 common-button classes for the two header links — `<a>` elements, so
  *  they can't go through `ui/Button`, but they sit on the same shape, size
@@ -159,6 +161,7 @@ function EmptyTab({
  */
 export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
   const [tab, setTab] = useState<Tab>("roadmap");
+  const [quizOpen, setQuizOpen] = useState(false);
   const updateProgress = useUpdateProgress();
   const toggleItem = useToggleStageItem();
   const issueCertificate = useIssueCertificate();
@@ -213,6 +216,16 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
     () => stages.flatMap((s) => s.practiceLinks.map((p) => ({ ...p, stageTitle: s.title }))),
     [stages]
   );
+  // Certifications are authored per course and attached to the final stage,
+  // but a learner thinks about them per course, not per stage. De-duplicated
+  // by URL because a seeded course and a generated one can cite the same
+  // programme from different stages.
+  const allCertifications = useMemo(() => {
+    const seen = new Set<string>();
+    return stages
+      .flatMap((s) => s.certifications)
+      .filter((c) => (seen.has(c.url) ? false : (seen.add(c.url), true)));
+  }, [stages]);
 
   return (
     <div className="pt-app-bar pb-nav">
@@ -326,6 +339,11 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
               { key: "roadmap", label: "Roadmap", icon: LayersIcon },
               { key: "resources", label: `Resources (${allResources.length})`, icon: BookIcon },
               { key: "practice", label: `Practice (${allPractice.length})`, icon: TargetIcon },
+              {
+                key: "certificates",
+                label: `Certificates (${allCertifications.length})`,
+                icon: MedalIcon,
+              },
             ] as const
           ).map(({ key, label, icon: Icon }) => (
             <button
@@ -436,6 +454,9 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
           </div>
         )}
 
+        {/* ── External certificates ────────────────────────────────── */}
+        {tab === "certificates" && <CertificatesPanel certifications={allCertifications} />}
+
         {/* ── Completion / certificate ─────────────────────────────── */}
         <section className="mt-6 overflow-hidden rounded-xl border border-md-outline-variant bg-md-surface-container-low p-5 sm:p-6">
           <div className="flex flex-wrap items-center justify-between gap-4">
@@ -448,9 +469,11 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
                   Complete the roadmap
                 </h2>
                 <p className="mt-0.5 text-body-md text-md-on-surface-variant">
-                  {isFinished
-                    ? "Every stage is done — claim your certificate."
-                    : `Finish all ${stages.length} stages to earn a completion certificate (${completedCount} done).`}
+                  {existingCertificate
+                    ? "Earned — your certificate is on your profile."
+                    : isFinished
+                      ? "Every stage is done. Pass a 10-question quiz — 8 correct — to earn your certificate."
+                      : `Finish all ${stages.length} stages, then pass a 10-question quiz, to earn a completion certificate (${completedCount} done).`}
                 </p>
               </div>
             </div>
@@ -467,7 +490,10 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
               <Button
                 variant="accent"
                 className="shrink-0"
-                onClick={() => issueCertificate.mutate(roadmap.id)}
+                // Opens the quiz rather than issuing directly. The server
+                // refuses to issue without a recorded pass, so a button that
+                // called the issue endpoint straight off would simply error.
+                onClick={() => setQuizOpen(true)}
                 // Disabled rather than hidden so the reward is visible from the
                 // start; the copy above says exactly what unlocks it.
                 disabled={!isFinished}
@@ -475,12 +501,22 @@ export function RoadmapJourney({ roadmap, progress }: RoadmapJourneyProps) {
                 loadingLabel="Issuing…"
               >
                 <MedalIcon className="h-5 w-5" />
-                Earn certificate
+                Take the quiz
               </Button>
             )}
           </div>
         </section>
       </div>
+
+      {/* Passing is what the server checks before it will issue anything, so
+          the certificate request is fired from the pass callback rather than
+          from the button that opens the quiz. */}
+      <CertificateQuiz
+        roadmapId={roadmap.id}
+        open={quizOpen}
+        onClose={() => setQuizOpen(false)}
+        onPassed={() => issueCertificate.mutate(roadmap.id)}
+      />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { User } from "../../models/User";
 import { getRoadmapById } from "../roadmap.service";
 import { ApiError } from "../../utils/apiError";
 import { recordActivity } from "../activity.service";
+import { canQuiz, PASS_MARK, QUESTION_COUNT } from "../quiz/quiz.service";
 
 /** `VID-<year>-<8 hex>` — short enough to read aloud, wide enough not to collide. */
 function makeSerial(): string {
@@ -41,6 +42,16 @@ export async function issueCertificate(
   if (completed < total) {
     throw ApiError.badRequest(
       `Finish every stage first — ${completed} of ${total} complete.`
+    );
+  }
+
+  // Finishing every stage is now necessary but not sufficient: the learner
+  // must also have passed the quiz. The check is here, in the issuing service,
+  // rather than in the controller, so no future caller can route around it.
+  // Roadmaps too small to produce a quiz are exempt — see `canQuiz`.
+  if (canQuiz(roadmap.stages) && !progress?.quizPassedAt) {
+    throw ApiError.badRequest(
+      `Pass the certificate quiz first — ${PASS_MARK} of ${QUESTION_COUNT} correct.`
     );
   }
 

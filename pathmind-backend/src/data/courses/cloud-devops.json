@@ -3,6 +3,11 @@
     "topic": "Git and Version Control",
     "category": "Cloud, DevOps & Security",
     "summary": "Track, branch and collaborate on code with Git, and recover confidently when history goes wrong.",
+    "certifications": [
+      { "title": "GitHub Foundations", "provider": "other", "url": "https://resources.github.com/learn/certifications/", "price": 99 },
+      { "title": "Linux Foundation certification catalog", "provider": "other", "url": "https://training.linuxfoundation.org/certification-catalog/", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Git+and+Version+Control", "price": null }
+    ],
     "stages": [
       {
         "title": "Tracking Changes",
@@ -81,6 +86,10 @@
     "topic": "Linux Command Line",
     "category": "Cloud, DevOps & Security",
     "summary": "Work fluently in a shell: navigate, transform text with pipelines, manage processes and automate with scripts.",
+    "certifications": [
+      { "title": "Linux Foundation Certified SysAdmin (LFCS)", "provider": "other", "url": "https://training.linuxfoundation.org/certification/linux-foundation-certified-sysadmin-lfcs/", "price": 395 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Linux+Command+Line", "price": null }
+    ],
     "stages": [
       {
         "title": "Navigating the Filesystem",
@@ -159,6 +168,11 @@
     "topic": "Docker",
     "category": "Cloud, DevOps & Security",
     "summary": "Package applications into containers, compose multi-service stacks, and build small hardened production images.",
+    "certifications": [
+      { "title": "Kubernetes and Cloud Native Associate (KCNA)", "provider": "other", "url": "https://www.cncf.io/training/certification/kcna/", "price": 250 },
+      { "title": "Docker learning resources", "provider": "other", "url": "https://www.docker.com/resources/", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Docker", "price": null }
+    ],
     "stages": [
       {
         "title": "Containers and Images",
@@ -237,6 +251,11 @@
     "topic": "Kubernetes",
     "category": "Cloud, DevOps & Security",
     "summary": "Deploy, configure and operate containerised services on Kubernetes, up to a GitOps release of your own app.",
+    "certifications": [
+      { "title": "Certified Kubernetes Administrator (CKA)", "provider": "other", "url": "https://www.cncf.io/training/certification/cka/", "price": 445 },
+      { "title": "Kubernetes and Cloud Native Associate (KCNA)", "provider": "other", "url": "https://www.cncf.io/training/certification/kcna/", "price": 250 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Kubernetes", "price": null }
+    ],
     "stages": [
       {
         "title": "Cluster Concepts",
@@ -331,6 +350,12 @@
     "topic": "AWS Cloud Fundamentals",
     "category": "Cloud, DevOps & Security",
     "summary": "Navigate the core AWS services and design a secure, resilient workload across compute, storage, network and identity.",
+    "certifications": [
+      { "title": "AWS Certified Cloud Practitioner", "provider": "aws", "url": "https://aws.amazon.com/certification/certified-cloud-practitioner/", "price": 100 },
+      { "title": "AWS Certified Solutions Architect – Associate", "provider": "aws", "url": "https://aws.amazon.com/certification/certified-solutions-architect-associate/", "price": 150 },
+      { "title": "AWS Skill Builder (free tier)", "provider": "aws", "url": "https://skillbuilder.aws/", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=AWS+Cloud+Fundamentals", "price": null }
+    ],
     "stages": [
       {
         "title": "AWS Core Concepts",
@@ -409,6 +434,11 @@
     "topic": "Microsoft Azure Fundamentals",
     "category": "Cloud, DevOps & Security",
     "summary": "Understand Azure's core services and governance model, then deploy and monitor a workload defined as code.",
+    "certifications": [
+      { "title": "Microsoft Certified: Azure Fundamentals (AZ-900)", "provider": "microsoft", "url": "https://learn.microsoft.com/en-us/credentials/certifications/azure-fundamentals/", "price": 99 },
+      { "title": "Microsoft Certified: Azure Developer Associate", "provider": "microsoft", "url": "https://learn.microsoft.com/en-us/credentials/certifications/azure-developer/", "price": 165 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Microsoft+Azure+Fundamentals", "price": null }
+    ],
     "stages": [
       {
         "title": "Azure Foundations",
@@ -486,6 +516,11 @@
     "topic": "Google Cloud Platform",
     "category": "Cloud, DevOps & Security",
     "summary": "Build on Google Cloud: projects and IAM, serverless and container compute, BigQuery data, and a production GKE deployment.",
+    "certifications": [
+      { "title": "Google Cloud Digital Leader", "provider": "google", "url": "https://cloud.google.com/learn/certification/cloud-digital-leader", "price": 99 },
+      { "title": "Associate Cloud Engineer", "provider": "google", "url": "https://cloud.google.com/learn/certification/cloud-engineer", "price": 125 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Google+Cloud+Platform", "price": null }
+    ],
     "stages": [
       {
         "title": "GCP Foundations",
@@ -563,6 +598,10 @@
     "topic": "Terraform and Infrastructure as Code",
     "category": "Cloud, DevOps & Security",
     "summary": "Describe cloud infrastructure as versioned code, manage state safely, and roll changes out through reviewed pipelines.",
+    "certifications": [
+      { "title": "HashiCorp Certified: Terraform Associate", "provider": "other", "url": "https://developer.hashicorp.com/certifications/terraform-associate", "price": 70 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Terraform+and+Infrastructure+as+Code", "price": null }
+    ],
     "stages": [
       {
         "title": "Declarative Infrastructure",
@@ -640,6 +679,11 @@
     "topic": "CI/CD Pipelines",
     "category": "Cloud, DevOps & Security",
     "summary": "Automate build, test and release so changes reach production frequently, safely and with a clear path back.",
+    "certifications": [
+      { "title": "AWS Certified DevOps Engineer – Professional", "provider": "aws", "url": "https://aws.amazon.com/certification/certified-devops-engineer-professional/", "price": 300 },
+      { "title": "GitHub Actions certification", "provider": "other", "url": "https://resources.github.com/learn/certifications/", "price": 99 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=CI%2FCD+Pipelines", "price": null }
+    ],
     "stages": [
       {
         "title": "Continuous Integration Basics",
@@ -717,6 +761,10 @@
     "topic": "Site Reliability Engineering",
     "category": "Cloud, DevOps & Security",
     "summary": "Run services to measurable reliability targets with SLOs, observability, disciplined incident response and less toil.",
+    "certifications": [
+      { "title": "Linux Foundation certification catalog", "provider": "other", "url": "https://training.linuxfoundation.org/certification-catalog/", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Site+Reliability+Engineering", "price": null }
+    ],
     "stages": [
       {
         "title": "SRE Principles",
@@ -795,6 +843,12 @@
     "topic": "Cybersecurity Fundamentals",
     "category": "Cloud, DevOps & Security",
     "summary": "Build a working security foundation: core concepts, network and endpoint defence, attacker behaviour and governance.",
+    "certifications": [
+      { "title": "Google Cybersecurity Professional Certificate", "provider": "coursera", "url": "https://www.coursera.org/professional-certificates/google-cybersecurity", "price": null },
+      { "title": "CompTIA Security+", "provider": "other", "url": "https://www.comptia.org/certifications/security", "price": 404 },
+      { "title": "ISC2 Certified in Cybersecurity (CC)", "provider": "other", "url": "https://www.isc2.org/certifications/cc", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Cybersecurity+Fundamentals", "price": null }
+    ],
     "stages": [
       {
         "title": "Security Foundations",
@@ -888,6 +942,11 @@
     "topic": "Web Application Security",
     "category": "Cloud, DevOps & Security",
     "summary": "Find and fix the vulnerability classes that actually break web apps, and build security into the delivery pipeline.",
+    "certifications": [
+      { "title": "freeCodeCamp: Information Security", "provider": "other", "url": "https://www.freecodecamp.org/learn/information-security/", "price": 0 },
+      { "title": "ISC2 Certified in Cybersecurity (CC)", "provider": "other", "url": "https://www.isc2.org/certifications/cc", "price": 0 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Web+Application+Security", "price": null }
+    ],
     "stages": [
       {
         "title": "The Web Security Model",
@@ -982,6 +1041,11 @@
     "topic": "Ethical Hacking and Penetration Testing",
     "category": "Cloud, DevOps & Security",
     "summary": "Run an authorised penetration test end to end: scoping, recon, web testing, lab exercises and a defensible report.",
+    "certifications": [
+      { "title": "OffSec PEN-200 (OSCP)", "provider": "other", "url": "https://www.offsec.com/courses/pen-200/", "price": 1649 },
+      { "title": "CompTIA Security+", "provider": "other", "url": "https://www.comptia.org/certifications/security", "price": 404 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Ethical+Hacking+and+Penetration+Testing", "price": null }
+    ],
     "stages": [
       {
         "title": "Engagement Fundamentals",
@@ -1077,6 +1141,10 @@
     "topic": "Cryptography",
     "category": "Cloud, DevOps & Security",
     "summary": "Understand ciphers, hashes, key exchange and TLS well enough to use cryptographic libraries correctly in real systems.",
+    "certifications": [
+      { "title": "Microsoft Security, Compliance and Identity Fundamentals", "provider": "microsoft", "url": "https://learn.microsoft.com/en-us/credentials/certifications/security-compliance-and-identity-fundamentals/", "price": 99 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Cryptography", "price": null }
+    ],
     "stages": [
       {
         "title": "Cryptographic Primitives",
@@ -1153,6 +1221,10 @@
     "topic": "Android Development",
     "category": "Mobile & Product",
     "summary": "Build Android apps in Kotlin with Jetpack Compose, modern architecture and a tested release on the Play Store.",
+    "certifications": [
+      { "title": "Meta Android Developer Professional Certificate", "provider": "coursera", "url": "https://www.coursera.org/professional-certificates/meta-android-developer", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Android+Development", "price": null }
+    ],
     "stages": [
       {
         "title": "Kotlin and Android Basics",
@@ -1230,6 +1302,10 @@
     "topic": "iOS Development",
     "category": "Mobile & Product",
     "summary": "Write Swift apps with SwiftUI, wire them to real data with async/await, and take one through to App Store submission.",
+    "certifications": [
+      { "title": "Meta iOS Developer Professional Certificate", "provider": "coursera", "url": "https://www.coursera.org/professional-certificates/meta-ios-developer", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=iOS+Development", "price": null }
+    ],
     "stages": [
       {
         "title": "Swift Foundations",
@@ -1307,6 +1383,10 @@
     "topic": "React Native",
     "category": "Mobile & Product",
     "summary": "Build cross-platform mobile apps with React Native: UI, navigation, state, native modules and a store release.",
+    "certifications": [
+      { "title": "Meta Front-End Developer Professional Certificate", "provider": "coursera", "url": "https://www.coursera.org/professional-certificates/meta-front-end-developer", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=React+Native", "price": null }
+    ],
     "stages": [
       {
         "title": "React Native Basics",
@@ -1384,6 +1464,10 @@
     "topic": "Flutter",
     "category": "Mobile & Product",
     "summary": "Build one Flutter codebase that runs on iOS and Android, with solid state management, tests and store releases.",
+    "certifications": [
+      { "title": "Google Cloud certification catalog", "provider": "google", "url": "https://cloud.google.com/learn/certification", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Flutter", "price": null }
+    ],
     "stages": [
       {
         "title": "Dart and First Widgets",
@@ -1461,6 +1545,10 @@
     "topic": "UI/UX Design Fundamentals",
     "category": "Mobile & Product",
     "summary": "Research users, shape interfaces that are clear and accessible, and document the system that keeps them consistent.",
+    "certifications": [
+      { "title": "Google UX Design Professional Certificate", "provider": "coursera", "url": "https://www.coursera.org/professional-certificates/google-ux-design", "price": null },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=UI%2FUX+Design+Fundamentals", "price": null }
+    ],
     "stages": [
       {
         "title": "Design Principles",
@@ -1555,6 +1643,11 @@
     "topic": "Product Management for Engineers",
     "category": "Mobile & Product",
     "summary": "Understand how product decisions get made so you can shape scope, prioritise well and argue trade-offs with evidence.",
+    "certifications": [
+      { "title": "Google Project Management Professional Certificate", "provider": "coursera", "url": "https://www.coursera.org/professional-certificates/google-project-management", "price": null },
+      { "title": "Professional Scrum Master I (PSM I)", "provider": "other", "url": "https://www.scrum.org/assessments/professional-scrum-master-i-certification", "price": 200 },
+      { "title": "Browse certificates on Coursera", "provider": "coursera", "url": "https://www.coursera.org/search?query=Product+Management+for+Engineers", "price": null }
+    ],
     "stages": [
       {
         "title": "What Product Management Is",
