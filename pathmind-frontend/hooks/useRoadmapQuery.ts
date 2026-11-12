@@ -24,6 +24,12 @@ export function useGenerateRoadmap() {
     onSuccess: (roadmap: Roadmap) => {
       setRoadmap(roadmap);
       queryClient.setQueryData(["roadmap", roadmap.id], roadmap);
+      // Generating now adds the roadmap to the library server-side, so the
+      // cached library list is stale the moment this resolves. Without these,
+      // /saved kept serving the pre-generation list from cache and the new
+      // roadmap looked like it had not been saved at all.
+      void queryClient.invalidateQueries({ queryKey: ["roadmaps", "saved"] });
+      void queryClient.invalidateQueries({ queryKey: ["me"] });
     },
   });
 }

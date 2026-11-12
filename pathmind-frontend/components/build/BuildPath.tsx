@@ -214,8 +214,8 @@ export function BuildPath() {
     try {
       const roadmap = await generate.mutateAsync(value);
       toast.success(
-        "Roadmap ready",
-        `${roadmap.stages.length} stages mapped — start whenever you like.`
+        "Roadmap ready and saved",
+        `${roadmap.stages.length} stages mapped. It's in your library whenever you want it.`
       );
       router.push(`/roadmap/${roadmap.id}`);
     } catch (err) {

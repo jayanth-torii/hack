@@ -35,6 +35,23 @@ export const courseStageSchema = z.object({
 });
 export type CourseStage = z.infer<typeof courseStageSchema>;
 
+/**
+ * An external certification a learner can pursue after the course.
+ *
+ * `price` is **US dollars, approximate**, and is the one field here that is
+ * not a fact: exam fees change and subscription prices vary by region. 0 means
+ * the certificate itself is free; `null` means the cost genuinely varies
+ * (a subscription, or free-to-audit with a paid certificate) and the interface
+ * says so rather than inventing a number.
+ */
+export const courseCertificationSchema = z.object({
+  title: z.string().trim().min(1),
+  provider: z.enum(["coursera", "udemy", "aws", "google", "microsoft", "other"]),
+  url: httpsUrl,
+  price: z.number().min(0).nullable(),
+});
+export type CourseCertification = z.infer<typeof courseCertificationSchema>;
+
 export const courseSchema = z.object({
   topic: z.string().trim().min(2).max(100),
   /** Free text, used only for grouping in the catalog — not stored on the model. */
@@ -42,6 +59,12 @@ export const courseSchema = z.object({
   /** One-sentence blurb — not stored on the model. */
   summary: z.string().trim().min(1),
   stages: z.array(courseStageSchema).min(1),
+  /**
+   * Course-level, not stage-level: you certify in the subject, not in
+   * "Chapter 3". The seeder attaches them to the final stage, which is the
+   * point a learner would actually sit the exam.
+   */
+  certifications: z.array(courseCertificationSchema).default([]),
 });
 export type Course = z.infer<typeof courseSchema>;
 

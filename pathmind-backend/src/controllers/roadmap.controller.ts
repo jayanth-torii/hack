@@ -19,6 +19,15 @@ export const generateRoadmap = asyncHandler(async (req: Request, res: Response) 
     "Roadmap generated or returned from cache"
   );
   if (req.auth?.userId) {
+    // Generating a roadmap IS the decision to keep it. Previously this only
+    // wrote an activity event, so a learner waited out the generation, landed
+    // on the roadmap, and then found nothing in their library — the roadmap
+    // survived only as a URL they had no reason to have kept. Nothing in the
+    // interface offered to save it either, so "it never saves" was literally
+    // true. $addToSet makes a repeat generation of the same topic a no-op.
+    await User.findByIdAndUpdate(req.auth.userId, {
+      $addToSet: { savedRoadmaps: roadmap._id },
+    });
     await recordActivity({
       userId: req.auth.userId,
       type: "roadmap_generated",

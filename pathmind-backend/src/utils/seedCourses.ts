@@ -111,7 +111,21 @@ export function courseToRoadmapInput(
       lastVerifiedAt: now,
       verified: true,
     })),
-    certifications: [],
+    // Course-level in the catalog file, attached to the final stage here —
+    // that is the point a learner would actually sit the exam, and the
+    // frontend aggregates across stages anyway. `rank` is the authored order,
+    // so the list stays in the order a human put it in.
+    certifications:
+      index === course.stages.length - 1
+        ? course.certifications.map((cert, rank) => ({
+            title: cert.title,
+            provider: cert.provider,
+            url: cert.url,
+            price: cert.price,
+            rank,
+            lastVerifiedAt: now,
+          }))
+        : [],
     practiceLinks:
       stage.type === "practice" && stage.practiceTags && stage.practiceTags.length > 0
         ? resolvePracticeLinks(
